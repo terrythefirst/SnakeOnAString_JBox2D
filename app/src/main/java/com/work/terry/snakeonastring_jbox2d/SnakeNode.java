@@ -81,7 +81,7 @@ public class SnakeNode extends CircleBody{
                 snakeBodyRestitution
                 );
         initJoints();
-        startMoving();
+        //startMoving();
     }
     public Vec2 getFrontV2D(){
         if(front instanceof SnakeHead)return ((SnakeHead) front).getV2D();//headV
@@ -247,7 +247,7 @@ public class SnakeNode extends CircleBody{
 //                    Mul2D(targetMoveV,10f)
 //            );
             body.applyLinearImpulse(
-                    Mul2D(targetMoveV,0.01f),
+                    Mul2D(targetMoveV,0.005f),
                     body.getPosition(),
                     true
             );

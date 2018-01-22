@@ -26,6 +26,12 @@ public class Constant {
         public static final float snakeHeadFriction = 0.04f;
         public static final float snakeHeadRestitution = 0.6f;
 
+        public static final float snakeHeadSpeed = 10f;
+        public static final int snakeHeadSpeedFactor = 20;
+
+        public static final float snakeHeadSpeedUponDead = 0.4f;
+        public static final float snakeBodySpeedUponDead = 0.4f;
+
         public static final float snakeBodyLinearDampingRate = 0.070f;
         public static final float snakeBodyLinearDampingRateFactorInter = 0.02f;
         public static final float snakeBodyDensity = 0.10f;

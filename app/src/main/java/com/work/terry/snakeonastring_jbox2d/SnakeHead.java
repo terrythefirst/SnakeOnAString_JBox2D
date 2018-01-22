@@ -29,8 +29,8 @@ public class SnakeHead extends CircleBody{
     Double cosRotateAngleStep = Math.cos(Math.toRadians(Constant.snakeHeadRotateStepAngle));
     public  float rotateAngle;
 
-    private int speed = 10;
-    private int SpeedFactor = 20;
+    private float speed = snakeHeadSpeed;
+    private int SpeedFactor = snakeHeadSpeedFactor;
 
     public float HeadVX = 0;
     public float HeadVY = 1;
