@@ -112,8 +112,8 @@ public class SnakeNode extends CircleBody{
                 angle,
                 0,0,
                 4,distance/2,
-                0.02f,
-                0.1f,0.6f,
+                0.01f,
+                0.0f,0.0f,
                 "",
                 false
         );
@@ -165,8 +165,8 @@ public class SnakeNode extends CircleBody{
                 frontBody,
                 //rectBody.body.getPosition(),
                 frontBody.body.getPosition(),
-                0.01f,
-                0.99f
+                0.0f,
+                1.0f
         );
         new MyWeldJoint(
                 "snake and body joint"+"RevoltJoint2",
