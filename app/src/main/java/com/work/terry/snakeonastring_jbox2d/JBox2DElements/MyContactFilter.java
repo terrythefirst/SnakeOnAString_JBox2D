@@ -1,8 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
-import android.app.Activity;
-
-import com.work.terry.snakeonastring_jbox2d.GamePlayView;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 
 import org.jbox2d.callbacks.ContactFilter;
 import org.jbox2d.dynamics.Body;

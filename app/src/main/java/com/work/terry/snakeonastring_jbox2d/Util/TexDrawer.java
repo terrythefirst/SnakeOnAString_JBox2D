@@ -3,7 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 
-import com.work.terry.snakeonastring_jbox2d.GamePlayView;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 import com.work.terry.snakeonastring_jbox2d.auto.ScreenScaleUtil;
 
 import java.nio.ByteBuffer;

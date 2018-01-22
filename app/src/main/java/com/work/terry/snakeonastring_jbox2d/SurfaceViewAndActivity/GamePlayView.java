@@ -1,21 +1,18 @@
-package com.work.terry.snakeonastring_jbox2d;
+package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.Context;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MatrixState;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;

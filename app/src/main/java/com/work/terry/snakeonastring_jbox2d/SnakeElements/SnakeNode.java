@@ -1,24 +1,18 @@
-package com.work.terry.snakeonastring_jbox2d;
+package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyDistanceJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
+import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeMovingThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
-import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
-
-import java.nio.channels.Channels;
-import java.security.cert.CertificateNotYetValidException;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -28,14 +22,14 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class SnakeNode extends CircleBody{
-    Snake snake;
+    public Snake snake;
 
     public CircleBody front = null;
     public Vec2 frontV;
 
     public RectBody rectBody = null;
-    private MovingThread movingThread = null;
-    private float centerDistance = 0;
+    private Thread movingThread = null;
+    public float centerDistance = 0;
 
     public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,int id){
         super(
@@ -210,48 +204,8 @@ public class SnakeNode extends CircleBody{
 //        );
     }
     public void startMoving(){
-        movingThread = new MovingThread();
+        movingThread = new SnakeNodeMovingThread(this);
         movingThread.start();
-    }
-
-    private class MovingThread extends Thread{
-        @Override
-        public void run(){
-            while(!snake.isDead()){
-                if(body==null)continue;
-                popXYfromBody();
-                changeBodyImpulseByFront();
-                try {
-                    sleep(5);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        public void changeBodyImpulseByFront(){
-            frontV = getFrontV2D();
-            Vec2 frontXY = front.getBodyXY();
-            float dx = frontXY.x - x;
-            float dy = frontXY.y - y;
-            Vec2 dxyV = new Vec2(dx,dy);
-            Vec2 frontVNormalized = normalize2D(frontV);
-            Vec2 targetMoveV = minusV2D(
-                    dxyV,
-                    Mul2D(
-                            frontVNormalized,
-                            getBodyCenterDistance()
-                    )
-            );
-
-//            body.applyForceToCenter(
-//                    Mul2D(targetMoveV,10f)
-//            );
-            body.applyLinearImpulse(
-                    Mul2D(targetMoveV,0.005f),
-                    body.getPosition(),
-                    true
-            );
-        }
     }
 
     @Override

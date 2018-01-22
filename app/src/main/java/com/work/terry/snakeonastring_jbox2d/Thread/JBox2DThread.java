@@ -1,14 +1,11 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
-import android.util.Log;
-
-import com.work.terry.snakeonastring_jbox2d.GamePlayView;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
-import com.work.terry.snakeonastring_jbox2d.SnakeHead;
-import com.work.terry.snakeonastring_jbox2d.SnakeNode;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;

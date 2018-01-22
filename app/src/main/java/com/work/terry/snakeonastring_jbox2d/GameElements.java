@@ -16,14 +16,14 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.snakeBodyImg;
  */
 
 public class GameElements{
-    protected float x;
-    protected float y;
-    protected float width;
-    protected float height;
-    protected float jumpHeight;
-    protected float downHeight;
+    public float x;
+    public float y;
+    public float width;
+    public float height;
+    public float jumpHeight;
+    public float downHeight;
 
-    protected String Img;
+    public String Img;
 
     public GameElements(
             float x,float y,

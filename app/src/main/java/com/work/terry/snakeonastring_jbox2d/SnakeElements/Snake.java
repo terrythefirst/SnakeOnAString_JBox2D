@@ -1,10 +1,10 @@
-package com.work.terry.snakeonastring_jbox2d;
+package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
@@ -15,8 +15,6 @@ import org.jbox2d.dynamics.World;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.LongSummaryStatistics;
-import java.util.stream.Collectors;
 
 /**
  * Created by Terry on 2017/12/28.
@@ -115,7 +113,7 @@ public class Snake {
                 );
     }
     public void moving(){
-        snakeHead.moving();
+        snakeHead.startMoving();
     }
     public void whenMotionDown(int x,int y){
         snakeHead.whenMotionDown(x,y);

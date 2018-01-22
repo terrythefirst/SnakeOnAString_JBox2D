@@ -2,8 +2,8 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;//声明包名
 
 import android.util.Log;
 
-import com.work.terry.snakeonastring_jbox2d.GamePlayView;
-import com.work.terry.snakeonastring_jbox2d.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;

@@ -1,5 +1,6 @@
-package com.work.terry.snakeonastring_jbox2d;
+package com.work.terry.snakeonastring_jbox2d.UI;
 
+import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
@@ -7,7 +8,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
  * Created by Terry on 2017/12/30.
  */
 
-public class Button extends GameElements{
+public class Button extends GameElements {
     public int Color = 1;
 
     private float circleDiameter;
