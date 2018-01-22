@@ -25,22 +25,21 @@ public class MyContactListener implements ContactListener {
 		String idB = bodyB.getUserData().toString();
 		Log.d("Contact","BodyA:"+bodyA.getUserData().toString()+"  BodyB:"+bodyB.getUserData().toString());
 
-//		if(!gamePlayView.snake.isDead()){
-//
-//			if(idA.equals("snakeHead")){
-//				if(!idB.equals("snakeBody1")){
-//					gamePlayView.snake.setDead();
-////					bodyA.setLinearDamping(0.07f);
-////					bodyB.setLinearDamping(0.10f);
-//				}
-//			}else if(idB.toString().equals("snakeHead")){
-//				if(!idA.equals("snakeBody1")){
-//					gamePlayView.snake.setDead();
-////					bodyA.setLinearDamping(0.10f);
-////					bodyB.setLinearDamping(0.07f);
-//				}
-//			}
-//		}
+		if(!gamePlayView.snake.isDead()){
+			if(idA.equals("snakeHead")){
+				if(!idB.equals("snakeBody1")){
+					gamePlayView.snake.setDead();
+//					bodyA.setLinearDamping(0.07f);
+//					bodyB.setLinearDamping(0.10f);
+				}
+			}else if(idB.toString().equals("snakeHead")){
+				if(!idA.equals("snakeBody1")){
+					gamePlayView.snake.setDead();
+//					bodyA.setLinearDamping(0.10f);
+//					bodyB.setLinearDamping(0.07f);
+				}
+			}
+		}
 	}
 	@Override
 	public void endContact(Contact contact){}

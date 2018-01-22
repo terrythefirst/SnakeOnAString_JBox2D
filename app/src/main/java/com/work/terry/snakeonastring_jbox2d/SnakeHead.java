@@ -150,22 +150,12 @@ public class SnakeHead extends CircleBody{
                         vecDXY .x* speedFactor(dx),
                         vecDXY .y* speedFactor(dy)
                 );
-//                applyForceCenter(
-//                    new Vec2(dvx,dvy)
-//                );
-
                 try {
                     sleep(1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
-            //pushXYintoBody();
-//            setBodyVelocity(
-//                    HeadVX,
-//                    HeadVY
-//            );
         }
     }
 
@@ -251,15 +241,15 @@ public class SnakeHead extends CircleBody{
                     rotateAngle
             );
         }
-        painter.drawSelf(
-                TexManager.getTex(axisImg),
-                ColorManager.getColor(Constant.C0LOR_WHITE),
-                x,
-                y-jumpHeight,
-                headEyesDiameter,
-                headEyesDiameter,
-                AxisRotateAngle
-        );
+//        painter.drawSelf(
+//                TexManager.getTex(axisImg),
+//                ColorManager.getColor(Constant.C0LOR_WHITE),
+//                x,
+//                y-jumpHeight,
+//                headEyesDiameter,
+//                headEyesDiameter,
+//                AxisRotateAngle
+//        );
     }
     @Override
     public void drawHeightShadow(TexDrawer painter,float[] color){

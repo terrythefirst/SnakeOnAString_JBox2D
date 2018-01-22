@@ -63,7 +63,9 @@ public class SnakeNode extends CircleBody{
                 Constant.SnakeDownHeight,
                 Constant.snakeBodyImg
         );
+        this.snake = snake;
         this.front = frontNode;
+
         initSelf();
         createCircleBody(
                 world,
@@ -79,7 +81,7 @@ public class SnakeNode extends CircleBody{
                 snakeBodyRestitution
                 );
         initJoints();
-        //startMoving();
+        startMoving();
     }
     public Vec2 getFrontV2D(){
         if(front instanceof SnakeHead)return ((SnakeHead) front).getV2D();//headV
@@ -95,7 +97,8 @@ public class SnakeNode extends CircleBody{
         return VectorUtil.calDistance(minusV2D(thisXY,frontXY));
     }
     public void initSelf(){
-        Vec2 frontVNormalized = normalize2D(getFrontV2D());
+        frontV = getFrontV2D();
+        Vec2 frontVNormalized = normalize2D(frontV);
         centerDistance = front.radius+this.radius;
         Vec2 frontXY = front.getBodyXY();
         x = frontXY.x - frontVNormalized.x*centerDistance;
@@ -212,56 +215,42 @@ public class SnakeNode extends CircleBody{
     }
 
     private class MovingThread extends Thread{
-        Vec2 bodyV;
         @Override
         public void run(){
             while(!snake.isDead()){
                 if(body==null)continue;
                 popXYfromBody();
                 changeBodyImpulseByFront();
-//                Vec2 vSkew = new Vec2(
-//                        -targetMoveV.x*front.getCenterDistance(),
-//                        -targetMoveV.y*front.getCenterDistance()).skew();
                 try {
                     sleep(5);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
-            setBodyVelocity(
-                    frontV.x,frontV.y
-            );
-
         }
         public void changeBodyImpulseByFront(){
-            //bodyV = getBodyVelocityNormalized();
-
+            frontV = getFrontV2D();
             Vec2 frontXY = front.getBodyXY();
             float dx = frontXY.x - x;
             float dy = frontXY.y - y;
-            Vec2 dxy = new Vec2(dx,dy);
+            Vec2 dxyV = new Vec2(dx,dy);
             Vec2 frontVNormalized = normalize2D(frontV);
             Vec2 targetMoveV = minusV2D(
-                    dxy,
+                    dxyV,
                     Mul2D(
                             frontVNormalized,
                             getBodyCenterDistance()
                     )
             );
-            //targetMoveV = minusV2D(frontV,bodyV);
-            //targetMoveV = targetMoveV.skew();
-            //targetMoveV = plusV2D(bodyV,targetMoveV);
-            //targetMoveV = normalize2D(targetMoveV);
-//            x = frontXY.x-targetMoveV.x*front.getCenterDistance();
-//            y = frontXY.y-targetMoveV.y*front.getCenterDistance();
-            body.applyForceToCenter(
-                    Mul2D(targetMoveV,10f)
-            );
-//            body.applyLinearImpulse(
-//                    Mul2D(targetMoveV,0.1f),
-//                    body.getPosition(),
-//                    true
+
+//            body.applyForceToCenter(
+//                    Mul2D(targetMoveV,10f)
 //            );
+            body.applyLinearImpulse(
+                    Mul2D(targetMoveV,0.01f),
+                    body.getPosition(),
+                    true
+            );
         }
     }
 
@@ -297,14 +286,14 @@ public class SnakeNode extends CircleBody{
                 bodyTopRadius*2,
                 0
         );
-        painter.drawSelf(
-                TexManager.getTex(snakeBodyHeightImg),
-                color,
-                rectBody.x,
-                rectBody.y,
-                10,
-                rectBody.height,
-                (float) Math.toDegrees(rectBody.body.getAngle())
-        );
+//        painter.drawSelf(
+//                TexManager.getTex(snakeBodyHeightImg),
+//                color,
+//                rectBody.x,
+//                rectBody.y,
+//                10,
+//                rectBody.height,
+//                (float) Math.toDegrees(rectBody.body.getAngle())
+//        );
     }
 }
