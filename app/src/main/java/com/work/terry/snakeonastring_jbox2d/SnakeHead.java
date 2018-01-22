@@ -22,6 +22,8 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
  */
 
 public class SnakeHead extends CircleBody{
+    public boolean initSelfFinished = false;
+
     Snake snake;
     Double sinRotateAngleStep = Math.sin(Math.toRadians(Constant.snakeHeadRotateStepAngle));
     Double cosRotateAngleStep = Math.cos(Math.toRadians(Constant.snakeHeadRotateStepAngle));
@@ -40,7 +42,7 @@ public class SnakeHead extends CircleBody{
                 world,
                 "snakeHead",
                 x,y,
-                calBodyRadians(vx,vy),
+                (float) ((135/360)*Math.PI),
                 vx,vy,
                 Constant.headRadius,
                 snakeHeadAngularDampingRate,
@@ -77,8 +79,8 @@ public class SnakeHead extends CircleBody{
     }
 
     private class Target{
-        public float TargetHeadX = 1280;
-        public float TargetHeadY = 720;
+        public float TargetHeadX = 720;
+        public float TargetHeadY = 1280;
         public float TargetHeadVX = 0;
         public float TargetHeadVY = 1;
 
@@ -166,14 +168,6 @@ public class SnakeHead extends CircleBody{
 //            );
         }
     }
-    public void applyForceCenter(Vec2 force){
-        Vec2 headV = plusV2D(
-                normalize2D(this.getBodyXY()),
-                this.getBodyVelocityNormalized()
-        );
-        headV = normalize2D(headV);
-        body.applyForce(force,Mul2D(headV,radius));
-    }
 
     private float speedFactor(float x){
         float vv = MyMath.smoothStep(0,SpeedFactor,Math.abs(x));
@@ -200,7 +194,7 @@ public class SnakeHead extends CircleBody{
         }else {
             rotateAngle = calRotateAngleDegrees(HeadVX,HeadVY);
         }
-        //rotateAngle =(float) Math.toDegrees(body.getAngle());
+        float AxisRotateAngle =(float) Math.toDegrees(body.getAngle());
         //calRotateAngleRadius(body.getLinearVelocity().x,body.getLinearVelocity().y);
         painter.drawDownShadow(
                 TexManager.getTex(Img),
@@ -257,7 +251,15 @@ public class SnakeHead extends CircleBody{
                     rotateAngle
             );
         }
-
+        painter.drawSelf(
+                TexManager.getTex(axisImg),
+                ColorManager.getColor(Constant.C0LOR_WHITE),
+                x,
+                y-jumpHeight,
+                headEyesDiameter,
+                headEyesDiameter,
+                AxisRotateAngle
+        );
     }
     @Override
     public void drawHeightShadow(TexDrawer painter,float[] color){
@@ -287,7 +289,10 @@ public class SnakeHead extends CircleBody{
         );
     }
     public void moving(){
-        target = new Target(x,y,0,0);
+        target = new Target(
+                x, y,
+                0, 1
+        );
         movingThread =  new MovingThread();
         movingThread.start();
     }

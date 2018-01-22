@@ -21,15 +21,16 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 		String idB = bodyB.getUserData().toString();
 		if(idA.matches("snakeBody.Rect")||idB.matches("snakeBody.Rect"))
 		{
-//			if (idB.matches("^snake(Head)|(Body[0-9])&")){
-//				if (idA.equals("snakeBody1")&&idB.equals("snakeHead")){
-//					return false;
-//				}
-//			}
+			if (idB.matches("^snake(Head)|(Body[0-9])&")){
+				if (idA.equals("snakeBody1")&&idB.equals("snakeHead")){
+					return false;
+				}
+			}
 			return false;
 		}else
 		{
 			return true;
 		}
+		//return true;
 	}
 }

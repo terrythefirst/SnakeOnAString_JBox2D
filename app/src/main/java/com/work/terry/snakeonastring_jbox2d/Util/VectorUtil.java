@@ -15,6 +15,9 @@ public class VectorUtil {
     public static float calDistance(double dx,double dy){
         return (float)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
     }
+    public static float calDistance(Vec2 v){
+        return (float)Math.sqrt(Math.pow(v.x,2)+Math.pow(v.y,2));
+    }
     public static Vec2 getCenterV2(Vec2 v1,Vec2 v2){
         return new Vec2((v1.x+v2.x)/2,(v1.y+v2.y)/2);
     }
@@ -78,5 +81,8 @@ public class VectorUtil {
     }
     public static Vec2 plusV2D(Vec2 v1,Vec2 v2){
         return new Vec2(v1.x+v2.x,v1.y+v2.y);
+    }
+    public static Vec2 minusV2D(Vec2 v1,Vec2 v2){
+        return new Vec2(v1.x-v2.x,v1.y-v2.y);
     }
 }

@@ -39,7 +39,7 @@ public class Constant {
     public static final int SnakeDownLittleHeight = 7;
     public static final float SnakeDownLittleColorFactor = 0.87f;
 
-    public static final int DistanceOffset = 40;
+    public static final int DistanceOffset = 30;
     public static final float JumpMathFactor = 4;
 
     //蛇头

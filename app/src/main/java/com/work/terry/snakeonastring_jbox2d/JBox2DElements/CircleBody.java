@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -20,7 +21,21 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
  */
 
 public class CircleBody extends MyBody{
-    protected float radius;//声明圆形类物体半径的变量
+    public float radius;//声明圆形类物体半径的变量
+    public CircleBody(
+            World world,
+            float x,float y,
+            float width,float height,
+            float downHeight,
+            String Img){
+        super(
+              world,x,y,
+            width,height,
+            downHeight,
+            Img
+        );
+        this.radius=width/2;//给圆形类物体半径变量赋值
+    }
     public CircleBody(
             World world,
             String id,

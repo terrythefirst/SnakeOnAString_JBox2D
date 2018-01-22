@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
  */
 
 public class Snake {
+    public boolean initSelfFinished = false;
+
     private World world;
     private SnakeHead snakeHead;
     public List<CircleBody> snakeBodies = null;//包括头！！！
@@ -45,7 +47,6 @@ public class Snake {
             drawSequence.add(tempt);
         }
         //calDrawSequence();
-
         animateThread = new AnimateThread();
         animateThread.start();
     }

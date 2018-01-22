@@ -32,9 +32,9 @@ public class JBox2DThread extends Thread{
             }
         while(gamePlayView.IS_PLAYING)//&&!gamePlayView.snake.isDead())
         {
+            //if(!gamePlayView.snake.initSelfFinished)continue;
             gamePlayView.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA,JBOX2D_ITERA);//开始模拟
             for(MyBody mb:JBox2DUtil.Bodies){
-                if(mb instanceof CircleBody){
 //                    if(gamePlayView.snake.isDead()) mb.popXYfromBody();
 //                    else mb.pushXYintoBody();
 //                    if(mb instanceof SnakeNode){
@@ -63,7 +63,6 @@ public class JBox2DThread extends Thread{
 //                                    +" vY="+mb.getBodyVelocityNormalized().y
 //                    );
                     //if(mb instanceof SnakeHead)((SnakeHead)mb).pushHeadVXYtoBody();
-                }
             }
             if (gamePlayView.snake.isDead()){
                 for (Object o:JBox2DUtil.Joints){
