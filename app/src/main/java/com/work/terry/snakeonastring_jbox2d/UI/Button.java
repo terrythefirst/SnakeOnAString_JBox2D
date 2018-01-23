@@ -24,9 +24,8 @@ public class Button extends GameElements {
         super(
                 x,y,
                 totalLength,circleDiameter,
-                Constant.SnakeDownHeight,
-                "",
-                jumpHeight
+                Constant.buttonBlockDefaultHeight,
+                ""
         );
         this.x = x;
         this.y = y;

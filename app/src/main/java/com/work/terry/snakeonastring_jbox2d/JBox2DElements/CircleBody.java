@@ -26,12 +26,12 @@ public class CircleBody extends MyBody{
             World world,
             float x,float y,
             float width,float height,
-            float downHeight,
+            float jumpHeight,
             String Img){
         super(
               world,x,y,
             width,height,
-            downHeight,
+            jumpHeight,
             Img
         );
         this.radius=width/2;//给圆形类物体半径变量赋值
@@ -43,6 +43,7 @@ public class CircleBody extends MyBody{
             float angle,
             float vX,float vY,
             float radius,
+            float defaultHeight,
             float angularDampingRate,
             float linearDampingRate,
             float density,
@@ -51,7 +52,7 @@ public class CircleBody extends MyBody{
             boolean isStaic,
             String img)//构造函数
     {
-        super(world,x,y,radius*2,radius*2, Constant.SnakeDownHeight,img);
+        super(world,x,y,radius*2,radius*2, defaultHeight,img);
         this.radius=radius;//给圆形类物体半径变量赋值
 
         createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);

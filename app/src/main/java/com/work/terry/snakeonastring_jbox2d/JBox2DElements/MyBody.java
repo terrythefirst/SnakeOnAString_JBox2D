@@ -26,9 +26,9 @@ public abstract class MyBody extends GameElements
             World world,
             float x,float y,
             float width,float height,
-            float downHeight,
+            float defaultHeight,
             String Img){
-        super(x,y,width,height, downHeight,Img);
+        super(x,y,width,height, defaultHeight,Img);
         JBox2DUtil.Bodies.add(this);
         this.world = world;
     }

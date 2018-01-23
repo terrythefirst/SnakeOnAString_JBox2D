@@ -31,7 +31,7 @@ public class SnakeNode extends CircleBody{
     private Thread movingThread = null;
     public float centerDistance = 0;
 
-    public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,int id){
+    public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,float jumpHeight,int id){
         super(
                 world,
                 "snakeBody"+id,
@@ -39,6 +39,7 @@ public class SnakeNode extends CircleBody{
                 calRotateAngleDegrees(vx,vy),
                 vx,vy,
                 Constant.bodyRadius,
+                jumpHeight,
                 0,
                 snakeBodyLinearDampingRate+id*snakeBodyLinearDampingRateFactorInter,
                 snakeBodyDensity,
@@ -55,7 +56,7 @@ public class SnakeNode extends CircleBody{
                 0,0,
                 Constant.bodyRadius*2,
                 Constant.bodyRadius*2,
-                Constant.SnakeDownHeight,
+                Constant.SnakeDefaultHeight,
                 Constant.snakeBodyImg
         );
         this.snake = snake;
@@ -111,6 +112,7 @@ public class SnakeNode extends CircleBody{
                 angle,
                 0,0,
                 1,rectBodyLenth/2,
+                0,
                 0.01f,
                 0.0f,0.0f,
                 "",
@@ -221,23 +223,21 @@ public class SnakeNode extends CircleBody{
                         +"\nx="+x
                         +" y="+y
         );
-        painter.drawDownShadow(
+        painter.drawColorFactorSelf(
                 TexManager.getTex(Img),
                 color,
                 x,
-                y-jumpHeight,
+                y-jumpHeight-defaultHeight+Constant.SnakeDownLittleHeight,
                 width,
                 height,
                 0,
-                0,
-                Constant.SnakeDownLittleHeight,
                 Constant.SnakeDownLittleColorFactor
         );
         painter.drawColorSelf(
                 TexManager.getTex(Img),
                 color,
                 x,
-                y-jumpHeight,
+                y-jumpHeight-defaultHeight,
                 bodyTopRadius*2,
                 bodyTopRadius*2,
                 0

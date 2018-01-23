@@ -20,38 +20,24 @@ public class GameElements{
     public float y;
     public float width;
     public float height;
+    public float defaultHeight;
     public float jumpHeight;
-    public float downHeight;
 
     public String Img;
 
     public GameElements(
             float x,float y,
             float width,float height,
-            float downHeight,
-            String Img){
+            float defaultHeight,
+            String Img
+            ){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.downHeight = downHeight;
         this.Img = Img;
-
+        this.defaultHeight = defaultHeight;
         this.jumpHeight = 0;
-    }
-    public GameElements(
-            float x,float y,
-            float width,float height,
-            float downHeight,
-            String Img,
-            float jumpHeight){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.downHeight = downHeight;
-        this.Img = Img;
-        this.jumpHeight = jumpHeight;
     }
 
     public void drawSelf(TexDrawer painter, float[] color){
@@ -59,14 +45,14 @@ public class GameElements{
                 TexManager.getTex(Img),
                 color,
                 x,
-                y-jumpHeight,
+                y-jumpHeight-defaultHeight,
                 width,
                 height,
                 0
         );
     }
     public void drawHeightShadow(TexDrawer painter,float[] color){
-        painter.drawDownShadow(
+        painter.drawColorFactorSelf(
                 TexManager.getTex(Img),
                 color,
                 x,
@@ -74,35 +60,29 @@ public class GameElements{
                 width,
                 height,
                 0,
-                0,
-                Constant.SnakeDownHeight,
                 Constant.SnakeHeightColorFactor
         );
-        painter.drawDownShadow(
+        painter.drawColorFactorSelf(
                 TexManager.getTex(snakeBodyHeightImg),
                 color,
                 x,
-                y-downHeight/2-jumpHeight/2,
+                y - jumpHeight/2-defaultHeight/2,
                 width,
-                downHeight+jumpHeight,
+                jumpHeight+defaultHeight,
                 0,
-                0,
-                downHeight,
                 Constant.SnakeHeightColorFactor
         );
     }
 
     public void drawFloorShadow(TexDrawer painter,float[] color){
-        painter.drawFloorShadow(
+        painter.drawShadow(
                 TexManager.getTex(Img),
                 color,
-                x,
-                y+Constant.SnakeDownHeight,
+                x+(defaultHeight+jumpHeight)*Constant.FloorShadowFactorX,
+                y+(defaultHeight+jumpHeight)*Constant.FloorShadowFactorY,
                 width,
                 height,
                 0,
-                (downHeight+jumpHeight)*Constant.FloorShadowFactorX,
-                (downHeight+jumpHeight)*Constant.FloorShadowFactorY,
                 Constant.SnakeFloorColorFactor
         );
     }

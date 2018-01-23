@@ -201,12 +201,10 @@ public class TexDrawer {
 
         GLES30.glDisable(GLES30.GL_BLEND);
     }
-    public void drawFloorShadow(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float downOffsetX,float downOffsetY,float colorFactor){
+    public void drawShadow(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_COLOR,GLES30.GL_ONE_MINUS_SRC_COLOR);
 
-        x+=downOffsetX;
-        y+=downOffsetY;
         GLES30.glUseProgram(mProgramShadow);
 
         float wSacle = ScreenScaleUtil.fromPixSizeToScreenSize(width,Constant.ssr);
@@ -251,12 +249,10 @@ public class TexDrawer {
 
         GLES30.glDisable(GLES30.GL_BLEND);
     }
-    public void drawDownShadow(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float downOffsetX,float downOffsetY,float colorFactor){
+    public void drawColorFactorSelf(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA,GLES30.GL_ONE_MINUS_SRC_ALPHA);
 
-        x+=downOffsetX;
-        y+=downOffsetY;
         GLES30.glUseProgram(mProgramShadow);
 
         float wSacle = ScreenScaleUtil.fromPixSizeToScreenSize(width,Constant.ssr);

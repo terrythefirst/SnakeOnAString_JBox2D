@@ -43,9 +43,8 @@ public class ButtonBlock extends GameElements{
         super(
                 x,y,
                 totalLength,circleDiameter,
-                Constant.SnakeDownHeight,
-                "",
-                jumpHeight
+                jumpHeight,
+                ""
         );
         this.world = world;
         this.x = x;
@@ -66,6 +65,7 @@ public class ButtonBlock extends GameElements{
                 0,0,
                 circleDiameter/2,
                 rectLength/2,
+                Constant.buttonBlockDefaultHeight,
                 1.0f,
                 0.01f,
                 0.1f,
@@ -93,7 +93,9 @@ public class ButtonBlock extends GameElements{
                 circleBody1XY.x,circleBody1XY.y,
                 0,
                 0,0,
-                circleDiameter/2,0,
+                circleDiameter/2,
+                Constant.buttonBlockDefaultHeight,
+                0,
                 0,
                 1.0f,
                 0.01f,
@@ -107,7 +109,9 @@ public class ButtonBlock extends GameElements{
                 circleBody2XY.x,circleBody2XY.y,
                 0,
                 0,0,
-                circleDiameter/2,0,
+                circleDiameter/2,
+                Constant.buttonBlockDefaultHeight,
+                0,
                 0,
                 1.0f,
                 0.01f,

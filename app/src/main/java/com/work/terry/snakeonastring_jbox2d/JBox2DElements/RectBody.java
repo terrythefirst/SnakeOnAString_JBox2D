@@ -30,13 +30,16 @@ public class RectBody extends MyBody{
             float vX,float vY,
             float halfWidth,//半宽
             float halfHeight,//半高
+            float defaultHeight,
             float density,
             float friction,
             float restitution,
             String img,
             boolean isStatic)//构造函数
     {
-        super(world,x,y,halfWidth*2,halfHeight*2, Constant.SnakeDownHeight,img);
+        super(world,x,y,halfWidth*2,halfHeight*2, defaultHeight,img);
+        this.halfHeight = halfHeight;
+        this.halfWidth = halfWidth;
 
         BodyDef bd=new BodyDef();//创建刚体描述
         if(isStatic)//判断是否为可运动刚体

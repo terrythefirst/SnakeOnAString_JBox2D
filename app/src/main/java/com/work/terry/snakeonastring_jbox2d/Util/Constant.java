@@ -41,7 +41,7 @@ public class Constant {
 
     //蛇整体
     public static final int SnakeBodyDefaultLength = 6;
-    public static final int SnakeDownHeight = 24;
+    public static final int SnakeDefaultHeight = 24;
     public static final int SnakeDownLittleHeight = 7;
     public static final float SnakeDownLittleColorFactor = 0.87f;
 
@@ -76,7 +76,7 @@ public class Constant {
 
     //碰撞块
     public static float buttonBlockDownLittleHeight = 5;
-
+    public static float buttonBlockDefaultHeight = 24;
 
     //绘制相关
     public static final float FloorShadowFactorX = 0.3f;

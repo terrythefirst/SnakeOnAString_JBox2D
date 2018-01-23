@@ -33,7 +33,7 @@ public class Snake {
 
     public Snake(World world){
         this.world = world;
-        snakeHead = new SnakeHead(this,world,720,1280,0,1);
+        snakeHead = new SnakeHead(this,world,720,1280,0,1,Constant.SnakeDefaultHeight);
         snakeBodies = new ArrayList<>();
         snakeBodies.add(snakeHead);
         for(int i = 1;i<=Constant.SnakeBodyDefaultLength;i++){
@@ -44,7 +44,6 @@ public class Snake {
             GameElements tempt = snakeBodies.get(i);
             drawSequence.add(tempt);
         }
-        //calDrawSequence();
         animateThread = new AnimateThread();
         animateThread.start();
     }
@@ -59,9 +58,9 @@ public class Snake {
             int timeLimit = (int) (2*Constant.JumpMathFactor);
             while (true){
                 if(index==-1)
-                snakeHead.jumpHeight = MyMath.JumpMath(Constant.SnakeDownHeight + 10 ,Constant.JumpMathFactor,time);
+                snakeHead.jumpHeight = MyMath.JumpMath(Constant.SnakeDefaultHeight + 10 ,Constant.JumpMathFactor,time);
                 else {
-                    snakeBodies.get(index).jumpHeight =  MyMath.JumpMath(Constant.SnakeDownHeight + 10 ,Constant.JumpMathFactor,time);
+                    snakeBodies.get(index).jumpHeight =  MyMath.JumpMath(Constant.SnakeDefaultHeight  + 10 ,Constant.JumpMathFactor,time);
                 }
 
                 if(time<timeLimit){

@@ -83,7 +83,24 @@ public class GamePlayView extends GLSurfaceView {
 
 
             //snake.setColor(Constant.COLOR_DEFAULT);
-            texDrawer.drawSelf(TexManager.getTex(Constant.backgroundImg), ColorManager.getColor(Constant.COLOR_DEFAULT),Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT/2,Constant.SCREEN_WIDTH,Constant.SCREEN_HEIGHT,0);
+            texDrawer.drawSelf(
+                    TexManager.getTex(Constant.backgroundImg),
+                    ColorManager.getColor(Constant.COLOR_DEFAULT),
+                    Constant.SCREEN_WIDTH/2,
+                    Constant.SCREEN_HEIGHT/2,
+                    Constant.SCREEN_WIDTH,
+                    Constant.SCREEN_HEIGHT,
+                    0
+            );
+//            texDrawer.drawSelf(
+//                    TexManager.getTex(Constant.axisImg),
+//                    ColorManager.getColor(Constant.COLOR_DEFAULT),
+//                    Constant.SCREEN_WIDTH/2,
+//                    Constant.SCREEN_HEIGHT/2,
+//                    Constant.SCREEN_WIDTH,
+//                    Constant.SCREEN_HEIGHT,
+//                    0
+//            );
             snake.drawSelf(texDrawer);
         }
         @Override
@@ -131,6 +148,7 @@ public class GamePlayView extends GLSurfaceView {
                 0,
                 0,0,
                 SCREEN_WIDTH/2,5,
+                0,
                 10,0.1f,0.1f,
                 "",
                 true
@@ -142,6 +160,7 @@ public class GamePlayView extends GLSurfaceView {
                 0,
                 0,0,
                 5,SCREEN_HEIGHT/2,
+                0,
                 10,0.1f,0.1f,
                 "",
                 true
@@ -153,6 +172,7 @@ public class GamePlayView extends GLSurfaceView {
                 0,
                 0,0,
                 5,SCREEN_HEIGHT/2,
+                0,
                 10,0.1f,0.1f,
                 "",
                 true
@@ -164,6 +184,7 @@ public class GamePlayView extends GLSurfaceView {
                 0,
                 0,0,
                 SCREEN_WIDTH/2,5,
+                0,
                 10,0.1f,0.1f,
                 "",
                 true
