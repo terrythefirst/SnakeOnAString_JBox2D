@@ -46,6 +46,7 @@ public class SnakeHead extends CircleBody{
                 snakeHeadDensity,
                 snakeHeadFriction,
                 snakeHeadRestitution,
+                false,
                 Constant.snakeHeadHeadImg
         );
         this.snake = snake;

@@ -21,6 +21,7 @@ public abstract class MyBody extends GameElements
     public World world;
     public Body body;//对应物理引擎中的刚体
     public Object lock = new Object();
+    public boolean isStatic;
     public MyBody(
             World world,
             float x,float y,

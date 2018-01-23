@@ -48,12 +48,13 @@ public class CircleBody extends MyBody{
             float density,
             float friction,
             float restitution,
+            boolean isStaic,
             String img)//构造函数
     {
         super(world,x,y,radius*2,radius*2, Constant.SnakeDownHeight,img);
         this.radius=radius;//给圆形类物体半径变量赋值
 
-        createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution);
+        createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);
     }
     public void createCircleBody(
                                  World world,
@@ -66,9 +67,16 @@ public class CircleBody extends MyBody{
                                  float linearDampingRate,
                                  float density,
                                  float friction,
-                                 float restitution){
+                                 float restitution,
+                                 boolean isStatic
+    ){
         BodyDef bd=new BodyDef();//创建刚体描述
-        bd.type= BodyType.DYNAMIC;//设置是否为可运动刚体
+        if(isStatic){
+            bd.type= BodyType.STATIC;//设置是否为可运动刚体
+        }else {
+            bd.type= BodyType.DYNAMIC;//设置是否为可运动刚体
+        }
+
 
         bd.position.set(x/RATE, y/RATE);//设置位置
         bd.linearVelocity.set(new Vec2(vX,vY));

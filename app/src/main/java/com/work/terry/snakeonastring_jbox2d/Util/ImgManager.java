@@ -13,6 +13,7 @@ public class ImgManager {
             Constant.snakeBodyHeightImg,
             Constant.snakeHeadEyesImg,
             Constant.snakeHeadEyesBallImg,
-            Constant.snakeHeadDeadEyesImg
+            Constant.snakeHeadDeadEyesImg,
+            Constant.snakeHeadDizzyEyesImg
     };
 }

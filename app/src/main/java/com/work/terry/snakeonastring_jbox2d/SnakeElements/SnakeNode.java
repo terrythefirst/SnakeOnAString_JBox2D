@@ -44,6 +44,7 @@ public class SnakeNode extends CircleBody{
                 snakeBodyDensity,
                 snakeBodyFriction,
                 snakeBodyRestitution,
+                false,
                 Constant.snakeBodyImg
         );
         this.snake = snake;
@@ -72,7 +73,8 @@ public class SnakeNode extends CircleBody{
                 snakeBodyLinearDampingRate+id*snakeBodyLinearDampingRateFactorInter,
                 snakeBodyDensity,
                 snakeBodyFriction,
-                snakeBodyRestitution
+                snakeBodyRestitution,
+                false
                 );
         initJoints();
         //startMoving();

@@ -53,6 +53,7 @@ public class Constant {
     public static String snakeHeadHeadImg = "snake_head_head.png";
     public static String snakeHeadEyesImg = "snake_head_eyes_version_2.png";
     public static String snakeHeadDeadEyesImg = "snake_head_eyes_dead_version_2.png";
+    public static String snakeHeadDizzyEyesImg = "snake_head_eyes_dizzy_version_2.png";
     public static String snakeHeadEyesBallImg = "snake_head_eyesBalls_version_2.png";
     public static final float SnakeHeadRatio = (float) (800*1.0/1024);
     public static final int headEyesDiameter = 110;
@@ -72,6 +73,9 @@ public class Constant {
     public static String snakeBodyHeightImg ="snake_body_height.png";
     public static final int bodyTopRadius = 33;
     public static final int bodyRadius = 35;
+
+    //碰撞块
+    public static float buttonBlockDownLittleHeight = 5;
 
 
     //绘制相关
