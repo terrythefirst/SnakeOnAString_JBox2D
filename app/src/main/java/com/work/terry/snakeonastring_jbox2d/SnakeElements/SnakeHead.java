@@ -135,7 +135,6 @@ public class SnakeHead extends CircleBody{
         if(snake.isDead()){
             painter.drawSelf(
                     TexManager.getTex(snakeHeadDeadEyesImg),
-                    ColorManager.getColor(Constant.C0LOR_WHITE),
                     x,
                     y-jumpHeight-defaultHeight,
                     headEyesDiameter,
@@ -145,7 +144,6 @@ public class SnakeHead extends CircleBody{
         }else {
             painter.drawSelf(
                     TexManager.getTex(snakeHeadEyesImg),
-                    ColorManager.getColor(Constant.C0LOR_WHITE),
                     x,
                     y-jumpHeight-defaultHeight,
                     headEyesDiameter,

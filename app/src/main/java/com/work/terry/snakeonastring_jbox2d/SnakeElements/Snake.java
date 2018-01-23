@@ -99,7 +99,7 @@ public class Snake {
                 .sorted(Comparator.comparing(x -> x.y))
                 .forEach(
                         x -> {
-                            x.drawFloorShadow(painter, Color);
+                            x.drawFloorShadow(painter, ColorManager.getColor(Constant.COLOR_GREAY));
                         }
                 );
         snakeBodies.stream()

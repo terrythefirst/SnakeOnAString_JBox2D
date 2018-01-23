@@ -143,13 +143,20 @@ public class ButtonBlock extends GameElements{
                 0.0f
         );
     }
+    @Override
     public void drawSelf(TexDrawer painter, float[] color){
-
+        circleBody1.drawSelf(painter,color);
+        circleBody2.drawSelf(painter,color);
+        rectBody.drawSelf(painter,color);
     }
     public void drawHeightShadow(TexDrawer painter,float[] color){
-
+        circleBody1.drawHeightShadow(painter,color);
+        circleBody2.drawHeightShadow(painter,color);
+        rectBody.drawHeightShadow(painter,color);
     }
     public void drawFloorShadow(TexDrawer painter,float[] color){
-
+        circleBody1.drawFloorShadow(painter,color);
+        circleBody2.drawFloorShadow(painter,color);
+        rectBody.drawFloorShadow(painter,color);
     }
 }

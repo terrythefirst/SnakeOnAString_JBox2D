@@ -85,7 +85,6 @@ public class GamePlayView extends GLSurfaceView {
             //snake.setColor(Constant.COLOR_DEFAULT);
             texDrawer.drawSelf(
                     TexManager.getTex(Constant.backgroundImg),
-                    ColorManager.getColor(Constant.COLOR_DEFAULT),
                     Constant.SCREEN_WIDTH/2,
                     Constant.SCREEN_HEIGHT/2,
                     Constant.SCREEN_WIDTH,

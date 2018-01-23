@@ -20,7 +20,6 @@ public class TexDrawer {
     int muMVPMatrixHandle;
     int maPositionHandle;
     int maTexCoorHandle;
-    int muColorHandle;
     String mVertexShader;
     String mFragmentShader;
 
@@ -81,7 +80,6 @@ public class TexDrawer {
         mProgram = ShaderUtil.createProgram(mVertexShader,mFragmentShader);
         maPositionHandle = GLES30.glGetAttribLocation(mProgram,"aPosition");
         maTexCoorHandle = GLES30.glGetAttribLocation(mProgram,"aTexCoor");
-        muColorHandle = GLES30.glGetUniformLocation(mProgram,"uColor");
         muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram,"uMVPMatrix");
 
         mVertexShaderColor = ShaderUtil.loadFromAssetsFile("sh/vertexColor.sh",view.getResources());
@@ -107,7 +105,7 @@ public class TexDrawer {
 * 方便旋转和对齐
 * */
 
-    public void drawSelf(int texId,float[] color,float x,float y,float width, float height,float rotateAngle){
+    public void drawSelf(int texId,float x,float y,float width, float height,float rotateAngle){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA,GLES30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -125,7 +123,6 @@ public class TexDrawer {
         MatrixState.rotate(rotateAngle,0,0,1);
 
         GLES30.glUniformMatrix4fv(muMVPMatrixHandle,1,false,MatrixState.getFinalMatrix(),0);
-        GLES30.glUniform3fv(muColorHandle,1,color,0);
         GLES30.glVertexAttribPointer(
                 maPositionHandle,
                 3,
@@ -220,7 +217,7 @@ public class TexDrawer {
 
         GLES30.glUniformMatrix4fv(muMVPMatrixHandleShadow,1,false,MatrixState.getFinalMatrix(),0);
         GLES30.glUniform1f(muDownColorFactorShadow,colorFactor);
-        GLES30.glUniform3fv(muColorHandle,1,color,0);
+        GLES30.glUniform3fv(muColorHandleShadow,1,color,0);
         GLES30.glVertexAttribPointer(
                 maPositionHandleShadow,
                 3,
@@ -268,7 +265,7 @@ public class TexDrawer {
 
         GLES30.glUniformMatrix4fv(muMVPMatrixHandleShadow,1,false,MatrixState.getFinalMatrix(),0);
         GLES30.glUniform1f(muDownColorFactorShadow,colorFactor);
-        GLES30.glUniform3fv(muColorHandle,1,color,0);
+        GLES30.glUniform3fv(muColorHandleShadow,1,color,0);
         GLES30.glVertexAttribPointer(
                 maPositionHandleShadow,
                 3,

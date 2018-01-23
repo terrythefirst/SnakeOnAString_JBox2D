@@ -43,7 +43,12 @@ public class Constant {
     public static final int SnakeBodyDefaultLength = 6;
     public static final int SnakeDefaultHeight = 24;
     public static final int SnakeDownLittleHeight = 7;
-    public static final float SnakeDownLittleColorFactor = 0.87f;
+
+    public static final float SnakeEyesDownLittleColorFactor = 0.80f;
+
+    public static final float SnakeDownLittleColorFactor = 0.80f;
+    public static final float SnakeHeightColorFactor = 0.75f;
+    public static final float SnakeFloorColorFactor = 0.65f;
 
     public static final int DistanceOffset = 30;
     public static final float JumpMathFactor = 4;
@@ -57,21 +62,17 @@ public class Constant {
     public static String snakeHeadEyesBallImg = "snake_head_eyesBalls_version_2.png";
     public static final float SnakeHeadRatio = (float) (800*1.0/1024);
     public static final int headEyesDiameter = 110;
-    public static final int headTopRadius = 48;
+    public static final int headTopRadius = 46;
     public static final int headRadius = 50;
 
-    public static final int SnakeEyesDownLittleHeight = 5;
-
-    public static final float SnakeEyesDownLittleColorFactor = 0.85f;
-    public static final float SnakeHeightColorFactor = 0.75f;
-    public static final float SnakeFloorColorFactor = 0.50f;
+    public static final int SnakeEyesDownLittleHeight = 3;
 
     public static float snakeHeadRotateStepAngle =3.0f/5f;//Degree
     //蛇身体
     public static String snakeBodyID = "snakeBody";
     public static String snakeBodyImg = "snake_body.png";
     public static String snakeBodyHeightImg ="snake_body_height.png";
-    public static final int bodyTopRadius = 33;
+    public static final int bodyTopRadius = 32;
     public static final int bodyRadius = 35;
 
     //碰撞块
@@ -90,7 +91,8 @@ public class Constant {
     public static int axisWidth = headRadius;
 
     public static final int COLOR_DEFAULT = 0;
-    public static final int C0LOR_WHITE = 1;
-    public static final int COLOR_ORANGE = 2;
-    public static final int C0LOR_CYAN = 3;
+    public static final int COLOR_GREAY = 1;
+    public static final int C0LOR_WHITE = 2;
+    public static final int COLOR_ORANGE = 3;
+    public static final int C0LOR_CYAN = 4;
 }

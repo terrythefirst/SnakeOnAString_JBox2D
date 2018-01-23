@@ -6,15 +6,20 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 
 public class ColorManager {
     public static final float Colors[][] = new float[][]{
-         {0.0f,0.0f,0.0f},
-         {0.05f,0.005F,0.015F},
-        {0.10f,0.10F,0.025F},//蛇的米白色
-        {0.33f,0.94f,0.94f},//青色
-        {0.95f,0.325f,0.103f},//橘色
-        {0.0f,0.3F,0.7F},//天蓝
+            {255,255,255},//白
+            {139,131,134},//灰
+            {255,250,240},//默认蛇的米白色
+            {127,255,212},
+            {255,69,0},
     };
-
+    public static float[] getColorByRGB255(float[] color255){
+        return new float[]{
+                color255[0]/255,
+                color255[1]/255,
+                color255[2]/255,
+        };
+    }
     public static float[] getColor(int index){
-        return Colors[index];
+        return getColorByRGB255(Colors[index]);
     }
 }
