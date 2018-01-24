@@ -6,6 +6,7 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeMovingThread;
+import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -31,22 +32,29 @@ public class SnakeNode extends CircleBody{
     private Thread movingThread = null;
     public float centerDistance = 0;
 
-    public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,float jumpHeight,int id){
+    public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,int color,float jumpHeight,int id){
         super(
                 world,
                 "snakeBody"+id,
                 x,y,
                 calRotateAngleDegrees(vx,vy),
                 vx,vy,
-                Constant.bodyRadius,
+                Constant.SnakeBodyRadius,
+
+                color,
                 jumpHeight,
+                Constant.SnakeDownLittleHeight,
+                Constant.SnakeDownLittleColorFactor,
+                Constant.SnakeHeightColorFactor,
+                Constant.SnakeFloorColorFactor,
+
                 0,
-                snakeBodyLinearDampingRate+id*snakeBodyLinearDampingRateFactorInter,
-                snakeBodyDensity,
-                snakeBodyFriction,
-                snakeBodyRestitution,
+                SnakeBodyLinearDampingRate+id*SnakeBodyLinearDampingRateFactorInter,
+                SnakeBodyDensity,
+                SnakeBodyFriction,
+                SnakeBodyRestitution,
                 false,
-                Constant.snakeBodyImg
+                Constant.SnakeBodyImg
         );
         this.snake = snake;
     }
@@ -54,10 +62,17 @@ public class SnakeNode extends CircleBody{
         super(
                 world,
                 0,0,
-                Constant.bodyRadius*2,
-                Constant.bodyRadius*2,
+                Constant.SnakeBodyRadius*2,
+                Constant.SnakeBodyRadius*2,
+
+                frontNode.color,
                 Constant.SnakeDefaultHeight,
-                Constant.snakeBodyImg
+                Constant.SnakeDownLittleHeight,
+                Constant.SnakeDownLittleColorFactor,
+                Constant.SnakeHeightColorFactor,
+                Constant.SnakeFloorColorFactor,
+
+                Constant.SnakeBodyImg
         );
         this.snake = snake;
         this.front = frontNode;
@@ -69,12 +84,12 @@ public class SnakeNode extends CircleBody{
                 x,y,
                 front.body.getAngle(),
                 0,0,
-                Constant.bodyRadius,
+                Constant.SnakeBodyRadius,
                 0,
-                snakeBodyLinearDampingRate+id*snakeBodyLinearDampingRateFactorInter,
-                snakeBodyDensity,
-                snakeBodyFriction,
-                snakeBodyRestitution,
+                SnakeBodyLinearDampingRate+id*SnakeBodyLinearDampingRateFactorInter,
+                SnakeBodyDensity,
+                SnakeBodyFriction,
+                SnakeBodyRestitution,
                 false
                 );
         initJoints();
@@ -112,7 +127,14 @@ public class SnakeNode extends CircleBody{
                 angle,
                 0,0,
                 1,rectBodyLenth/2,
+
+                this.color,
                 0,
+                Constant.SnakeDownLittleHeight,
+                Constant.SnakeDownLittleColorFactor,
+                Constant.SnakeHeightColorFactor,
+                Constant.SnakeFloorColorFactor,
+
                 0.01f,
                 0.0f,0.0f,
                 "",
@@ -213,7 +235,7 @@ public class SnakeNode extends CircleBody{
     }
 
     @Override
-    public void drawSelf(TexDrawer painter,float[] color){
+    public void drawSelf(TexDrawer painter){
         Log.d(
                 "Draw"+body.getUserData().toString(),
                 "BODYx="+body.getPosition().x*RATE
@@ -223,9 +245,10 @@ public class SnakeNode extends CircleBody{
                         +"\nx="+x
                         +" y="+y
         );
-        painter.drawColorFactorSelf(
+
+        painter.drawColorFactorTex(
                 TexManager.getTex(Img),
-                color,
+                ColorManager.getColor(color),
                 x,
                 y-jumpHeight-defaultHeight+Constant.SnakeDownLittleHeight,
                 width,
@@ -235,15 +258,15 @@ public class SnakeNode extends CircleBody{
         );
         painter.drawColorSelf(
                 TexManager.getTex(Img),
-                color,
+                ColorManager.getColor(color),
                 x,
                 y-jumpHeight-defaultHeight,
-                bodyTopRadius*2,
-                bodyTopRadius*2,
+                SnakeBodyTopRadius*2,
+                SnakeBodyTopRadius*2,
                 0
         );
-//        painter.drawSelf(
-//                TexManager.getTex(snakeBodyHeightImg),
+//        painter.drawColorSelf(
+//                TexManager.getTex(SnakeBodyHeightImg),
 //                color,
 //                rectBody.x,
 //                rectBody.y,

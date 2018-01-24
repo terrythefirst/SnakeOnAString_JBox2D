@@ -7,6 +7,7 @@ import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
@@ -27,23 +28,22 @@ public class Snake {
     private SnakeHead snakeHead;
     public List<CircleBody> snakeBodies = null;//包括头！！！
     private AnimateThread animateThread = null;
-    private static float[] Color = ColorManager.getColor(Constant.C0LOR_WHITE);
+    private int color = Constant.C0LOR_WHITE;
     private boolean isDead = false;
-    private List<GameElements> drawSequence = null;
+    private DrawUtil drawUtil;
 
-    public Snake(World world){
+    public Snake(World world,int color,DrawUtil drawUtil){
         this.world = world;
-        snakeHead = new SnakeHead(this,world,720,1280,0,1,Constant.SnakeDefaultHeight);
+        this.color = color;
+        this.drawUtil = drawUtil;
+
         snakeBodies = new ArrayList<>();
-        snakeBodies.add(snakeHead);
+
+        createHead();
         for(int i = 1;i<=Constant.SnakeBodyDefaultLength;i++){
             addBody();
         }
-        drawSequence = new ArrayList<GameElements>();
-        for(int i = 0;i<snakeBodies.size();i++){
-            GameElements tempt = snakeBodies.get(i);
-            drawSequence.add(tempt);
-        }
+
         animateThread = new AnimateThread();
         animateThread.start();
     }
@@ -86,30 +86,22 @@ public class Snake {
     public boolean isDead(){
         return isDead;
     }
+
+    public void createHead(){
+        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,Constant.SnakeDefaultHeight);
+        snakeBodies.add(snakeHead);
+        drawUtil.addToCenterLayer(snakeHead);
+    }
     public void addBody(){
         int index = snakeBodies.size();
+        SnakeNode tempt;
         if(index==1){
-            snakeBodies.add(new SnakeNode(this,world,snakeHead,index));
+            tempt = new SnakeNode(this,world,snakeHead,index);
         }else{
-            snakeBodies.add(new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index));
+            tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
         }
-    }
-    public void drawSelf(TexDrawer painter) {
-        snakeBodies.stream()
-                .sorted(Comparator.comparing(x -> x.y))
-                .forEach(
-                        x -> {
-                            x.drawFloorShadow(painter, ColorManager.getColor(Constant.COLOR_GREAY));
-                        }
-                );
-        snakeBodies.stream()
-                .sorted(Comparator.comparing(x -> x.y))
-                .forEach(
-                        x -> {
-                            x.drawHeightShadow(painter, Color);
-                            x.drawSelf(painter, Color);
-                        }
-                );
+        snakeBodies.add(tempt);
+        drawUtil.addToCenterLayer(tempt);
     }
     public void moving(){
         snakeHead.startMoving();
@@ -119,7 +111,10 @@ public class Snake {
     }
 
     public void setColor(int index){
-        Color = ColorManager.getColor(index);
+       this.color = index;
+       for (GameElements g:snakeBodies){
+           g.color = color;
+       }
     }
 
 

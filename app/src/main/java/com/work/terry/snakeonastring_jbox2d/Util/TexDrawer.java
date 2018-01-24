@@ -105,7 +105,7 @@ public class TexDrawer {
 * 方便旋转和对齐
 * */
 
-    public void drawSelf(int texId,float x,float y,float width, float height,float rotateAngle){
+    public void drawTex(int texId,float x,float y,float width, float height,float rotateAngle){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA,GLES30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -165,8 +165,9 @@ public class TexDrawer {
         MatrixState.pushMatrix();
 
         MatrixState.translate(xDraw,yDraw,0);
-        MatrixState.scale(wSacle,hScale,1.0f);
         MatrixState.rotate(rotateAngle,0,0,1);
+        MatrixState.scale(wSacle,hScale,1.0f);
+
 
         GLES30.glUniformMatrix4fv(muMVPMatrixHandleColor,1,false,MatrixState.getFinalMatrix(),0);
         GLES30.glUniform3fv(muColorHandleColor,1,color,0);
@@ -246,7 +247,7 @@ public class TexDrawer {
 
         GLES30.glDisable(GLES30.GL_BLEND);
     }
-    public void drawColorFactorSelf(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
+    public void drawColorFactorTex(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA,GLES30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -260,8 +261,9 @@ public class TexDrawer {
         MatrixState.pushMatrix();
 
         MatrixState.translate(xDraw,yDraw,0);
-        MatrixState.scale(wSacle,hScale,1.0f);
         MatrixState.rotate(rotateAngle,0,0,1);
+        MatrixState.scale(wSacle,hScale,1.0f);
+
 
         GLES30.glUniformMatrix4fv(muMVPMatrixHandleShadow,1,false,MatrixState.getFinalMatrix(),0);
         GLES30.glUniform1f(muDownColorFactorShadow,colorFactor);

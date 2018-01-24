@@ -8,7 +8,6 @@ import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
-import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -25,30 +24,37 @@ public class SnakeHead extends CircleBody{
     public Snake snake;
     public  float rotateAngle;
 
-    public float speed = snakeHeadSpeed;
-    public int SpeedFactor = snakeHeadSpeedFactor;
+    public float speed = SnakeHeadSpeed;
+    public int SpeedFactor = SnakeHeadSpeedFactor;
 
     public float HeadVX = 0;
     public float HeadVY = 1;
     Thread movingThread;
 
     public SnakeHeadTarget target = null;
-    public SnakeHead(Snake snake,World world,int x, int y, int vx, int vy,float jumpHeight){
+    public SnakeHead(Snake snake,World world,int x, int y, int vx, int vy,int color,float defaultHeight){
         super(
                 world,
                 "snakeHead",
                 x,y,
                 (float) ((135/360)*Math.PI),
                 vx,vy,
-                Constant.headRadius,
-                jumpHeight,
-                snakeHeadAngularDampingRate,
-                snakeHeadLinearDampingRate,
-                snakeHeadDensity,
-                snakeHeadFriction,
-                snakeHeadRestitution,
+                Constant.SnakeHeadRadius,
+
+                color,
+                defaultHeight,
+                SnakeDownLittleHeight,
+                SnakeDownLittleColorFactor,
+                SnakeHeightColorFactor,
+                SnakeFloorColorFactor,
+
+                SnakeHeadAngularDampingRate,
+                SnakeHeadLinearDampingRate,
+                SnakeHeadDensity,
+                SnakeHeadFriction,
+                SnakeHeadRestitution,
                 false,
-                Constant.snakeHeadHeadImg
+                Constant.SnakeHeadHeadImg
         );
         this.snake = snake;
         rotateAngle = calRotateAngleDegrees(vx,vy);
@@ -81,7 +87,7 @@ public class SnakeHead extends CircleBody{
         return new Vec2(HeadVX,HeadVY);
     }
     @Override
-    public void drawSelf(TexDrawer painter, float[] color){
+    public void drawSelf(TexDrawer painter){
         Log.d(
                 "Draw"+body.getUserData().toString(),
                 "BODYx="+body.getPosition().x*RATE
@@ -98,13 +104,14 @@ public class SnakeHead extends CircleBody{
         }else {
             rotateAngle = calRotateAngleDegrees(HeadVX,HeadVY);
         }
+        //rotateAngle =(float) Math.toDegrees(body.getAngle())+90;
         //float AxisRotateAngle =(float) Math.toDegrees(body.getAngle());
         //calRotateAngleRadius(body.getLinearVelocity().x,body.getLinearVelocity().y);
 
-
-        painter.drawColorFactorSelf(
+        //drawSelf
+        painter.drawColorFactorTex(
                 TexManager.getTex(Img),
-                color,
+                ColorManager.getColor(color),
                 x,
                 y-jumpHeight-defaultHeight+Constant.SnakeDownLittleHeight,
                 width,
@@ -114,40 +121,40 @@ public class SnakeHead extends CircleBody{
         );
         painter.drawColorSelf(
                 TexManager.getTex(Img),
-                color,
+                ColorManager.getColor(color),
                 x,
                 y-jumpHeight-defaultHeight,
-                Constant.headTopRadius*2,
-                Constant.headTopRadius*2,
+                Constant.SnakeHeadTopRadius*2,
+                Constant.SnakeHeadTopRadius*2,
                 0
         );
 
-        painter.drawColorFactorSelf(
-                TexManager.getTex(snakeHeadEyesBallImg),
-                color,
+        painter.drawColorFactorTex(
+                TexManager.getTex(SnakeHeadEyesBallImg),
+                ColorManager.getColor(color),
                 x,
                 y -jumpHeight-defaultHeight+Constant.SnakeEyesDownLittleHeight,
-                headEyesDiameter,
-                headEyesDiameter,
+                SnakeHeadEyesDiameter,
+                SnakeHeadEyesDiameter,
                 rotateAngle,
                 Constant.SnakeEyesDownLittleColorFactor
         );
         if(snake.isDead()){
-            painter.drawSelf(
-                    TexManager.getTex(snakeHeadDeadEyesImg),
+            painter.drawTex(
+                    TexManager.getTex(SnakeHeadDeadEyesImg),
                     x,
                     y-jumpHeight-defaultHeight,
-                    headEyesDiameter,
-                    headEyesDiameter,
+                    SnakeHeadEyesDiameter,
+                    SnakeHeadEyesDiameter,
                     rotateAngle
             );
         }else {
-            painter.drawSelf(
-                    TexManager.getTex(snakeHeadEyesImg),
+            painter.drawTex(
+                    TexManager.getTex(SnakeHeadEyesImg),
                     x,
                     y-jumpHeight-defaultHeight,
-                    headEyesDiameter,
-                    headEyesDiameter,
+                    SnakeHeadEyesDiameter,
+                    SnakeHeadEyesDiameter,
                     rotateAngle
             );
         }
@@ -162,10 +169,11 @@ public class SnakeHead extends CircleBody{
 //        );
     }
     @Override
-    public void drawHeightShadow(TexDrawer painter,float[] color){
-        painter.drawColorFactorSelf(
+    public void drawHeight(TexDrawer painter){
+        //drawHeight
+        painter.drawColorFactorTex(
                 TexManager.getTex(Img),
-                color,
+                ColorManager.getColor(color),
                 x,
                 y,
                 width,
@@ -173,9 +181,9 @@ public class SnakeHead extends CircleBody{
                 0,
                 Constant.SnakeHeightColorFactor
         );
-        painter.drawColorFactorSelf(
-                TexManager.getTex(snakeBodyHeightImg),
-                color,
+        painter.drawColorFactorTex(
+                TexManager.getTex(SnakeBodyHeightImg),
+                ColorManager.getColor(color),
                 x,
                 y -jumpHeight/2-defaultHeight/2,
                 width*Constant.SnakeHeadRatio,

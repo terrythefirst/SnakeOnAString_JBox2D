@@ -30,14 +30,32 @@ public class RectBody extends MyBody{
             float vX,float vY,
             float halfWidth,//半宽
             float halfHeight,//半高
+
+            int color,
             float defaultHeight,
+            float topOffset,
+            float topOffsetColorFactor,
+            float heightColorFactor,
+            float floorShadowColorFactor,
+
             float density,
             float friction,
             float restitution,
             String img,
             boolean isStatic)//构造函数
     {
-        super(world,x,y,halfWidth*2,halfHeight*2, defaultHeight,img);
+        super(
+                world,
+                x,y,
+                halfWidth*2,halfHeight*2,
+                color,
+                defaultHeight,
+                topOffset,
+                topOffsetColorFactor,
+                heightColorFactor,
+                floorShadowColorFactor,
+                img
+        );
         this.halfHeight = halfHeight;
         this.halfWidth = halfWidth;
 

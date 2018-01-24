@@ -41,7 +41,7 @@ public class TexManager {
         InputStream is = null;
         Bitmap bitmap = null;
         try{
-            is = r.getAssets().open(Constant.picDirectoryPrefix+texFileName);
+            is = r.getAssets().open(Constant.PicDirectoryPrefix+texFileName);
             bitmap = BitmapFactory.decodeStream(is);
         }catch (Exception e){
             e.printStackTrace();

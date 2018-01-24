@@ -1,12 +1,11 @@
 package com.work.terry.snakeonastring_jbox2d;
 
-import android.widget.*;
-
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyPrismaticJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
@@ -14,7 +13,11 @@ import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 
 /**
@@ -27,58 +30,84 @@ public class ButtonBlock extends GameElements{
     CircleBody circleBody2;
     RectBody rectBody;
 
+    DrawUtil drawUtil;
+    List<GameElements> drawSequence;
+
     boolean isStatic;
-    public int Color = 1;
 
     private float circleDiameter;
     private float rectLength;
-    private float rotateAngleRadian;
+    private float rotateAngleRectRadian;
+    private float rotateAngleCB1Radian;
+    private float rotateAngleCB2Radian;
 
     public ButtonBlock(
             World world,
+            DrawUtil drawUtil,
             float x,float y,
             float circleDiameter,
             float totalLength,
-            float jumpHeight,
+
+            float defaultHeight,
             float rotateAngleDegrees,
             boolean isStatic,
-            int Color){
+            int color
+            ){
         super(
                 x,y,
                 totalLength,circleDiameter,
-                jumpHeight,
+
+                color,
+                defaultHeight,
+                ButtonBlockTopOffSet,
+                ButtonBlockTopOffSetColorFactor,
+                ButtonBlockHeightColorFactor,
+                ButtonBlockFloorColorFactor,
+
                 ""
         );
         this.world = world;
+        this.drawUtil = drawUtil;
         this.x = x;
         this.y = y;
-        this.Color = Color;
-        this.rotateAngleRadian = (float)Math.toRadians(rotateAngleDegrees);
+        this.rotateAngleRectRadian = (float)Math.toRadians(rotateAngleDegrees);
+        this.rotateAngleCB1Radian = (float)Math.toRadians(rotateAngleDegrees);
+        this.rotateAngleCB2Radian = (float)Math.toRadians(rotateAngleDegrees+90);
         this.circleDiameter = circleDiameter;
         rectLength = totalLength-circleDiameter;
         this.isStatic = isStatic;
+
+        drawSequence = new ArrayList<>();
         initBody();
+
     }
     public void initBody(){
         rectBody = new RectBody(
                 world,
                 (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"RectBody",
                 x,y,
-                rotateAngleRadian,
+                rotateAngleRectRadian,
                 0,0,
                 circleDiameter/2,
                 rectLength/2,
-                Constant.buttonBlockDefaultHeight,
+
+                this.color,
+                ButtonBlockDefaultHeight,
+                TopOffset,
+                ButtonBlockTopOffSetColorFactor,
+                ButtonBlockHeightColorFactor,
+                ButtonBlockFloorColorFactor,
+
                 1.0f,
                 0.01f,
                 0.1f,
-                Constant.snakeBodyHeightImg,
+                ButtonImgRect,
                 isStatic
         );
         Vec2 angleVector = Mul2D(
                 new Vec2(
-                        (float) Math.cos(rotateAngleRadian),
-                        (float) Math.sin(rotateAngleRadian)
+                        (float) Math.cos(rotateAngleRectRadian),
+                        (float) Math.sin(rotateAngleRectRadian)
                 ),
                 rectLength/2
                 );
@@ -94,34 +123,51 @@ public class ButtonBlock extends GameElements{
                 world,
                 (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"CircleBody",
                 circleBody1XY.x,circleBody1XY.y,
-                0,
+                rotateAngleCB1Radian,
                 0,0,
                 circleDiameter/2,
-                Constant.buttonBlockDefaultHeight,
+
+                this.color,
+                ButtonBlockDefaultHeight,
+                TopOffset,
+                ButtonBlockTopOffSetColorFactor,
+                ButtonBlockHeightColorFactor,
+                ButtonBlockFloorColorFactor,
+
                 0,
                 0,
                 1.0f,
                 0.01f,
                 0.1f,
                 isStatic,
-                Constant.snakeBodyImg
+                Constant.ButtonImgCircleUp
         );
         circleBody2 = new CircleBody(
                 world,
                 (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"CircleBody",
                 circleBody2XY.x,circleBody2XY.y,
-                0,
+                rotateAngleCB2Radian,
                 0,0,
                 circleDiameter/2,
-                Constant.buttonBlockDefaultHeight,
+
+                this.color,
+                ButtonBlockDefaultHeight,
+                TopOffset,
+                ButtonBlockTopOffSetColorFactor,
+                ButtonBlockHeightColorFactor,
+                ButtonBlockFloorColorFactor,
+
                 0,
                 0,
                 1.0f,
                 0.01f,
                 0.1f,
                 isStatic,
-                Constant.snakeBodyImg
+                Constant.ButtonImgCircleDown
         );
+        drawSequence.add(rectBody);
+        drawSequence.add(circleBody1);
+        drawSequence.add(circleBody2);
 
         new MyWeldJoint(
                 "ButtonBlock"+"WeldJoint1",
@@ -164,24 +210,43 @@ public class ButtonBlock extends GameElements{
 //        );
     }
     @Override
-    public void drawSelf(TexDrawer painter,float[] color){
-        rectBody.rotateAngleGameElements = 270;//(float)Math.toDegrees( rectBody.body.getAngle());
-        circleBody1.drawSelf(painter,color);
-        circleBody2.drawSelf(painter,color);
-        rectBody.drawSelf(painter,color);
+    public void drawSelf(TexDrawer painter){
+//        circleBody1.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())-90;
+//        circleBody1.drawSelf(painter);
+//
+//        circleBody2.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+//        circleBody2.drawSelf(painter);
+        drawSequence.stream()
+                .sorted(Comparator.comparing(x -> x.y))
+                .forEach(
+                        x -> {
+                            x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+                            x.drawSelf(painter);
+                        }
+                );
     }
     @Override
-    public void drawHeightShadow(TexDrawer painter,float[] color){
-        rectBody.rotateAngleGameElements = 270;//(float)Math.toDegrees( rectBody.body.getAngle());
-        circleBody1.drawHeightShadow(painter,color);
-        circleBody2.drawHeightShadow(painter,color);
-        rectBody.drawHeightShadow(painter,color);
+    public void drawHeight(TexDrawer painter){
+        drawSequence.stream()
+                .sorted(Comparator.comparing(x -> x.y))
+                .forEach(
+                        x -> {
+                            x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+                            x.drawHeight(painter);
+                        }
+                );
+
     }
     @Override
-    public void drawFloorShadow(TexDrawer painter,float[] color){
-        rectBody.rotateAngleGameElements = 270;//(float)Math.toDegrees( rectBody.body.getAngle());
-        circleBody1.drawFloorShadow(painter,color);
-        circleBody2.drawFloorShadow(painter,color);
-        rectBody.drawFloorShadow(painter,color);
+    public void drawFloorShadow(TexDrawer painter){
+        //rectBody.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+        drawSequence.stream()
+                .sorted(Comparator.comparing(x -> x.y))
+                .forEach(
+                        x -> {
+                            x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+                            x.drawFloorShadow(painter);
+                        }
+                );
     }
 }

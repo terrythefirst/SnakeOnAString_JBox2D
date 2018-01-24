@@ -22,11 +22,6 @@ public class JBox2DThread extends Thread{
     }
     @Override
     public void run(){
-            try{
-                sleep(1000);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
         while(gamePlayView.IS_PLAYING)//&&!gamePlayView.snake.isDead())
         {
             //if(!gamePlayView.snake.initSelfFinished)continue;

@@ -6,14 +6,17 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 
 public class ImgManager {
     public static String[] picName = {
-            Constant.snakeHeadHeadImg,
-            Constant.snakeBodyImg,
-            Constant.backgroundImg,
-            Constant.axisImg,
-            Constant.snakeBodyHeightImg,
-            Constant.snakeHeadEyesImg,
-            Constant.snakeHeadEyesBallImg,
-            Constant.snakeHeadDeadEyesImg,
-            Constant.snakeHeadDizzyEyesImg
+            Constant.SnakeHeadHeadImg,
+            Constant.SnakeBodyImg,
+            Constant.BackgroundImg,
+            Constant.AxisImg,
+            Constant.SnakeBodyHeightImg,
+            Constant.SnakeHeadEyesImg,
+            Constant.SnakeHeadEyesBallImg,
+            Constant.SnakeHeadDeadEyesImg,
+            Constant.SnakeHeadDizzyEyesImg,
+            Constant.ButtonImgCircleUp,
+            Constant.ButtonImgCircleDown,
+            Constant.ButtonImgRect,
     };
 }

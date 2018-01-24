@@ -26,13 +26,27 @@ public class CircleBody extends MyBody{
             World world,
             float x,float y,
             float width,float height,
-            float jumpHeight,
+
+            int color,
+            float defaultHeight,
+            float topOffset,
+            float topOffsetColorFactor,
+            float heightColorFactor,
+            float floorShadowColorFactor,
+
             String Img){
         super(
-              world,x,y,
-            width,height,
-            jumpHeight,
-            Img
+                world,x,y,
+                width,height,
+
+                color,
+                defaultHeight,
+                topOffset,
+                topOffsetColorFactor,
+                heightColorFactor,
+                floorShadowColorFactor,
+
+                Img
         );
         this.radius=width/2;//给圆形类物体半径变量赋值
     }
@@ -43,7 +57,14 @@ public class CircleBody extends MyBody{
             float angle,
             float vX,float vY,
             float radius,
+
+            int color,
             float defaultHeight,
+            float topOffset,
+            float topOffsetColorFactor,
+            float heightColorFactor,
+            float floorShadowColorFactor,
+
             float angularDampingRate,
             float linearDampingRate,
             float density,
@@ -52,7 +73,20 @@ public class CircleBody extends MyBody{
             boolean isStaic,
             String img)//构造函数
     {
-        super(world,x,y,radius*2,radius*2, defaultHeight,img);
+        super(
+                world,
+                x,y,
+                radius*2,radius*2,
+
+                color,
+                defaultHeight,
+                topOffset,
+                topOffsetColorFactor,
+                heightColorFactor,
+                floorShadowColorFactor,
+
+                img
+        );
         this.radius=radius;//给圆形类物体半径变量赋值
 
         createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);

@@ -16,8 +16,8 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.plusV2D;
 public class SnakeHeadMovingThread extends Thread {
     private SnakeHead snakeHead;
     private Vec2 bodyV;
-    double sinRotateAngleStep = Math.sin(Math.toRadians(Constant.snakeHeadRotateStepAngle));
-    double cosRotateAngleStep = Math.cos(Math.toRadians(Constant.snakeHeadRotateStepAngle));
+    double sinRotateAngleStep = Math.sin(Math.toRadians(Constant.SnakeHeadRotateStepAngle));
+    double cosRotateAngleStep = Math.cos(Math.toRadians(Constant.SnakeHeadRotateStepAngle));
 
     public SnakeHeadMovingThread (SnakeHead snakeHead) {
         this.snakeHead = snakeHead;

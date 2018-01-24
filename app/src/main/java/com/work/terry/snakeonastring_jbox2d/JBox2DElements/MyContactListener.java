@@ -31,14 +31,14 @@ public class MyContactListener implements ContactListener {
 						bb.getLinearVelocity().set(
 						Mul2D(
 								normalize2D(bb.getLinearVelocity()),
-								snakeHeadSpeedUponDead
+								SnakeHeadSpeedUponDead
 						)
 				);
 			}else {
 						bb.getLinearVelocity().set(
 						Mul2D(
 								normalize2D(bb.getLinearVelocity()),
-								snakeBodySpeedUponDead
+								SnakeBodySpeedUponDead
 						)
 				);
 			}
