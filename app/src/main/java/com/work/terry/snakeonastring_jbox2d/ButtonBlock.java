@@ -3,15 +3,18 @@ package com.work.terry.snakeonastring_jbox2d;
 import android.widget.*;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyPrismaticJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 
 /**
@@ -69,7 +72,7 @@ public class ButtonBlock extends GameElements{
                 1.0f,
                 0.01f,
                 0.1f,
-                "",
+                Constant.snakeBodyHeightImg,
                 isStatic
         );
         Vec2 angleVector = Mul2D(
@@ -101,7 +104,7 @@ public class ButtonBlock extends GameElements{
                 0.01f,
                 0.1f,
                 isStatic,
-                ""
+                Constant.snakeBodyImg
         );
         circleBody2 = new CircleBody(
                 world,
@@ -117,7 +120,7 @@ public class ButtonBlock extends GameElements{
                 0.01f,
                 0.1f,
                 isStatic,
-                ""
+                Constant.snakeBodyImg
         );
 
         new MyWeldJoint(
@@ -142,19 +145,41 @@ public class ButtonBlock extends GameElements{
                 0.0f,
                 0.0f
         );
+
+//        new MyPrismaticJoint(
+//                "",
+//                world,
+//                true,
+//                JBox2DUtil.staticBody,
+//                rectBody.body,
+//                rectBody.getBodyXY(),
+//                new Vec2(1,0),
+//                0,
+//                true,
+//                -400/RATE,
+//                400/RATE,
+//                true,
+//                5,
+//                200
+//        );
     }
     @Override
-    public void drawSelf(TexDrawer painter, float[] color){
+    public void drawSelf(TexDrawer painter,float[] color){
+        rectBody.rotateAngleGameElements = 270;//(float)Math.toDegrees( rectBody.body.getAngle());
         circleBody1.drawSelf(painter,color);
         circleBody2.drawSelf(painter,color);
         rectBody.drawSelf(painter,color);
     }
+    @Override
     public void drawHeightShadow(TexDrawer painter,float[] color){
+        rectBody.rotateAngleGameElements = 270;//(float)Math.toDegrees( rectBody.body.getAngle());
         circleBody1.drawHeightShadow(painter,color);
         circleBody2.drawHeightShadow(painter,color);
         rectBody.drawHeightShadow(painter,color);
     }
+    @Override
     public void drawFloorShadow(TexDrawer painter,float[] color){
+        rectBody.rotateAngleGameElements = 270;//(float)Math.toDegrees( rectBody.body.getAngle());
         circleBody1.drawFloorShadow(painter,color);
         circleBody2.drawFloorShadow(painter,color);
         rectBody.drawFloorShadow(painter,color);

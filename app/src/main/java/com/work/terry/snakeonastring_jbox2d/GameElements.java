@@ -23,6 +23,8 @@ public class GameElements{
     public float defaultHeight;
     public float jumpHeight;
 
+    public float rotateAngleGameElements = 0;
+
     public String Img;
 
     public GameElements(
@@ -48,7 +50,7 @@ public class GameElements{
                 y-jumpHeight-defaultHeight,
                 width,
                 height,
-                0
+                45
         );
     }
     public void drawHeightShadow(TexDrawer painter,float[] color){
@@ -59,7 +61,7 @@ public class GameElements{
                 y,
                 width,
                 height,
-                0,
+                rotateAngleGameElements,
                 Constant.SnakeHeightColorFactor
         );
         painter.drawColorFactorSelf(
@@ -69,7 +71,7 @@ public class GameElements{
                 y - jumpHeight/2-defaultHeight/2,
                 width,
                 jumpHeight+defaultHeight,
-                0,
+                rotateAngleGameElements,
                 Constant.SnakeHeightColorFactor
         );
     }
@@ -82,7 +84,7 @@ public class GameElements{
                 y+(defaultHeight+jumpHeight)*Constant.FloorShadowFactorY,
                 width,
                 height,
-                0,
+                rotateAngleGameElements,
                 Constant.SnakeFloorColorFactor
         );
     }

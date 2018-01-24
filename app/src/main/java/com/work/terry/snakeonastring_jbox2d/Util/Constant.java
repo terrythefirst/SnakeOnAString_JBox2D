@@ -44,10 +44,10 @@ public class Constant {
     public static final int SnakeDefaultHeight = 24;
     public static final int SnakeDownLittleHeight = 7;
 
-    public static final float SnakeEyesDownLittleColorFactor = 0.80f;
+    public static final float SnakeEyesDownLittleColorFactor = 0.85f;
 
-    public static final float SnakeDownLittleColorFactor = 0.80f;
-    public static final float SnakeHeightColorFactor = 0.75f;
+    public static final float SnakeDownLittleColorFactor = 0.85f;
+    public static final float SnakeHeightColorFactor = 0.70f;
     public static final float SnakeFloorColorFactor = 0.65f;
 
     public static final int DistanceOffset = 30;

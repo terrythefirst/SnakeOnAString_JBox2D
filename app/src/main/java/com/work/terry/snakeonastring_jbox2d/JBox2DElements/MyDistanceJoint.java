@@ -9,7 +9,6 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.DistanceJoint;
 import org.jbox2d.dynamics.joints.DistanceJointDef;
 
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 
 /**
  * Created by Terry on 2018/1/14.

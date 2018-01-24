@@ -5,14 +5,17 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
+import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
+import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MatrixState;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -39,6 +42,7 @@ public class GamePlayView extends GLSurfaceView {
 
 
     public Snake snake ;
+    public ButtonBlock buttonBlock;
 
     public GamePlayView(Context context){
         super(context);
@@ -91,6 +95,7 @@ public class GamePlayView extends GLSurfaceView {
                     Constant.SCREEN_HEIGHT,
                     0
             );
+            buttonBlock.drawSelf(texDrawer,ColorManager.getColor(buttonBlock.Color));
 //            texDrawer.drawSelf(
 //                    TexManager.getTex(Constant.axisImg),
 //                    ColorManager.getColor(Constant.COLOR_DEFAULT),
@@ -127,19 +132,32 @@ public class GamePlayView extends GLSurfaceView {
 
             Vec2 gravity = new Vec2(0,0);
             world = new World(gravity);
-            constructWalls();
+            constructWallsAndStaticBody();
 
-            snake = new Snake(world);
-            jBox2DThread = new JBox2DThread(GamePlayView.this);
             world.setContactFilter(new MyContactFilter(GamePlayView.this));
             MyContactListener myContactListener = new MyContactListener(GamePlayView.this);
             world.setContactListener(myContactListener);
 
-            jBox2DThread.start();
+
+
+            snake = new Snake(world);
+            buttonBlock = new ButtonBlock(
+                   world,
+                    720,2000,
+                     80,
+                    200,
+                    40,
+                    0,
+                    true,
+                    Constant.COLOR_GREAY
+            );
+            jBox2DThread = new JBox2DThread(GamePlayView.this);
+
             snake.moving();
+            jBox2DThread.start();
         }
     }
-    public void constructWalls(){
+    public void constructWallsAndStaticBody(){
         RectBody upWall = new RectBody(
                 world,
                 "upWall",
@@ -176,7 +194,7 @@ public class GamePlayView extends GLSurfaceView {
                 "",
                 true
         );
-        RectBody buttomWall = new RectBody(
+        RectBody buttonWall = new RectBody(
                 world,
                 "buttomWall",
                 SCREEN_WIDTH/2,SCREEN_HEIGHT+8,
@@ -188,6 +206,8 @@ public class GamePlayView extends GLSurfaceView {
                 "",
                 true
         );
+
+        JBox2DUtil.staticBody = buttonWall.body;
     }
     @Override
     public void onResume(){
