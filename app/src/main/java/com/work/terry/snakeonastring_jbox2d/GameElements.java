@@ -27,6 +27,9 @@ public class GameElements{
 
     public float rotateAngleGameElements = 0;
 
+    public float TopWidth;
+    public float TopHeight;
+
     public String Img;
 
     public GameElements(
@@ -46,6 +49,8 @@ public class GameElements{
         this.y = y;
         this.width = width;
         this.height = height;
+        this.TopWidth = width;
+        this.TopHeight = height;
         this.Img = Img;
         this.color = color;
         this.defaultHeight = defaultHeight;
@@ -55,7 +60,10 @@ public class GameElements{
         this.FloorShadowColorFactor = floorShadowColorFactor;
         this.jumpHeight = 0;
     }
-
+    public void setTopRatio(float TopRatio){
+        this.TopWidth = width*TopRatio;
+        this.TopHeight = height*TopRatio;
+    }
     public void drawSelf(TexDrawer painter){
         //offSet
         if(TopOffset!=0){
@@ -77,8 +85,8 @@ public class GameElements{
                 ColorManager.getColor(color),
                 x,
                 y-jumpHeight-defaultHeight,
-                width,
-                height,
+                TopWidth,
+                TopHeight,
                 rotateAngleGameElements
         );
 
@@ -104,7 +112,7 @@ public class GameElements{
                 y - jumpHeight/2-defaultHeight/2,
                 width,
                 jumpHeight+defaultHeight,
-                rotateAngleGameElements,
+                0,
                 HeightColorFactor
         );
     }

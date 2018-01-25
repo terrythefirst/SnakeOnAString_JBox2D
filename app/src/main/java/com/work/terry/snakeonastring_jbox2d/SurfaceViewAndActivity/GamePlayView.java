@@ -124,19 +124,20 @@ public class GamePlayView extends GLSurfaceView {
 
 
             snake = new Snake(world,Constant.C0LOR_WHITE,drawUtil);
-            drawUtil.addToCenterLayer(
-                    new ButtonBlock(
-                            world,
-                            drawUtil,
-                            720,2000,
-                            80,
-                            200,
-                            ButtonBlockDefaultHeight,
-                            90,
-                            true,
-                            Constant.C0LOR_WHITE
-                    )
-            );
+//            drawUtil.addToCenterLayer(
+//                    new ButtonBlock(
+//                            world,
+//                            drawUtil,
+//                            720,2000,
+//                            80,
+//                            200,
+//                            0.8f,
+//                            ButtonBlockDefaultHeight,
+//                            100,
+//                            true,
+//                            Constant.C0LOR_WHITE
+//                    )
+//            );
             jBox2DThread = new JBox2DThread(GamePlayView.this);
 
             snake.moving();

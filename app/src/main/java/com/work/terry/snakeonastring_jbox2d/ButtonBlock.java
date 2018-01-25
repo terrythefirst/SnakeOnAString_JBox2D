@@ -40,6 +40,7 @@ public class ButtonBlock extends GameElements{
     private float rotateAngleRectRadian;
     private float rotateAngleCB1Radian;
     private float rotateAngleCB2Radian;
+    private float TopRatio;
 
     public ButtonBlock(
             World world,
@@ -47,6 +48,8 @@ public class ButtonBlock extends GameElements{
             float x,float y,
             float circleDiameter,
             float totalLength,
+
+            float TopRatio,
 
             float defaultHeight,
             float rotateAngleDegrees,
@@ -70,6 +73,7 @@ public class ButtonBlock extends GameElements{
         this.drawUtil = drawUtil;
         this.x = x;
         this.y = y;
+        this.TopRatio = TopRatio;
         this.rotateAngleRectRadian = (float)Math.toRadians(rotateAngleDegrees);
         this.rotateAngleCB1Radian = (float)Math.toRadians(rotateAngleDegrees);
         this.rotateAngleCB2Radian = (float)Math.toRadians(rotateAngleDegrees+90);
@@ -104,6 +108,8 @@ public class ButtonBlock extends GameElements{
                 ButtonImgRect,
                 isStatic
         );
+        rectBody.setTopRatio(TopRatio);
+
         Vec2 angleVector = Mul2D(
                 new Vec2(
                         (float) Math.cos(rotateAngleRectRadian),
@@ -140,8 +146,9 @@ public class ButtonBlock extends GameElements{
                 0.01f,
                 0.1f,
                 isStatic,
-                Constant.ButtonImgCircleUp
+                Constant.ButtonImgCircleDown
         );
+        circleBody1.setTopRatio(TopRatio);
         circleBody2 = new CircleBody(
                 world,
                 (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"CircleBody",
@@ -150,7 +157,7 @@ public class ButtonBlock extends GameElements{
                 0,0,
                 circleDiameter/2,
 
-                this.color,
+                3,
                 ButtonBlockDefaultHeight,
                 TopOffset,
                 ButtonBlockTopOffSetColorFactor,
@@ -163,8 +170,10 @@ public class ButtonBlock extends GameElements{
                 0.01f,
                 0.1f,
                 isStatic,
-                Constant.ButtonImgCircleDown
+                Constant.ButtonImgCircleUp
         );
+        circleBody2.setTopRatio(TopRatio);
+
         drawSequence.add(rectBody);
         drawSequence.add(circleBody1);
         drawSequence.add(circleBody2);
@@ -175,8 +184,8 @@ public class ButtonBlock extends GameElements{
                 true,
                 rectBody,
                 circleBody1,
-                //rectBody.body.getPosition(),
-                circleBody1.body.getPosition(),
+                rectBody.body.getPosition(),
+                //circleBody1.body.getPosition(),
                 0.0f,
                 0.0f
         );
@@ -186,8 +195,8 @@ public class ButtonBlock extends GameElements{
                 true,
                 rectBody,
                 circleBody2,
-                //rectBody.body.getPosition(),
-                circleBody2.body.getPosition(),
+                rectBody.body.getPosition(),
+                //circleBody2.body.getPosition(),
                 0.0f,
                 0.0f
         );
@@ -220,7 +229,7 @@ public class ButtonBlock extends GameElements{
                 .sorted(Comparator.comparing(x -> x.y))
                 .forEach(
                         x -> {
-                            x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+                            //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
                             x.drawSelf(painter);
                         }
                 );
@@ -231,7 +240,7 @@ public class ButtonBlock extends GameElements{
                 .sorted(Comparator.comparing(x -> x.y))
                 .forEach(
                         x -> {
-                            x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+                            //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
                             x.drawHeight(painter);
                         }
                 );
@@ -244,7 +253,7 @@ public class ButtonBlock extends GameElements{
                 .sorted(Comparator.comparing(x -> x.y))
                 .forEach(
                         x -> {
-                            x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle())+90;
+                            //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
                             x.drawFloorShadow(painter);
                         }
                 );

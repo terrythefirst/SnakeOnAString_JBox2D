@@ -91,8 +91,8 @@ public class Constant {
 
     public static String BackgroundImg = "Strips_background.png";
 
-    public static String ButtonImgCircleUp = "button_circle_up.png";
-    public static String ButtonImgCircleDown = "button_circle_down.png";
+    public static String ButtonImgCircleUp = SnakeBodyImg;//"button_circle_up.png";
+    public static String ButtonImgCircleDown = SnakeBodyImg;//"button_circle_down.png";
     public static String ButtonImgRect = SnakeBodyHeightImg;
 
     public static String AxisImg = "axis_with_direction.png";

@@ -213,8 +213,9 @@ public class TexDrawer {
         MatrixState.pushMatrix();
 
         MatrixState.translate(xDraw,yDraw,0);
-        MatrixState.scale(wSacle,hScale,1.0f);
         MatrixState.rotate(rotateAngle,0,0,1);
+        MatrixState.scale(wSacle,hScale,1.0f);
+
 
         GLES30.glUniformMatrix4fv(muMVPMatrixHandleShadow,1,false,MatrixState.getFinalMatrix(),0);
         GLES30.glUniform1f(muDownColorFactorShadow,colorFactor);
