@@ -154,14 +154,15 @@ public class GameElements{
             float rotateAngle,
             int Color
     ){
-        painter.drawColorSelf(
+        painter.drawShadow(
                 TexManager.getTex(picName),
                 ColorManager.getColor(Color),
                 x,
                 y,
                 width,
                 height,
-                rotateAngle
+                rotateAngle,
+                1
         );
     }
     public static void drawNumberUnder3Digit(
