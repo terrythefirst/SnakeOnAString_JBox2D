@@ -1,9 +1,11 @@
 package com.work.terry.snakeonastring_jbox2d;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -12,10 +14,13 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GameElements{
+    public String id;
     public float x;
     public float y;
     public float width;
     public float height;
+
+    public float TopRatio;
 
     public int color;
     public float defaultHeight;
@@ -32,7 +37,10 @@ public class GameElements{
 
     public String Img;
 
+    public boolean doDrawHeight = true;
+
     public GameElements(
+            String id,
             float x,float y,
             float width,float height,
 
@@ -45,6 +53,7 @@ public class GameElements{
 
             String Img
             ){
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -61,6 +70,10 @@ public class GameElements{
         this.jumpHeight = 0;
     }
     public void setTopRatio(float TopRatio){
+        this.TopRatio = TopRatio;
+        setTopHeightWidth();
+    }
+    public void setTopHeightWidth(){
         this.TopWidth = width*TopRatio;
         this.TopHeight = height*TopRatio;
     }
@@ -79,6 +92,7 @@ public class GameElements{
             );
         }
 
+        if(TopRatio!=0)setTopHeightWidth();
         //drawSelf
         painter.drawColorSelf(
                 TexManager.getTex(Img),
@@ -89,11 +103,13 @@ public class GameElements{
                 TopHeight,
                 rotateAngleGameElements
         );
-
-
     }
 
+    public void setDoDrawHeight(boolean x){
+        this.doDrawHeight = x;
+    }
     public void drawHeight(TexDrawer painter){
+        if (!doDrawHeight)return;
         //drawHeight
         painter.drawColorFactorTex(
                 TexManager.getTex(Img),
@@ -128,5 +144,109 @@ public class GameElements{
                 FloorShadowColorFactor
         );
     }
+    public static void drawPic(
+            TexDrawer painter,
+            String picName,
+            float x,
+            float y,
+            float width,
+            float height,
+            float rotateAngle,
+            int Color
+    ){
+        painter.drawColorSelf(
+                TexManager.getTex(picName),
+                ColorManager.getColor(Color),
+                x,
+                y,
+                width,
+                height,
+                rotateAngle
+        );
+    }
+    public static void drawNumberUnder3Digit(
+            TexDrawer painter,
+            int number,
+            float x,float y,
+            float width,float height,
+            int Color
+    ){
+        if(number<10){
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(number),
+                    x+width/2,
+                    y,
+                    width,
+                    height,
+                    0,
+                    Color
+            );
+        }else if(number>=10&&number<100){
+            float quarterWidth = width*1.0f/4;
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(number%10),
+                    x+quarterWidth,
+                    y,
+                    width/2,
+                    height,
+                    0,
+                    Color
+            );
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(number/10),
+                    x-quarterWidth,
+                    y,
+                    width/2,
+                    height,
+                    0,
+                    Color
+            );
+        }else if(number>=100){
+            float thirdWidth = width*1.0f/4;
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(number%10),
+                    x+thirdWidth,
+                    y,
+                    thirdWidth,
+                    height,
+                    0,
+                    Color
+            );
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(number/10),
+                    x,
+                    y,
+                    thirdWidth,
+                    height,
+                    0,
+                    Color
+            );
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(number/10),
+                    x-thirdWidth,
+                    y,
+                    thirdWidth,
+                    height,
+                    0,
+                    Color
+            );
+        }
+    }
+    public void onPause(SharedPreferences.Editor editor){
+        editor.putFloat(id+"defaultHeight",defaultHeight);
+        editor.putFloat(id+"topOffset",TopOffset);
+        editor.putFloat(id+"topOffsetColorFactor",TopOffsetColorFactor);
+        editor.putFloat(id+"heightColorFactor",HeightColorFactor);
+        editor.putFloat(id+"floorShadowColorFactor",FloorShadowColorFactor);
+        editor.putString(id+"img",Img);
+    }
+    public void onResume(){
 
+    }
 }

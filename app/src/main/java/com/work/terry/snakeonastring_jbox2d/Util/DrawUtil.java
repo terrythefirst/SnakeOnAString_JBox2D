@@ -12,11 +12,13 @@ import java.util.List;
 
 public class DrawUtil {
     String backgroundImg = "";
+    public List<GameElements> floorLayerDrawSequence = null;
     public List<GameElements> centerLayerDrawSequence = null;
     public List<GameElements> topLayerDrawSequence = null;
 
     public DrawUtil(String backgroundImg){
         this.backgroundImg = backgroundImg;
+        floorLayerDrawSequence = new ArrayList<>();
         centerLayerDrawSequence = new ArrayList<>();
         topLayerDrawSequence = new ArrayList<>();
     }
@@ -27,7 +29,14 @@ public class DrawUtil {
     public void addToCenterLayer(GameElements gameElements){
         centerLayerDrawSequence.add(gameElements);
     }
-
+    public void addToFloorLayer(GameElements gameElements){
+        floorLayerDrawSequence.add(gameElements);
+    }
+    public void deleteElement(GameElements gameElements){
+        topLayerDrawSequence.remove(gameElements);
+        centerLayerDrawSequence.remove(gameElements);
+        floorLayerDrawSequence.remove(gameElements);
+    }
     public void stepDraw(TexDrawer painter){
         //先画背景
         painter.drawTex(
@@ -38,12 +47,40 @@ public class DrawUtil {
                 Constant.SCREEN_HEIGHT,
                 0
         );
+        //底层元素
+            //floorShadow
+            centerLayerDrawSequence.stream()
+                    .forEach(
+                            x -> {
+                                x.drawFloorShadow(painter);
+                            }
+                    );
+            //height
+            floorLayerDrawSequence.stream()
+                    .sorted(Comparator.comparing(x -> x.y))
+                    .forEach(
+                            x -> {
+                                x.drawFloorShadow(painter);
+                            }
+                    );
 
+            //top
+            floorLayerDrawSequence.stream()
+                    .sorted(Comparator.comparing(x -> x.y))
+                    .forEach(
+                            x -> {
+                                x.drawHeight(painter);
+                                x.drawSelf(painter);
+                            }
+                    );
         //中层元素
             //floorShadow
-            for (GameElements g:centerLayerDrawSequence){
-                g.drawFloorShadow(painter);
-            }
+            centerLayerDrawSequence.stream()
+                    .forEach(
+                            x -> {
+                                x.drawFloorShadow(painter);
+                            }
+                    );
             //height
             centerLayerDrawSequence.stream()
                 .sorted(Comparator.comparing(x -> x.y))

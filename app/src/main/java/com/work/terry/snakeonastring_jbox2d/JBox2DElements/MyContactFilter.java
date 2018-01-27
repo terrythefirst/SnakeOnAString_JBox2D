@@ -1,5 +1,8 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import android.util.Log;
+
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 
 import org.jbox2d.callbacks.ContactFilter;
@@ -8,8 +11,8 @@ import org.jbox2d.dynamics.Fixture;
 
 public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 {
-	GamePlayView gamePlayView;
-	public MyContactFilter(GamePlayView gamePlayView){this.gamePlayView = gamePlayView;	}//构造器
+	GamePlay gamePlay;
+	public MyContactFilter(GamePlay gamePlay){this.gamePlay = gamePlay;	}//构造器
 	@Override
 	public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB)///检验是否碰撞的方法
 	{
@@ -17,18 +20,32 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 		Body bodyB= fixtureB.getBody();
 		String idA = bodyA.getUserData().toString();
 		String idB = bodyB.getUserData().toString();
-		if(idA.matches("snakeBody.Rect")||idB.matches("snakeBody.Rect"))
-		{
-			if (idB.matches("^snake(Head)|(Body[0-9])&")){
-				if (idA.equals("snakeBody1")&&idB.equals("snakeHead")){
+		int idANum = 0;
+		int idBNum = 0;
+
+		if(idA.contains("snakeFood")||idB.contains("snakeFood")) {
+			if(idA.contains("snakeFood")){
+//				Log.d("ContactFilter",idA+" contains snakeFood");
+				idANum = Integer.parseInt(idA.split(" ")[1]);
+				if(gamePlay.getFood(idANum).eatean){
 					return false;
+				}else {
+					return true;
+				}
+			}else if(idB.contains("snakeFood")){
+//				Log.d("ContactFilter",idB+" contains snakeFood");
+				idBNum = Integer.parseInt(idB.split(" ")[1]);
+				if(gamePlay.getFood(idBNum).eatean){
+					return false;
+				}else {
+					return true;
 				}
 			}
+		}else if(idA.contains("snakeBody")&&idB.contains("Wall")){
 			return false;
-		}else
-		{
-			return true;
 		}
-		//return true;
+
+
+		return true;
 	}
 }

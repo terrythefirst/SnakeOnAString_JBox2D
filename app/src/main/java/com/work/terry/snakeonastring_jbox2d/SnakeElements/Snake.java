@@ -1,10 +1,14 @@
 package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.Thread.SnakeBodyAppendThread;
+import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
@@ -22,13 +26,16 @@ import java.util.List;
  */
 
 public class Snake {
-    public boolean initSelfFinished = false;
+    public int SnakeAddLength = 0;
+
+    public boolean isInitFinnished = false;
 
     public World world;
     private SnakeHead snakeHead;
     public List<CircleBody> snakeBodies = null;//包括头！！！
     private AnimateThread animateThread = null;
     private int color = Constant.C0LOR_WHITE;
+    private boolean paused = false;
     private boolean isDead = false;
     private DrawUtil drawUtil;
 
@@ -39,13 +46,18 @@ public class Snake {
 
         snakeBodies = new ArrayList<>();
 
-        createHead();
+        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,Constant.SnakeDefaultHeight);
+        snakeBodies.add(snakeHead);
+        drawUtil.addToCenterLayer(snakeHead);
+
         for(int i = 1;i<=Constant.SnakeBodyDefaultLength;i++){
             addBody();
         }
 
         animateThread = new AnimateThread();
         animateThread.start();
+
+        isInitFinnished = true;
     }
     public int getSize(){
         return snakeBodies.size();
@@ -56,7 +68,7 @@ public class Snake {
             int time = 0;
             int index = -1;
             int timeLimit = (int) (2*Constant.JumpMathFactor);
-            while (true){
+            while (!paused){
                 if(index==-1)
                 snakeHead.jumpHeight = MyMath.JumpMath(Constant.SnakeDefaultHeight + 10 ,Constant.JumpMathFactor,time);
                 else {
@@ -81,17 +93,15 @@ public class Snake {
         }
     }
     public void setDead(){
-        Log.d("snake","DEAD!");isDead = true;
+        Log.d("snake","DEAD!");
+        isDead = true;
+        snakeHead.changeFace(Constant.SnakeHeadDeadEyesImg);//Constant.SnakeHeadDizzyEyesImg);
     }
     public boolean isDead(){
         return isDead;
     }
+    public boolean isPaused(){return paused;}
 
-    public void createHead(){
-        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,Constant.SnakeDefaultHeight);
-        snakeBodies.add(snakeHead);
-        drawUtil.addToCenterLayer(snakeHead);
-    }
     public void addBody(){
         int index = snakeBodies.size();
         SnakeNode tempt;
@@ -101,7 +111,13 @@ public class Snake {
             tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
         }
         snakeBodies.add(tempt);
-        drawUtil.addToCenterLayer(tempt);
+
+//        if(isInitFinnished)new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
+//        else
+            drawUtil.addToCenterLayer(tempt);
+    }
+    public int getLength(){
+        return snakeBodies.size()+1;
     }
     public void moving(){
         snakeHead.startMoving();
@@ -119,10 +135,23 @@ public class Snake {
 
 
     public void onResume(){
-
+        for (CircleBody c:snakeBodies){
+            if(c instanceof SnakeHead){
+                ((SnakeHead)c).onResume();
+            }else {
+                ((SnakeNode)c).onResume();
+            }
+        }
     }
-    public void onPause(){
-
+    public void onPause(SharedPreferences.Editor editor){
+        paused = true;
+        for (CircleBody c:snakeBodies){
+            if(c instanceof SnakeHead){
+                ((SnakeHead)c).onPause(editor);
+            }else {
+                ((SnakeNode)c).onPause(editor);
+            }
+        }
     }
 
 }

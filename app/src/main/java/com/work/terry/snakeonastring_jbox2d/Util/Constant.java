@@ -7,39 +7,61 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.auto.*;
 
 public class Constant {
+    public final static String SharedPreferencesName = "com.work.terry.snakeonastring_jbox2d";
     //屏幕自适应相关
     public static int SCREEN_WIDTH ;
     public static int SCREEN_HEIGHT;
     public static ScreenScaleResult ssr;
 
+    //界面标志
+    public static final int CHANGE_BY_DEFAULT_VIEW = -1;
+    public static final int MAIN_VIEW = 0;
+    public static final int MENU_VIEW = 1;
+    public static final int GAMEPLAY_VIEW = 2;
+
     //文件前缀
     public static String PicDirectoryPrefix = "pic/";
 
-    //JBOX2D相关
+    public static String Number0Img = "number_zero.png";
+    public static String Number1Img = "number_one.png";
+    public static String Number2Img = "number_two.png";
+    public static String Number3Img = "number_three.png";
+    public static String Number4Img = "number_four.png";
+    public static String Number5Img = "number_five.png";
+    public static String Number6Img = "number_six.png";
+    public static String Number7Img = "number_seven.png";
+    public static String Number8Img = "number_eight.png";
+    public static String Number9Img = "number_nine.png";
+
+    public static String ArrowsSwitchImg = "arrows_switch_horizontal.png";
+
+    //JBOX2D相关1
     public static final float RATE = 10;//屏幕到现实世界的比例 10px：1m;
-    public static final float JBOX2D_TIME_STEP = 1.0f/60.0f;//模拟的的频率
+    public static final float JBOX2D_TIME_STEP = 2.0f/60.0f;//模拟的的频率
     public static final int JBOX2D_ITERA = 10;//迭代越大，模拟约精确，但性能越低
 
         //蛇的刚体参数
         public static final float SnakeHeadAngularDampingRate = 0.3f;
-        public static final float SnakeHeadLinearDampingRate = 0.07f;
+        public static final float SnakeHeadLinearDampingRate = 0.2f;
         public static final float SnakeHeadDensity = 1.0f;
         public static final float SnakeHeadFriction = 0.04f;
         public static final float SnakeHeadRestitution = 0.6f;
 
-        public static final float SnakeHeadSpeed = 10f;
-        public static final int SnakeHeadSpeedFactor = 20;
+        public static final float SnakeHeadSpeed = 0.2f;
+        public static final int SnakeHeadSpeedFactor = 10;
 
-        public static final float SnakeHeadSpeedUponDead = 0.4f;
-        public static final float SnakeBodySpeedUponDead = 0.4f;
+        public static final float SnakeHeadSpeedUponDead = 1.0f;//0.4f;
+        public static final float SnakeBodySpeedUponDead = 1.0f;//0.4f;
 
-        public static final float SnakeBodyLinearDampingRate = 0.070f;
+        public static final float SnakeBodyLinearDampingRate = 0.10f;
         public static final float SnakeBodyLinearDampingRateFactorInter = 0.02f;
         public static final float SnakeBodyDensity = 0.10f;
         public static final float SnakeBodyFriction = 0.04f;
         public static final float SnakeBodyRestitution = 0.6f;
     //public static final float snakeBodyAngularDampingRate = 0f;
 
+    //蛇的食物
+    public static final String SnakeFoodImg = "snake_food.png";
     //蛇整体
     public static final int SnakeBodyDefaultLength = 6;
 
@@ -51,7 +73,7 @@ public class Constant {
 
     public static final int SnakeDownLittleHeight = 7;
     public static final float SnakeDownLittleColorFactor = 0.85f;
-    public static final float SnakeHeightColorFactor = 0.70f;
+    public static final float SnakeHeightColorFactor = 0.75f;
     public static final float SnakeFloorColorFactor = 1f;
 
     public static final int DistanceOffset = 30;

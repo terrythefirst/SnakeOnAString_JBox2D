@@ -1,5 +1,8 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
@@ -24,6 +27,7 @@ public class CircleBody extends MyBody{
     public float radius;//声明圆形类物体半径的变量
     public CircleBody(
             World world,
+            String id,
             float x,float y,
             float width,float height,
 
@@ -36,7 +40,9 @@ public class CircleBody extends MyBody{
 
             String Img){
         super(
-                world,x,y,
+                world,
+                id,
+                x,y,
                 width,height,
 
                 color,
@@ -71,10 +77,12 @@ public class CircleBody extends MyBody{
             float friction,
             float restitution,
             boolean isStaic,
-            String img)//构造函数
+            String img
+    )//构造函数
     {
         super(
                 world,
+                id,
                 x,y,
                 radius*2,radius*2,
 
@@ -120,8 +128,8 @@ public class CircleBody extends MyBody{
 
         bd.setAngularDamping(angularDampingRate);
         bd.setLinearDamping(linearDampingRate);
-
         Body bodyTemp= world.createBody(bd);//在世界中创建刚体
+        //Log.d("CircleBody",(bodyTemp==null)?"NULL":"NOT NULL!");
         CircleShape cs=new CircleShape();//创建刚体形状
         cs.m_radius=radius/RATE;//获得物理世界圆的半径
         FixtureDef fd=new FixtureDef();//创建刚体物理描述
@@ -131,5 +139,10 @@ public class CircleBody extends MyBody{
         fd.shape=cs;//设置形状
         bodyTemp.createFixture(fd);//将刚体物理描述与刚体结合
         this.body = bodyTemp;
+    }
+    @Override
+    public void onPause(SharedPreferences.Editor editor){
+        super.onPause(editor);
+        editor.putFloat(id+"radius",radius);
     }
 }

@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import com.work.terry.snakeonastring_jbox2d.auto.ScreenScaleUtil;
 
 public class MainActivity extends Activity {
@@ -45,6 +47,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause(){
         super.onPause();
-        gamePlayView.onPause();
+        SharedPreferences.Editor sharedata = getSharedPreferences(SharedPreferencesName, 0).edit();
+        gamePlayView.onPause(sharedata);
+        sharedata.commit();
     }
 }

@@ -19,7 +19,7 @@ public class SnakeNodeMovingThread extends Thread{
     }
     @Override
     public void run(){
-        while(!snakeNode.snake.isDead()){
+        while(!snakeNode.snake.isPaused()&&!snakeNode.snake.isDead()){
             if(snakeNode.body==null)continue;
             snakeNode.popXYfromBody();
             changeBodyImpulseByFront();

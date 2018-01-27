@@ -1,5 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -46,6 +47,7 @@ public class RectBody extends MyBody{
     {
         super(
                 world,
+                id,
                 x,y,
                 halfWidth*2,halfHeight*2,
                 color,
@@ -91,5 +93,11 @@ public class RectBody extends MyBody{
         }
         this.body = bodyTemp;
 
+    }
+    @Override
+    public void onPause(SharedPreferences.Editor editor){
+        super.onPause(editor);
+        editor.putFloat(id+"halfWidth",halfWidth);
+        editor.putFloat(id+"halfHeight",halfHeight);
     }
 }

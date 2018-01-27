@@ -23,6 +23,8 @@
  ******************************************************************************/
 package org.jbox2d.dynamics;
 
+import android.util.Log;
+
 import org.jbox2d.collision.broadphase.BroadPhase;
 import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.collision.shapes.Shape;
@@ -185,6 +187,7 @@ public class Body {
     assert (m_world.isLocked() == false);
 
     if (m_world.isLocked() == true) {
+      Log.d("m_world.isLocked()=",m_world.isLocked()+"");
       return null;
     }
 

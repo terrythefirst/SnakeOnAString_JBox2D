@@ -1,5 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
@@ -35,7 +36,7 @@ public class SnakeNode extends CircleBody{
     public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,int color,float jumpHeight,int id){
         super(
                 world,
-                "snakeBody"+id,
+                "snakeBody "+id,
                 x,y,
                 calRotateAngleDegrees(vx,vy),
                 vx,vy,
@@ -61,6 +62,7 @@ public class SnakeNode extends CircleBody{
     public SnakeNode(Snake snake,World world,CircleBody frontNode,int id){
         super(
                 world,
+                "snakeBody "+id,
                 0,0,
                 Constant.SnakeBodyRadius*2,
                 Constant.SnakeBodyRadius*2,
@@ -80,7 +82,7 @@ public class SnakeNode extends CircleBody{
         initSelf();
         createCircleBody(
                 world,
-                "snakeBody"+id,
+                "snakeBody "+id,
                 x,y,
                 front.body.getAngle(),
                 0,0,
@@ -93,7 +95,7 @@ public class SnakeNode extends CircleBody{
                 false
                 );
         initJoints();
-        //startMoving();
+        startMoving();
     }
     public Vec2 getFrontV2D(){
         if(front instanceof SnakeHead)return ((SnakeHead) front).getV2D();//headV
@@ -115,6 +117,9 @@ public class SnakeNode extends CircleBody{
         Vec2 frontXY = front.getBodyXY();
         x = frontXY.x - frontVNormalized.x*centerDistance;
         y = frontXY.y - frontVNormalized.y*centerDistance;
+        Log.d("bodyInitSelf"+id,"x="+x+" y="+y);
+
+        setTopRatio(SnakeBodyTopRadius*1.0f/SnakeBodyRadius);
     }
     public void initJoints(){
         Vec2 center = getCenterV2(front.getBodyXY(),this.getBodyXY());
@@ -122,7 +127,7 @@ public class SnakeNode extends CircleBody{
         float rectBodyLenth = getBodyCenterDistance();
         rectBody = new RectBody(
                 world,
-                ""+body.getUserData().toString()+"Rect",
+                body.getUserData().toString()+" Rect",
                 center.x,center.y,
                 angle,
                 0,0,
@@ -183,9 +188,9 @@ public class SnakeNode extends CircleBody{
 //        );
         if(front instanceof SnakeHead){
             new MyWeldJoint(
-                    "snake and body joint"+"WeldJoint1",
+                    body.getUserData().toString()+" WeldJoint 1",
                     world,
-                    true,
+                    false,
                     rectBody,
                     front,
                     //rectBody.body.getPosition(),
@@ -195,9 +200,9 @@ public class SnakeNode extends CircleBody{
             );
         }else {
             new MyWeldJoint(
-                    "snake and body joint"+"WeldJoint1",
+                    body.getUserData().toString()+" WeldJoint 1",
                     world,
-                    true,
+                    false,
                     rectBody,
                     front,
                     //rectBody.body.getPosition(),
@@ -208,9 +213,9 @@ public class SnakeNode extends CircleBody{
         }
 
         new MyWeldJoint(
-                "snake and body joint"+"WeldJoint2",
+                body.getUserData().toString()+" WeldJoint 2",
                 world,
-                true,
+                false,
                 rectBody,
                 this,
                 this.body.getPosition(),
@@ -233,46 +238,10 @@ public class SnakeNode extends CircleBody{
         movingThread = new SnakeNodeMovingThread(this);
         movingThread.start();
     }
+    public void onPause(SharedPreferences.Editor editor){
 
-    @Override
-    public void drawSelf(TexDrawer painter){
-        Log.d(
-                "Draw"+body.getUserData().toString(),
-                "BODYx="+body.getPosition().x*RATE
-                        +" BODYy="+body.getPosition().y*RATE
-                        +" vX="+body.getLinearVelocity().x*RATE
-                        +" vY="+body.getLinearVelocity().y*RATE
-                        +"\nx="+x
-                        +" y="+y
-        );
-
-        painter.drawColorFactorTex(
-                TexManager.getTex(Img),
-                ColorManager.getColor(color),
-                x,
-                y-jumpHeight-defaultHeight+Constant.SnakeDownLittleHeight,
-                width,
-                height,
-                0,
-                Constant.SnakeDownLittleColorFactor
-        );
-        painter.drawColorSelf(
-                TexManager.getTex(Img),
-                ColorManager.getColor(color),
-                x,
-                y-jumpHeight-defaultHeight,
-                SnakeBodyTopRadius*2,
-                SnakeBodyTopRadius*2,
-                0
-        );
-//        painter.drawColorSelf(
-//                TexManager.getTex(SnakeBodyHeightImg),
-//                color,
-//                rectBody.x,
-//                rectBody.y,
-//                10,
-//                rectBody.height,
-//                (float) Math.toDegrees(rectBody.body.getAngle())
-//        );
+    }
+    public void onResume(){
+        startMoving();
     }
 }

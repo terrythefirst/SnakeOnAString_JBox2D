@@ -44,7 +44,7 @@ public class ButtonBlock extends GameElements{
 
     public ButtonBlock(
             World world,
-            DrawUtil drawUtil,
+            String id,
             float x,float y,
             float circleDiameter,
             float totalLength,
@@ -57,6 +57,7 @@ public class ButtonBlock extends GameElements{
             int color
             ){
         super(
+                id,
                 x,y,
                 totalLength,circleDiameter,
 
@@ -70,7 +71,6 @@ public class ButtonBlock extends GameElements{
                 ""
         );
         this.world = world;
-        this.drawUtil = drawUtil;
         this.x = x;
         this.y = y;
         this.TopRatio = TopRatio;

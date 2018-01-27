@@ -1,22 +1,54 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
+
 /**
  * Created by Terry on 2017/12/23.
  */
 
 public class ImgManager {
     public static String[] picName = {
-            Constant.SnakeHeadHeadImg,
-            Constant.SnakeBodyImg,
-            Constant.BackgroundImg,
-            Constant.AxisImg,
-            Constant.SnakeBodyHeightImg,
-            Constant.SnakeHeadEyesImg,
-            Constant.SnakeHeadEyesBallImg,
-            Constant.SnakeHeadDeadEyesImg,
-            Constant.SnakeHeadDizzyEyesImg,
-            Constant.ButtonImgCircleUp,
-            Constant.ButtonImgCircleDown,
-            Constant.ButtonImgRect,
+            SnakeHeadHeadImg,
+            SnakeBodyImg,
+            BackgroundImg,
+            AxisImg,
+            SnakeBodyHeightImg,
+            SnakeHeadEyesImg,
+            SnakeHeadEyesBallImg,
+            SnakeHeadDeadEyesImg,
+            SnakeHeadDizzyEyesImg,
+            ButtonImgCircleUp,
+            ButtonImgCircleDown,
+            ButtonImgRect,
+            SnakeFoodImg,
+
+            Number0Img,
+            Number1Img,
+            Number2Img,
+            Number3Img,
+            Number4Img,
+            Number5Img,
+            Number6Img,
+            Number7Img,
+            Number8Img,
+            Number9Img,
     };
+
+    public static String getNumberImgName(int x){
+        String res;
+        switch (x){
+            case 0:res = Number0Img;break;
+            case 1:res = Number1Img;break;
+            case 2:res = Number2Img;break;
+            case 3:res = Number3Img;break;
+            case 4:res = Number4Img;break;
+            case 5:res = Number5Img;break;
+            case 6:res = Number6Img;break;
+            case 7:res = Number7Img;break;
+            case 8:res = Number8Img;break;
+            case 9:res = Number9Img;break;
+            default:res = null;
+        }
+        return res;
+    }
 }

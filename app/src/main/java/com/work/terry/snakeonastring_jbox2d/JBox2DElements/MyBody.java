@@ -1,5 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
@@ -24,6 +25,7 @@ public abstract class MyBody extends GameElements
     public boolean isStatic;
     public MyBody(
             World world,
+            String id,
             float x,float y,
             float width,float height,
             int color,
@@ -34,6 +36,7 @@ public abstract class MyBody extends GameElements
             float floorShadowColorFactor,
             String Img){
         super(
+                id,
                 x,y,
                 width,height,
                 color,
@@ -57,6 +60,7 @@ public abstract class MyBody extends GameElements
             //body.setTransform(new Vec2(this.x / RATE, this.y / RATE), 0);
     }
     public void popXYfromBody(){
+        if(body==null)return;
         Vec2 v = getBodyXY();
         this.x = v.x;
         this.y = v.y;
@@ -67,10 +71,34 @@ public abstract class MyBody extends GameElements
     public Vec2 getBodyXY(){
         return new Vec2(body.getPosition().x*RATE,body.getPosition().y*RATE);
     }
+    public int getId(){
+        return Integer.parseInt(body.getUserData().toString().split(" ")[1]);
+    }
     @Override
     public String toString(){
         return body.getUserData().toString()+"\n"
                 +"bodyX = "+body.getPosition().x* RATE+" bodyY = "+body.getPosition().y*RATE
                 +"\nvX = "+body.getLinearVelocity().x+" vY = "+body.getLinearVelocity().y;
+    }
+    @Override
+    public void onPause(SharedPreferences.Editor editor){
+        super.onPause(editor);
+        if(body!=null){
+            Vec2 v = getBodyXY();
+            Vec2 vv = getBodyVelocityNormalized();
+            editor.putFloat(body.getUserData().toString()+"x",v.x);
+            editor.putFloat(body.getUserData().toString()+"y",v.y);
+            editor.putFloat(body.getUserData().toString()+"vx",vv.x);
+            editor.putFloat(body.getUserData().toString()+"vy",vv.y);
+            editor.putFloat(body.getUserData().toString()+"width",width);
+            editor.putFloat(body.getUserData().toString()+"height",height);
+            editor.putFloat(id+"angle",body.getAngle());
+            editor.putFloat(body.getUserData().toString()+"color",color);
+        }
+
+    }
+    @Override
+    public void onResume(){
+
     }
 }

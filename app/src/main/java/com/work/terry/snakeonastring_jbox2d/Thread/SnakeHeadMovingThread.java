@@ -6,6 +6,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
 import org.jbox2d.common.Vec2;
 
+import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.Mul2D;
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.normalize2D;
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.plusV2D;
 
@@ -23,7 +24,7 @@ public class SnakeHeadMovingThread extends Thread {
         this.snakeHead = snakeHead;
     }
     public void run () {
-        while (!snakeHead.snake.isDead()) {
+        while (!snakeHead.snake.isPaused()&&!snakeHead.snake.isDead()) {
             bodyV = snakeHead.body.getLinearVelocity();//getBodyVelocityNormalized();
 
             float dx = snakeHead.target.TargetHeadX - snakeHead.x;
@@ -44,6 +45,18 @@ public class SnakeHeadMovingThread extends Thread {
             snakeHead.HeadVX += normalDvXY.x*sinRotateAngleStep;
             snakeHead.HeadVY += normalDvXY.y*sinRotateAngleStep;
 
+//            snakeHead.body.applyLinearImpulse(
+//                    new Vec2(
+//                            snakeHead.HeadVX* speedFactor(dx),
+//                            snakeHead.HeadVY* speedFactor(dy) ),
+//                    snakeHead.body.getPosition(),
+//                    true
+//            );
+//            snakeHead.body.applyForceToCenter(
+//                    new Vec2(
+//                    vecDXY .x* speedFactor(dx),
+//                    vecDXY .y* speedFactor(dy) )
+//            );
             snakeHead.setBodyVelocity(
                     vecDXY .x* speedFactor(dx),
                     vecDXY .y* speedFactor(dy)
@@ -56,7 +69,13 @@ public class SnakeHeadMovingThread extends Thread {
         }
     }
     private float speedFactor(float x){
-        float vv = MyMath.smoothStep(0,snakeHead.SpeedFactor,Math.abs(x));
-        return vv*snakeHead.speed;
+        return MyMath.smoothStep(
+                0,
+                snakeHead.SpeedFactor,
+                Math.abs(x)
+        )
+                *snakeHead.speed
+                *snakeHead.snake.getLength()
+                *5;
     }
 }
