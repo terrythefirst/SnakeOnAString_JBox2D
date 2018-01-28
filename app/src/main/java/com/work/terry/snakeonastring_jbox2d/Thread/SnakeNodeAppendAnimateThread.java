@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
@@ -38,5 +39,7 @@ public class SnakeNodeAppendAnimateThread extends Thread {
         }
         drawUtil.deleteElement(snakeNodeAnimateDraw);
         drawUtil.addToCenterLayer(snakeNode);
+
+        Log.d("SnakeNodeAppendAnimateThread","finished!");
     }
 }

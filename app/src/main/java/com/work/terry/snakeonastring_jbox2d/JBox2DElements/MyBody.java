@@ -21,8 +21,6 @@ public abstract class MyBody extends GameElements
 {
     public World world;
     public Body body;//对应物理引擎中的刚体
-    public Object lock = new Object();
-    public boolean isStatic;
     public MyBody(
             World world,
             String id,
@@ -46,30 +44,38 @@ public abstract class MyBody extends GameElements
                 heightColorFactor,
                 floorShadowColorFactor,
                 Img);
-        JBox2DUtil.Bodies.add(this);
+        synchronized (JBox2DUtil.Bodies){
+            JBox2DUtil.Bodies.add(this);
+        }
         this.world = world;
     }
     public Vec2 getBodyVelocityNormalized(){
         return VectorUtil.normalize2D(new Vec2(body.getLinearVelocity().x*100,body.getLinearVelocity().x*100));
     }
     public void setBodyVelocity(float vx,float vy){
-        body.setLinearVelocity(new Vec2(vx/RATE,vy/RATE));
+        synchronized (body){
+            body.setLinearVelocity(new Vec2(vx/RATE,vy/RATE));
+        }
     }
     public void pushXYintoBody(){
             body.getPosition().set(this.x / RATE, this.y / RATE);
             //body.setTransform(new Vec2(this.x / RATE, this.y / RATE), 0);
     }
     public void popXYfromBody(){
-        if(body==null)return;
-        Vec2 v = getBodyXY();
-        this.x = v.x;
-        this.y = v.y;
+        synchronized (this){
+            if(body==null)return;
+            Vec2 v = getBodyXY();
+            this.x = v.x;
+            this.y = v.y;
+        }
     }
     public void setBodyXY(float setX,float setY){
         body.setTransform(new Vec2(setX/RATE,setY/RATE),0);
     }
     public Vec2 getBodyXY(){
-        return new Vec2(body.getPosition().x*RATE,body.getPosition().y*RATE);
+        synchronized (this){
+            return new Vec2(body.getPosition().x*RATE,body.getPosition().y*RATE);
+        }
     }
     public int getId(){
         return Integer.parseInt(body.getUserData().toString().split(" ")[1]);

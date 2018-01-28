@@ -128,7 +128,10 @@ public class CircleBody extends MyBody{
 
         bd.setAngularDamping(angularDampingRate);
         bd.setLinearDamping(linearDampingRate);
-        Body bodyTemp= world.createBody(bd);//在世界中创建刚体
+        Body bodyTemp;
+        synchronized (world){
+            bodyTemp= world.createBody(bd);//在世界中创建刚体
+        }
         //Log.d("CircleBody",(bodyTemp==null)?"NULL":"NOT NULL!");
         CircleShape cs=new CircleShape();//创建刚体形状
         cs.m_radius=radius/RATE;//获得物理世界圆的半径

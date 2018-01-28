@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;//声明包名
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
@@ -41,24 +42,12 @@ public class MyContactListener implements ContactListener {
 			}else {
 						bb.getLinearVelocity().set(
 						Mul2D(
-								normalize2D(bb.getLinearVelocity()),
+								normalize2D(((SnakeNode)circleBody).getFrontV2D()),
 								SnakeBodySpeedUponDead
 						)
 				);
 			}
 		}
-//		head.getLinearVelocity().set(
-//				Mul2D(
-//						normalize2D(head.getLinearVelocity()),
-//						snakeHeadSpeedUponDead
-//				)
-//		);
-//		body.getLinearVelocity().set(
-//				Mul2D(
-//						normalize2D(head.getLinearVelocity()),
-//						snakeBodySpeedUponDead
-//				)
-//		);
 	}
 	@Override
 	public void beginContact(Contact contact){
@@ -76,7 +65,7 @@ public class MyContactListener implements ContactListener {
 					gamePlay.snake.SnakeAddLength++;
 				}else if(!idB.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
-					//changeSnakeVelocityUponDead();
+					changeSnakeVelocityUponDead();
 				}
 			}else if(idB.toString().equals("snakeHead")){
 				if(idA.contains("snakeFood")){
@@ -85,7 +74,7 @@ public class MyContactListener implements ContactListener {
 					gamePlay.snake.SnakeAddLength++;
 				}else if(!idA.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
-					//changeSnakeVelocityUponDead();
+					changeSnakeVelocityUponDead();
 				}
 			}
 		}

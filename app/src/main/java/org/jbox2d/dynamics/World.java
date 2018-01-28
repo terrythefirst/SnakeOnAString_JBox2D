@@ -571,7 +571,7 @@ public class World {
   public void step(float dt, int velocityIterations, int positionIterations) {
     stepTimer.reset();
     tempTimer.reset();
-    // log.debug("Starting step");
+    //log.debug("Starting step");
     // If new fixtures were added, we need to find the new contacts.
     if ((m_flags & NEW_FIXTURE) == NEW_FIXTURE) {
       // log.debug("There's a new fixture, lets look for new contacts");

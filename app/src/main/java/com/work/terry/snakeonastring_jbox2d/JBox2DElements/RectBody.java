@@ -75,7 +75,10 @@ public class RectBody extends MyBody{
         bd.linearVelocity.set(new Vec2(vX,vY));
         bd.angle = angle;
 
-        Body bodyTemp= world.createBody(bd);//在世界中创建刚体
+        Body bodyTemp;
+        synchronized (world){
+            bodyTemp= world.createBody(bd);//在世界中创建刚体
+        }
         PolygonShape ps=new PolygonShape();//创建刚体形状
         ps.setAsBox(halfWidth/RATE, halfHeight/RATE);//设定边框
         FixtureDef fd=new FixtureDef();//创建刚体物理描述

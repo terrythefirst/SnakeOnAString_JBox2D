@@ -6,19 +6,14 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
-import com.work.terry.snakeonastring_jbox2d.Thread.SnakeBodyAppendThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
-import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
-import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 import org.jbox2d.dynamics.World;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -28,7 +23,8 @@ import java.util.List;
 public class Snake {
     public int SnakeAddLength = 0;
 
-    public boolean isInitFinnished = false;
+    public boolean initFinnished = false;
+    public boolean addAnimating = false;
 
     public World world;
     private SnakeHead snakeHead;
@@ -57,7 +53,7 @@ public class Snake {
         animateThread = new AnimateThread();
         animateThread.start();
 
-        isInitFinnished = true;
+        initFinnished = true;
     }
     public int getSize(){
         return snakeBodies.size();
@@ -112,8 +108,8 @@ public class Snake {
         }
         snakeBodies.add(tempt);
 
-//        if(isInitFinnished)new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
-//        else
+        if(initFinnished)new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
+        else
             drawUtil.addToCenterLayer(tempt);
     }
     public int getLength(){

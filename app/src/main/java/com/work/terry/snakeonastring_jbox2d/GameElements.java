@@ -14,6 +14,8 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GameElements{
+    public Object lock;
+
     public String id;
     public float x;
     public float y;
@@ -68,6 +70,8 @@ public class GameElements{
         this.HeightColorFactor = heightColorFactor;
         this.FloorShadowColorFactor = floorShadowColorFactor;
         this.jumpHeight = 0;
+
+        lock = new Object();
     }
     public void setTopRatio(float TopRatio){
         this.TopRatio = TopRatio;
@@ -79,30 +83,32 @@ public class GameElements{
     }
     public void drawSelf(TexDrawer painter){
         //offSet
-        if(TopOffset!=0){
-            painter.drawColorFactorTex(
+        synchronized (lock) {
+            if (TopOffset != 0) {
+                painter.drawColorFactorTex(
+                        TexManager.getTex(Img),
+                        ColorManager.getColor(color),
+                        x,
+                        y - jumpHeight - defaultHeight + TopOffset,
+                        width,
+                        height,
+                        rotateAngleGameElements,
+                        TopOffsetColorFactor
+                );
+            }
+
+            if (TopRatio != 0) setTopHeightWidth();
+            //drawSelf
+            painter.drawColorSelf(
                     TexManager.getTex(Img),
                     ColorManager.getColor(color),
                     x,
-                    y - jumpHeight-defaultHeight+TopOffset,
-                    width,
-                    height,
-                    rotateAngleGameElements,
-                    TopOffsetColorFactor
+                    y - jumpHeight - defaultHeight,
+                    TopWidth,
+                    TopHeight,
+                    rotateAngleGameElements
             );
         }
-
-        if(TopRatio!=0)setTopHeightWidth();
-        //drawSelf
-        painter.drawColorSelf(
-                TexManager.getTex(Img),
-                ColorManager.getColor(color),
-                x,
-                y-jumpHeight-defaultHeight,
-                TopWidth,
-                TopHeight,
-                rotateAngleGameElements
-        );
     }
 
     public void setDoDrawHeight(boolean x){
@@ -111,38 +117,45 @@ public class GameElements{
     public void drawHeight(TexDrawer painter){
         if (!doDrawHeight)return;
         //drawHeight
-        painter.drawColorFactorTex(
-                TexManager.getTex(Img),
-                ColorManager.getColor(color),
-                x,
-                y,
-                width,
-                height,
-                rotateAngleGameElements,
-                HeightColorFactor
-        );
-        painter.drawColorFactorTex(
-                TexManager.getTex(SnakeBodyHeightImg),
-                ColorManager.getColor(color),
-                x,
-                y - jumpHeight/2-defaultHeight/2,
-                width,
-                jumpHeight+defaultHeight,
-                0,
-                HeightColorFactor
-        );
+        synchronized (lock) {
+
+
+            painter.drawColorFactorTex(
+                    TexManager.getTex(Img),
+                    ColorManager.getColor(color),
+                    x,
+                    y,
+                    width,
+                    height,
+                    rotateAngleGameElements,
+                    HeightColorFactor
+            );
+            painter.drawColorFactorTex(
+                    TexManager.getTex(SnakeBodyHeightImg),
+                    ColorManager.getColor(color),
+                    x,
+                    y - jumpHeight / 2 - defaultHeight / 2,
+                    width,
+                    jumpHeight + defaultHeight,
+                    0,
+                    HeightColorFactor
+            );
+        }
     }
     public void drawFloorShadow(TexDrawer painter){
-        painter.drawShadow(
-                TexManager.getTex(Img),
-                ColorManager.getColor(Constant.COLOR_GREAY),
-                x+(defaultHeight+jumpHeight)*Constant.FloorShadowFactorX,
-                y+(defaultHeight+jumpHeight)*Constant.FloorShadowFactorY,
-                width,
-                height,
-                rotateAngleGameElements,
-                FloorShadowColorFactor
-        );
+        synchronized (lock) {
+
+            painter.drawShadow(
+                    TexManager.getTex(Img),
+                    ColorManager.getColor(Constant.COLOR_GREAY),
+                    x + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorX,
+                    y + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorY,
+                    width,
+                    height,
+                    rotateAngleGameElements,
+                    FloorShadowColorFactor
+            );
+        }
     }
     public static void drawPic(
             TexDrawer painter,

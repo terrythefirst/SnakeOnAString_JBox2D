@@ -50,8 +50,8 @@ public class Constant {
         public static final float SnakeHeadSpeed = 0.2f;
         public static final int SnakeHeadSpeedFactor = 10;
 
-        public static final float SnakeHeadSpeedUponDead = 1.0f;//0.4f;
-        public static final float SnakeBodySpeedUponDead = 1.0f;//0.4f;
+        public static final float SnakeHeadSpeedUponDead = 0.2f;
+        public static final float SnakeBodySpeedUponDead = 0.2f;
 
         public static final float SnakeBodyLinearDampingRate = 0.10f;
         public static final float SnakeBodyLinearDampingRateFactorInter = 0.02f;

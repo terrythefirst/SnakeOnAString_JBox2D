@@ -49,7 +49,7 @@ public class SnakeNodeMovingThread extends Thread{
 //                    Mul2D(targetMoveV,10f)
 //            );
         snakeNode.body.applyLinearImpulse(
-                Mul2D(targetMoveV,0.005f),
+                Mul2D(targetMoveV,0.006f),
                 snakeNode.body.getPosition(),
                 true
         );

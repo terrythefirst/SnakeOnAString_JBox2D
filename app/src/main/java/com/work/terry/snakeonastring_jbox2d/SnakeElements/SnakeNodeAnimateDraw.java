@@ -36,15 +36,21 @@ public class SnakeNodeAnimateDraw extends GameElements{
         return (nowRadius>=targetRadius);
     }
     public void changeXY(){
+        float ratio = nowRadius/targetRadius;
+        float distance = nowRadius+snakeNode.front.radius;
+        TopOffset = ratio*snakeNode.TopOffset;
+        defaultHeight = ratio*snakeNode.defaultHeight;
+
         width = nowRadius*2;
         height = nowRadius*2;
         Vec2 snakeNodeXY = snakeNode.getBodyXY();
         Vec2 frontXY = snakeNode.front.getBodyXY();
 
-        Vec2 targetXYV = VectorUtil.minusV2D(snakeNodeXY,frontXY);
+        Vec2 targetXYV = VectorUtil.minusV2D(frontXY,snakeNodeXY);
         targetXYV.normalize();
 
-        x = targetXYV.x*nowRadius;
-        y = targetXYV.y*nowRadius;
+
+        x =frontXY.x- targetXYV.x*distance;
+        y =frontXY.y- targetXYV.y*distance;
     }
 }
