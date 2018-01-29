@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 import org.jbox2d.common.Vec2;
@@ -30,6 +32,9 @@ public class MyWeldJoint
 		wjd.initialize(poA.body,poB.body,anchor);//调用焊接关节的初始化方法
 		wjd.frequencyHz = frequencyHz;					//给关节频率赋值
 		wjd.dampingRatio = dampingRatio;					//给阻尼系数赋值
+//		while (world.isLocked()){
+//			Log.d("world","LOKED!");
+//		}
 		wj=(WeldJoint) world.createJoint(wjd);//在物理世界添加焊接关节
 
 		JBox2DUtil.Joints.add(this);

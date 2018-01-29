@@ -106,7 +106,8 @@ public class GamePlay extends MyView{
 
     }
     public void removeFood(SnakeFood food){
-        drawUtil.deleteElement(food);
+        //drawUtil.deleteElement(food);
+        food.setDoDraw(false);
     }
     public void removeFood(int index){
         removeFood(snakeFoodMap.get(index));

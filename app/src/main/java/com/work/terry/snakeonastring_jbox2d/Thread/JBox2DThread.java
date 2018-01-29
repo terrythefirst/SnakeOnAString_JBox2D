@@ -20,6 +20,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class JBox2DThread extends Thread{
+    public static byte[] JBox2DLock = new byte[0];
     GamePlay gamePlay;
 
     public JBox2DThread(GamePlay gamePlay){
@@ -29,7 +30,7 @@ public class JBox2DThread extends Thread{
     public void run(){
         while(gamePlay.IS_PLAYING)//&&!gamePlayView.snake.isDead())
         {
-            synchronized (gamePlay.world) {
+            synchronized (JBox2DLock){
                 gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
             }
 
@@ -41,7 +42,8 @@ public class JBox2DThread extends Thread{
                     if (mb instanceof SnakeFood) {
                         if (((SnakeFood) mb).eatean) {
                             synchronized (gamePlay.drawUtil){
-                                gamePlay.drawUtil.deleteElement(mb);
+                                //gamePlay.drawUtil.deleteElement(mb);
+                                mb.setDoDraw(false);
                             }
                             synchronized (gamePlay.world){
                                 gamePlay.world.destroyBody(mb.body);

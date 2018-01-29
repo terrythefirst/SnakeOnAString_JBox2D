@@ -30,8 +30,8 @@ public class MyContactListener implements ContactListener {
 	public void changeSnakeVelocityUponDead(){//(Body head,Body body){
 		for(CircleBody circleBody:gamePlay.snake.snakeBodies){
 			Body bb = circleBody.body;
-			circleBody.body.setLinearDamping(0.0000f);
-			circleBody.body.setAngularDamping(0.0f);
+			circleBody.body.setLinearDamping(0.01f);
+			circleBody.body.setAngularDamping(0.01f);
 			if(circleBody instanceof SnakeHead){
 						bb.getLinearVelocity().set(
 						Mul2D(

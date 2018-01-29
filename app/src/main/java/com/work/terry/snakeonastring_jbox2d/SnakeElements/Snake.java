@@ -6,9 +6,11 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
 import org.jbox2d.dynamics.World;
@@ -99,17 +101,22 @@ public class Snake {
     public boolean isPaused(){return paused;}
 
     public void addBody(){
-        int index = snakeBodies.size();
         SnakeNode tempt;
-        if(index==1){
-            tempt = new SnakeNode(this,world,snakeHead,index);
-        }else{
-            tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
-        }
-        snakeBodies.add(tempt);
+        synchronized (JBox2DThread.JBox2DLock){
+            int index = snakeBodies.size();
 
-        if(initFinnished)new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
-        else
+            if(index==1){
+                tempt = new SnakeNode(this,world,snakeHead,index);
+            }else{
+                tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
+            }
+            snakeBodies.add(tempt);
+        }
+        if(initFinnished){
+            tempt.setDoDraw(false);
+            drawUtil.addToCenterLayer(tempt);
+            new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
+        }else
             drawUtil.addToCenterLayer(tempt);
     }
     public int getLength(){

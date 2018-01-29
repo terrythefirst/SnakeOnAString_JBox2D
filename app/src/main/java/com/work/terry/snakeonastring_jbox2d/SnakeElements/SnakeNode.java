@@ -111,6 +111,9 @@ public class SnakeNode extends CircleBody{
         return VectorUtil.calDistance(minusV2D(thisXY,frontXY));
     }
     public void initSelf(){
+        while (world.isLocked()){
+            Log.d("world","LOKED!");
+        }
         frontV = getFrontV2D();
         Vec2 frontVNormalized = normalize2D(frontV);
         centerDistance = front.radius+this.radius;
@@ -142,7 +145,7 @@ public class SnakeNode extends CircleBody{
 
                 0.01f,
                 0.0f,0.0f,
-                "",
+                ButtonImgRect,
                 false
         );
         //        if(frontBody instanceof SnakeHead){
@@ -233,6 +236,13 @@ public class SnakeNode extends CircleBody{
 //                0.0f,
 //                0f
 //        );
+    }
+    @Override
+    public void drawSelf(TexDrawer painter){
+        super.drawSelf(painter);
+
+        rectBody.rotateAngleGameElements = (float)Math.toDegrees(rectBody.body.getAngle());
+        rectBody.drawSelf(painter);
     }
     public void startMoving(){
         movingThread = new SnakeNodeMovingThread(this);

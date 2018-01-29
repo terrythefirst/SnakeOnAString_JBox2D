@@ -40,6 +40,7 @@ public class GameElements{
     public String Img;
 
     public boolean doDrawHeight = true;
+    public boolean doDraw = true;
 
     public GameElements(
             String id,
@@ -114,12 +115,13 @@ public class GameElements{
     public void setDoDrawHeight(boolean x){
         this.doDrawHeight = x;
     }
+    public void setDoDraw(boolean x){
+        this.doDraw = x;
+    }
     public void drawHeight(TexDrawer painter){
         if (!doDrawHeight)return;
         //drawHeight
         synchronized (lock) {
-
-
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
                     ColorManager.getColor(color),
@@ -144,7 +146,6 @@ public class GameElements{
     }
     public void drawFloorShadow(TexDrawer painter){
         synchronized (lock) {
-
             painter.drawShadow(
                     TexManager.getTex(Img),
                     ColorManager.getColor(Constant.COLOR_GREAY),

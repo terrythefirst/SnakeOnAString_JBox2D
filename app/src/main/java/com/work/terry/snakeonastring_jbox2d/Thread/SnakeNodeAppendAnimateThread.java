@@ -37,8 +37,10 @@ public class SnakeNodeAppendAnimateThread extends Thread {
                 e.printStackTrace();
             }
         }
-        drawUtil.deleteElement(snakeNodeAnimateDraw);
-        drawUtil.addToCenterLayer(snakeNode);
+        //drawUtil.deleteElement(snakeNodeAnimateDraw);
+        snakeNodeAnimateDraw.setDoDraw(false);
+        snakeNode.setDoDraw(true);
+        //drawUtil.addToCenterLayer(snakeNode);
 
         Log.d("SnakeNodeAppendAnimateThread","finished!");
     }

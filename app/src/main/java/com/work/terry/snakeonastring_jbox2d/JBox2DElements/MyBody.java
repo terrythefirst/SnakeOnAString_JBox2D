@@ -53,29 +53,23 @@ public abstract class MyBody extends GameElements
         return VectorUtil.normalize2D(new Vec2(body.getLinearVelocity().x*100,body.getLinearVelocity().x*100));
     }
     public void setBodyVelocity(float vx,float vy){
-        synchronized (body){
-            body.setLinearVelocity(new Vec2(vx/RATE,vy/RATE));
-        }
+        body.setLinearVelocity(new Vec2(vx/RATE,vy/RATE));
     }
     public void pushXYintoBody(){
-            body.getPosition().set(this.x / RATE, this.y / RATE);
+        body.getPosition().set(this.x / RATE, this.y / RATE);
             //body.setTransform(new Vec2(this.x / RATE, this.y / RATE), 0);
     }
     public void popXYfromBody(){
-        synchronized (this){
-            if(body==null)return;
-            Vec2 v = getBodyXY();
-            this.x = v.x;
-            this.y = v.y;
-        }
+        if(body==null)return;
+        Vec2 v = getBodyXY();
+        this.x = v.x;
+        this.y = v.y;
     }
     public void setBodyXY(float setX,float setY){
         body.setTransform(new Vec2(setX/RATE,setY/RATE),0);
     }
     public Vec2 getBodyXY(){
-        synchronized (this){
-            return new Vec2(body.getPosition().x*RATE,body.getPosition().y*RATE);
-        }
+        return new Vec2(body.getPosition().x * RATE, body.getPosition().y * RATE);
     }
     public int getId(){
         return Integer.parseInt(body.getUserData().toString().split(" ")[1]);
@@ -101,7 +95,6 @@ public abstract class MyBody extends GameElements
             editor.putFloat(id+"angle",body.getAngle());
             editor.putFloat(body.getUserData().toString()+"color",color);
         }
-
     }
     @Override
     public void onResume(){
