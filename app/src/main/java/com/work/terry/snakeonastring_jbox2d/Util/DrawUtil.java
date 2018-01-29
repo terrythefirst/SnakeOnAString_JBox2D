@@ -41,17 +41,17 @@ public class DrawUtil {
         }
     }
 
-//    public void deleteElement(GameElements gameElements) {
-//        synchronized (topLayerDrawSequence) {
-//            topLayerDrawSequence.remove(gameElements);
-//        }
-//        synchronized (centerLayerDrawSequence) {
-//            centerLayerDrawSequence.remove(gameElements);
-//        }
-//        synchronized (floorLayerDrawSequence) {
-//            floorLayerDrawSequence.remove(gameElements);
-//        }
-//    }
+    public void deleteElement(GameElements gameElements) {
+        synchronized (topLayerDrawSequence) {
+            topLayerDrawSequence.remove(gameElements);
+        }
+        synchronized (centerLayerDrawSequence) {
+            centerLayerDrawSequence.remove(gameElements);
+        }
+        synchronized (floorLayerDrawSequence) {
+            floorLayerDrawSequence.remove(gameElements);
+        }
+    }
 
     public void stepDraw(TexDrawer painter) {
         //先画背景

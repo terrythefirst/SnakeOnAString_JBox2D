@@ -28,11 +28,11 @@ public class SnakeNodeAppendAnimateThread extends Thread {
     @Override
     public void run(){
         while(!snakeNodeAnimateDraw.isFinished()){
-            snakeNodeAnimateDraw.nowRadius +=2;
+            snakeNodeAnimateDraw.nowRadius +=0.5;
             snakeNodeAnimateDraw.changeXY();
 
             try {
-                sleep(50);
+                sleep(10);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -40,6 +40,8 @@ public class SnakeNodeAppendAnimateThread extends Thread {
         //drawUtil.deleteElement(snakeNodeAnimateDraw);
         snakeNodeAnimateDraw.setDoDraw(false);
         snakeNode.setDoDraw(true);
+
+        snakeNode.snake.endAddAnimation();
         //drawUtil.addToCenterLayer(snakeNode);
 
         Log.d("SnakeNodeAppendAnimateThread","finished!");

@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -23,9 +25,13 @@ import java.util.List;
  */
 
 public class Snake {
-    public int SnakeAddLength = 0;
+    public byte[] snakeAjaxLengthLock = new byte[0];
+
+    public int SnakeAjaxLength ;
 
     public boolean initFinnished = false;
+
+    public byte[] addAnimationLock = new byte[0];
     public boolean addAnimating = false;
 
     public World world;
@@ -51,6 +57,7 @@ public class Snake {
         for(int i = 1;i<=Constant.SnakeBodyDefaultLength;i++){
             addBody();
         }
+        SnakeAjaxLength = getLength();
 
         animateThread = new AnimateThread();
         animateThread.start();
@@ -99,8 +106,19 @@ public class Snake {
         return isDead;
     }
     public boolean isPaused(){return paused;}
-
+    public void beginAddAnimation(){
+        synchronized (addAnimationLock){
+            addAnimating = true;
+        }
+    }
+    public void endAddAnimation(){
+        synchronized (addAnimationLock){
+            addAnimating = false;
+        }
+    }
     public void addBody(){
+        beginAddAnimation();
+
         SnakeNode tempt;
         synchronized (JBox2DThread.JBox2DLock){
             int index = snakeBodies.size();
@@ -110,17 +128,22 @@ public class Snake {
             }else{
                 tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
             }
+        }
+        synchronized (snakeBodies){
             snakeBodies.add(tempt);
         }
         if(initFinnished){
             tempt.setDoDraw(false);
             drawUtil.addToCenterLayer(tempt);
             new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
-        }else
+        }else{
             drawUtil.addToCenterLayer(tempt);
+            addAnimating = false;
+        }
+
     }
     public int getLength(){
-        return snakeBodies.size()+1;
+        return snakeBodies.size();
     }
     public void moving(){
         snakeHead.startMoving();
@@ -135,8 +158,51 @@ public class Snake {
            g.color = color;
        }
     }
-
-
+    public void doAfterDead(){
+        for (CircleBody sn:snakeBodies){
+            if(sn instanceof SnakeNode){
+                synchronized (JBox2DThread.JBox2DLock){
+                    world.destroyBody(((SnakeNode) sn).rectBody.body);
+                }
+            }
+        }
+        for (Object o : JBox2DUtil.Joints) {
+            if (o instanceof MyBox2DRevoluteJoint) {
+                synchronized (JBox2DThread.JBox2DLock){
+                    world.destroyJoint(((MyBox2DRevoluteJoint) o).rjoint);
+                }
+            } else if (o instanceof MyBox2DRevoluteJoint) {
+                synchronized (JBox2DThread.JBox2DLock){
+                    world.destroyJoint(((MyWeldJoint) o).wj);
+                }
+            }
+        }
+    }
+    public void checkLength(){
+        if(getSnakeAjaxLength()> getLength()&&!addAnimating) {
+            new Thread() {
+                public void run() {
+                    addBody();
+                }
+            }.start();
+            minusOneSnakeAjaxLength();
+        }
+    }
+    public int getSnakeAjaxLength(){
+        synchronized (snakeAjaxLengthLock){
+            return SnakeAjaxLength;
+        }
+    }
+    public void plusOneSnakeAjaxLength(){
+        synchronized (snakeAjaxLengthLock){
+            SnakeAjaxLength+=1;
+        }
+    }
+    public void minusOneSnakeAjaxLength(){
+        synchronized (snakeAjaxLengthLock){
+            SnakeAjaxLength-=1;
+        }
+    }
     public void onResume(){
         for (CircleBody c:snakeBodies){
             if(c instanceof SnakeHead){

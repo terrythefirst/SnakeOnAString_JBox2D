@@ -35,48 +35,24 @@ public class JBox2DThread extends Thread{
             }
 
             synchronized (JBox2DUtil.Bodies) {
-
                 for (MyBody mb : JBox2DUtil.Bodies) {
                     mb.popXYfromBody();
 
                     if (mb instanceof SnakeFood) {
                         if (((SnakeFood) mb).eatean) {
-                            synchronized (gamePlay.drawUtil){
                                 //gamePlay.drawUtil.deleteElement(mb);
-                                mb.setDoDraw(false);
-                            }
-                            synchronized (gamePlay.world){
-                                gamePlay.world.destroyBody(mb.body);
-                            }
+                            gamePlay.removeFood(mb.getId());
+                            //mb.setDoDraw(false);
+                            gamePlay.world.destroyBody(mb.body);
                         }
                     }
                 }
             }
-
-
+            gamePlay.checkShouldAddFood();
             if (gamePlay.snake.isDead()) {
-                for (CircleBody sn:gamePlay.snake.snakeBodies){
-                    if(sn instanceof SnakeNode){
-                        gamePlay.world.destroyBody(((SnakeNode) sn).rectBody.body);
-                    }
-                }
-
-                for (Object o : JBox2DUtil.Joints) {
-                    if (o instanceof MyBox2DRevoluteJoint) {
-                        gamePlay.world.destroyJoint(((MyBox2DRevoluteJoint) o).rjoint);
-                    } else if (o instanceof MyBox2DRevoluteJoint) {
-                        gamePlay.world.destroyJoint(((MyWeldJoint) o).wj);
-                    }
-                }
-            }
-
-            if (!gamePlay.snake.isDead() && gamePlay.snake.SnakeAddLength > 0) {
-                new Thread() {
-                    public void run() {
-                        gamePlay.snake.addBody();
-                    }
-                }.start();
-                gamePlay.snake.SnakeAddLength--;
+                gamePlay.snake.doAfterDead();
+            }else {
+                gamePlay.snake.checkLength();
             }
         }
     }

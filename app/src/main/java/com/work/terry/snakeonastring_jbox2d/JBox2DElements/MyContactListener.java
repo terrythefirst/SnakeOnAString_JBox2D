@@ -62,7 +62,9 @@ public class MyContactListener implements ContactListener {
 				if(idB.contains("snakeFood")){
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
 					gamePlay.getFood(Integer.parseInt(idB.split(" ")[1])).setEatean();
-					gamePlay.snake.SnakeAddLength++;
+					gamePlay.snake.plusOneSnakeAjaxLength();
+				}else  if(idB.contains("Bomb")){
+					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idB.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
 					changeSnakeVelocityUponDead();
@@ -71,7 +73,9 @@ public class MyContactListener implements ContactListener {
 				if(idA.contains("snakeFood")){
 					Log.d("ContactListener",idB+" equals snakeHead "+idA+" contains snakeFood");
 					gamePlay.getFood(Integer.parseInt(idA.split(" ")[1])).setEatean();
-					gamePlay.snake.SnakeAddLength++;
+					gamePlay.snake.plusOneSnakeAjaxLength();
+				}else  if(idA.contains("Bomb")){
+					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idA.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
 					changeSnakeVelocityUponDead();

@@ -183,4 +183,11 @@ public class SnakeHead extends CircleBody{
             target.setTarget(touchX,touchY,x,y);
         }
     }
+    public void onResume(){
+        movingThread =  new SnakeHeadMovingThread(this);
+        movingThread.start();
+    }
+    public void onPause(SharedPreferences.Editor editor){
+
+    }
 }

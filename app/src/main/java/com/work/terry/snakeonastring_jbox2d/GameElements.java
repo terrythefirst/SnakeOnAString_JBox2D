@@ -14,8 +14,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GameElements{
-    public Object lock;
-
     public String id;
     public float x;
     public float y;
@@ -72,7 +70,6 @@ public class GameElements{
         this.FloorShadowColorFactor = floorShadowColorFactor;
         this.jumpHeight = 0;
 
-        lock = new Object();
     }
     public void setTopRatio(float TopRatio){
         this.TopRatio = TopRatio;
@@ -84,32 +81,30 @@ public class GameElements{
     }
     public void drawSelf(TexDrawer painter){
         //offSet
-        synchronized (lock) {
-            if (TopOffset != 0) {
-                painter.drawColorFactorTex(
-                        TexManager.getTex(Img),
-                        ColorManager.getColor(color),
-                        x,
-                        y - jumpHeight - defaultHeight + TopOffset,
-                        width,
-                        height,
-                        rotateAngleGameElements,
-                        TopOffsetColorFactor
-                );
-            }
-
-            if (TopRatio != 0) setTopHeightWidth();
-            //drawSelf
-            painter.drawColorSelf(
+        if (TopOffset != 0) {
+            painter.drawColorFactorTex(
                     TexManager.getTex(Img),
                     ColorManager.getColor(color),
                     x,
-                    y - jumpHeight - defaultHeight,
-                    TopWidth,
-                    TopHeight,
-                    rotateAngleGameElements
+                    y - jumpHeight - defaultHeight + TopOffset,
+                    width,
+                    height,
+                    rotateAngleGameElements,
+                    TopOffsetColorFactor
             );
         }
+
+        if (TopRatio != 0) setTopHeightWidth();
+        //drawSelf
+        painter.drawColorSelf(
+                TexManager.getTex(Img),
+                ColorManager.getColor(color),
+                x,
+                y - jumpHeight - defaultHeight,
+                TopWidth,
+                TopHeight,
+                rotateAngleGameElements
+        );
     }
 
     public void setDoDrawHeight(boolean x){
@@ -121,7 +116,6 @@ public class GameElements{
     public void drawHeight(TexDrawer painter){
         if (!doDrawHeight)return;
         //drawHeight
-        synchronized (lock) {
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
                     ColorManager.getColor(color),
@@ -142,10 +136,8 @@ public class GameElements{
                     0,
                     HeightColorFactor
             );
-        }
     }
     public void drawFloorShadow(TexDrawer painter){
-        synchronized (lock) {
             painter.drawShadow(
                     TexManager.getTex(Img),
                     ColorManager.getColor(Constant.COLOR_GREAY),
@@ -156,7 +148,6 @@ public class GameElements{
                     rotateAngleGameElements,
                     FloorShadowColorFactor
             );
-        }
     }
     public static void drawPic(
             TexDrawer painter,

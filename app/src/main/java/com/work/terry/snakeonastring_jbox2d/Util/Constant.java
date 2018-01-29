@@ -62,6 +62,8 @@ public class Constant {
 
     //蛇的食物
     public static final String SnakeFoodImg = "snake_food.png";
+    //炸弹
+    public static final String BombImg = "my_bomb.png";
     //蛇整体
     public static final int SnakeBodyDefaultLength = 6;
 

@@ -9,6 +9,7 @@ import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BombImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.ButtonBlockDefaultHeight;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SCREEN_HEIGHT;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SCREEN_WIDTH;
@@ -84,8 +86,6 @@ public class GamePlay extends MyView{
         snakeFoodLocationMap.put(2,new Vec2(1200,600));
         snakeFoodLocationMap.put(3,new Vec2(1200,1800));
 
-        addFood();
-
         drawUtil.addToCenterLayer(
                 new ButtonBlockCircle(
                         world,
@@ -99,37 +99,70 @@ public class GamePlay extends MyView{
                 )
         );
 
+
         jBox2DThread = new JBox2DThread(GamePlay.this);
+        addBomb();
 
         snake.moving();
         jBox2DThread.start();
 
     }
     public void removeFood(SnakeFood food){
-        //drawUtil.deleteElement(food);
-        food.setDoDraw(false);
+        drawUtil.deleteElement(food);
+        //food.setDoDraw(false);
+
     }
     public void removeFood(int index){
         removeFood(snakeFoodMap.get(index));
     }
+    public void checkShouldAddFood(){
+        if (snakeFoodMap == null)return;
+
+        boolean allEaten = true;
+        for(int x:snakeFoodMap.keySet()){
+            if(!snakeFoodMap.get(x).eatean){
+                allEaten = false;
+                break;
+            }
+        }
+        if(allEaten)addFood();
+    }
     public void addFood(){
         Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
         Log.d("foodCount",foodCount+"");
-        SnakeFood tempt = new SnakeFood(
-                world,
-                foodCount,
-                loc.x,loc.y,
-                60,60,
-                0,
-                10,
-                SnakeFoodImg
-        );
+        SnakeFood tempt;
+        synchronized (JBox2DThread.JBox2DLock){
+            tempt= new SnakeFood(
+                    world,
+                    foodCount,
+                    loc.x,loc.y,
+                    60,60,
+                    0,
+                    10,
+                    SnakeFoodImg
+            );
+        }
         snakeFoodMap.put(foodCount,tempt);
         drawUtil.addToFloorLayer(tempt);
         foodCount++;
         if(foodLocationCount>3){
             foodLocationCount=0;
         }
+    }
+    public void addBomb(){
+        Bomb tempt;
+        synchronized (JBox2DThread.JBox2DLock){
+            tempt = new Bomb(
+                    world,
+                    foodCount,
+                    200,1440,
+                    100,100,
+                    0,
+                    10,
+                    BombImg
+            );
+        }
+        drawUtil.addToFloorLayer(tempt);
     }
     public void constructWallsAndStaticBody(){
         RectBody upWall = new RectBody(
@@ -209,10 +242,16 @@ public class GamePlay extends MyView{
     }
     @Override
     public void onResume(){
+        IS_PLAYING = true;
+        jBox2DThread = new JBox2DThread(GamePlay.this);
+        snake.moving();
+        jBox2DThread.start();
+
         if(snake!=null)snake.onResume();
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){
+        IS_PLAYING = false;
         if(snake!=null)snake.onPause(editor);
     }
 }

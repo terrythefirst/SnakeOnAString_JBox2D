@@ -1,0 +1,48 @@
+package com.work.terry.snakeonastring_jbox2d.SnakeElements;
+
+import android.util.Log;
+
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+
+import org.jbox2d.dynamics.World;
+
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColorFactor;
+
+/**
+ * Created by Terry on 2018/1/29.
+ */
+
+public class Bomb extends CircleBody {
+    public boolean eatean = false;
+
+    public int score;
+    public Bomb(
+            World world,
+            int id,
+            float x,float y,
+            float width,float height,
+            int color,
+            int score,
+            String Img){
+        super(
+                world,
+                "Bomb "+id,
+                x,y,
+                0,0,0,
+                width/2,
+
+                color,
+                6,0,0,0.4f,SnakeFloorColorFactor,
+
+                0,0,0,0,0,
+                true,
+                Img
+        );
+        this.score = score;
+        setDoDrawHeight(false);
+    }
+    public void setEatean(){
+        Log.d("Bomb","eaten");
+        eatean = true;
+    }
+}

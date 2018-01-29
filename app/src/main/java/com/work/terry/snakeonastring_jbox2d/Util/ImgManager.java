@@ -32,6 +32,8 @@ public class ImgManager {
             Number7Img,
             Number8Img,
             Number9Img,
+
+            BombImg,
     };
 
     public static String getNumberImgName(int x){

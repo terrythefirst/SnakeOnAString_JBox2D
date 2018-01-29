@@ -29,22 +29,21 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 				idANum = Integer.parseInt(idA.split(" ")[1]);
 				if(gamePlay.getFood(idANum).eatean){
 					return false;
-				}else {
-					return true;
+				}else if(idB.contains("snakeBody")){
+					return false;
 				}
 			}else if(idB.contains("snakeFood")){
 //				Log.d("ContactFilter",idB+" contains snakeFood");
 				idBNum = Integer.parseInt(idB.split(" ")[1]);
 				if(gamePlay.getFood(idBNum).eatean){
 					return false;
-				}else {
-					return true;
+				}else if(idA.contains("snakeBody")){
+					return false;
 				}
 			}
 		}else if(idA.contains("snakeBody")&&idB.contains("Wall")){
 			return false;
 		}
-
 
 		return true;
 	}
