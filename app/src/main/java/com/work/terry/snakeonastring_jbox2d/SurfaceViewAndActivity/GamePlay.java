@@ -133,6 +133,7 @@ public class GamePlay extends MyView{
         SnakeFood tempt;
         synchronized (JBox2DThread.JBox2DLock){
             tempt= new SnakeFood(
+                    getDrawUtil(),
                     world,
                     foodCount,
                     loc.x,loc.y,
@@ -143,7 +144,6 @@ public class GamePlay extends MyView{
             );
         }
         snakeFoodMap.put(foodCount,tempt);
-        drawUtil.addToFloorLayer(tempt);
         foodCount++;
         if(foodLocationCount>3){
             foodLocationCount=0;

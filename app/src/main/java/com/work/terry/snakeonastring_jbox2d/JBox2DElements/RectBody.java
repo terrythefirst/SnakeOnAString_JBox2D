@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -75,10 +76,13 @@ public class RectBody extends MyBody{
         bd.linearVelocity.set(new Vec2(vX,vY));
         bd.angle = angle;
 
-//        while (world.isLocked()){
-//            Log.d("world","LOKED!");
-//        }
-        Body bodyTemp = world.createBody(bd);//在世界中创建刚体
+        while (world.isLocked()){
+            Log.d("world","LOKED!");
+        }
+        Body bodyTemp;
+        synchronized (JBox2DThread.JBox2DLock){
+            bodyTemp = world.createBody(bd);//在世界中创建刚体
+        }
 
         Log.d("RectBody"+id,(bodyTemp==null)?"NULL":"NOT NULL");
         PolygonShape ps=new PolygonShape();//创建刚体形状

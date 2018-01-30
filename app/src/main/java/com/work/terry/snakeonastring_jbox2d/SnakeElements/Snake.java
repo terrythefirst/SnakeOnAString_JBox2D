@@ -185,7 +185,6 @@ public class Snake {
                     addBody();
                 }
             }.start();
-            minusOneSnakeAjaxLength();
         }
     }
     public int getSnakeAjaxLength(){

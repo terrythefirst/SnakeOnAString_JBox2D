@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
@@ -20,11 +22,12 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class SnakeFood extends CircleBody{
-
+    public DrawUtil drawUtil;
     public boolean eatean = false;
 
     public int score;
     public SnakeFood(
+            DrawUtil drawUtil,
             World world,
             int id,
             float x,float y,
@@ -46,8 +49,11 @@ public class SnakeFood extends CircleBody{
                 true,
                 Img
         );
+        this.drawUtil = drawUtil;
         this.score = score;
         setDoDrawHeight(false);
+
+        drawUtil.addToFloorLayer(this);
     }
     public void setEatean(){
         Log.d("SnakeFood","eaten");

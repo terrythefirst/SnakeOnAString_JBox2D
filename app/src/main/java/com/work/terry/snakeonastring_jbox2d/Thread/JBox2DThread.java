@@ -40,9 +40,10 @@ public class JBox2DThread extends Thread{
 
                     if (mb instanceof SnakeFood) {
                         if (((SnakeFood) mb).eatean) {
-                                //gamePlay.drawUtil.deleteElement(mb);
+                                gamePlay.drawUtil.deleteElement(mb);
                             gamePlay.removeFood(mb.getId());
                             //mb.setDoDraw(false);
+
                             gamePlay.world.destroyBody(mb.body);
                         }
                     }

@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
@@ -128,10 +129,13 @@ public class CircleBody extends MyBody{
 
         bd.setAngularDamping(angularDampingRate);
         bd.setLinearDamping(linearDampingRate);
-//        while (world.isLocked()){
-//            Log.d("world","LOKED!");
-//        }
-        Body bodyTemp = world.createBody(bd);//在世界中创建刚体
+        while (world.isLocked()){
+            Log.d("world","LOKED!");
+        }
+        Body bodyTemp;
+        synchronized (JBox2DThread.JBox2DLock){
+            bodyTemp = world.createBody(bd);//在世界中创建刚体
+        }
 
         //Log.d("CircleBody",(bodyTemp==null)?"NULL":"NOT NULL!");
         CircleShape cs=new CircleShape();//创建刚体形状
