@@ -129,13 +129,10 @@ public class CircleBody extends MyBody{
 
         bd.setAngularDamping(angularDampingRate);
         bd.setLinearDamping(linearDampingRate);
-        while (world.isLocked()){
-            Log.d("world","LOKED!");
-        }
-        Body bodyTemp;
-        synchronized (JBox2DThread.JBox2DLock){
-            bodyTemp = world.createBody(bd);//在世界中创建刚体
-        }
+//        while (world.isLocked()){
+//            Log.d("world","LOKED!");
+//        }
+        Body bodyTemp = world.createBody(bd);//在世界中创建刚体
 
         //Log.d("CircleBody",(bodyTemp==null)?"NULL":"NOT NULL!");
         CircleShape cs=new CircleShape();//创建刚体形状

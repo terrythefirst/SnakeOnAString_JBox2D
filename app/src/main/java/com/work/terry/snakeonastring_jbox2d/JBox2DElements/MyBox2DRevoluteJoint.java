@@ -10,10 +10,7 @@ import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 
-public class MyBox2DRevoluteJoint {
-	World world;////物理层里的物理世界
-	public RevoluteJoint rjoint;//创建旋转关节对象
-	RectBody squareBody;
+public class MyBox2DRevoluteJoint extends MyJoint{
 	public MyBox2DRevoluteJoint(String id,//关节id
                                 World world,//物理层里的物理世界
                                 boolean collideConnected,
@@ -41,7 +38,7 @@ public class MyBox2DRevoluteJoint {
 		anchor.x=anchor.x / RATE;					//更改锚点的x坐标
 		anchor.y=anchor.y / RATE;					//更改锚点的y坐标
 		rjd.initialize(A.body, B.body, anchor);//调用旋转关节描述的初始化函数
-		rjoint=(RevoluteJoint)world.createJoint(rjd);		//在物理世界里增添旋转关节
+		joint=(RevoluteJoint)world.createJoint(rjd);		//在物理世界里增添旋转关节
 
 		JBox2DUtil.Joints.add(this);
 	}

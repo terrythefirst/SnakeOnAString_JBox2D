@@ -20,7 +20,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class JBox2DThread extends Thread{
-    public static byte[] JBox2DLock = new byte[0];
     GamePlay gamePlay;
 
     public JBox2DThread(GamePlay gamePlay){
@@ -30,26 +29,13 @@ public class JBox2DThread extends Thread{
     public void run(){
         while(gamePlay.IS_PLAYING)//&&!gamePlayView.snake.isDead())
         {
-            synchronized (JBox2DLock){
-                gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
-            }
+           // Log.d("JBOX2DTHREAD","worldBodySize="+gamePlay.world.getBodyCount()+" myBodiesSize="+JBox2DUtil.Bodies.size());
+            gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
 
-            synchronized (JBox2DUtil.Bodies) {
-                for (MyBody mb : JBox2DUtil.Bodies) {
-                    mb.popXYfromBody();
+            JBox2DUtil.MyJBox2DStep();
 
-                    if (mb instanceof SnakeFood) {
-                        if (((SnakeFood) mb).eatean) {
-                                gamePlay.drawUtil.deleteElement(mb);
-                            gamePlay.removeFood(mb.getId());
-                            //mb.setDoDraw(false);
-
-                            gamePlay.world.destroyBody(mb.body);
-                        }
-                    }
-                }
-            }
             gamePlay.checkShouldAddFood();
+
             if (gamePlay.snake.isDead()) {
                 gamePlay.snake.doAfterDead();
             }else {

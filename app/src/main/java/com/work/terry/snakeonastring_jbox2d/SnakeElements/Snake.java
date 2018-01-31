@@ -7,6 +7,7 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
@@ -26,7 +27,6 @@ import java.util.List;
 
 public class Snake {
     public byte[] snakeAjaxLengthLock = new byte[0];
-
     public int SnakeAjaxLength ;
 
     public boolean initFinnished = false;
@@ -106,6 +106,9 @@ public class Snake {
         return isDead;
     }
     public boolean isPaused(){return paused;}
+    public boolean getAddAnimating(){
+        return addAnimating;
+    }
     public void beginAddAnimation(){
         synchronized (addAnimationLock){
             addAnimating = true;
@@ -117,30 +120,21 @@ public class Snake {
         }
     }
     public void addBody(){
-        beginAddAnimation();
-
         SnakeNode tempt;
-        synchronized (JBox2DThread.JBox2DLock){
-            int index = snakeBodies.size();
+        int index = snakeBodies.size();
 
-            if(index==1){
-                tempt = new SnakeNode(this,world,snakeHead,index);
-            }else{
-                tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
-            }
+        if(index==1){
+            tempt = new SnakeNode(this,world,snakeHead,index);
+        }else{
+            tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
         }
-        synchronized (snakeBodies){
-            snakeBodies.add(tempt);
-        }
+        snakeBodies.add(tempt);
+
         if(initFinnished){
             tempt.setDoDraw(false);
-            drawUtil.addToCenterLayer(tempt);
-            new SnakeNodeAppendAnimateThread(tempt,drawUtil).run();
-        }else{
-            drawUtil.addToCenterLayer(tempt);
-            addAnimating = false;
+            new SnakeNodeAppendAnimateThread(tempt,drawUtil).start();
         }
-
+        drawUtil.addToCenterLayer(tempt);
     }
     public int getLength(){
         return snakeBodies.size();
@@ -161,30 +155,17 @@ public class Snake {
     public void doAfterDead(){
         for (CircleBody sn:snakeBodies){
             if(sn instanceof SnakeNode){
-                synchronized (JBox2DThread.JBox2DLock){
-                    world.destroyBody(((SnakeNode) sn).rectBody.body);
-                }
+               ((SnakeNode) sn).rectBody.destroySelf();
             }
         }
-        for (Object o : JBox2DUtil.Joints) {
-            if (o instanceof MyBox2DRevoluteJoint) {
-                synchronized (JBox2DThread.JBox2DLock){
-                    world.destroyJoint(((MyBox2DRevoluteJoint) o).rjoint);
-                }
-            } else if (o instanceof MyBox2DRevoluteJoint) {
-                synchronized (JBox2DThread.JBox2DLock){
-                    world.destroyJoint(((MyWeldJoint) o).wj);
-                }
-            }
+        for (MyJoint mj : JBox2DUtil.Joints) {
+            mj.destroySelf();
         }
     }
     public void checkLength(){
-        if(getSnakeAjaxLength()> getLength()&&!addAnimating) {
-            new Thread() {
-                public void run() {
-                    addBody();
-                }
-            }.start();
+        if(!getAddAnimating()&&getSnakeAjaxLength()> getLength()) {
+            beginAddAnimation();
+            addBody();
         }
     }
     public int getSnakeAjaxLength(){

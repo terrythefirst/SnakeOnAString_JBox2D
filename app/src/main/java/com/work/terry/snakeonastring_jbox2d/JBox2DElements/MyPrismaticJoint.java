@@ -14,9 +14,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
  * Created by Terry on 2018/1/23.
  */
 
-public class MyPrismaticJoint {
-    World world;//物理层里的物理世界
-    PrismaticJoint pjoint;//创建移动关节对象
+public class MyPrismaticJoint extends MyJoint{
     public MyPrismaticJoint(
             String id,
             World world,
@@ -47,8 +45,8 @@ public class MyPrismaticJoint {
         pjd.upperTranslation = upperTranslation / RATE;		//最大变换
         pjd.enableLimit=enableLimit;							//给是否开启关节限制赋值
         pjd.initialize(A, B, anchor, localAxisA);			//调用移动关节描述对象的初始化函数
-        pjoint=(PrismaticJoint)world.createJoint(pjd);		//在物理世界里增添移动关节
+        joint=(PrismaticJoint)world.createJoint(pjd);		//在物理世界里增添移动关节
 
-        JBox2DUtil.Joints.add(pjoint);
+        JBox2DUtil.Joints.add(this);
     }
 }

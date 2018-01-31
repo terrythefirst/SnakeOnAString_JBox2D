@@ -14,10 +14,8 @@ import org.jbox2d.dynamics.joints.DistanceJointDef;
  * Created by Terry on 2018/1/14.
  */
 
-public class MyDistanceJoint
+public class MyDistanceJoint extends MyJoint
 {
-    World world;//物理世界对象
-    public DistanceJoint dj;//距离关节对象
     public MyDistanceJoint
             (
                     String id,//id
@@ -38,10 +36,8 @@ public class MyDistanceJoint
         djd.initialize(poA.body, poB.body, anchorA, anchorB);//调用关节的初始化方法
         djd.frequencyHz=frequencyHz;//设置关节频率
         djd.dampingRatio=dampingRatio;//设置关节阻尼系数
-        dj=(DistanceJoint) world.createJoint(djd);//在物理世界添加距离关节
+        joint=(DistanceJoint) world.createJoint(djd);//在物理世界添加距离关节
 
-
-        Log.d("RectBody","length"+dj.getLength());
         JBox2DUtil.Joints.add(this);
     }
 }

@@ -43,7 +43,7 @@ public class Constant {
         //蛇的刚体参数
         public static final float SnakeHeadAngularDampingRate = 0.3f;
         public static final float SnakeHeadLinearDampingRate = 0.2f;
-        public static final float SnakeHeadDensity = 1.0f;
+        public static final float SnakeHeadDensity = 10.0f;
         public static final float SnakeHeadFriction = 0.04f;
         public static final float SnakeHeadRestitution = 0.6f;
 

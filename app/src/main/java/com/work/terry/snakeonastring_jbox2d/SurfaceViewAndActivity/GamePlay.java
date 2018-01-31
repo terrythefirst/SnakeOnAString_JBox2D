@@ -24,6 +24,7 @@ import java.io.StreamCorruptedException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BombImg;
@@ -101,19 +102,11 @@ public class GamePlay extends MyView{
 
 
         jBox2DThread = new JBox2DThread(GamePlay.this);
-        addBomb();
+        //addBomb();
 
         snake.moving();
         jBox2DThread.start();
 
-    }
-    public void removeFood(SnakeFood food){
-        drawUtil.deleteElement(food);
-        //food.setDoDraw(false);
-
-    }
-    public void removeFood(int index){
-        removeFood(snakeFoodMap.get(index));
     }
     public void checkShouldAddFood(){
         if (snakeFoodMap == null)return;
@@ -128,31 +121,29 @@ public class GamePlay extends MyView{
         if(allEaten)addFood();
     }
     public void addFood(){
-        Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
-        Log.d("foodCount",foodCount+"");
-        SnakeFood tempt;
-        synchronized (JBox2DThread.JBox2DLock){
-            tempt= new SnakeFood(
+        float rx = (float) Math.random()*800+100;
+        float ry = (float) Math.random()*1800+200;
+        //Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
+        //Log.d("foodCount",foodCount+"");
+        SnakeFood tempt = new SnakeFood(
                     getDrawUtil(),
                     world,
                     foodCount,
-                    loc.x,loc.y,
+                    rx,ry,
                     60,60,
                     0,
                     10,
                     SnakeFoodImg
             );
-        }
+
         snakeFoodMap.put(foodCount,tempt);
         foodCount++;
-        if(foodLocationCount>3){
-            foodLocationCount=0;
-        }
+//        if(foodLocationCount>3){
+//            foodLocationCount=0;
+//        }
     }
     public void addBomb(){
-        Bomb tempt;
-        synchronized (JBox2DThread.JBox2DLock){
-            tempt = new Bomb(
+        Bomb tempt  = new Bomb(
                     world,
                     foodCount,
                     200,1440,
@@ -161,7 +152,6 @@ public class GamePlay extends MyView{
                     10,
                     BombImg
             );
-        }
         drawUtil.addToFloorLayer(tempt);
     }
     public void constructWallsAndStaticBody(){

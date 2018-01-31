@@ -19,6 +19,8 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 
 public abstract class MyBody extends GameElements
 {
+    public boolean destroyed = false;
+
     public World world;
     public Body body;//对应物理引擎中的刚体
     public MyBody(
@@ -44,9 +46,7 @@ public abstract class MyBody extends GameElements
                 heightColorFactor,
                 floorShadowColorFactor,
                 Img);
-        synchronized (JBox2DUtil.Bodies){
-            JBox2DUtil.Bodies.add(this);
-        }
+        JBox2DUtil.Bodies.add(this);
         this.world = world;
     }
     public Vec2 getBodyVelocityNormalized(){
@@ -70,6 +70,12 @@ public abstract class MyBody extends GameElements
     }
     public Vec2 getBodyXY(){
         return new Vec2(body.getPosition().x * RATE, body.getPosition().y * RATE);
+    }
+    public void destroySelf(){
+        if (!destroyed){
+            world.destroyBody(body);
+            destroyed = true;
+        }
     }
     public int getId(){
         return Integer.parseInt(body.getUserData().toString().split(" ")[1]);

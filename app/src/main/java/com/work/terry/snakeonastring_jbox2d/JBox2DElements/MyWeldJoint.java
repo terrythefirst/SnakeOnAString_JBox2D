@@ -10,10 +10,8 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.WeldJoint;
 import org.jbox2d.dynamics.joints.WeldJointDef;
 
-public class MyWeldJoint 
+public class MyWeldJoint extends MyJoint
 {
-	World world;//声明物理世界引用
-	public WeldJoint wj;//声明焊接关节引用
 	public MyWeldJoint
 	(
             String id,//关节id
@@ -33,12 +31,8 @@ public class MyWeldJoint
 		wjd.initialize(poA.body,poB.body,anchor);//调用焊接关节的初始化方法
 		wjd.frequencyHz = frequencyHz;					//给关节频率赋值
 		wjd.dampingRatio = dampingRatio;					//给阻尼系数赋值
-		while (world.isLocked()){
-			Log.d("world","LOKED!");
-		}
-		synchronized (JBox2DThread.JBox2DLock){
-			wj=(WeldJoint) world.createJoint(wjd);//在物理世界添加焊接关节
-		}
+
+		joint=(WeldJoint) world.createJoint(wjd);//在物理世界添加焊接关节
 
 		JBox2DUtil.Joints.add(this);
 	}
