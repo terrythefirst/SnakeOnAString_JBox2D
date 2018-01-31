@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyDistanceJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 
 import org.jbox2d.dynamics.Body;
@@ -27,6 +28,13 @@ public class JBox2DUtil {
 
             if (mb instanceof SnakeFood) {
                 if (((SnakeFood) mb).eatean) {
+                    mb.setDoDraw(false);
+                    mb.destroySelf();
+                    JBox2DUtil.removeBodyList.add(mb);
+                }
+            }
+            if(mb instanceof Bomb){
+                if(((Bomb)mb).eatean){
                     mb.setDoDraw(false);
                     mb.destroySelf();
                     JBox2DUtil.removeBodyList.add(mb);

@@ -46,7 +46,7 @@ public class DrawUtil {
             floorLayerDrawSequence.add(gameElements);
         }
     }
-    public void addToremoveSequence(GameElements gameElements){
+    public void addToRemoveSequence(GameElements gameElements){
         synchronized (removeSequence){
             removeSequence.add(gameElements);
         }

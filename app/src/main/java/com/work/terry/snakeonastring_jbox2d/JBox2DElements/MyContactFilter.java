@@ -24,6 +24,7 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 		int idBNum = 0;
 
 		if(idA.contains("snakeFood")||idB.contains("snakeFood")) {
+
 			if(idA.contains("snakeFood")){
 //				Log.d("ContactFilter",idA+" contains snakeFood");
 				idANum = Integer.parseInt(idA.split(" ")[1]);
@@ -41,6 +42,27 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 					return false;
 				}
 			}
+
+		}else if(idA.contains("Bomb")||idB.contains("Bomb")){
+
+			if(idA.contains("Bomb")){
+//				Log.d("ContactFilter",idA+" contains snakeFood");
+				idANum = Integer.parseInt(idA.split(" ")[1]);
+				if(gamePlay.getBomb(idANum).eatean){
+					return false;
+				}else if(idB.contains("snakeBody")){
+					return false;
+				}
+			}else if(idB.contains("Bomb")){
+//				Log.d("ContactFilter",idB+" contains snakeFood");
+				idBNum = Integer.parseInt(idB.split(" ")[1]);
+				if(gamePlay.getBomb(idBNum).eatean){
+					return false;
+				}else if(idA.contains("snakeBody")){
+					return false;
+				}
+			}
+
 		}else if(idA.contains("snakeBody")&&idB.contains("Wall")){
 			return false;
 		}

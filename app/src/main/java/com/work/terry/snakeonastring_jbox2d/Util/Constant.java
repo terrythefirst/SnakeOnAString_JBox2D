@@ -69,6 +69,9 @@ public class Constant {
 
     public static final int SnakeDefaultHeight = 24;
 
+    public static final int SNAKE_ANIMATION_APPEND = 0;
+    public static final int SNAKE_ANIMATION_REMOVE = 1;
+
 
     public static final int SnakeEyesDownLittleHeight = 3;
     public static final float SnakeEyesDownLittleColorFactor = 0.85f;

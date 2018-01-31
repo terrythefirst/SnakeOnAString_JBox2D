@@ -34,7 +34,7 @@ public class JBox2DThread extends Thread{
 
             JBox2DUtil.MyJBox2DStep();
 
-            gamePlay.checkShouldAddFood();
+            gamePlay.checkShouldAddFoodOrBomb();
 
             if (gamePlay.snake.isDead()) {
                 gamePlay.snake.doAfterDead();

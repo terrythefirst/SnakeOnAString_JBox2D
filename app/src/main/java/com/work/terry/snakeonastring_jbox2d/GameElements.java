@@ -178,12 +178,23 @@ public class GameElements{
             int Color
     ){
         if(number<10){
+            float quarterWidth = width*1.0f/4;
             drawPic(
                     painter,
                     ImgManager.getNumberImgName(number),
-                    x+width/2,
+                    x+quarterWidth,
                     y,
-                    width,
+                    width/2,
+                    height,
+                    0,
+                    Color
+            );
+            drawPic(
+                    painter,
+                    ImgManager.getNumberImgName(0),
+                    x-quarterWidth,
+                    y,
+                    width/2,
                     height,
                     0,
                     Color

@@ -39,8 +39,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFoodImg;
  */
 
 public class GamePlay extends MyView{
-    public Object lock;
-
     public boolean IS_PLAYING = true;
     public World world;
     public JBox2DThread jBox2DThread = null;
@@ -49,15 +47,13 @@ public class GamePlay extends MyView{
     public int Score ;
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
-    public Map<Integer,Vec2> snakeFoodLocationMap = new HashMap<>();
+    public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
+    //public Map<Integer,Vec2> snakeFoodLocationMap = new HashMap<>();
     public int foodLocationCount = 0;
-    public int foodCount = 0;
+    public int foodIndex = 0;
+    public int bombIndex = 0;
 
-    public GamePlay (
-
-    ){
-        lock = new Object();
-
+    public GamePlay (){
         setDrawUtilAndBacktoundImg(BackgroundImg);
 
         Vec2 gravity = new Vec2(0,0);
@@ -82,10 +78,10 @@ public class GamePlay extends MyView{
 //                            Constant.C0LOR_WHITE
 //                    )
 //            );
-        snakeFoodLocationMap.put(0,new Vec2(200,600));
-        snakeFoodLocationMap.put(1,new Vec2(200,1800));
-        snakeFoodLocationMap.put(2,new Vec2(1200,600));
-        snakeFoodLocationMap.put(3,new Vec2(1200,1800));
+//        snakeFoodLocationMap.put(0,new Vec2(200,600));
+//        snakeFoodLocationMap.put(1,new Vec2(200,1800));
+//        snakeFoodLocationMap.put(2,new Vec2(1200,600));
+//        snakeFoodLocationMap.put(3,new Vec2(1200,1800));
 
         drawUtil.addToCenterLayer(
                 new ButtonBlockCircle(
@@ -102,23 +98,35 @@ public class GamePlay extends MyView{
 
 
         jBox2DThread = new JBox2DThread(GamePlay.this);
-        //addBomb();
+        addBomb();
 
         snake.moving();
         jBox2DThread.start();
 
     }
-    public void checkShouldAddFood(){
-        if (snakeFoodMap == null)return;
-
-        boolean allEaten = true;
-        for(int x:snakeFoodMap.keySet()){
-            if(!snakeFoodMap.get(x).eatean){
-                allEaten = false;
-                break;
+    public void checkShouldAddFoodOrBomb(){
+        if (snakeFoodMap != null){
+            boolean allEaten = true;
+            for(int x:snakeFoodMap.keySet()){
+                if(!snakeFoodMap.get(x).eatean){
+                    allEaten = false;
+                    break;
+                }
             }
+            if(allEaten)addFood();
         }
-        if(allEaten)addFood();
+        if(snakeBombMap != null){
+            boolean allEaten = true;
+            for(int x:snakeBombMap.keySet()){
+                if(!snakeBombMap.get(x).eatean){
+                    allEaten = false;
+                    break;
+                }
+            }
+            if(allEaten)addBomb();
+        }
+
+
     }
     public void addFood(){
         float rx = (float) Math.random()*800+100;
@@ -128,31 +136,42 @@ public class GamePlay extends MyView{
         SnakeFood tempt = new SnakeFood(
                     getDrawUtil(),
                     world,
-                    foodCount,
+                    foodIndex,
                     rx,ry,
                     60,60,
                     0,
-                    10,
+                    8,
                     SnakeFoodImg
             );
 
-        snakeFoodMap.put(foodCount,tempt);
-        foodCount++;
+        snakeFoodMap.put(foodIndex,tempt);
+        foodIndex++;
 //        if(foodLocationCount>3){
 //            foodLocationCount=0;
 //        }
     }
+    public SnakeFood getFood(int index){
+        return snakeFoodMap.get(index);
+    }
     public void addBomb(){
+        float rx = (float) Math.random()*800+100;
+        float ry = (float) Math.random()*1800+200;
         Bomb tempt  = new Bomb(
+                    drawUtil,
                     world,
-                    foodCount,
-                    200,1440,
+                    bombIndex,
+                    rx,ry,
                     100,100,
                     0,
-                    10,
+                    8,
                     BombImg
             );
         drawUtil.addToFloorLayer(tempt);
+
+        snakeBombMap.put(bombIndex++,tempt);
+    }
+    public Bomb getBomb(int bombIndex){
+        return snakeBombMap.get(bombIndex);
     }
     public void constructWallsAndStaticBody(){
         RectBody upWall = new RectBody(
@@ -226,9 +245,6 @@ public class GamePlay extends MyView{
             case MotionEvent.ACTION_UP:
                 break;
         }
-    }
-    public SnakeFood getFood(int index){
-        return snakeFoodMap.get(index);
     }
     @Override
     public void onResume(){

@@ -55,10 +55,10 @@ public class SnakeFood extends CircleBody{
 
         drawUtil.addToFloorLayer(this);
     }
-    public void setEatean(){
+    public void setEaten(){
         Log.d("SnakeFood","eaten");
         eatean = true;
-        drawUtil.addToremoveSequence(this);
+        drawUtil.addToRemoveSequence(this);
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){

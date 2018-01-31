@@ -61,10 +61,11 @@ public class MyContactListener implements ContactListener {
 			if(idA.equals("snakeHead")){
 				if(idB.contains("snakeFood")){
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
-					gamePlay.getFood(Integer.parseInt(idB.split(" ")[1])).setEatean();
+					gamePlay.getFood(Integer.parseInt(idB.split(" ")[1])).setEaten();
 					gamePlay.snake.plusOneSnakeAjaxLength();
 				}else  if(idB.contains("Bomb")){
-					//gamePlay.snake.minusOneSnakeAjaxLength();
+					gamePlay.getBomb(Integer.parseInt(idB.split(" ")[1])).setEaten();
+					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idB.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
 					changeSnakeVelocityUponDead();
@@ -72,10 +73,11 @@ public class MyContactListener implements ContactListener {
 			}else if(idB.toString().equals("snakeHead")){
 				if(idA.contains("snakeFood")){
 					Log.d("ContactListener",idB+" equals snakeHead "+idA+" contains snakeFood");
-					gamePlay.getFood(Integer.parseInt(idA.split(" ")[1])).setEatean();
+					gamePlay.getFood(Integer.parseInt(idA.split(" ")[1])).setEaten();
 					gamePlay.snake.plusOneSnakeAjaxLength();
 				}else  if(idA.contains("Bomb")){
-					//gamePlay.snake.minusOneSnakeAjaxLength();
+					gamePlay.getBomb(Integer.parseInt(idA.split(" ")[1])).setEaten();
+					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idA.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
 					changeSnakeVelocityUponDead();

@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 
 import org.jbox2d.dynamics.World;
 
@@ -13,10 +14,12 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColor
  */
 
 public class Bomb extends CircleBody {
+    DrawUtil drawUtil;
     public boolean eatean = false;
 
     public int score;
     public Bomb(
+            DrawUtil drawUtil,
             World world,
             int id,
             float x,float y,
@@ -38,11 +41,13 @@ public class Bomb extends CircleBody {
                 true,
                 Img
         );
+        this.drawUtil = drawUtil;
         this.score = score;
         setDoDrawHeight(false);
     }
-    public void setEatean(){
+    public void setEaten(){
         Log.d("Bomb","eaten");
         eatean = true;
+        drawUtil.addToRemoveSequence(this);
     }
 }

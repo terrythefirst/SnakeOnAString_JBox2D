@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
 import com.work.terry.snakeonastring_jbox2d.GameElements;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
@@ -16,7 +17,8 @@ public class SnakeNodeAnimateDraw extends GameElements{
     public float nowRadius = 0;
     public SnakeNode snakeNode;
     public SnakeNodeAnimateDraw(
-            SnakeNode snakeNode
+            SnakeNode snakeNode,
+            int code
     ){
         super(
                 "SnakeNodeAnimateDraw "+DrawId++,
@@ -30,13 +32,22 @@ public class SnakeNodeAnimateDraw extends GameElements{
                 snakeNode.FloorShadowColorFactor,
                 snakeNode.Img);
         this.snakeNode = snakeNode;
-        this.targetRadius = snakeNode.radius;
+        if(code == Constant.SNAKE_ANIMATION_REMOVE){
+            this.nowRadius = snakeNode.radius;
+            this.targetRadius = 0;
+        }else if(code ==Constant.SNAKE_ANIMATION_APPEND){
+            this.nowRadius = 0;
+            this.targetRadius = snakeNode.radius;
+        }
+
     }
     public boolean isFinished(){
-        return (nowRadius>=targetRadius);
+        return (nowRadius==targetRadius);
     }
-    public void changeXY(){
-        float ratio = nowRadius/targetRadius;
+    public void AnimationStep(float perRadius){
+        nowRadius += perRadius;
+
+        float ratio = nowRadius/snakeNode.radius;
         float distance = nowRadius+snakeNode.front.radius;
         TopOffset = ratio*snakeNode.TopOffset;
         defaultHeight = ratio*snakeNode.defaultHeight;
