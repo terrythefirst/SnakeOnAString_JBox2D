@@ -1,9 +1,8 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import com.work.terry.snakeonastring_jbox2d.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 

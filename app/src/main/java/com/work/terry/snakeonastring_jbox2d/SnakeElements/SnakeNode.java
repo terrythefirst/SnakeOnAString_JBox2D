@@ -199,7 +199,7 @@ public class SnakeNode extends CircleBody{
                     //rectBody.body.getPosition(),
                     front.body.getPosition(),
                     0.01f,
-                    0.05f
+                    0.01f
             );
         }else {
             new MyWeldJoint(
@@ -244,6 +244,11 @@ public class SnakeNode extends CircleBody{
 //        rectBody.rotateAngleGameElements = (float)Math.toDegrees(rectBody.body.getAngle());
 //        rectBody.drawSelf(painter);
 //    }
+    @Override
+    public void destroySelf(){
+        super.destroySelf();
+        rectBody.destroySelf();
+    }
     public void startMoving(){
         movingThread = new SnakeNodeMovingThread(this);
         movingThread.start();

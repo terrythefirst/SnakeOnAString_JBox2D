@@ -1,11 +1,10 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
-import com.work.terry.snakeonastring_jbox2d.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Created by Terry on 2018/1/24.

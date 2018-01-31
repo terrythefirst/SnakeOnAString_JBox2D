@@ -1,14 +1,12 @@
 package com.work.terry.snakeonastring_jbox2d;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyPrismaticJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
-import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -24,7 +22,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
  * Created by Yearn on 2018/1/21.
  */
 
-public class ButtonBlock extends GameElements{
+public class ButtonBlock extends GameElements {
     World world;
     CircleBody circleBody1;
     CircleBody circleBody2;

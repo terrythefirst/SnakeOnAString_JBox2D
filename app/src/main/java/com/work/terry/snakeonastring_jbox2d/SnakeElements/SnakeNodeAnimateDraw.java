@@ -1,7 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
-import com.work.terry.snakeonastring_jbox2d.GameElements;
-import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 

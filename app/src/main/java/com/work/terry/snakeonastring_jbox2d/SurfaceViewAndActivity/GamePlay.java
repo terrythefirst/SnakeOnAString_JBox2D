@@ -1,11 +1,9 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.ButtonBlockCircle;
-import com.work.terry.snakeonastring_jbox2d.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
@@ -14,24 +12,19 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
-import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.io.StreamCorruptedException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BombImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.ButtonBlockDefaultHeight;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SCREEN_HEIGHT;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SCREEN_WIDTH;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeBodyImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFoodImg;
 
 /**

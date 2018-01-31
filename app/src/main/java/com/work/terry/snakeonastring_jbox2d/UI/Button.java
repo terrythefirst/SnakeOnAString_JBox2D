@@ -1,9 +1,5 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
-import com.work.terry.snakeonastring_jbox2d.GameElements;
-import com.work.terry.snakeonastring_jbox2d.Util.Constant;
-import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
-
 /**
  * Created by Terry on 2017/12/30.
  */

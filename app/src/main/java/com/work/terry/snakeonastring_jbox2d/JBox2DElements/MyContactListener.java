@@ -2,19 +2,15 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;//声明包名
 
 import android.util.Log;
 
-import com.work.terry.snakeonastring_jbox2d.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
-import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
-import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.contacts.Contact;
 
@@ -62,6 +58,7 @@ public class MyContactListener implements ContactListener {
 				if(idB.contains("snakeFood")){
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
 					gamePlay.getFood(Integer.parseInt(idB.split(" ")[1])).setEaten();
+					gamePlay.snake.startAJumpAnimation();
 					gamePlay.snake.plusOneSnakeAjaxLength();
 				}else  if(idB.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idB.split(" ")[1])).setEaten();
@@ -74,6 +71,7 @@ public class MyContactListener implements ContactListener {
 				if(idA.contains("snakeFood")){
 					Log.d("ContactListener",idB+" equals snakeHead "+idA+" contains snakeFood");
 					gamePlay.getFood(Integer.parseInt(idA.split(" ")[1])).setEaten();
+					gamePlay.snake.startAJumpAnimation();
 					gamePlay.snake.plusOneSnakeAjaxLength();
 				}else  if(idA.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idA.split(" ")[1])).setEaten();

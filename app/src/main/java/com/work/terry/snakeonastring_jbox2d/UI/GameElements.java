@@ -1,4 +1,4 @@
-package com.work.terry.snakeonastring_jbox2d;
+package com.work.terry.snakeonastring_jbox2d.UI;
 
 import android.content.SharedPreferences;
 import android.util.Log;
