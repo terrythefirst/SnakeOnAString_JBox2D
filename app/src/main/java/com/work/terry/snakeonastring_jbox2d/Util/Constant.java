@@ -67,6 +67,9 @@ public class Constant {
     //钉子
     public static final String NailVerticalImg = "nail_vertical.png";
     public static final String NailShadowImg = "nail_shadow.png";
+
+    //按钮
+    public static final String PauseButtonImg = "stop.png";
     //蛇整体
     public static final int SnakeBodyDefaultLength = 6;
 

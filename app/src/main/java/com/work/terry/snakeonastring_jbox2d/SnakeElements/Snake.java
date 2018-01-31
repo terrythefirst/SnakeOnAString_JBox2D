@@ -40,7 +40,7 @@ public class Snake {
     public boolean addAnimating = false;
 
     public World world;
-    private SnakeHead snakeHead;
+    public SnakeHead snakeHead;
     public List<CircleBody> snakeBodies = null;//包括头！！！
     private int color = Constant.C0LOR_WHITE;
     public boolean paused = false;
@@ -122,8 +122,6 @@ public class Snake {
         SnakeNode tempt = (SnakeNode) snakeBodies.get(getLength()-1);
 
         new SnakeNodeRemoveAnimateThread(tempt,drawUtil,getAnEarliestRemoveJumpAnimationThread()).start();
-
-
     }
     public void addBody(){
         SnakeNode tempt;
@@ -142,6 +140,23 @@ public class Snake {
         }
         drawUtil.addToCenterLayer(tempt);
     }
+
+    public void setDizzy(){
+        new Thread(){
+            @Override
+            public void run() {
+                snakeHead.changeFace(Constant.SnakeHeadDizzyEyesImg);
+                try {
+                    sleep(800);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if(!isDead())
+                    snakeHead.changeFace(Constant.SnakeHeadEyesImg);
+            }
+        }.start();
+    }
+
     public int getLength(){
         return snakeBodies.size();
     }

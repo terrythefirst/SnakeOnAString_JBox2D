@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
@@ -20,12 +21,8 @@ import org.jbox2d.dynamics.World;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BombImg;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.ButtonBlockDefaultHeight;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SCREEN_HEIGHT;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SCREEN_WIDTH;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFoodImg;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
+
 
 /**
  * Created by Terry on 2018/1/25.
@@ -43,9 +40,10 @@ public class GamePlay extends MyView{
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
     //public Map<Integer,Vec2> snakeFoodLocationMap = new HashMap<>();
-    public int foodLocationCount = 0;
     public int foodIndex = 0;
     public int bombIndex = 0;
+
+    public Button pauseButton;
 
     public GamePlay (){
         setDrawUtilAndBacktoundImg(BackgroundImg);
@@ -59,7 +57,20 @@ public class GamePlay extends MyView{
         world.setContactListener(myContactListener);
 
         snake = new Snake(world, Constant.C0LOR_WHITE,drawUtil);
-
+        pauseButton = new Button(
+                0,
+                1440-120,200/2+20,
+                200,200,
+                0,
+                10,
+                3,
+                ButtonBlockTopOffSetColorFactor,
+                ButtonBlockHeightColorFactor,
+                ButtonBlockFloorColorFactor,
+                PauseButtonImg
+        );
+        pauseButton.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(pauseButton);
 //            drawUtil.addToCenterLayer(
 //                    new ButtonBlock(
 //                            world,
@@ -240,12 +251,15 @@ public class GamePlay extends MyView{
     public void onTouchEvent(MotionEvent event,int x,int y){
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                snake.whenMotionDown(x,y);
-                break;
             case MotionEvent.ACTION_MOVE:
-                snake.whenMotionDown(x,y);
+                if(pauseButton.testTouch(x,y))pauseButton.whenPressed();
+                else {
+                    snake.whenMotionDown(x,y);
+                }
                 break;
             case MotionEvent.ACTION_UP:
+               // if(pauseButton.testTouch(x,y))pauseButton
+                pauseButton.whenReleased();
                 snake.whenMotionUp();
                 break;
         }

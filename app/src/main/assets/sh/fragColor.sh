@@ -11,10 +11,11 @@ void main()
     vec4 tempColor = texture(sTexture, vTextureCoord);
     //fragColor = vec4((tempColor.r-uColor.r/2.0)*tempColor.a,(tempColor.g-uColor.g/2.0)*tempColor.a,(tempColor.b-uColor.b/2.0)*tempColor.a,tempColor.a);
 
+    float color = (tempColor.r+tempColor.g+tempColor.b)/3.0;
     fragColor = vec4(
-            tempColor.r*uColor.r,
-            tempColor.g*uColor.g,
-            tempColor.b*uColor.b,
+            color+uColor.r,
+            color+uColor.g,
+            color+uColor.b,
             tempColor.a
         );
     //fragColor = vec4((tempColor.r+uColor.r/4.0)*tempColor.a,(tempColor.g+uColor.g/4.0)*tempColor.a,(tempColor.b+uColor.b/4.0)*tempColor.a,tempColor.a);

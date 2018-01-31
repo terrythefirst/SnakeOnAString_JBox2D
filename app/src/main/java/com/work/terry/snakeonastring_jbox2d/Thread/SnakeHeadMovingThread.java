@@ -76,6 +76,6 @@ public class SnakeHeadMovingThread extends Thread {
         )
                 *snakeHead.speed
                 *snakeHead.snake.getLength()
-                *5;
+                *10;
     }
 }

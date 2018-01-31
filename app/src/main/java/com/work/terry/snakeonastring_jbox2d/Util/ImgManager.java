@@ -36,6 +36,8 @@ public class ImgManager {
 
             NailVerticalImg,
             NailShadowImg,
+
+            PauseButtonImg,
     };
 
     public static String getNumberImgName(int x){

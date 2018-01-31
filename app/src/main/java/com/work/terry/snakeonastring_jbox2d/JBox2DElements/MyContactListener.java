@@ -6,12 +6,14 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.contacts.Contact;
 
@@ -68,8 +70,25 @@ public class MyContactListener implements ContactListener {
 					gamePlay.snake.startARemoveJumpAnimationThread();
 					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idB.equals("snakeBody 1")){
-					gamePlay.snake.setDead();
-					changeSnakeVelocityUponDead();
+//					if(contact.getManifold().type == Manifold.ManifoldType.CIRCLES){
+//
+//					}
+//					Vec2 localNormal = contact.getManifold().localNormal.skew();
+//					Vec2 localPoint = contact.getManifold().localPoint;
+//
+//					float dotMul = dotMul2D(
+//							plusV2D(localNormal,localPoint),
+//							gamePlay.snake.snakeHead.getBodyVelocityNormalized()
+//					);
+//					Log.d("dotMul",dotMul+"");
+					float v = VectorUtil.calDistance(gamePlay.snake.snakeHead.body.getLinearVelocity());
+					Log.d("velocity",v+"");
+					if(v<=1.5f){
+						gamePlay.snake.setDizzy();
+					}else {
+						gamePlay.snake.setDead();
+						changeSnakeVelocityUponDead();
+					}
 				}
 			}else if(idB.toString().equals("snakeHead")){
 				if(idA.contains("snakeFood")){
@@ -84,8 +103,17 @@ public class MyContactListener implements ContactListener {
 					gamePlay.snake.startARemoveJumpAnimationThread();
 					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idA.equals("snakeBody 1")){
-					gamePlay.snake.setDead();
-					changeSnakeVelocityUponDead();
+//					Vec2 localNormal = contact.getManifold().localNormal;
+//					float dotMul = dotMul2D(localNormal,gamePlay.snake.snakeHead.getBodyVelocityNormalized());
+//					Log.d("dotMul",dotMul+"");
+					float v = VectorUtil.calDistance(gamePlay.snake.snakeHead.body.getLinearVelocity());
+					Log.d("velocity",v+"");
+					if(v<=1.5f){
+						gamePlay.snake.setDizzy();
+					}else {
+						gamePlay.snake.setDead();
+						changeSnakeVelocityUponDead();
+					}
 				}
 			}
 		}
