@@ -16,22 +16,30 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeBodyRadius
  */
 
 public class SnakeNodeAppendAnimateThread extends Thread {
+    Thread waitThread;
     private int code = Constant.SNAKE_ANIMATION_APPEND;
     SnakeNode snakeNode;
     SnakeNodeAnimateDraw snakeNodeAnimateDraw;
     DrawUtil drawUtil;
 
-    public SnakeNodeAppendAnimateThread (SnakeNode snakeNode, DrawUtil drawUtil){
+    public SnakeNodeAppendAnimateThread (SnakeNode snakeNode, DrawUtil drawUtil,Thread waitThread){
         this.snakeNode = snakeNode;
         this.snakeNodeAnimateDraw = new SnakeNodeAnimateDraw(snakeNode,code);
         this.drawUtil = drawUtil;
+        this.waitThread  = waitThread;
         drawUtil.addToCenterLayer(snakeNodeAnimateDraw);
     }
     @Override
     public void run(){
         snakeNode.snake.beginAddAnimation();
+        try {
+            waitThread.join();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        while(!snakeNodeAnimateDraw.isFinished()){
+
+        while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
             snakeNodeAnimateDraw.AnimationStep(0.5f);
 
             try {

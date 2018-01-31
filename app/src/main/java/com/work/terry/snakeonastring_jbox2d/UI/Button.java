@@ -1,44 +1,59 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
+import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
+
+import java.nio.channels.FileLock;
+
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.NailShadowImg;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColorFactor;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeightColorFactor;
+
 /**
  * Created by Terry on 2017/12/30.
  */
 
-//public class Button extends GameElements {
-//    public int Color = 1;
-//
-//    private float circleDiameter;
-//    private float rectLength;
-//    private float rotateAngle;
-//
-//    public Button(
-//            float x,float y,
-//            float circleDiameter,
-//            float totalLength,float jumpHeight,
-//            float rotateAngle,
-//            int Color){
-//        super(
-//                x,y,
-//                totalLength,circleDiameter,
-//                Constant.ButtonBlockDefaultHeight,
-//                ""
-//        );
-//        this.x = x;
-//        this.y = y;
-//        this.Color = Color;
-//        this.rotateAngle = rotateAngle;
-//        this.circleDiameter = circleDiameter;
-//        rectLength = totalLength-circleDiameter;
-//    }
-//
-//    public void drawSelf(TexDrawer painter, float[] color){
-//
-//    }
-//    public void drawHeightShadow(TexDrawer painter,float[] color){
-//
-//    }
-//    public void drawFloorShadow(TexDrawer painter,float[] color){
-//
-//    }
-//
-//}
+public class Button extends GameElements {
+    public float buttonDefaultHeight ;
+
+    public Button(
+            int id,
+            float x,float y,
+            float width,float height,
+
+            int color,
+            float defaultHeight,
+            float topOffset,
+            float topOffsetColorFactor,
+            float heightColorFactor,
+            float floorShadowColorFactor,
+
+            String Img){
+        super(
+                "Button "+id,
+                x,y,
+                width, height,
+                color,
+                defaultHeight,
+                topOffset,
+                topOffsetColorFactor,
+                heightColorFactor,
+                floorShadowColorFactor,
+                Img);
+        buttonDefaultHeight = defaultHeight;
+        jumpHeight = defaultHeight;
+        this.defaultHeight = 0;
+    }
+    public void whenPressed(){
+        jumpHeight = 0;
+    }
+    public void whenReleased(){
+        jumpHeight = buttonDefaultHeight;
+    }
+    public boolean testTouch(float touchX,float touchY){
+        return touchX>x-width/2
+                &&touchX<x+width/2
+                &&touchY>y-height/2
+                &&touchY<y+height/2
+                ;
+    }
+}

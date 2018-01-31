@@ -38,6 +38,7 @@ public class GamePlay extends MyView{
     public Snake snake ;
 
     public int Score ;
+    private byte[] scoreLock = new byte[0];
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
@@ -58,6 +59,7 @@ public class GamePlay extends MyView{
         world.setContactListener(myContactListener);
 
         snake = new Snake(world, Constant.C0LOR_WHITE,drawUtil);
+
 //            drawUtil.addToCenterLayer(
 //                    new ButtonBlock(
 //                            world,
@@ -96,6 +98,14 @@ public class GamePlay extends MyView{
         snake.moving();
         jBox2DThread.start();
 
+    }
+    public void plusScore(int x){
+        synchronized (scoreLock){
+            this.Score+=x;
+        }
+    }
+    public int getScore(){
+       return Score;
     }
     public void checkShouldAddFoodOrBomb(){
         if (snakeFoodMap != null){
@@ -236,6 +246,7 @@ public class GamePlay extends MyView{
                 snake.whenMotionDown(x,y);
                 break;
             case MotionEvent.ACTION_UP:
+                snake.whenMotionUp();
                 break;
         }
     }

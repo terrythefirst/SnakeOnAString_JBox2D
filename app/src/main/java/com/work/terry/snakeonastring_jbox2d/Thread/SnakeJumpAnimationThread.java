@@ -10,8 +10,10 @@ import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
 public class SnakeJumpAnimationThread extends Thread {
     Snake snake;
-    public SnakeJumpAnimationThread(Snake snake){
+    int jumpLength;
+    public SnakeJumpAnimationThread(Snake snake,int jumpLength){
         this.snake = snake;
+        this.jumpLength = jumpLength;
     }
     @Override
     public void run(){
@@ -20,7 +22,7 @@ public class SnakeJumpAnimationThread extends Thread {
         int timeLimit = (int) (2* Constant.JumpMathFactor);
         boolean finished = false;
         while (!snake.paused&&!finished){
-            if(index<snake.getLength())
+            if(index<snake.getLength()&&index<=jumpLength)
                 snake.snakeBodies.get(index).jumpHeight =  MyMath.JumpMath(Constant.SnakeDefaultHeight  + 10 ,Constant.JumpMathFactor,time);
             else finished = true;
 

@@ -27,8 +27,8 @@ public class SnakeHeadMovingThread extends Thread {
         while (!snakeHead.snake.isPaused()&&!snakeHead.snake.isDead()) {
             bodyV = snakeHead.body.getLinearVelocity();//getBodyVelocityNormalized();
 
-            float dx = snakeHead.target.TargetHeadX - snakeHead.x;
-            float dy = snakeHead.target.TargetHeadY - snakeHead.y;
+            float dx = snakeHead.target.x - snakeHead.x;
+            float dy = snakeHead.target.y - snakeHead.y;
             Vec2 vecDXY = new Vec2(dx, dy);
             //vecDXY = normalize2D(vecDXY);
             vecDXY = plusV2D(vecDXY,bodyV);

@@ -256,6 +256,8 @@ public class GameElements{
         }
     }
     public void onPause(SharedPreferences.Editor editor){
+        editor.putFloat(id+"x",x);
+        editor.putFloat(id+"x",y);
         editor.putFloat(id+"defaultHeight",defaultHeight);
         editor.putFloat(id+"topOffset",TopOffset);
         editor.putFloat(id+"topOffsetColorFactor",TopOffsetColorFactor);

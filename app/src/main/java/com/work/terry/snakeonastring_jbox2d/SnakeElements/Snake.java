@@ -18,13 +18,19 @@ import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 import org.jbox2d.dynamics.World;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Created by Terry on 2017/12/28.
  */
 
 public class Snake {
+    public Queue<Thread> addJumpAnimationThreads = new LinkedList<Thread>();
+    public Queue<Thread> removeJumpAnimationThreads = new LinkedList<Thread>();
+
     public byte[] snakeAjaxLengthLock = new byte[0];
     public int SnakeAjaxLength ;
 
@@ -62,9 +68,7 @@ public class Snake {
 
         initFinnished = true;
     }
-    public int getSize(){
-        return snakeBodies.size();
-    }
+
     public void setDead(){
         Log.d("snake","DEAD!");
         isDead = true;
@@ -73,12 +77,35 @@ public class Snake {
     public boolean isDead(){
         return isDead;
     }
+
+    public int getSize(){
+        return snakeBodies.size();
+    }
+
     public boolean isPaused(){return paused;}
+
+    public void startAnAddJumpAnimationThread(){
+        Thread thread = new SnakeJumpAnimationThread(this,getLength());
+        addJumpAnimationThreads.offer(thread);
+        thread.start();
+    }
+    public Thread getAnEarliestAddJumpAnimationThread(){
+        Thread thread = addJumpAnimationThreads.poll();
+        return thread;
+    }
+
+    public void startARemoveJumpAnimationThread(){
+        Thread thread = new SnakeJumpAnimationThread(this,getLength()-1);
+        removeJumpAnimationThreads.offer(thread);
+        thread.start();
+    }
+    public Thread getAnEarliestRemoveJumpAnimationThread(){
+        Thread thread = removeJumpAnimationThreads.poll();
+        return thread;
+    }
+
     public boolean getAddAnimating(){
         return addAnimating;
-    }
-    public void startAJumpAnimation(){
-        new SnakeJumpAnimationThread(this).start();
     }
     public void beginAddAnimation(){
         synchronized (addAnimationLock){
@@ -94,13 +121,8 @@ public class Snake {
         if(getLength()==1)return;
         SnakeNode tempt = (SnakeNode) snakeBodies.get(getLength()-1);
 
-        tempt.setDoDraw(false);
-        snakeBodies.remove(tempt);
-        tempt.destroySelf();
+        new SnakeNodeRemoveAnimateThread(tempt,drawUtil,getAnEarliestRemoveJumpAnimationThread()).start();
 
-        new SnakeNodeRemoveAnimateThread(tempt,drawUtil).start();
-
-        drawUtil.addToRemoveSequence(tempt);
 
     }
     public void addBody(){
@@ -116,7 +138,7 @@ public class Snake {
 
         if(initFinnished){
             tempt.setDoDraw(false);
-            new SnakeNodeAppendAnimateThread(tempt,drawUtil).start();
+            new SnakeNodeAppendAnimateThread(tempt,drawUtil,getAnEarliestAddJumpAnimationThread()).start();
         }
         drawUtil.addToCenterLayer(tempt);
     }
@@ -125,11 +147,16 @@ public class Snake {
     }
     public void moving(){
         snakeHead.startMoving();
+        drawUtil.addToFloorLayer(snakeHead.target);
     }
     public void whenMotionDown(int x,int y){
+        if(isDead()||isPaused())return;
         snakeHead.whenMotionDown(x,y);
     }
-
+    public void whenMotionUp(){
+        if(isDead()||isPaused())return;
+        snakeHead.whenMotionUp();
+    }
     public void setColor(int index){
        this.color = index;
        for (GameElements g:snakeBodies){

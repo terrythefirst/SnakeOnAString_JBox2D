@@ -21,6 +21,7 @@ public class ImgManager {
             ButtonImgCircleDown,
             ButtonImgRect,
             SnakeFoodImg,
+            BombImg,
 
             Number0Img,
             Number1Img,
@@ -33,7 +34,8 @@ public class ImgManager {
             Number8Img,
             Number9Img,
 
-            BombImg,
+            NailVerticalImg,
+            NailShadowImg,
     };
 
     public static String getNumberImgName(int x){

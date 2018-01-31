@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;//声明包名
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
@@ -57,11 +58,14 @@ public class MyContactListener implements ContactListener {
 			if(idA.equals("snakeHead")){
 				if(idB.contains("snakeFood")){
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
-					gamePlay.getFood(Integer.parseInt(idB.split(" ")[1])).setEaten();
-					gamePlay.snake.startAJumpAnimation();
+					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idB.split(" ")[1]));
+					sf.setEaten();
+					gamePlay.plusScore(sf.score);
+					gamePlay.snake.startAnAddJumpAnimationThread();
 					gamePlay.snake.plusOneSnakeAjaxLength();
 				}else  if(idB.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idB.split(" ")[1])).setEaten();
+					gamePlay.snake.startARemoveJumpAnimationThread();
 					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idB.equals("snakeBody 1")){
 					gamePlay.snake.setDead();
@@ -70,11 +74,14 @@ public class MyContactListener implements ContactListener {
 			}else if(idB.toString().equals("snakeHead")){
 				if(idA.contains("snakeFood")){
 					Log.d("ContactListener",idB+" equals snakeHead "+idA+" contains snakeFood");
-					gamePlay.getFood(Integer.parseInt(idA.split(" ")[1])).setEaten();
-					gamePlay.snake.startAJumpAnimation();
+					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idA.split(" ")[1]));
+					sf.setEaten();
+					gamePlay.plusScore(sf.score);
+					gamePlay.snake.startAnAddJumpAnimationThread();
 					gamePlay.snake.plusOneSnakeAjaxLength();
 				}else  if(idA.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idA.split(" ")[1])).setEaten();
+					gamePlay.snake.startARemoveJumpAnimationThread();
 					gamePlay.snake.minusOneSnakeAjaxLength();
 				}else if(!idA.equals("snakeBody 1")){
 					gamePlay.snake.setDead();

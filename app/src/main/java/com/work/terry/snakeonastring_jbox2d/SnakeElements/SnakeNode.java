@@ -253,9 +253,11 @@ public class SnakeNode extends CircleBody{
         movingThread = new SnakeNodeMovingThread(this);
         movingThread.start();
     }
+    @Override
     public void onPause(SharedPreferences.Editor editor){
 
     }
+    @Override
     public void onResume(){
         startMoving();
     }

@@ -33,7 +33,7 @@ public class SnakeHead extends CircleBody{
     public float HeadVY = 1;
     Thread movingThread;
 
-    public SnakeHeadTarget target = null;
+    public Nail target = null;
     public SnakeHead(Snake snake,World world,int x, int y, int vx, int vy,int color,float defaultHeight){
         super(
                 world,
@@ -171,23 +171,32 @@ public class SnakeHead extends CircleBody{
         );
     }
     public void startMoving(){
-        target = new SnakeHeadTarget(
+        target = new Nail(
                 x+HeadVX, y+HeadVY,
-                x, y
+                x, y,
+                3
         );
         movingThread =  new SnakeHeadMovingThread(this);
         movingThread.start();
     }
     public void whenMotionDown(int touchX,int touchY){
+        if(target!=null)target.setDoDraw(false);
+
         if(touchX!=x||touchY!=y){
             target.setTarget(touchX,touchY,x,y);
         }
     }
+    public void whenMotionUp(){
+        if(target!=null)target.setDoDraw(true);
+    }
+
+    @Override
     public void onResume(){
         movingThread =  new SnakeHeadMovingThread(this);
         movingThread.start();
     }
+    @Override
     public void onPause(SharedPreferences.Editor editor){
-
+        editor.putFloat(id+"defaultHeight",defaultHeight);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class JBox2DUtil {
-    public static List<MyBody> Bodies= new ArrayList<>();
+    public static List<MyBody> Bodies= new ArrayList<>();//所有对Bodies的操作要求再 STEP期间做
     public static List<MyBody> removeBodyList = new ArrayList<>();
     public static List<MyJoint> Joints = new ArrayList<>();
 
@@ -29,20 +29,21 @@ public class JBox2DUtil {
             if (mb instanceof SnakeFood) {
                 if (((SnakeFood) mb).eatean) {
                     mb.setDoDraw(false);
-                    mb.destroySelf();
                     JBox2DUtil.removeBodyList.add(mb);
                 }
             }
             if(mb instanceof Bomb){
                 if(((Bomb)mb).eatean){
                     mb.setDoDraw(false);
-                    mb.destroySelf();
                     JBox2DUtil.removeBodyList.add(mb);
                 }
             }
         }
-        for(MyBody mb:JBox2DUtil.removeBodyList){
-            JBox2DUtil.Bodies.remove(mb);
+        synchronized (removeBodyList){
+            for(MyBody mb:JBox2DUtil.removeBodyList){
+                JBox2DUtil.Bodies.remove(mb);
+                mb.destroySelf();
+            }
         }
         JBox2DUtil.removeBodyList.clear();
     }
