@@ -1,6 +1,9 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
@@ -22,22 +25,25 @@ public class SnakeJumpAnimationThread extends Thread {
         int timeLimit = (int) (2* Constant.JumpMathFactor);
         boolean finished = false;
         while (!snake.paused&&!finished){
-            if(index<snake.getLength()&&index<=jumpLength)
-                snake.snakeBodies.get(index).jumpHeight =  MyMath.JumpMath(Constant.SnakeDefaultHeight  + 10 ,Constant.JumpMathFactor,time);
-            else finished = true;
+            if(index<snake.getLength()&&index<=jumpLength){
+                CircleBody cc  = snake.snakeBodies.get(index);
+                Thread animateThread = new JiggleAnimation(
+                        cc,
+                        50,
+                        0.1f,
 
-            if(time<timeLimit){
-                time++;
-            }else {
-                time = 0;
+                        !(cc instanceof SnakeHead),
+                        0.5f
+                        );
+                animateThread.start();
                 index++;
+                try {
+                    sleep(50);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-
-            try {
-                sleep(20);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            else finished = true;
         }
     }
 

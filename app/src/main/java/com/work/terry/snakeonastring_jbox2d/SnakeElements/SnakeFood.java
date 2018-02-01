@@ -60,8 +60,8 @@ public class SnakeFood extends CircleBody{
                 TexManager.getTex(Img),
                 x,
                 y-jumpHeight-defaultHeight,
-                width,
-                height,
+                width+scaleWidth,
+                height+scaleHeight,
                 0
         );
     }

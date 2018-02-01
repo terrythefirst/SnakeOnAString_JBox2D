@@ -10,10 +10,9 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeRemoveAnimateThread;
-import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
+
 
 import org.jbox2d.dynamics.World;
 
@@ -22,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
+import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 /**
  * Created by Terry on 2017/12/28.
@@ -78,10 +79,6 @@ public class Snake {
         return isDead;
     }
 
-    public int getSize(){
-        return snakeBodies.size();
-    }
-
     public boolean isPaused(){return paused;}
 
     public void startAnAddJumpAnimationThread(){
@@ -118,7 +115,7 @@ public class Snake {
         }
     }
     public void removeBody(){
-        if(getLength()==1)return;
+        if(getLength()==1+SnakeBodyDefaultLength)return;
         SnakeNode tempt = (SnakeNode) snakeBodies.get(getLength()-1);
 
         new SnakeNodeRemoveAnimateThread(tempt,drawUtil,getAnEarliestRemoveJumpAnimationThread()).start();
@@ -158,6 +155,7 @@ public class Snake {
     }
 
     public int getLength(){
+        Log.d("getLength",""+snakeBodies.size());
         return snakeBodies.size();
     }
     public void moving(){
@@ -210,6 +208,7 @@ public class Snake {
         }
     }
     public void minusOneSnakeAjaxLength(){
+        if(getLength()==1+SnakeBodyDefaultLength)return;
         synchronized (snakeAjaxLengthLock){
             SnakeAjaxLength-=1;
         }

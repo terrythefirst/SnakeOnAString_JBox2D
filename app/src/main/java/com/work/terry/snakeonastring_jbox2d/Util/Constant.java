@@ -71,7 +71,7 @@ public class Constant {
     //按钮
     public static final String PauseButtonImg = "stop.png";
     //蛇整体
-    public static final int SnakeBodyDefaultLength = 6;
+    public static final int SnakeBodyDefaultLength = 3;
 
     public static final int SnakeDefaultHeight = 24;
 

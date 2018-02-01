@@ -12,6 +12,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
+import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
@@ -157,6 +158,26 @@ public class GamePlay extends MyView{
                     8,
                     SnakeFoodImg
             );
+        new Thread(){
+            @Override
+            public void run(){
+                while (!tempt.eatean){
+                    new JiggleAnimation(
+                            tempt,
+                            50,
+                            0.6f,
+
+                            true,
+                            0.5f
+                    ).run();
+                    try {
+                        sleep(1000);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
 
         snakeFoodMap.put(foodIndex,tempt);
         foodIndex++;
@@ -181,6 +202,27 @@ public class GamePlay extends MyView{
                     BombImg
             );
         drawUtil.addToFloorLayer(tempt);
+
+        new Thread(){
+            @Override
+            public void run(){
+                while (!tempt.eatean){
+                    new JiggleAnimation(
+                            tempt,
+                            60,
+                            0.6f,
+
+                            true,
+                            0.5f
+                    ).run();
+                    try {
+                        sleep(1000);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
 
         snakeBombMap.put(bombIndex++,tempt);
     }

@@ -18,7 +18,9 @@ public class GameElements{
     public float x;
     public float y;
     public float width;
+    public float scaleWidth;
     public float height;
+    public float scaleHeight;
 
     public float TopRatio;
 
@@ -87,8 +89,8 @@ public class GameElements{
                     ColorManager.getColor(color),
                     x,
                     y - jumpHeight - defaultHeight + TopOffset,
-                    width,
-                    height,
+                    width+scaleWidth,
+                    height+scaleHeight,
                     rotateAngleGameElements,
                     TopOffsetColorFactor
             );
@@ -101,8 +103,8 @@ public class GameElements{
                 ColorManager.getColor(color),
                 x,
                 y - jumpHeight - defaultHeight,
-                TopWidth,
-                TopHeight,
+                TopWidth+scaleWidth*TopRatio,
+                TopHeight+scaleHeight*TopRatio,
                 rotateAngleGameElements
         );
     }
@@ -121,8 +123,8 @@ public class GameElements{
                     ColorManager.getColor(color),
                     x,
                     y,
-                    width,
-                    height,
+                    width+scaleWidth,
+                    height+scaleHeight,
                     rotateAngleGameElements,
                     HeightColorFactor
             );
@@ -131,7 +133,7 @@ public class GameElements{
                     ColorManager.getColor(color),
                     x,
                     y - jumpHeight / 2 - defaultHeight / 2,
-                    width,
+                    width+scaleWidth,
                     jumpHeight + defaultHeight,
                     0,
                     HeightColorFactor
@@ -143,8 +145,8 @@ public class GameElements{
                     ColorManager.getColor(Constant.COLOR_GREAY),
                     x + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorX,
                     y + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorY,
-                    width,
-                    height,
+                    width+scaleWidth,
+                    height+scaleHeight,
                     rotateAngleGameElements,
                     FloorShadowColorFactor
             );

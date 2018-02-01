@@ -34,24 +34,26 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
         }catch (Exception e){
             e.printStackTrace();
         }
-        snakeNode.setDoDraw(false);
-        while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
-            snakeNodeAnimateDraw.AnimationStep(-0.5f);
 
-            try {
-                sleep(10);
-            }catch (Exception e){
-                e.printStackTrace();
+        if(snakeNode.snake.getSnakeAjaxLength()<snakeNode.snake.getLength()) {
+            snakeNode.setDoDraw(false);
+            while (!snakeNode.snake.isDead() && !snakeNodeAnimateDraw.isFinished()) {
+                snakeNodeAnimateDraw.AnimationStep(-0.5f);
+
+                try {
+                    sleep(10);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+            //drawUtil.deleteElement(snakeNodeAnimateDraw);
+            snakeNodeAnimateDraw.setDoDraw(false);
+            drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
+
+            JBox2DUtil.removeBodyList.add(snakeNode);
+            snakeNode.snake.snakeBodies.remove(snakeNode);
+            drawUtil.addToRemoveSequence(snakeNode);
         }
-        //drawUtil.deleteElement(snakeNodeAnimateDraw);
-        snakeNodeAnimateDraw.setDoDraw(false);
-        drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
-
-        JBox2DUtil.removeBodyList.add(snakeNode);
-        snakeNode.snake.snakeBodies.remove(snakeNode);
-        drawUtil.addToRemoveSequence(snakeNode);
-
         snakeNode.snake.endAddAnimation();
         //drawUtil.addToCenterLayer(snakeNode);
 
