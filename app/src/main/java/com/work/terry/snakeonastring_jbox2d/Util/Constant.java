@@ -70,6 +70,9 @@ public class Constant {
 
     //按钮
     public static final String PauseButtonImg = "pause.png";
+
+    //磁铁
+    public static final String FoodMagnetImg = "magnet.png";
     //蛇整体
     public static final int SnakeBodyDefaultLength = 3;
 

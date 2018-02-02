@@ -2,10 +2,13 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;//声明包名
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetSearchThread;
+import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
@@ -69,6 +72,14 @@ public class MyContactListener implements ContactListener {
 					gamePlay.getBomb(Integer.parseInt(idB.split(" ")[1])).setEaten();
 					gamePlay.snake.startARemoveJumpAnimationThread();
 					gamePlay.snake.minusOneSnakeAjaxLength();
+				}else if(idB.contains("FoodMagnet")){
+					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idB.split(" ")[1]));
+					foodMagnet.setEaten();
+					gamePlay.snake.setIsMagnetic(true);
+					new FoodMagnetSearchThread(
+							foodMagnet,
+							gamePlay.snake
+					).start();
 				}else if(!idB.equals("snakeBody 1")){
 //					if(contact.getManifold().type == Manifold.ManifoldType.CIRCLES){
 //
@@ -102,6 +113,14 @@ public class MyContactListener implements ContactListener {
 					gamePlay.getBomb(Integer.parseInt(idA.split(" ")[1])).setEaten();
 					gamePlay.snake.startARemoveJumpAnimationThread();
 					gamePlay.snake.minusOneSnakeAjaxLength();
+				}else if(idA.contains("FoodMagnet")){
+					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idA.split(" ")[1]));
+					foodMagnet.setEaten();
+					gamePlay.snake.setIsMagnetic(true);
+					new FoodMagnetSearchThread(
+							foodMagnet,
+							gamePlay.snake
+					).start();
 				}else if(!idA.equals("snakeBody 1")){
 //					Vec2 localNormal = contact.getManifold().localNormal;
 //					float dotMul = dotMul2D(localNormal,gamePlay.snake.snakeHead.getBodyVelocityNormalized());

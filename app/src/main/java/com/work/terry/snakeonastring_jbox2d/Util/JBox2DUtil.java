@@ -4,12 +4,18 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyDistanceJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
 
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 
 /**
  * Created by Terry on 2018/1/14.
@@ -38,6 +44,12 @@ public class JBox2DUtil {
                     JBox2DUtil.removeBodyList.add(mb);
                 }
             }
+            if(mb instanceof FoodMagnet){
+                if(((FoodMagnet)mb).eatean){
+                    mb.setDoDraw(false);
+                    JBox2DUtil.removeBodyList.add(mb);
+                }
+            }
         }
         synchronized (removeBodyList){
             for(MyBody mb:JBox2DUtil.removeBodyList){
@@ -47,4 +59,5 @@ public class JBox2DUtil {
         }
         JBox2DUtil.removeBodyList.clear();
     }
+
 }

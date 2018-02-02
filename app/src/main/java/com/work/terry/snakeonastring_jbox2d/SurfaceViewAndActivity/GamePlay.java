@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
@@ -42,9 +43,11 @@ public class GamePlay extends MyView{
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
+    public Map<Integer,FoodMagnet> foodMagnetMap = new HashMap<>();
     //public Map<Integer,Vec2> snakeFoodLocationMap = new HashMap<>();
     public int foodIndex = 0;
     public int bombIndex = 0;
+    public int foodMagnetIndex = 0;
 
     public Button pauseButton;
 
@@ -59,7 +62,7 @@ public class GamePlay extends MyView{
         MyContactListener myContactListener = new MyContactListener(GamePlay.this);
         world.setContactListener(myContactListener);
 
-        snake = new Snake(world, Constant.C0LOR_SNAKE_WHITE,drawUtil);
+        snake = new Snake(world,this, Constant.C0LOR_SNAKE_WHITE,drawUtil);
         addPauseButton();
         scoreBoard = new ScoreBoard(
                 200,120,
@@ -149,8 +152,38 @@ public class GamePlay extends MyView{
             }
             if(allEaten)addBomb();
         }
-
-
+        if(foodMagnetMap!=null){
+            boolean allEaten = true;
+            for(int x:foodMagnetMap.keySet()){
+                if(!foodMagnetMap.get(x).eatean){
+                    allEaten = false;
+                    break;
+                }
+            }
+            if(allEaten)addFoodMagnet();
+        }
+    }
+    public void addFoodMagnet(){
+        float rx = (float) Math.random()*800+100;
+        float ry = (float) Math.random()*1800+200;
+        //Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
+        //Log.d("foodCount",foodCount+"");
+        FoodMagnet tempt = new FoodMagnet(
+                getDrawUtil(),
+                world,
+                foodMagnetIndex,
+                rx,ry,
+                30,
+                4,
+                1000,
+                FoodMagnetImg
+        );
+        drawUtil.addToFloorLayer(tempt);
+        foodMagnetMap.put(foodMagnetIndex,tempt);
+        foodMagnetIndex++;
+    }
+    public FoodMagnet getFoodMagnet(int index){
+        return foodMagnetMap.get(index);
     }
     public void addFood(){
         float rx = (float) Math.random()*800+100;

@@ -38,6 +38,8 @@ public class ImgManager {
             NailShadowImg,
 
             PauseButtonImg,
+
+            FoodMagnetImg,
     };
 
     public static String getNumberImgName(int x){

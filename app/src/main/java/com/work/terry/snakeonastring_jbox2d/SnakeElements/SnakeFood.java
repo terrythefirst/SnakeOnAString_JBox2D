@@ -19,6 +19,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 public class SnakeFood extends CircleBody{
     public DrawUtil drawUtil;
     public boolean eatean = false;
+    public boolean moving = false;
     public Thread jumpScoreThread;
 
     public int score;
@@ -41,8 +42,8 @@ public class SnakeFood extends CircleBody{
                 color,
                 6,0,0,0.4f,SnakeFloorColorFactor,
 
-                0,0,0,0,0,
-                true,
+                0,SnakeBodyLinearDampingRate,SnakeHeadDensity,SnakeBodyFriction,SnakeBodyRestitution,
+                false,
                 Img
         );
         this.drawUtil = drawUtil;

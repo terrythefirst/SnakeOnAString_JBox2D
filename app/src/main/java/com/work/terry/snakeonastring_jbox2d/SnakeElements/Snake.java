@@ -4,6 +4,8 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeJumpAnimationThread;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
@@ -14,6 +16,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import java.util.ArrayList;
@@ -22,6 +25,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
+
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 /**
@@ -41,14 +46,27 @@ public class Snake {
     public boolean addAnimating = false;
 
     public World world;
+    public GamePlay gamePlay;
     public SnakeHead snakeHead;
+
+    public boolean isMagnetic = false;
+
+    public float searchRadius = 300;
+    public float numRays = 80;
+
     public List<CircleBody> snakeBodies = null;//包括头！！！
     private int color = Constant.C0LOR_SNAKE_WHITE;
     public boolean paused = false;
     public boolean isDead = false;
     private DrawUtil drawUtil;
 
-    public Snake(World world,int color,DrawUtil drawUtil){
+    public Snake(
+            World world,
+            GamePlay gamePlay,
+            int color,
+            DrawUtil drawUtil
+    ){
+        this.gamePlay = gamePlay;
         this.world = world;
         this.color = color;
         this.drawUtil = drawUtil;
@@ -81,6 +99,45 @@ public class Snake {
 
     public boolean isPaused(){return paused;}
 
+    public void setIsMagnetic(boolean x){
+        this.isMagnetic = x;
+    }
+
+    public void searchWithin(){
+        if(!isMagnetic)return;
+
+        Vec2 headLoc =snakeHead.getBodyXY();//设置爆炸中心点
+        float blastRadius = searchRadius;//爆炸半径
+        for(Integer i:gamePlay.snakeFoodMap.keySet()){
+            SnakeFood sf = gamePlay.snakeFoodMap.get(i);
+            Vec2 foodLoc = sf.getBodyXY();
+
+            float distance = VectorUtil.calDistance(VectorUtil.minusV2D(foodLoc,headLoc));
+            if(distance<=snakeHead.radius+blastRadius){
+                if(!sf.eatean&&!sf.moving)
+                    new FoodMagnetMoveThread(sf,snakeHead).start();
+            }
+        }
+//        for (int i=0;i<numRays;i++)//遍历numRays条光线
+//        {
+//            float angle = (i/(float)numRays)*360*0.01745329f;//光线旋转角
+//            Vec2 rayDir=new Vec2((float)Math.sin(angle),(float)Math.cos(angle));
+//            Vec2 rayEnd =center.add(rayDir.mul(blastRadius));
+//            callback = new RayCastClosestCallback();
+//            world.raycast(callback, center, rayEnd);//物理世界调用光线投射方法
+//            if (
+//                    callback.body!=null
+//                            &&callback.body.getUserData().toString().contains("snakeFood")
+//                    )//若光线遇到了刚体
+//            {
+//                SnakeFood snakeFood = gamePlay.getFood(
+//                        Integer.parseInt( callback.body.getUserData().toString().split(" ")[1])
+//                );
+//                new FoodMagnetMoveThread(snakeFood,snakeHead).start();
+//            }
+//        }
+
+    }
     public void startAnAddJumpAnimationThread(){
         Thread thread = new SnakeJumpAnimationThread(this,getLength());
         addJumpAnimationThreads.offer(thread);

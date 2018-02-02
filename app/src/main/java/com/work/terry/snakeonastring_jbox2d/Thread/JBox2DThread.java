@@ -40,6 +40,8 @@ public class JBox2DThread extends Thread{
                 gamePlay.snake.doAfterDead();
             }else {
                 gamePlay.snake.checkLength();
+                if(gamePlay.snake.isMagnetic)
+                    gamePlay.snake.searchWithin();
             }
         }
     }
