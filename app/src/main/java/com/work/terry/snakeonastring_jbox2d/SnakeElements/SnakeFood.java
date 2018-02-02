@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.Thread.SnakeFoodJumpScoreThread;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -18,6 +19,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 public class SnakeFood extends CircleBody{
     public DrawUtil drawUtil;
     public boolean eatean = false;
+    public Thread jumpScoreThread;
 
     public int score;
     public SnakeFood(
@@ -25,7 +27,7 @@ public class SnakeFood extends CircleBody{
             World world,
             int id,
             float x,float y,
-            float width,float height,
+            float raius,
             int color,
             int score,
             String Img){
@@ -34,7 +36,7 @@ public class SnakeFood extends CircleBody{
                 "snakeFood "+id,
                 x,y,
                 0,0,0,
-                width/2,
+                raius,
 
                 color,
                 6,0,0,0.4f,SnakeFloorColorFactor,
@@ -48,6 +50,15 @@ public class SnakeFood extends CircleBody{
         setDoDrawHeight(false);
 
         drawUtil.addToFloorLayer(this);
+        starttJumpScoreThread();
+    }
+    public void starttJumpScoreThread(){
+        jumpScoreThread = new SnakeFoodJumpScoreThread(
+                this,
+                score-score/3,
+                4
+        );
+        jumpScoreThread.start();
     }
     public void setEaten(){
         Log.d("SnakeFood","eaten");
@@ -68,7 +79,7 @@ public class SnakeFood extends CircleBody{
     @Override
     public void drawFloorShadow(TexDrawer painter){
         super.drawFloorShadow(painter);
-        drawNumberUnder3Digit(
+        drawNumber(
                 painter,
                 score,
                 x,

@@ -7,6 +7,7 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 public class ColorManager {
     public static final float Colors[][] = new float[][]{
             {255,255,255},//白
+            {0,0,0},//黑
             {139,131,134},//灰
             {255,250,240},//默认蛇的米白色
             {127,255,212},

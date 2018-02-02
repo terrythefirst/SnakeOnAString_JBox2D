@@ -43,7 +43,7 @@ public class Snake {
     public World world;
     public SnakeHead snakeHead;
     public List<CircleBody> snakeBodies = null;//包括头！！！
-    private int color = Constant.C0LOR_WHITE;
+    private int color = Constant.C0LOR_SNAKE_WHITE;
     public boolean paused = false;
     public boolean isDead = false;
     private DrawUtil drawUtil;
@@ -129,11 +129,13 @@ public class Snake {
         }else{
             tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
         }
-        snakeBodies.add(tempt);
+        //snakeBodies.add(tempt);
 
         if(initFinnished){
             tempt.setDoDraw(false);
             new SnakeNodeAppendAnimateThread(tempt,drawUtil,getAnEarliestAddJumpAnimationThread()).start();
+        }else {
+            snakeBodies.add(tempt);
         }
         drawUtil.addToCenterLayer(tempt);
     }

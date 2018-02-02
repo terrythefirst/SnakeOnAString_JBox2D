@@ -3,7 +3,6 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -11,28 +10,26 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import org.jbox2d.dynamics.World;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColorFactor;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeadEyesDiameter;
 
 /**
- * Created by Terry on 2018/1/29.
+ * Created by Terry on 2018/2/2.
  */
 
-public class Bomb extends CircleBody {
+public class FoodMagnet extends CircleBody {
+    public boolean eatean;
     DrawUtil drawUtil;
-    public boolean eatean = false;
 
-    public int score;
-    public Bomb(
+    public FoodMagnet(
             DrawUtil drawUtil,
             World world,
             int id,
             float x,float y,
             float radius,
             int color,
-            int score){
+            String Img){
         super(
                 world,
-                "Bomb "+id,
+                "FoodMagnet "+id,
                 x,y,
                 0,0,0,
                 radius,
@@ -42,14 +39,13 @@ public class Bomb extends CircleBody {
 
                 0,0,0,0,0,
                 true,
-                Constant.BombImg
+                Img
         );
         this.drawUtil = drawUtil;
-        this.score = score;
         setDoDrawHeight(false);
     }
     public void setEaten(){
-        Log.d("Bomb","eaten");
+        Log.d("FoodMagnet","eaten");
         eatean = true;
         drawUtil.addToRemoveSequence(this);
     }

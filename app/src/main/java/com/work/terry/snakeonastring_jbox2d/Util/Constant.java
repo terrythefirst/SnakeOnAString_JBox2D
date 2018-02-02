@@ -69,7 +69,7 @@ public class Constant {
     public static final String NailShadowImg = "nail_shadow.png";
 
     //按钮
-    public static final String PauseButtonImg = "stop.png";
+    public static final String PauseButtonImg = "pause.png";
     //蛇整体
     public static final int SnakeBodyDefaultLength = 3;
 
@@ -131,9 +131,10 @@ public class Constant {
     public static String AxisImg = "axis_with_direction.png";
     public static int AxisWidth = SnakeHeadRadius;
 
-    public static final int COLOR_DEFAULT = 0;
-    public static final int COLOR_GREAY = 1;
-    public static final int C0LOR_WHITE = 2;
-    public static final int COLOR_ORANGE = 3;
-    public static final int C0LOR_CYAN = 4;
+    public static final int COLOR_WHITE= 0;
+    public static final int COLOR_BLACK=1;
+    public static final int COLOR_GREY = 2;
+    public static final int C0LOR_SNAKE_WHITE = 3;
+    public static final int COLOR_ORANGE = 4;
+    public static final int C0LOR_CYAN = 5;
 }

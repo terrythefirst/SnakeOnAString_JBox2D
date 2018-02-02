@@ -14,6 +14,7 @@ public class DrawUtil {
     String backgroundImg = "";
     public List<GameElements> floorLayerDrawSequence = null;
     public List<GameElements> centerLayerDrawSequence = null;
+    public List<GameElements> animationLayerDrawSequence = null;
     public List<GameElements> topLayerDrawSequence = null;
 
     public List<GameElements> removeSequence = null;
@@ -23,6 +24,7 @@ public class DrawUtil {
         this.backgroundImg = backgroundImg;
         floorLayerDrawSequence = new ArrayList<>();
         centerLayerDrawSequence = new ArrayList<>();
+        animationLayerDrawSequence = new ArrayList<>();
         topLayerDrawSequence = new ArrayList<>();
 
         removeSequence = new ArrayList<>();
@@ -40,6 +42,12 @@ public class DrawUtil {
         }
     }
 
+    public void addToAnimationLayer(GameElements gameElements){
+        synchronized (animationLayerDrawSequence){
+            animationLayerDrawSequence.add(gameElements);
+        }
+    }
+
     public void addToFloorLayer(GameElements gameElements) {
         synchronized (floorLayerDrawSequence){
             floorLayerDrawSequence.add(gameElements);
@@ -51,9 +59,18 @@ public class DrawUtil {
         }
     }
     private void deleteElement(GameElements gameElements) {
-        topLayerDrawSequence.remove(gameElements);
-        centerLayerDrawSequence.remove(gameElements);
-        floorLayerDrawSequence.remove(gameElements);
+        synchronized (animationLayerDrawSequence){
+            animationLayerDrawSequence.remove(gameElements);
+        }
+        synchronized (centerLayerDrawSequence){
+            centerLayerDrawSequence.remove(gameElements);
+        }
+        synchronized (animationLayerDrawSequence){
+            animationLayerDrawSequence.remove(gameElements);
+        }
+        synchronized (floorLayerDrawSequence){
+            floorLayerDrawSequence.remove(gameElements);
+        }
     }
 
     public void stepDraw(TexDrawer painter) {
@@ -68,6 +85,7 @@ public class DrawUtil {
         );
 
         drawFloorAndCenterLayer(painter);
+        drawAnimationLayer(painter);
         drawTopLayer(painter);
         cleanNotDraw();
     }
@@ -77,6 +95,13 @@ public class DrawUtil {
                     x->deleteElement(x)
             );
             removeSequence.clear();
+        }
+    }
+    public void drawAnimationLayer(TexDrawer painter){
+        synchronized (animationLayerDrawSequence){
+            animationLayerDrawSequence.stream().forEach(
+                    x->x.drawSelf(painter)
+            );
         }
     }
     public void drawFloorAndCenterLayer(TexDrawer painter){

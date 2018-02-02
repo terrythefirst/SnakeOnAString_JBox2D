@@ -8,6 +8,10 @@ import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 /**
  * Created by Terry on 2018/1/2.
@@ -142,7 +146,7 @@ public class GameElements{
     public void drawFloorShadow(TexDrawer painter){
             painter.drawShadow(
                     TexManager.getTex(Img),
-                    ColorManager.getColor(Constant.COLOR_GREAY),
+                    ColorManager.getColor(Constant.COLOR_GREY),
                     x + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorX,
                     y + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorY,
                     width+scaleWidth,
@@ -151,7 +155,7 @@ public class GameElements{
                     FloorShadowColorFactor
             );
     }
-    public static void drawPic(
+    public static void drawColorShape(
             TexDrawer painter,
             String picName,
             float x,
@@ -161,7 +165,7 @@ public class GameElements{
             float rotateAngle,
             int Color
     ){
-        painter.drawShadow(
+        painter.drawColorFactorTex(
                 TexManager.getTex(picName),
                 ColorManager.getColor(Color),
                 x,
@@ -172,85 +176,102 @@ public class GameElements{
                 1
         );
     }
-    public static void drawNumberUnder3Digit(
+    public static void drawNumberColorFactor(
+            TexDrawer painter,
+            int number,
+            float x,float y,
+            float width,float height,
+            int Color,
+            float colorFactor
+    ) {
+        List<Integer> digits = new ArrayList<>();
+        if(number==0)digits.add(0);
+        while(number>0){
+            digits.add(number%10);
+            number/=10;
+        }
+        int length = digits.size();
+
+        float perWidth = width/length;
+        if(perWidth>height){
+            perWidth = height*4/5;
+        }
+        float startX = x+(length-1)*perWidth/2;
+        for (int i=0;i<length;i++){
+            painter.drawColorFactorTex(
+                    TexManager.getTex(ImgManager.getNumberImgName(digits.get(i))),
+                    ColorManager.getColor(Color),
+                    startX-i*perWidth,
+                    y,
+                    perWidth,
+                    height,
+                    0,
+                    colorFactor
+            );
+        }
+    }
+    public static void drawNumberShadow(
+            TexDrawer painter,
+            int number,
+            float x,float y,
+            float width,float height,
+            int Color,
+            float floorShadowColorFactor
+    ) {
+        List<Integer> digits = new ArrayList<>();
+        if(number==0)digits.add(0);
+        while(number>0){
+            digits.add(number%10);
+            number/=10;
+        }
+        int length = digits.size();
+
+        float perWidth = width/length;
+        if(perWidth>height){
+            perWidth = height*4/5;
+        }
+        float startX = x+(length-1)*perWidth/2;
+        for (int i=0;i<length;i++){
+            painter.drawShadow(
+                    TexManager.getTex(ImgManager.getNumberImgName(digits.get(i))),
+                    ColorManager.getColor(Color),
+                    startX-i*perWidth,
+                    y,
+                    perWidth,
+                    height,
+                    0,
+                    floorShadowColorFactor
+            );
+        }
+    }
+
+    public static void drawNumber(
             TexDrawer painter,
             int number,
             float x,float y,
             float width,float height,
             int Color
     ){
-        if(number<10){
-            float quarterWidth = width*1.0f/4;
-            drawPic(
+        List<Integer> digits = new ArrayList<>();
+        if(number==0)digits.add(0);
+        while(number>0){
+            digits.add(number%10);
+            number/=10;
+        }
+        int length = digits.size();
+
+        float perWidth = width/length;
+        if(perWidth>height){
+            perWidth = height*4/5;
+        }
+        float startX = x+(length-1)*perWidth/2;
+        for (int i=0;i<length;i++){
+            drawColorShape(
                     painter,
-                    ImgManager.getNumberImgName(number),
-                    x+quarterWidth,
+                    ImgManager.getNumberImgName(digits.get(i)),
+                    startX-i*perWidth,
                     y,
-                    width/2,
-                    height,
-                    0,
-                    Color
-            );
-            drawPic(
-                    painter,
-                    ImgManager.getNumberImgName(0),
-                    x-quarterWidth,
-                    y,
-                    width/2,
-                    height,
-                    0,
-                    Color
-            );
-        }else if(number>=10&&number<100){
-            float quarterWidth = width*1.0f/4;
-            drawPic(
-                    painter,
-                    ImgManager.getNumberImgName(number%10),
-                    x+quarterWidth,
-                    y,
-                    width/2,
-                    height,
-                    0,
-                    Color
-            );
-            drawPic(
-                    painter,
-                    ImgManager.getNumberImgName(number/10),
-                    x-quarterWidth,
-                    y,
-                    width/2,
-                    height,
-                    0,
-                    Color
-            );
-        }else if(number>=100){
-            float thirdWidth = width*1.0f/4;
-            drawPic(
-                    painter,
-                    ImgManager.getNumberImgName(number%10),
-                    x+thirdWidth,
-                    y,
-                    thirdWidth,
-                    height,
-                    0,
-                    Color
-            );
-            drawPic(
-                    painter,
-                    ImgManager.getNumberImgName(number/10),
-                    x,
-                    y,
-                    thirdWidth,
-                    height,
-                    0,
-                    Color
-            );
-            drawPic(
-                    painter,
-                    ImgManager.getNumberImgName(number/10),
-                    x-thirdWidth,
-                    y,
-                    thirdWidth,
+                    perWidth,
                     height,
                     0,
                     Color

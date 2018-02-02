@@ -13,6 +13,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
@@ -35,8 +36,9 @@ public class GamePlay extends MyView{
     public JBox2DThread jBox2DThread = null;
     public Snake snake ;
 
-    public int Score ;
-    private byte[] scoreLock = new byte[0];
+//    public int Score ;
+//    private byte[] scoreLock = new byte[0];
+    public ScoreBoard scoreBoard;
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
@@ -57,21 +59,19 @@ public class GamePlay extends MyView{
         MyContactListener myContactListener = new MyContactListener(GamePlay.this);
         world.setContactListener(myContactListener);
 
-        snake = new Snake(world, Constant.C0LOR_WHITE,drawUtil);
-        pauseButton = new Button(
-                0,
-                1440-120,200/2+20,
-                200,200,
-                0,
+        snake = new Snake(world, Constant.C0LOR_SNAKE_WHITE,drawUtil);
+        addPauseButton();
+        scoreBoard = new ScoreBoard(
+                200,120,
+                280,150,
+                Constant.C0LOR_SNAKE_WHITE,
+                20,
                 10,
-                3,
                 ButtonBlockTopOffSetColorFactor,
-                ButtonBlockHeightColorFactor,
-                ButtonBlockFloorColorFactor,
-                PauseButtonImg
+                0,
+                ButtonBlockFloorColorFactor
         );
-        pauseButton.setDoDrawHeight(false);
-        drawUtil.addToTopLayer(pauseButton);
+        drawUtil.addToTopLayer(scoreBoard);
 //            drawUtil.addToCenterLayer(
 //                    new ButtonBlock(
 //                            world,
@@ -95,7 +95,7 @@ public class GamePlay extends MyView{
                         world,
                         720,2000,
                         60,
-                        Constant.C0LOR_WHITE,
+                        Constant.C0LOR_SNAKE_WHITE,
 
                         true,
                         ButtonBlockDefaultHeight,
@@ -111,14 +111,23 @@ public class GamePlay extends MyView{
         jBox2DThread.start();
 
     }
-    public void plusScore(int x){
-        synchronized (scoreLock){
-            this.Score+=x;
-        }
+    public void addPauseButton(){
+        pauseButton = new Button(
+                0,
+                1440-120,200/2+30,
+                200,200,
+                COLOR_WHITE,
+                20,
+                6,
+                ButtonBlockTopOffSetColorFactor,
+                ButtonBlockHeightColorFactor,
+                ButtonBlockFloorColorFactor,
+                PauseButtonImg
+        );
+        pauseButton.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(pauseButton);
     }
-    public int getScore(){
-       return Score;
-    }
+
     public void checkShouldAddFoodOrBomb(){
         if (snakeFoodMap != null){
             boolean allEaten = true;
@@ -153,32 +162,11 @@ public class GamePlay extends MyView{
                     world,
                     foodIndex,
                     rx,ry,
-                    60,60,
+                    35,
                     0,
-                    8,
+                    10,
                     SnakeFoodImg
             );
-        new Thread(){
-            @Override
-            public void run(){
-                while (!tempt.eatean){
-                    new JiggleAnimation(
-                            tempt,
-                            50,
-                            0.6f,
-
-                            true,
-                            0.5f
-                    ).run();
-                    try {
-                        sleep(1000);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-
         snakeFoodMap.put(foodIndex,tempt);
         foodIndex++;
 //        if(foodLocationCount>3){
@@ -196,10 +184,9 @@ public class GamePlay extends MyView{
                     world,
                     bombIndex,
                     rx,ry,
-                    100,100,
+                    100,
                     0,
-                    8,
-                    BombImg
+                    8
             );
         drawUtil.addToFloorLayer(tempt);
 

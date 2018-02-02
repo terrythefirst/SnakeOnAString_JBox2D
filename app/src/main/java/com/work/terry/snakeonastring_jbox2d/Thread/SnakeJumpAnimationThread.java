@@ -46,6 +46,4 @@ public class SnakeJumpAnimationThread extends Thread {
             else finished = true;
         }
     }
-
-
 }
