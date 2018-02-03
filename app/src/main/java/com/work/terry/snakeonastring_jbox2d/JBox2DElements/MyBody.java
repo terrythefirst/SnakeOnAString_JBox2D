@@ -58,6 +58,9 @@ public abstract class MyBody extends GameElements
         body.getPosition().set(this.x / RATE, this.y / RATE);
             //body.setTransform(new Vec2(this.x / RATE, this.y / RATE), 0);
     }
+//    public void pushWidthHeightIntoBody(){
+//        body.getFixtureList().getShape().setRadius(VectorUtil.calDistance(width,height)/RATE);
+//    }
     public void popXYfromBody(){
         if(body==null)return;
         Vec2 v = getBodyXY();

@@ -72,6 +72,7 @@ public class ButtonBlockCircle extends CircleBody{
 
                 Constant.SnakeBodyImg
         );
+        setTopRatio(Constant.ButtonBlockTopRatio);
         if(isStatic){
             initJoint();
         }

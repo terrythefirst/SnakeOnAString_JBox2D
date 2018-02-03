@@ -111,10 +111,11 @@ public class Constant {
     public static String SnakeBodyID = "snakeBody";
     public static String SnakeBodyImg = "snake_body.png";
     public static String SnakeBodyHeightImg ="snake_body_height.png";
-    public static final int SnakeBodyTopRadius = 32;
+    public static final int SnakeBodyTopRadius = 33;
     public static final int SnakeBodyRadius = 35;
 
     //碰撞块
+    public static float ButtonBlockTopRatio = 0.95f;
     public static float ButtonBlockDefaultHeight = 40;
     public static float ButtonBlockTopOffSet = 10;
     public static float ButtonBlockTopOffSetColorFactor = SnakeDownLittleColorFactor;

@@ -31,6 +31,7 @@ public class JBox2DUtil {
     public static void MyJBox2DStep(){
         for (MyBody mb : JBox2DUtil.Bodies) {
             mb.popXYfromBody();
+            //mb.pushWidthHeightIntoBody();
 
             if (mb instanceof SnakeFood) {
                 if (((SnakeFood) mb).eatean) {

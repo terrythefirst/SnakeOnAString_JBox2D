@@ -100,15 +100,14 @@ public class GameElements{
             );
         }
 
-        if (TopRatio != 0) setTopHeightWidth();
         //drawSelf
         painter.drawColorSelf(
                 TexManager.getTex(Img),
                 ColorManager.getColor(color),
                 x,
                 y - jumpHeight - defaultHeight,
-                TopWidth+scaleWidth*TopRatio,
-                TopHeight+scaleHeight*TopRatio,
+                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
+                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
                 rotateAngleGameElements
         );
     }

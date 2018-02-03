@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
+import com.work.terry.snakeonastring_jbox2d.UI.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
@@ -93,19 +94,24 @@ public class GamePlay extends MyView{
 //        snakeFoodLocationMap.put(2,new Vec2(1200,600));
 //        snakeFoodLocationMap.put(3,new Vec2(1200,1800));
 
-        drawUtil.addToCenterLayer(
-                new ButtonBlockCircle(
-                        world,
-                        720,2000,
-                        60,
-                        Constant.C0LOR_SNAKE_WHITE,
 
-                        true,
-                        ButtonBlockDefaultHeight,
-                        1
-                )
+        ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
+                world,
+                720,2000,
+                60,
+                Constant.C0LOR_CYAN,
+
+                true,
+                ButtonBlockDefaultHeight,
+                1
         );
-
+        drawUtil.addToCenterLayer(buttonBlockCircle);
+        new BreathAnimation(
+                buttonBlockCircle,
+                40,
+                true,
+                2f
+        ).start();
 
         jBox2DThread = new JBox2DThread(GamePlay.this);
         addBomb();
@@ -173,7 +179,7 @@ public class GamePlay extends MyView{
                 world,
                 foodMagnetIndex,
                 rx,ry,
-                30,
+                45,
                 4,
                 1000,
                 FoodMagnetImg
@@ -217,7 +223,7 @@ public class GamePlay extends MyView{
                     world,
                     bombIndex,
                     rx,ry,
-                    100,
+                    65,
                     0,
                     8
             );

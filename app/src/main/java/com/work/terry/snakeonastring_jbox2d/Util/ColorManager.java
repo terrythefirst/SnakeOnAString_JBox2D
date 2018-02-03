@@ -11,7 +11,7 @@ public class ColorManager {
             {139,131,134},//灰
             {255,250,240},//默认蛇的米白色
             {127,255,212},
-            {255,69,0},
+            {255,127,80},
     };
     public static float[] getColorByRGB255(float[] color255){
         return new float[]{
