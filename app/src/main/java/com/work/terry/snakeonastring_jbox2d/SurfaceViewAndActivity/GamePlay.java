@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.UI.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
@@ -76,19 +77,20 @@ public class GamePlay extends MyView{
                 ButtonBlockFloorColorFactor
         );
         drawUtil.addToTopLayer(scoreBoard);
-//            drawUtil.addToCenterLayer(
-//                    new ButtonBlock(
-//                            world,
-//                            720,2000,
-//                            80,
-//                            200,
-//                            0.8f,
-//                            ButtonBlockDefaultHeight,
-//                            100,
-//                            true,
-//                            Constant.C0LOR_WHITE
-//                    )
-//            );
+            drawUtil.addToCenterLayer(
+                    new ButtonBlock(
+                            world,
+                            "",
+                            720,400,
+                            80,
+                            200,
+                            0.95f,
+                            ButtonBlockDefaultHeight,
+                            220,
+                            true,
+                            Constant.COLOR_WHITE
+                    )
+            );
 //        snakeFoodLocationMap.put(0,new Vec2(200,600));
 //        snakeFoodLocationMap.put(1,new Vec2(200,1800));
 //        snakeFoodLocationMap.put(2,new Vec2(1200,600));

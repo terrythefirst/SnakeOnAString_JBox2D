@@ -282,7 +282,7 @@ public class SnakeNode extends CircleBody{
 
         rectBody.rotateAngleGameElements = -(float)Math.toDegrees(rectBody.body.getAngle());
         //rectBody.rotateAngleGameElements = 0;
-                Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
+        //        Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
         rectBody.drawSelf(painter);
     }
     @Override
