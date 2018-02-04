@@ -15,7 +15,8 @@ public class MyAnimation extends GameElements {
             float topOffset,
             float topOffsetColorFactor,
             float heightColorFactor,
-            float floorShadowColorFactor
+            float floorShadowColorFactor,
+            String Img
     ) {
         super(
                 "Animation "+id,
@@ -27,7 +28,7 @@ public class MyAnimation extends GameElements {
                 topOffsetColorFactor,
                 heightColorFactor,
                 floorShadowColorFactor,
-                ""
+                Img
         );
         setDoDrawHeight(false);
     }

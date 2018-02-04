@@ -25,7 +25,7 @@ public class SnakeNodeMovingThread extends Thread{
             snakeNode.popXYfromBody();
             changeBodyImpulseByFront();
             try {
-                sleep(10);
+                sleep(5);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -33,6 +33,7 @@ public class SnakeNodeMovingThread extends Thread{
     }
     public void changeBodyImpulseByFront(){
         snakeNode.frontV = snakeNode.getFrontV2D();
+
         Vec2 frontXY = snakeNode.front.getBodyXY();
         float dx = frontXY.x - snakeNode.x;
         float dy = frontXY.y - snakeNode.y;
@@ -47,12 +48,20 @@ public class SnakeNodeMovingThread extends Thread{
         );
 
 //        snakeNode.body.applyForceToCenter(
-//                    Mul2D(targetMoveV,0.1f)
+//                Mul2D(dxyV,10f)
+//        );
+//        snakeNode.body.applyForceToCenter(
+//                    Mul2D(targetMoveV,6f)
 //            );
-        snakeNode.body.applyLinearImpulse(
-                Mul2D(targetMoveV, MyMath.smoothStep(0,6,snakeNode.getId())*0.06f),//0.006f*snakeNode.getId()),
-                snakeNode.body.getPosition(),
-                true
-        );
+
+//        snakeNode.body.applyLinearImpulse(
+//                Mul2D(targetMoveV, MyMath.smoothStep(0,6,snakeNode.getId())*1f),//0.006f*snakeNode.getId()),
+//                snakeNode.body.getPosition(),
+//                true
+//        );
+//        snakeNode.setBodyVelocity(
+//                targetMoveV.x,
+//                targetMoveV.y
+//        );
     }
 }

@@ -54,6 +54,11 @@ public class SnakeHeadMovingThread extends Thread {
 //            );
 //            snakeHead.body.applyForceToCenter(
 //                    new Vec2(
+//                            vecDXY .x* 1000,
+//                            vecDXY .y* 1000 )
+//            );
+//            snakeHead.body.applyForceToCenter(
+//                    new Vec2(
 //                    vecDXY .x* speedFactor(dx),
 //                    vecDXY .y* speedFactor(dy) )
 //            );

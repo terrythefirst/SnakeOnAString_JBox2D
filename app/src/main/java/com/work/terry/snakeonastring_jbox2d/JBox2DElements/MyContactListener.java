@@ -75,11 +75,7 @@ public class MyContactListener implements ContactListener {
 				}else if(idB.contains("FoodMagnet")){
 					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idB.split(" ")[1]));
 					foodMagnet.setEaten();
-					gamePlay.snake.setIsMagnetic(true);
-					new FoodMagnetSearchThread(
-							foodMagnet,
-							gamePlay.snake
-					).start();
+					gamePlay.snake.whenEatFoodMagnet(foodMagnet);
 				}else if(!idB.equals("snakeBody 1")){
 //					if(contact.getManifold().type == Manifold.ManifoldType.CIRCLES){
 //
@@ -116,11 +112,7 @@ public class MyContactListener implements ContactListener {
 				}else if(idA.contains("FoodMagnet")){
 					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idA.split(" ")[1]));
 					foodMagnet.setEaten();
-					gamePlay.snake.setIsMagnetic(true);
-					new FoodMagnetSearchThread(
-							foodMagnet,
-							gamePlay.snake
-					).start();
+					gamePlay.snake.whenEatFoodMagnet(foodMagnet);
 				}else if(!idA.equals("snakeBody 1")){
 //					Vec2 localNormal = contact.getManifold().localNormal;
 //					float dotMul = dotMul2D(localNormal,gamePlay.snake.snakeHead.getBodyVelocityNormalized());

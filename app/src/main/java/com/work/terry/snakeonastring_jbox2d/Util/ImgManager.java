@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
+import com.work.terry.snakeonastring_jbox2d.UI.LockDownAnimation;
+
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 /**
@@ -40,6 +42,8 @@ public class ImgManager {
             PauseButtonImg,
 
             FoodMagnetImg,
+
+            LockDownImg,
     };
 
     public static String getNumberImgName(int x){

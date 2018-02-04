@@ -42,8 +42,8 @@ public class Constant {
 
         //蛇的刚体参数
         public static final float SnakeHeadAngularDampingRate = 0.3f;
-        public static final float SnakeHeadLinearDampingRate = 0.2f;
-        public static final float SnakeHeadDensity = 10.0f;
+        public static final float SnakeHeadLinearDampingRate = 0.5f;
+        public static final float SnakeHeadDensity = 1.0f;
         public static final float SnakeHeadFriction = 0.04f;
         public static final float SnakeHeadRestitution = 0.6f;
 
@@ -53,10 +53,10 @@ public class Constant {
         public static final float SnakeHeadSpeedUponDead = 0.2f;
         public static final float SnakeBodySpeedUponDead = 0.2f;
 
-        public static final float SnakeBodyLinearDampingRate = 0.10f;
+        public static final float SnakeBodyLinearDampingRate = 0.50f;
         public static final float SnakeBodyLinearDampingRateFactorInter = 0.02f;
-        public static final float SnakeBodyDensity = 0.10f;
-        public static final float SnakeBodyFriction = 0.04f;
+        public static final float SnakeBodyDensity = 1.0f;
+        public static final float SnakeBodyFriction = 0.4f;
         public static final float SnakeBodyRestitution = 0.6f;
     //public static final float snakeBodyAngularDampingRate = 0f;
 
@@ -67,6 +67,8 @@ public class Constant {
     //钉子
     public static final String NailVerticalImg = "nail_vertical.png";
     public static final String NailShadowImg = "nail_shadow.png";
+    //锁定
+    public static final String LockDownImg = "circle_drashed.png";
 
     //按钮
     public static final String PauseButtonImg = "pause.png";

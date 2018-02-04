@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
+import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetSearchThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeJumpAnimationThread;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
@@ -37,6 +38,12 @@ public class Snake {
     public Queue<Thread> addJumpAnimationThreads = new LinkedList<Thread>();
     public Queue<Thread> removeJumpAnimationThreads = new LinkedList<Thread>();
 
+    public Thread foodMagnetSearchThread = null;
+    public float MagneticDuration = 0;
+    public float snakeMaxMagneticDuration = 4;
+    public byte[] MagneticDurationLock = new byte[0];
+    public boolean isMagnetic = false;
+
     public byte[] snakeAjaxLengthLock = new byte[0];
     public int SnakeAjaxLength ;
 
@@ -49,10 +56,8 @@ public class Snake {
     public GamePlay gamePlay;
     public SnakeHead snakeHead;
 
-    public boolean isMagnetic = false;
 
     public float searchRadius = 300;
-    public float numRays = 80;
 
     public List<CircleBody> snakeBodies = null;//包括头！！！
     private int color = Constant.C0LOR_SNAKE_WHITE;
@@ -147,7 +152,28 @@ public class Snake {
         Thread thread = addJumpAnimationThreads.poll();
         return thread;
     }
-
+    public void whenEatFoodMagnet(FoodMagnet foodMagnet){
+        addDuration(foodMagnet.duration);
+        if(foodMagnetSearchThread==null||!foodMagnetSearchThread.isAlive()){
+            setIsMagnetic(true);
+            foodMagnetSearchThread = new FoodMagnetSearchThread(
+                    this
+            );
+            foodMagnetSearchThread.start();
+        }
+    }
+    public void addDuration(float x){
+        synchronized (MagneticDurationLock){
+            MagneticDuration += x;
+        }
+    }
+    public float getMagneticDurationSetZero(){
+        synchronized (MagneticDurationLock){
+            float tempt = MagneticDuration;
+            MagneticDuration = 0;
+            return tempt;
+        }
+    }
     public void startARemoveJumpAnimationThread(){
         Thread thread = new SnakeJumpAnimationThread(this,getLength()-1);
         removeJumpAnimationThreads.offer(thread);
@@ -214,7 +240,7 @@ public class Snake {
     }
 
     public int getLength(){
-        Log.d("getLength",""+snakeBodies.size());
+       // Log.d("getLength",""+snakeBodies.size());
         return snakeBodies.size();
     }
     public void moving(){

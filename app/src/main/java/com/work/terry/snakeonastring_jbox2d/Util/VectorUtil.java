@@ -39,13 +39,11 @@ public class VectorUtil {
     }
     public static float calBodyRadians(float dx,float dy){
         if (dx==0){
-            if (dy>0)return (float) Math.toRadians(90);
-            else if (dy==0)return 0;
-            else return (float) Math.toRadians(270);
+            if (dy<0)return (float) Math.toRadians(0);
+            else return (float) Math.toRadians(180);
         }else {
-            return (float) Math.atan(dy/dx);
+            return (float) Math.atan(-dy/dx);
         }
-
     }
     public static float calRotateAngleDegrees(float dx,float dy){
         float res = 0;
