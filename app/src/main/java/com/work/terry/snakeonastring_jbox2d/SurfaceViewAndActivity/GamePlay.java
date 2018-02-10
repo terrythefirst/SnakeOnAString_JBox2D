@@ -23,6 +23,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.nio.channels.FileLock;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +77,7 @@ public class GamePlay extends MyView{
                 0,
                 ButtonBlockFloorColorFactor
         );
+        float rotateAngle = (float)Math.random();
         drawUtil.addToTopLayer(scoreBoard);
             drawUtil.addToCenterLayer(
                     new ButtonBlock(
@@ -83,10 +85,10 @@ public class GamePlay extends MyView{
                             "",
                             720,400,
                             80,
-                            200,
+                            rotateAngle*400,
                             0.95f,
                             ButtonBlockDefaultHeight,
-                            220,
+                            rotateAngle*360,
                             true,
                             Constant.COLOR_WHITE
                     )

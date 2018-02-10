@@ -59,8 +59,8 @@ public class SnakeHeadMovingThread extends Thread {
 //            );
 //            snakeHead.body.applyForceToCenter(
 //                    new Vec2(
-//                    vecDXY .x* speedFactor(dx),
-//                    vecDXY .y* speedFactor(dy) )
+//                    vecDXY .x* forceFactor(dx),
+//                    vecDXY .y* forceFactor(dy) )
 //            );
             snakeHead.setBodyVelocity(
                     vecDXY .x* speedFactor(dx),
@@ -75,12 +75,21 @@ public class SnakeHeadMovingThread extends Thread {
     }
     private float speedFactor(float x){
         return MyMath.smoothStep(
+                5,
+                snakeHead.SpeedFactor,
+                Math.abs(x)
+        )
+                *snakeHead.speed
+                * snakeHead.snake.getLength()
+                *10;
+    }
+    public float forceFactor(float x){
+        return MyMath.smoothStep(
                 0,
                 snakeHead.SpeedFactor,
                 Math.abs(x)
         )
                 *snakeHead.speed
-                *snakeHead.snake.getLength()
-                *10;
+                *((float)Math.pow(Math.E, snakeHead.snake.getLength()));
     }
 }

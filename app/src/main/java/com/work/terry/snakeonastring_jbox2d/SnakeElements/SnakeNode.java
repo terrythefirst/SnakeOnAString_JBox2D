@@ -52,7 +52,7 @@ public class SnakeNode extends CircleBody{
                 Constant.SnakeFloorColorFactor,
 
                 0,
-                SnakeBodyLinearDampingRate+id*SnakeBodyLinearDampingRateFactorInter,
+                SnakeBodyLinearDampingRate,//+id*SnakeBodyLinearDampingRateFactorInter,
                 SnakeBodyDensity,
                 SnakeBodyFriction,
                 SnakeBodyRestitution,
@@ -145,7 +145,7 @@ public class SnakeNode extends CircleBody{
                 Constant.SnakeHeightColorFactor,
                 Constant.SnakeFloorColorFactor,
 
-                0.01f,
+                0.0000001f,
                 0.0f,0.0f,
                 ButtonImgRect,
                 false
@@ -212,7 +212,7 @@ public class SnakeNode extends CircleBody{
                     front,
                     //rectBody.body.getPosition(),
                     front.body.getPosition(),
-                    1.0f,
+                    10.0f,
                     0.70f
             );
         //}
@@ -224,7 +224,7 @@ public class SnakeNode extends CircleBody{
                 rectBody,
                 this,
                 this.body.getPosition(),
-                20.0f,
+                10.0f,
                 0.50f
         );
 //

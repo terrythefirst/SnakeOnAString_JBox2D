@@ -8,6 +8,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
+import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -32,7 +33,9 @@ public class JBox2DUtil {
         for (MyBody mb : JBox2DUtil.Bodies) {
             mb.popXYfromBody();
             //mb.pushWidthHeightIntoBody();
-
+            if(mb instanceof ButtonBlockCircle){
+                ((ButtonBlockCircle)mb).body.getFixtureList().getShape().setRadius((((ButtonBlockCircle) mb).radius+((ButtonBlockCircle) mb).scaleWidth/2)/RATE);
+            }
             if (mb instanceof SnakeFood) {
                 if (((SnakeFood) mb).eatean) {
                     mb.setDoDraw(false);

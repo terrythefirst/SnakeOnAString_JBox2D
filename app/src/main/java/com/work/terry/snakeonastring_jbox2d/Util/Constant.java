@@ -76,7 +76,7 @@ public class Constant {
     //磁铁
     public static final String FoodMagnetImg = "magnet.png";
     //蛇整体
-    public static final int SnakeBodyDefaultLength = 3;
+    public static final int SnakeBodyDefaultLength = 8;
 
     public static final int SnakeDefaultHeight = 24;
 
