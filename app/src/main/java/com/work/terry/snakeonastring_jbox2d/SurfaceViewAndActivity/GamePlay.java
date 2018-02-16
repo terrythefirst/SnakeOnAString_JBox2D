@@ -77,6 +77,7 @@ public class GamePlay extends MyView{
                 0,
                 ButtonBlockFloorColorFactor
         );
+        float dia = 20+(float)Math.random()*80;
         float rotateAngle = (float)Math.random();
         drawUtil.addToTopLayer(scoreBoard);
             drawUtil.addToCenterLayer(
@@ -84,8 +85,8 @@ public class GamePlay extends MyView{
                             world,
                             "",
                             720,400,
-                            80,
-                            rotateAngle*400,
+                            dia,
+                            rotateAngle*400+dia,
                             0.95f,
                             ButtonBlockDefaultHeight,
                             rotateAngle*360,

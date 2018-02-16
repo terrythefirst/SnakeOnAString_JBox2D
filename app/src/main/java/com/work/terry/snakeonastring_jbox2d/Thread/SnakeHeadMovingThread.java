@@ -47,8 +47,8 @@ public class SnakeHeadMovingThread extends Thread {
 
 //            snakeHead.body.applyLinearImpulse(
 //                    new Vec2(
-//                            snakeHead.HeadVX* speedFactor(dx),
-//                            snakeHead.HeadVY* speedFactor(dy) ),
+//                            snakeHead.HeadVX* forceFactor(dx),
+//                            snakeHead.HeadVY* forceFactor(dy) ),
 //                    snakeHead.body.getPosition(),
 //                    true
 //            );
@@ -85,11 +85,11 @@ public class SnakeHeadMovingThread extends Thread {
     }
     public float forceFactor(float x){
         return MyMath.smoothStep(
-                0,
-                snakeHead.SpeedFactor,
+                1,
+                10,
                 Math.abs(x)
         )
-                *snakeHead.speed
-                *((float)Math.pow(Math.E, snakeHead.snake.getLength()));
+                *400f
+                *snakeHead.snake.getLength();
     }
 }

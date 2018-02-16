@@ -276,15 +276,15 @@ public class SnakeNode extends CircleBody{
 //                0f
 //        );
     }
-    @Override
-    public void drawSelf(TexDrawer painter){
-        super.drawSelf(painter);
-
-        rectBody.rotateAngleGameElements = -(float)Math.toDegrees(rectBody.body.getAngle());
-        //rectBody.rotateAngleGameElements = 0;
-        //        Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
-        rectBody.drawSelf(painter);
-    }
+//    @Override
+//    public void drawSelf(TexDrawer painter){
+//        super.drawSelf(painter);
+//
+//        rectBody.rotateAngleGameElements = -(float)Math.toDegrees(rectBody.body.getAngle());
+//        //rectBody.rotateAngleGameElements = 0;
+//        //        Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
+//        rectBody.drawSelf(painter);
+//    }
     @Override
     public void destroySelf(){
         super.destroySelf();
