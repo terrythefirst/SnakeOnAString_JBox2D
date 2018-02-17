@@ -35,8 +35,8 @@ public class MyBox2DRevoluteJoint extends MyJoint{
 		rjd.enableMotor = enableMotor;					//给是否开启旋转马达赋值
 		rjd.motorSpeed = motorSpeed;					//给关节马达速度赋值
 		rjd.maxMotorTorque = maxMotorTorque;			//给关节马达的最大扭矩赋值
-		anchor.x=anchor.x / RATE;					//更改锚点的x坐标
-		anchor.y=anchor.y / RATE;					//更改锚点的y坐标
+//		anchor.x=anchor.x / RATE;					//更改锚点的x坐标
+//		anchor.y=anchor.y / RATE;					//更改锚点的y坐标
 		rjd.initialize(A.body, B.body, anchor);//调用旋转关节描述的初始化函数
 		joint=(RevoluteJoint)world.createJoint(rjd);		//在物理世界里增添旋转关节
 

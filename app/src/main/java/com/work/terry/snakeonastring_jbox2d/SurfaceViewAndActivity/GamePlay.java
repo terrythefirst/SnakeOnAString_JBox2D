@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.UI.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
@@ -22,6 +23,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.nio.channels.FileLock;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,20 +77,23 @@ public class GamePlay extends MyView{
                 0,
                 ButtonBlockFloorColorFactor
         );
+        float dia = 20+(float)Math.random()*80;
+        float rotateAngle = (float)Math.random();
         drawUtil.addToTopLayer(scoreBoard);
-//            drawUtil.addToCenterLayer(
-//                    new ButtonBlock(
-//                            world,
-//                            720,2000,
-//                            80,
-//                            200,
-//                            0.8f,
-//                            ButtonBlockDefaultHeight,
-//                            100,
-//                            true,
-//                            Constant.C0LOR_WHITE
-//                    )
-//            );
+            drawUtil.addToCenterLayer(
+                    new ButtonBlock(
+                            world,
+                            "",
+                            720,400,
+                            dia,
+                            rotateAngle*400+dia,
+                            0.95f,
+                            ButtonBlockDefaultHeight,
+                            rotateAngle*360,
+                            true,
+                            Constant.COLOR_WHITE
+                    )
+            );
 //        snakeFoodLocationMap.put(0,new Vec2(200,600));
 //        snakeFoodLocationMap.put(1,new Vec2(200,1800));
 //        snakeFoodLocationMap.put(2,new Vec2(1200,600));

@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyDistanceJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeMovingThread;
@@ -50,7 +52,7 @@ public class SnakeNode extends CircleBody{
                 Constant.SnakeFloorColorFactor,
 
                 0,
-                SnakeBodyLinearDampingRate+id*SnakeBodyLinearDampingRateFactorInter,
+                SnakeBodyLinearDampingRate,//+id*SnakeBodyLinearDampingRateFactorInter,
                 SnakeBodyDensity,
                 SnakeBodyFriction,
                 SnakeBodyRestitution,
@@ -126,7 +128,7 @@ public class SnakeNode extends CircleBody{
     }
     public void initJoints(){
         Vec2 center = getCenterV2(front.getBodyXY(),this.getBodyXY());
-        float angle = front.body.getAngle();//calBodyRadians(-frontV.x,-frontV.y);
+        float angle = calBodyRadians(front.x-x,front.y-y);//front.body.getAngle();//calBodyRadians(-frontV.x,-frontV.y);
         float rectBodyLenth = getBodyCenterDistance();
         rectBody = new RectBody(
                 world,
@@ -143,7 +145,7 @@ public class SnakeNode extends CircleBody{
                 Constant.SnakeHeightColorFactor,
                 Constant.SnakeFloorColorFactor,
 
-                0.01f,
+                0.0000001f,
                 0.0f,0.0f,
                 ButtonImgRect,
                 false
@@ -189,7 +191,19 @@ public class SnakeNode extends CircleBody{
 //                (float) ((30/360)*Math.PI),
 //                false, 0f, 0f
 //        );
-        if(front instanceof SnakeHead){
+//        if(front instanceof SnakeHead){
+//            new MyWeldJoint(
+//                    body.getUserData().toString()+" WeldJoint 1",
+//                    world,
+//                    false,
+//                    rectBody,
+//                    front,
+//                    //rectBody.body.getPosition(),
+//                    front.body.getPosition(),
+//                    0.01f,
+//                    0.01f
+//            );
+//        }else {
             new MyWeldJoint(
                     body.getUserData().toString()+" WeldJoint 1",
                     world,
@@ -198,22 +212,10 @@ public class SnakeNode extends CircleBody{
                     front,
                     //rectBody.body.getPosition(),
                     front.body.getPosition(),
-                    0.01f,
-                    0.01f
+                    10.0f,
+                    0.70f
             );
-        }else {
-            new MyWeldJoint(
-                    body.getUserData().toString()+" WeldJoint 1",
-                    world,
-                    false,
-                    rectBody,
-                    front,
-                    //rectBody.body.getPosition(),
-                    front.body.getPosition(),
-                    0.0f,
-                    1.0f
-            );
-        }
+        //}
 
         new MyWeldJoint(
                 body.getUserData().toString()+" WeldJoint 2",
@@ -222,9 +224,46 @@ public class SnakeNode extends CircleBody{
                 rectBody,
                 this,
                 this.body.getPosition(),
-                0.2f,
-                0.8f
+                10.0f,
+                0.50f
         );
+//
+        new MyDistanceJoint(
+                body.getUserData().toString() +" DistanceJoint 1",
+                world,
+                false,
+                this,
+                front,
+                this.body.getPosition(),
+                front.body.getPosition(),
+                0.0f,
+                0.0f
+        );
+//            new MyBox2DRevoluteJoint(
+//                    body.getUserData().toString()+" RevoluteJoint 1",
+//                    world,
+//                    false,
+//                    front,
+//                    rectBody,
+//                    //rectBody.body.getPosition(),
+//                    front.body.getPosition(),
+//                    true,
+//                    (float)Math.toRadians(-30),
+//                    (float)Math.toRadians(30),
+//                    false, 0, 0
+//            );
+//        new MyBox2DRevoluteJoint(
+//                body.getUserData().toString() +" RevoluteJoint 1",
+//                world,
+//                false,
+//                this,
+//                rectBody,
+//                this.body.getPosition(),
+//                true,
+//                (float)Math.toRadians(-30),
+//                (float)Math.toRadians(30),
+//                false, 0, 0
+//        );
 //        new MyDistanceJoint(
 //                "snake and body joint",
 //                world,
@@ -241,7 +280,9 @@ public class SnakeNode extends CircleBody{
 //    public void drawSelf(TexDrawer painter){
 //        super.drawSelf(painter);
 //
-//        rectBody.rotateAngleGameElements = (float)Math.toDegrees(rectBody.body.getAngle());
+//        rectBody.rotateAngleGameElements = -(float)Math.toDegrees(rectBody.body.getAngle());
+//        //rectBody.rotateAngleGameElements = 0;
+//        //        Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
 //        rectBody.drawSelf(painter);
 //    }
     @Override
