@@ -62,7 +62,8 @@ public class GamePlayView extends GLSurfaceView {
             nowViewIndex = index;
         }
         switch (index){
-            case MAIN_VIEW:
+            case START_VIEW:
+                nowView = new StartView(null);
                 break;
             case MENU_VIEW:
                 break;
@@ -107,8 +108,8 @@ public class GamePlayView extends GLSurfaceView {
             TexManager.loadTextures(GamePlayView.this.getResources());
             GLES30.glDisable(GLES30.GL_CULL_FACE);
 
-            setNowViewIndex(GAMEPLAY_VIEW);
-            setNowView(GAMEPLAY_VIEW);
+            setNowViewIndex(START_VIEW);
+            setNowView(START_VIEW);
         }
     }
     public void onResume(){

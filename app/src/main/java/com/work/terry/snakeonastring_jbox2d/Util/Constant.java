@@ -15,25 +15,51 @@ public class Constant {
 
     //界面标志
     public static final int CHANGE_BY_DEFAULT_VIEW = -1;
-    public static final int MAIN_VIEW = 0;
+    public static final int START_VIEW = 0;
     public static final int MENU_VIEW = 1;
     public static final int GAMEPLAY_VIEW = 2;
 
     //文件前缀
     public static String PicDirectoryPrefix = "pic/";
+    public static String NumbersPicDirectoryPrefix = "numbers/";
+    public static String LettersPicDirectoryPrefix = "letters/";
 
-    public static String Number0Img = "number_zero.png";
-    public static String Number1Img = "number_one.png";
-    public static String Number2Img = "number_two.png";
-    public static String Number3Img = "number_three.png";
-    public static String Number4Img = "number_four.png";
-    public static String Number5Img = "number_five.png";
-    public static String Number6Img = "number_six.png";
-    public static String Number7Img = "number_seven.png";
-    public static String Number8Img = "number_eight.png";
-    public static String Number9Img = "number_nine.png";
+    public static String Number0Img = NumbersPicDirectoryPrefix+"number_zero.png";
+    public static String Number1Img = NumbersPicDirectoryPrefix+"number_one.png";
+    public static String Number2Img = NumbersPicDirectoryPrefix+"number_two.png";
+    public static String Number3Img = NumbersPicDirectoryPrefix+"number_three.png";
+    public static String Number4Img = NumbersPicDirectoryPrefix+"number_four.png";
+    public static String Number5Img = NumbersPicDirectoryPrefix+"number_five.png";
+    public static String Number6Img = NumbersPicDirectoryPrefix+"number_six.png";
+    public static String Number7Img = NumbersPicDirectoryPrefix+"number_seven.png";
+    public static String Number8Img = NumbersPicDirectoryPrefix+"number_eight.png";
+    public static String Number9Img = NumbersPicDirectoryPrefix+"number_nine.png";
 
+    public static String LetterS = LettersPicDirectoryPrefix+"letter_s.png";
+    public static String LetterN = LettersPicDirectoryPrefix+"letter_n.png";
+    public static String LetterA = LettersPicDirectoryPrefix+"letter_a.png";
+    public static String LetterK = LettersPicDirectoryPrefix+"letter_k.png";
+    public static String LetterE = LettersPicDirectoryPrefix+"letter_e.png";
+    public static String LetterO = LettersPicDirectoryPrefix+"letter_o.png";
+    public static String LetterT = LettersPicDirectoryPrefix+"letter_t.png";
+    public static String LetterR = LettersPicDirectoryPrefix+"letter_r.png";
+    public static String LetterI = LettersPicDirectoryPrefix+"letter_i.png";
+    public static String LetterG = LettersPicDirectoryPrefix+"letter_g.png";
+
+
+    public static String RoundEdgeCube = "round_edge_cube.png";
     public static String ArrowsSwitchImg = "arrows_switch_horizontal.png";
+    public static String SoundAltImg = "sound_alt.png";
+    public static String SoundOffImg = "sound_off.png";
+    public static String SoundOutloud = "sound_outloud.png";
+
+    public static String StatisticsBars = "bars.png";
+    public static String StartImg = "start.png";
+    public static String InfiniteImg = "infinite.png";
+
+    public static String StarFavoriteImg = "star_favorite.png";
+    public static String RateImg = "thumbs_up.png";
+    public static String LikeImg = "love.png";
 
     //JBOX2D相关1
     public static final float RATE = 10;//屏幕到现实世界的比例 10px：1m;

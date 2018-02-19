@@ -23,6 +23,8 @@ public class ImgManager {
             SnakeFoodImg,
             BombImg,
 
+            RoundEdgeCube,
+
             Number0Img,
             Number1Img,
             Number2Img,
@@ -34,12 +36,36 @@ public class ImgManager {
             Number8Img,
             Number9Img,
 
+            LetterS,
+            LetterN,
+            LetterA,
+            LetterK,
+            LetterE,
+            LetterO,
+            LetterT,
+            LetterR,
+            LetterI,
+            LetterG,
+
             NailVerticalImg,
             NailShadowImg,
 
             PauseButtonImg,
 
             FoodMagnetImg,
+
+            ArrowsSwitchImg,
+            SoundAltImg,
+            SoundOffImg,
+            SoundOutloud,
+
+            StatisticsBars,
+            StartImg,
+            InfiniteImg,
+            StarFavoriteImg,
+            RateImg,
+            LikeImg,
+
     };
 
     public static String getNumberImgName(int x){

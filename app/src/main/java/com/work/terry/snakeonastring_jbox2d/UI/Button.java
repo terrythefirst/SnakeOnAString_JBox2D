@@ -14,7 +14,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeightColo
 
 public class Button extends GameElements {
     public float buttonDefaultHeight ;
-
+    public boolean disabled = false;
 
     public Button(
             int id,
@@ -44,8 +44,15 @@ public class Button extends GameElements {
         jumpHeight = defaultHeight;
         this.defaultHeight = 0;
     }
+    public void setDisabled(boolean x){
+        disabled = x;
+    }
     public void whenPressed(){
-        jumpHeight = 0;
+        if(disabled){
+            jumpHeight = buttonDefaultHeight*2/3;
+        }else {
+            jumpHeight = 0;
+        }
     }
     public void whenReleased(){
         jumpHeight = buttonDefaultHeight;
