@@ -1,29 +1,42 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
+import com.work.terry.snakeonastring_jbox2d.UI.LockDownAnimation;
+
 /**
  * Created by Terry on 2018/2/2.
  */
 
 public class FoodMagnetSearchThread extends Thread {
-    FoodMagnet foodMagnet;
+    float duration = 0;
     Snake snake;
 
-    int nowTime = 0;
     public FoodMagnetSearchThread(
-            FoodMagnet foodMagnet,
             Snake snake
     ){
-        this.foodMagnet = foodMagnet;
         this.snake = snake;
+        this.duration +=snake.getMagneticDurationSetZero();
+        Log.d("duration",""+duration);
     }
     @Override
     public void run(){
-       nowTime = 0;
+       int nowTime = 0;
        int interval = 1000;
-       snake.setIsMagnetic(true);
-       while (nowTime<foodMagnet.duration){
+
+        new LockDownAnimation(
+                snake.snakeHead,
+                snake.gamePlay.getDrawUtil(),
+                true,
+                3,
+                0.5f
+        ).start();
+       while (nowTime<duration){
+           this.duration += snake.getMagneticDurationSetZero();
+           this.duration = (duration>snake.snakeMaxMagneticDuration)?snake.snakeMaxMagneticDuration:duration;
+
            nowTime ++;
            try {
                sleep(interval);
@@ -31,10 +44,14 @@ public class FoodMagnetSearchThread extends Thread {
                e.printStackTrace();
            }
        }
-       snake.setIsMagnetic(false);
-    }
-    public void setNowTime(int x){
-        nowTime = x;
-    }
 
+       snake.setIsMagnetic(false);
+        new LockDownAnimation(
+                snake.snakeHead,
+                snake.gamePlay.getDrawUtil(),
+                false,
+                3,
+                0.5f
+        ).start();
+    }
 }

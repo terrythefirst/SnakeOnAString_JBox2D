@@ -68,8 +68,8 @@ public class Constant {
 
         //蛇的刚体参数
         public static final float SnakeHeadAngularDampingRate = 0.3f;
-        public static final float SnakeHeadLinearDampingRate = 0.2f;
-        public static final float SnakeHeadDensity = 10.0f;
+        public static final float SnakeHeadLinearDampingRate = 0.5f;
+        public static final float SnakeHeadDensity = 1.0f;
         public static final float SnakeHeadFriction = 0.04f;
         public static final float SnakeHeadRestitution = 0.6f;
 
@@ -79,10 +79,10 @@ public class Constant {
         public static final float SnakeHeadSpeedUponDead = 0.2f;
         public static final float SnakeBodySpeedUponDead = 0.2f;
 
-        public static final float SnakeBodyLinearDampingRate = 0.10f;
+        public static final float SnakeBodyLinearDampingRate = 0.50f;
         public static final float SnakeBodyLinearDampingRateFactorInter = 0.02f;
-        public static final float SnakeBodyDensity = 0.10f;
-        public static final float SnakeBodyFriction = 0.04f;
+        public static final float SnakeBodyDensity = 1.0f;
+        public static final float SnakeBodyFriction = 0.4f;
         public static final float SnakeBodyRestitution = 0.6f;
     //public static final float snakeBodyAngularDampingRate = 0f;
 
@@ -93,6 +93,8 @@ public class Constant {
     //钉子
     public static final String NailVerticalImg = "nail_vertical.png";
     public static final String NailShadowImg = "nail_shadow.png";
+    //锁定
+    public static final String LockDownImg = "circle_drashed.png";
 
     //按钮
     public static final String PauseButtonImg = "pause.png";
@@ -100,7 +102,7 @@ public class Constant {
     //磁铁
     public static final String FoodMagnetImg = "magnet.png";
     //蛇整体
-    public static final int SnakeBodyDefaultLength = 3;
+    public static final int SnakeBodyDefaultLength = 4;
 
     public static final int SnakeDefaultHeight = 24;
 
@@ -154,8 +156,8 @@ public class Constant {
 
     public static String BackgroundImg = "Strips_background.png";
 
-    public static String ButtonImgCircleUp = SnakeBodyImg;//"button_circle_up.png";
-    public static String ButtonImgCircleDown = SnakeBodyImg;//"button_circle_down.png";
+    public static String ButtonImgCircleUp = "button_circle_up.png";
+    public static String ButtonImgCircleDown = "button_circle_down.png";
     public static String ButtonImgRect = SnakeBodyHeightImg;
 
     public static String AxisImg = "axis_with_direction.png";

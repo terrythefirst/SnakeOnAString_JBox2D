@@ -94,6 +94,5 @@ public class JiggleAnimation extends Thread{
                 e.printStackTrace();
             }
         }
-        Log.d("JiggleAnimation","NowJumpHeight"+gameElements.jumpHeight);
     }
 }

@@ -106,6 +106,14 @@ public class DrawUtil {
     }
     public void drawFloorAndCenterLayer(TexDrawer painter){
         //背景上的影子
+        synchronized (animationLayerDrawSequence){
+            animationLayerDrawSequence.stream()
+                    .forEach(
+                            x->{
+                                x.drawFloorShadow(painter);
+                            }
+                    );
+        }
         synchronized (centerLayerDrawSequence){
             centerLayerDrawSequence.stream()
                     .filter(x->x.doDraw)

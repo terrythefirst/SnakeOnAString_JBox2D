@@ -37,7 +37,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.plusV2D;
  */
 
 public class ButtonBlockCircle extends CircleBody{
-    private Thread AnimateThread = null;
     public ButtonBlockCircle(
             World world,
             float x, float y,
