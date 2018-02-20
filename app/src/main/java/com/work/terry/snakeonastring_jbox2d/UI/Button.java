@@ -48,7 +48,7 @@ public class Button extends GameElements {
         disabled = x;
     }
     public void whenPressed(){
-        if(disabled){
+        if(!disabled){
             jumpHeight = -defaultHeight*3/4;
         }else {
             jumpHeight = -defaultHeight*1/4;

@@ -327,6 +327,7 @@ public class StartView extends MyView {
                 Constant.SnakeBodyImg
         );
         drawUtil.addToTopLayer(musicButton);
+        buttons.add(musicButton);
 
         statisticsButton = new ImgButton(
                 0,
@@ -342,6 +343,7 @@ public class StartView extends MyView {
                 Constant.SnakeBodyImg
         );
         drawUtil.addToTopLayer(statisticsButton);
+        buttons.add(statisticsButton);
 
         initThreeButtons();
 
@@ -361,6 +363,29 @@ public class StartView extends MyView {
         originalPlayButton.setTopImgRatio(0.5f);
         originalPlayButton.setDisabled(true);
         drawUtil.addToTopLayer(originalPlayButton);
+        buttons.add(originalPlayButton);
+        new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    Thread thread = new JiggleAnimation(
+                            originalPlayButton,
+                            20,
+                            3f,
+                            true,
+                            0.4f,
+                            false
+                    );
+
+                    thread.start();
+                    try {
+                        thread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
 
         endlessPlayButton= new ImgButton(
                 0,
@@ -377,6 +402,30 @@ public class StartView extends MyView {
         );
         endlessPlayButton.setTopImgRatio(0.5f);
         drawUtil.addToTopLayer(endlessPlayButton);
+        buttons.add(endlessPlayButton);
+        new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    Thread thread = new JiggleAnimation(
+                            endlessPlayButton,
+                            20,
+                            3f,
+                            true,
+                            0.4f,
+                            false
+                    );
+
+                    thread.start();
+                    try {
+                        thread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }.start();
     }
     public void initThreeButtons(){
         threeButtonsY = 2260;
@@ -395,6 +444,7 @@ public class StartView extends MyView {
                 Constant.SnakeBodyImg
         );
         drawUtil.addToTopLayer(favoriteButton);
+        buttons.add(favoriteButton);
 
         rateButton = new ImgButton(
                 0,
@@ -411,6 +461,7 @@ public class StartView extends MyView {
         );
         rateButton.setTopImgRatio(0.6f);
         drawUtil.addToTopLayer(rateButton);
+        buttons.add(rateButton);
 
         likeButton = new ImgButton(
                 0,
@@ -427,6 +478,7 @@ public class StartView extends MyView {
         );
         likeButton.setTopImgRatio(0.6f);
         drawUtil.addToTopLayer(likeButton);
+        buttons.add(likeButton);
     }
 
     @Override
