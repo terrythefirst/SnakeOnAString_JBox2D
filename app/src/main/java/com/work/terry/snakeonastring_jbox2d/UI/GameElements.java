@@ -111,7 +111,6 @@ public class GameElements{
                     TopOffsetColorFactor
             );
         }
-
         //drawSelf
         painter.drawColorSelf(
                 TexManager.getTex(Img),

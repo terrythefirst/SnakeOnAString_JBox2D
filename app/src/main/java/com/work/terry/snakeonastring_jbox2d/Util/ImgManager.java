@@ -8,7 +8,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 public class ImgManager {
     public static String[] picName = {
-            SnakeHeadHeadImg,
             SnakeBodyImg,
             BackgroundImg,
             AxisImg,
@@ -33,6 +32,8 @@ public class ImgManager {
             Number7Img,
             Number8Img,
             Number9Img,
+
+            LockDownImg,
 
             LetterS,
             LetterN,

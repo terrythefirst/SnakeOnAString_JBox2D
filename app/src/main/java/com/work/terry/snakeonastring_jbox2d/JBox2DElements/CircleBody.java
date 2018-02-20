@@ -98,7 +98,8 @@ public class CircleBody extends MyBody{
         );
         this.radius=radius;//给圆形类物体半径变量赋值
 
-        createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);
+        if(world != null)
+            createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);
     }
     public void createCircleBody(
                                  World world,

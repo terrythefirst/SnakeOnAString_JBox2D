@@ -35,14 +35,20 @@ public class SnakeNode extends CircleBody{
     private Thread movingThread = null;
     public float centerDistance = 0;
 
-    public SnakeNode(Snake snake,World world,float x, float y, float vx, float vy,int color,float jumpHeight,int id){
+    public SnakeNode(
+            float x, float y,
+            float radius,
+            int color,
+            float jumpHeight,
+            int id
+    ){
         super(
-                world,
+                null,
                 "snakeBody "+id,
                 x,y,
-                calRotateAngleDegrees(vx,vy),
-                vx,vy,
-                Constant.SnakeBodyRadius,
+                0,
+                0,0,
+                radius,
 
                 color,
                 jumpHeight,
@@ -59,7 +65,7 @@ public class SnakeNode extends CircleBody{
                 false,
                 Constant.SnakeBodyImg
         );
-        this.snake = snake;
+        this.snake = null;
     }
     public SnakeNode(Snake snake,World world,CircleBody frontNode,int id){
         super(

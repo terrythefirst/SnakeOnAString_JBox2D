@@ -3,6 +3,9 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
@@ -14,6 +17,8 @@ import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -36,6 +41,7 @@ public class StartView extends MyView {
 
     private List<GameElements> letterSnakeList = new ArrayList<>();
     private List<GameElements> letterOnAStringList = new ArrayList<>();
+    private List<GameElements> snake = new ArrayList<>();
 
     float letterSnakeDefaultHeight = 30;
     float letterSnakeBeginX = 250;
@@ -53,8 +59,17 @@ public class StartView extends MyView {
     float letterOnAStringSpanX = 10;
     float letterOnAStringGapX = 100;
 
+    float HeadRadius = 50;
+    float NodeRadius = 50;
+    float SnakeY = 1400;
+    float SnakeYSpan = 100;
+    float SnakeXSpan = 90;
+    float SnakeXTotalSpan = 8*SnakeXSpan;
+
     private float threeButtonsY = 2260;
     private float threeButtonsSpan = 20;
+
+
 
     public StartView(
         String backgroundImg
@@ -64,6 +79,46 @@ public class StartView extends MyView {
         initButtons();
         initLetterSnake();
         initOnAString();
+        initSnake();
+    }
+    public void initSnake(){
+
+        int NodeIndex = 0;
+
+        while (NodeIndex < 8){
+            SnakeNode snakeNode = new SnakeNode(
+                    720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
+                    NodeRadius,
+                    Constant.C0LOR_SNAKE_WHITE,
+                    Constant.SnakeDefaultHeight,
+                    NodeIndex++
+            );
+            snakeNode.setTopRatio(0.95f);
+            drawUtil.addToTopLayer(snakeNode);
+            snake.add(snakeNode);
+        }
+
+        SnakeHead snakeHead = new SnakeHead(
+                720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
+                1,1,
+                NodeRadius,
+                Constant.C0LOR_SNAKE_WHITE,
+                Constant.SnakeDefaultHeight
+        );
+        snakeHead.setTopRatio(0.95f);
+        drawUtil.addToTopLayer(snakeHead);
+        snake.add(snakeHead);
+
+        Collections.reverse(snake);
+        new ListJiggleAnimation(
+                snake,
+                40,
+                0.3f,
+                2000,
+                false,
+                0,
+                true
+        ).start();
     }
     public void initLetterSnake(){
         Button tempt = new Button(

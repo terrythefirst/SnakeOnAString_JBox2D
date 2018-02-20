@@ -11,7 +11,6 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import org.jbox2d.dynamics.World;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColorFactor;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeadEyesDiameter;
 
 /**
  * Created by Terry on 2018/1/29.

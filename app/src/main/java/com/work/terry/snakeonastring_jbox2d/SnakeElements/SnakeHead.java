@@ -34,6 +34,39 @@ public class SnakeHead extends CircleBody{
     Thread movingThread;
 
     public Nail target = null;
+    public SnakeHead(
+            float x, float y,
+            float vx, float vy,
+            float radius,
+            int color,
+            float jumpHeight
+    ){
+        super(
+                null,
+                "snakeHead ",
+                x,y,
+                0,
+                0,0,
+                radius,
+
+                color,
+                jumpHeight,
+                Constant.SnakeDownLittleHeight,
+                Constant.SnakeDownLittleColorFactor,
+                Constant.SnakeHeightColorFactor,
+                Constant.SnakeFloorColorFactor,
+
+                0,
+                SnakeBodyLinearDampingRate,//+id*SnakeBodyLinearDampingRateFactorInter,
+                SnakeBodyDensity,
+                SnakeBodyFriction,
+                SnakeBodyRestitution,
+                false,
+                Constant.SnakeBodyImg
+        );
+        this.snake = null;
+        this.rotateAngle = calRotateAngleDegrees(vx,vy);
+    }
     public SnakeHead(Snake snake,World world,int x, int y, int vx, int vy,int color,float defaultHeight){
         super(
                 world,
@@ -56,34 +89,12 @@ public class SnakeHead extends CircleBody{
                 SnakeHeadFriction,
                 SnakeHeadRestitution,
                 false,
-                Constant.SnakeHeadHeadImg
+                Constant.SnakeBodyImg
         );
         this.snake = snake;
         rotateAngle = calRotateAngleDegrees(vx,vy);
         HeadVX = vx;
         HeadVY = vy;
-//        squareBody = new RectBody(
-//                world,
-//                ""+body.getUserData().toString()+"Rect",
-//                body.getPosition().x,body.getPosition().y,
-//                rotateAngle,
-//                0,0,
-//                4,4,
-//                "",
-//                false
-//        );
-//        new MyBox2DRevoluteJoint(
-//                ""+body.getUserData().toString()+"RevoltJoint1",
-//                world,
-//                false,
-//                squareBody,
-//                this,
-//                this.getBodyXY(),
-//                true,
-//                0,0,
-//                false,0f,0f
-//        );
-        //pushXYintoBody();
     }
 
 
@@ -92,28 +103,31 @@ public class SnakeHead extends CircleBody{
     }
     @Override
     public void drawSelf(TexDrawer painter){
-        Log.d(
-                "Draw"+body.getUserData().toString(),
-                "BODYx="+body.getPosition().x*RATE
-                        +" BODYy="+body.getPosition().y*RATE
-                  +"\nx="+x
-                        +" y="+y
-                        +" HeadvX="+HeadVX
-                        +" HeadvY="+HeadVY
-        );
-        if(snake.isDead()){
-            rotateAngle =(float) Math.toDegrees(body.getAngle());
-           //Vec2 v = getBodyVelocityNormalized();
-           //rotateAngle =calRotateAngleDegrees(v.x,v.y);
-        }else {
-            rotateAngle = calRotateAngleDegrees(HeadVX,HeadVY);
-        }
+        if(body!=null)
+            Log.d(
+                    "Draw"+body.getUserData().toString(),
+                    "BODYx="+body.getPosition().x*RATE
+                            +" BODYy="+body.getPosition().y*RATE
+                      +"\nx="+x
+                            +" y="+y
+                            +" HeadvX="+HeadVX
+                            +" HeadvY="+HeadVY
+            );
+        if(snake!=null)
+            if(snake.isDead()){
+                rotateAngle =(float) Math.toDegrees(body.getAngle());
+               //Vec2 v = getBodyVelocityNormalized();
+               //rotateAngle =calRotateAngleDegrees(v.x,v.y);
+            }else {
+                rotateAngle = calRotateAngleDegrees(HeadVX,HeadVY);
+            }
         //rotateAngle =(float) Math.toDegrees(body.getAngle())+90;
         //float AxisRotateAngle =(float) Math.toDegrees(body.getAngle());
         //calRotateAngleRadius(body.getLinearVelocity().x,body.getLinearVelocity().y);
 
         //drawSelf
         super.drawSelf(painter);
+        float SnakeHeadEyesDiameter = radius/Constant.SnakeHeadRatio*2;
         painter.drawColorFactorTex(
                 TexManager.getTex(SnakeHeadEyesBallImg),
                 ColorManager.getColor(color),
@@ -145,30 +159,6 @@ public class SnakeHead extends CircleBody{
     }
     public void changeFace(String face){
         nowFace = face;
-    }
-    @Override
-    public void drawHeight(TexDrawer painter){
-        //drawHeight
-        painter.drawColorFactorTex(
-                TexManager.getTex(Img),
-                ColorManager.getColor(color),
-                x,
-                y,
-                width,
-                height,
-                0,
-                Constant.SnakeHeightColorFactor
-        );
-        painter.drawColorFactorTex(
-                TexManager.getTex(SnakeBodyHeightImg),
-                ColorManager.getColor(color),
-                x,
-                y -jumpHeight/2-defaultHeight/2,
-                width*Constant.SnakeHeadRatio,
-                jumpHeight+defaultHeight,
-                0,
-                Constant.SnakeHeightColorFactor
-        );
     }
     public void startMoving(){
         target = new Nail(

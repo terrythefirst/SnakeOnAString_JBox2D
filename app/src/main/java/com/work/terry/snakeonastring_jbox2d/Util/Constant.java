@@ -123,16 +123,12 @@ public class Constant {
 
     //蛇头
     public static String SnakeHeadID = "snakeHead";
-    public static String SnakeHeadHeadImg = "snake_head_head.png";
     public static String SnakeHeadEyesImg = "snake_head_eyes_version_2.png";
     public static String SnakeHeadDeadEyesImg = "snake_head_eyes_dead_version_2.png";
     public static String SnakeHeadDizzyEyesImg = "snake_head_eyes_dizzy_version_2.png";
     public static String SnakeHeadEyesBallImg = "snake_head_eyesBalls_version_2.png";
     public static final float SnakeHeadRatio = (float) (800*1.0/1024);
-    public static final int SnakeHeadEyesDiameter = 110;
-    public static final int SnakeHeadTopRadius = 46;
-    public static final int SnakeHeadRadius = 50;
-
+    public static final int SnakeHeadRadius = 38;
 
     public static float SnakeHeadRotateStepAngle =3.0f/5f;//Degree
     //蛇身体
