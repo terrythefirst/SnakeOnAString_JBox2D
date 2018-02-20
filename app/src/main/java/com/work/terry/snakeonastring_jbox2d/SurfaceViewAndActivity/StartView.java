@@ -33,8 +33,11 @@ public class StartView extends MyView {
     private ImgButton statisticsButton;
     private ScoreBoard yellowStarScoreboard;
     private GameElements yellowStar;
+    private ImgButton switchButton;
     private ImgButton originalPlayButton;
+    private GameElements originalPlayBand;
     private ImgButton endlessPlayButton;
+    private GameElements endlessPlayBand;
     private ImgButton favoriteButton;
     private ImgButton rateButton;
     private ImgButton likeButton;
@@ -66,6 +69,22 @@ public class StartView extends MyView {
     float SnakeXSpan = 90;
     float SnakeXTotalSpan = 8*SnakeXSpan;
 
+    float OriginalEndlessY = 1850;
+    float OriginalEndlessSpan = 400;
+    float OriginalEndlessWidth = 250;
+    float OriginalEndlessHeight = 250;
+    float OriginalEndlessDefaultHeight = 60;
+
+    float OriginalButtonBandSpan = 200;
+    float OriginalBandWidth = 260;
+    float OriginalBandHeight = 260;
+    float OriginalBandDefaultHeight = 10;
+
+    float EndlessButtonBandSpan = 200;
+    float EndlessBandWidth = 260;
+    float EndlessBandHeight = 260;
+    float EndlessBandDefaultHeight = 10;
+
     private float threeButtonsY = 2260;
     private float threeButtonsSpan = 20;
 
@@ -80,10 +99,55 @@ public class StartView extends MyView {
         initLetterSnake();
         initOnAString();
         initSnake();
+        initScoreBoard();
+    }
+    public void initScoreBoard(){
+        yellowStar = new Button(
+                0,
+                800,140,
+                150,150,
+                Constant.C0LOR_CYAN,
+                30,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.StarFavoriteImg
+        ) ;
+        yellowStar.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(yellowStar);
+
+        yellowStarScoreboard = new ScoreBoard(
+                1000,140,
+                400,150,
+                Constant.COLOR_WHITE,
+                30,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor
+        );
+        drawUtil.addToTopLayer(yellowStarScoreboard);
+
     }
     public void initSnake(){
-
         int NodeIndex = 0;
+        switchButton = new ImgButton(
+                0,
+                720,SnakeY,
+                150,150,
+                Constant.C0LOR_CYAN,
+                30,
+                0,
+                0,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.ArrowsSwitchImg,
+                Constant.SnakeBodyImg
+        );
+        switchButton.setTopImgRatio(0.7f);
+        buttons.add(switchButton);
+        drawUtil.addToTopLayer(switchButton);
 
         while (NodeIndex < 8){
             SnakeNode snakeNode = new SnakeNode(
@@ -94,7 +158,7 @@ public class StartView extends MyView {
                     NodeIndex++
             );
             snakeNode.setTopRatio(0.95f);
-            drawUtil.addToTopLayer(snakeNode);
+            drawUtil.addToCenterLayer(snakeNode);
             snake.add(snakeNode);
         }
 
@@ -106,7 +170,7 @@ public class StartView extends MyView {
                 Constant.SnakeDefaultHeight
         );
         snakeHead.setTopRatio(0.95f);
-        drawUtil.addToTopLayer(snakeHead);
+        drawUtil.addToCenterLayer(snakeHead);
         snake.add(snakeHead);
 
         Collections.reverse(snake);
@@ -401,13 +465,15 @@ public class StartView extends MyView {
         buttons.add(statisticsButton);
 
         initThreeButtons();
-
+        initOriginalEndlessButton();
+    }
+    public void initOriginalEndlessButton(){
         originalPlayButton = new ImgButton(
                 0,
-                500,1850,
-                250,250,
+                720-OriginalEndlessSpan/2,OriginalEndlessY,
+                OriginalEndlessWidth,OriginalEndlessHeight,
                 Constant.C0LOR_CYAN,
-                60,
+                OriginalEndlessDefaultHeight,
                 0,
                 0,
                 Constant.ButtonBlockHeightColorFactor,
@@ -441,13 +507,27 @@ public class StartView extends MyView {
                 }
             }
         }.start();
+        originalPlayBand = new Button(
+                0,
+                originalPlayButton.x,originalPlayButton.y+OriginalButtonBandSpan,
+                OriginalBandWidth,OriginalBandHeight,
+                Constant.COLOR_WHITE,
+                OriginalBandDefaultHeight,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterOriginal
+        ) ;
+        originalPlayBand.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(originalPlayBand);
 
         endlessPlayButton= new ImgButton(
                 0,
-                940,1850,
-                250,250,
+                720+OriginalEndlessSpan/2,OriginalEndlessY,
+                OriginalEndlessWidth,OriginalEndlessHeight,
                 Constant.C0LOR_CYAN,
-                60,
+                OriginalEndlessDefaultHeight,
                 0,
                 0,
                 Constant.ButtonBlockHeightColorFactor,
@@ -481,6 +561,20 @@ public class StartView extends MyView {
                 }
             }
         }.start();
+        endlessPlayBand = new Button(
+                0,
+                endlessPlayButton.x,endlessPlayButton.y+EndlessButtonBandSpan,
+                EndlessBandWidth,EndlessBandHeight,
+                Constant.COLOR_WHITE,
+                EndlessBandDefaultHeight,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterEndless
+        ) ;
+        endlessPlayBand.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(endlessPlayBand);
     }
     public void initThreeButtons(){
         threeButtonsY = 2260;

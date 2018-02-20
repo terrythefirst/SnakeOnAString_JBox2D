@@ -35,6 +35,8 @@ public class ImgManager {
 
             LockDownImg,
 
+            LetterOriginal,
+            LetterEndless,
             LetterS,
             LetterN,
             LetterA,

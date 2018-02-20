@@ -35,6 +35,8 @@ public class Constant {
     public static String Number8Img = NumbersPicDirectoryPrefix+"number_eight.png";
     public static String Number9Img = NumbersPicDirectoryPrefix+"number_nine.png";
 
+    public static String LetterOriginal = LettersPicDirectoryPrefix+"original.png";
+    public static String LetterEndless = LettersPicDirectoryPrefix+"endless.png";
     public static String LetterS = LettersPicDirectoryPrefix+"letter_s.png";
     public static String LetterN = LettersPicDirectoryPrefix+"letter_n.png";
     public static String LetterA = LettersPicDirectoryPrefix+"letter_a.png";
