@@ -6,10 +6,15 @@ import android.view.MotionEvent;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
+import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.UI.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
@@ -29,6 +34,25 @@ public class StartView extends MyView {
     private ImgButton rateButton;
     private ImgButton likeButton;
 
+    private List<GameElements> letterSnakeList = new ArrayList<>();
+    private List<GameElements> letterOnAStringList = new ArrayList<>();
+
+    float letterSnakeDefaultHeight = 30;
+    float letterSnakeBeginX = 250;
+    float letterSnakeSpan = 40;
+    float letterSnakeWidth = 200;
+    float letterSnakeHeight = 200;
+    float letterSnakeY = 500;
+
+    float letterSnake_OnAStringSpanY = 200;
+    float letterOnAStringY = letterSnakeY+letterSnake_OnAStringSpanY;
+    float letterOnaStringStartX = 200;
+    float letterDefaultHeight = 30;
+    float letterOnAStringWidth = 100;
+    float letterOnAStringHeight = 100;
+    float letterOnAStringSpanX = 10;
+    float letterOnAStringGapX = 100;
+
     private float threeButtonsY = 2260;
     private float threeButtonsSpan = 20;
 
@@ -38,15 +62,48 @@ public class StartView extends MyView {
         if(backgroundImg!=null)this.backgroundImg = backgroundImg;
         drawUtil = new DrawUtil(this.backgroundImg);
         initButtons();
-        initLetters();
+        initLetterSnake();
+        initOnAString();
     }
-    public void initLetters(){
+    public void initLetterSnake(){
         Button tempt = new Button(
-                0,
-                300,400,
-                200,200,
+                5,
+                letterSnakeBeginX,letterSnakeY,
+                letterSnakeWidth,letterSnakeHeight,
                 Constant.C0LOR_SNAKE_WHITE,
-                20,
+                letterSnakeDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterS
+        );
+        tempt.setDoDrawHeight(false);
+        letterSnakeList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                5,
+                letterSnakeBeginX+letterSnakeWidth+letterSnakeSpan,letterSnakeY,
+                letterSnakeWidth,letterSnakeHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterSnakeDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterN
+        );
+        tempt.setDoDrawHeight(false);
+        letterSnakeList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                5,
+                letterSnakeBeginX+(letterSnakeWidth+letterSnakeSpan)*2,letterSnakeY,
+                letterSnakeWidth,letterSnakeHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterSnakeDefaultHeight,
                 10,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 0,
@@ -54,7 +111,206 @@ public class StartView extends MyView {
                 Constant.LetterA
         );
         tempt.setDoDrawHeight(false);
+        letterSnakeList.add(tempt);
         drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                5,
+                letterSnakeBeginX+(letterSnakeWidth+letterSnakeSpan)*3,letterSnakeY,
+                letterSnakeWidth,letterSnakeHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterSnakeDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterK
+        );
+        tempt.setDoDrawHeight(false);
+        letterSnakeList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                5,
+                letterSnakeBeginX+(letterSnakeWidth+letterSnakeSpan)*4,letterSnakeY,
+                letterSnakeWidth,letterSnakeHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterSnakeDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterE
+        );
+        tempt.setDoDrawHeight(false);
+        letterSnakeList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        new ListJiggleAnimation(
+                letterSnakeList,
+                40,
+                0.3f,
+                2000,
+                true,
+                0.3f,
+                true
+        ).start();
+    }
+    public void initOnAString(){
+        Button tempt = new Button(
+                9,
+                letterOnaStringStartX,letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterO
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringSpanX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterN
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringGapX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterA
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringGapX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterS
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringSpanX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterT
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringSpanX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterR
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringSpanX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterI
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringSpanX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterN
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        tempt = new Button(
+                9,
+                letterOnAStringList.get(letterOnAStringList.size()-1).x+(letterOnAStringWidth+letterOnAStringSpanX),letterOnAStringY,
+                letterOnAStringWidth,letterOnAStringHeight,
+                Constant.C0LOR_SNAKE_WHITE,
+                letterDefaultHeight,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                0,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LetterG
+        );
+        tempt.setDoDrawHeight(false);
+        letterOnAStringList.add(tempt);
+        drawUtil.addToTopLayer(tempt);
+
+        new ListJiggleAnimation(
+                letterOnAStringList,
+                20,
+                1f,
+                1500,
+                true,
+                0.2f,
+                false
+        ).start();
     }
     public void initButtons(){
         musicButton = new ImgButton(
@@ -175,7 +431,17 @@ public class StartView extends MyView {
 
     @Override
     public void onTouchEvent(MotionEvent event, int x, int y) {
-
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                Button tempt = whichButtonTouched(x,y);
+                if(tempt!=null)tempt.whenPressed();
+                break;
+            case MotionEvent.ACTION_UP:
+                // if(pauseButton.testTouch(x,y))pauseButton
+                whenReleased();
+                break;
+        }
     }
 
     @Override

@@ -22,6 +22,7 @@ public class JiggleAnimation extends Thread{
     float defaultHeight;
     float maxRatio;
 
+    boolean doHeight;
     public boolean firstRoundFinished = false;
     boolean allRoundFinnished = false;
 
@@ -34,7 +35,8 @@ public class JiggleAnimation extends Thread{
             float timeSpan,
 
             boolean doScale,
-            float maxRatio
+            float maxRatio,
+            boolean doHeight
     ){
         this.gameElements = gameElements;
         this.jumpSpan = jumpSpan;
@@ -46,15 +48,20 @@ public class JiggleAnimation extends Thread{
             defaultHeight = gameElements.width;
             defaultWidth = gameElements.height;
         }
-
+        this.doHeight = doHeight;
         this.G = (float) (2*jumpSpan/Math.pow(timeSpan/2,2));
         this.interval = 10;
+    }
+    public void setDoHeight(boolean x){
+        this.doHeight = x;
     }
     @Override
     public void run(){
         float nowTime = 0;
         float nowTimes = 0;
         float vy = G*timeSpan/2;
+        float jumpHeight = 0;
+
         while (nowTimes<10){
             nowTime +=interval*0.001f;
             //根据此轮起始Y坐标、此轮运动时间、此轮起始速度计算当前位置
@@ -72,18 +79,20 @@ public class JiggleAnimation extends Thread{
                 //若速度小于阈值则停止运动
                 if(vy<1f)
                 {
-                    gameElements.jumpHeight=0;
+                    jumpHeight=0;
                     allRoundFinnished = true;
                     break;
                 }
             }
             else
             {//若没有碰到地面则正常运动
-                gameElements.jumpHeight = tempCurrY;
+                jumpHeight = tempCurrY;
             }
 
+            if(doHeight)gameElements.jumpHeight = jumpHeight;
+
             if(doScale){
-                float ratio = gameElements.jumpHeight/jumpSpan * maxRatio;
+                float ratio = jumpHeight/jumpSpan * maxRatio;
                 gameElements.scaleWidth = defaultWidth*ratio;
                 gameElements.scaleHeight = defaultHeight*ratio;
             }

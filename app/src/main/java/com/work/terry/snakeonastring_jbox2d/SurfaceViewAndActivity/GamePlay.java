@@ -139,6 +139,7 @@ public class GamePlay extends MyView{
                 PauseButtonImg
         );
         pauseButton.setDoDrawHeight(false);
+        buttons.add(pauseButton);
         drawUtil.addToTopLayer(pauseButton);
     }
 
@@ -244,7 +245,8 @@ public class GamePlay extends MyView{
                             0.6f,
 
                             true,
-                            0.5f
+                            0.5f,
+                            true
                     ).run();
                     try {
                         sleep(1000);
@@ -325,14 +327,15 @@ public class GamePlay extends MyView{
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                if(pauseButton.testTouch(x,y))pauseButton.whenPressed();
+                Button tempt = whichButtonTouched(x,y);
+                if(tempt!=null)tempt.whenPressed();
                 else {
                     snake.whenMotionDown(x,y);
                 }
                 break;
             case MotionEvent.ACTION_UP:
                // if(pauseButton.testTouch(x,y))pauseButton
-                pauseButton.whenReleased();
+                whenReleased();
                 snake.whenMotionUp();
                 break;
         }

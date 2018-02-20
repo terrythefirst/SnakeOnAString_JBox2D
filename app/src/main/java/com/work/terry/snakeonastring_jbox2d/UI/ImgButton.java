@@ -39,9 +39,9 @@ public class ImgButton extends Button{
                 floorShadowColorFactor,
                 Img);
         this.TopImg = TopImg;
-        buttonDefaultHeight = defaultHeight;
-        jumpHeight = defaultHeight;
-        this.defaultHeight = 0;
+        //buttonDefaultHeight = defaultHeight;
+        //jumpHeight = defaultHeight;
+        //this.defaultHeight = 0;
     }
     public void setTopImgRatio(float rate){
         this.TopImgRatio = rate;

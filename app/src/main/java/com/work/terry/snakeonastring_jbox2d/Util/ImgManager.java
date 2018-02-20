@@ -34,10 +34,35 @@ public class ImgManager {
             Number8Img,
             Number9Img,
 
+            LetterS,
+            LetterN,
+            LetterA,
+            LetterK,
+            LetterE,
+            LetterO,
+            LetterT,
+            LetterR,
+            LetterI,
+            LetterG,
+
             NailVerticalImg,
             NailShadowImg,
 
             PauseButtonImg,
+
+            StarFavoriteImg,
+            LikeImg,
+            RateImg,
+
+            RoundEdgeCube,
+            ArrowsSwitchImg,
+            SoundAltImg,
+            SoundOffImg,
+            SoundOutloud,
+
+            StatisticsBars,
+            StartImg,
+            InfiniteImg,
 
             FoodMagnetImg,
     };

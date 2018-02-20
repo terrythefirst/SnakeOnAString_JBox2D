@@ -33,7 +33,8 @@ public class SnakeJumpAnimationThread extends Thread {
                         0.1f,
 
                         !(cc instanceof SnakeHead),
-                        0.5f
+                        0.5f,
+                        true
                         );
                 animateThread.start();
                 index++;

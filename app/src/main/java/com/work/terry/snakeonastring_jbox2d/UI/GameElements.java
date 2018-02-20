@@ -38,6 +38,9 @@ public class GameElements{
 
     public float rotateAngleGameElements = 0;
 
+    public float floorShadowFactorX = Constant.FloorShadowFactorX;
+    public float floorShadowFactorY = Constant.FloorShadowFactorY;
+
     public float TopWidth;
     public float TopHeight;
 
@@ -76,6 +79,9 @@ public class GameElements{
         this.FloorShadowColorFactor = floorShadowColorFactor;
         this.jumpHeight = 0;
 
+        this.floorShadowFactorX = Constant.FloorShadowFactorX;
+        this.floorShadowFactorY = Constant.FloorShadowFactorY;
+
     }
     public void setTopRatio(float TopRatio){
         this.TopRatio = TopRatio;
@@ -84,6 +90,12 @@ public class GameElements{
     public void setTopHeightWidth(){
         this.TopWidth = width*TopRatio;
         this.TopHeight = height*TopRatio;
+    }
+    public void setFloorShadowFactorX(float x){
+        this.floorShadowFactorX = x;
+    }
+    public void setFloorShadowFactorY(float y){
+        this.floorShadowFactorY = y;
     }
     public void drawSelf(TexDrawer painter){
         //offSet
@@ -143,11 +155,12 @@ public class GameElements{
             );
     }
     public void drawFloorShadow(TexDrawer painter){
+        Log.d(id,"defaultHeight="+defaultHeight+" jumpHeight="+jumpHeight);
             painter.drawShadow(
                     TexManager.getTex(Img),
                     ColorManager.getColor(Constant.COLOR_GREY),
-                    x + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorX,
-                    y + (defaultHeight + jumpHeight) * Constant.FloorShadowFactorY,
+                    x + (defaultHeight + jumpHeight) * floorShadowFactorX,
+                    y + (defaultHeight + jumpHeight) * floorShadowFactorY,
                     width+scaleWidth,
                     height+scaleHeight,
                     rotateAngleGameElements,

@@ -37,7 +37,8 @@ public class SnakeFoodJumpScoreThread extends Thread {
                     0.6f,
 
                     true,
-                    0.5f
+                    0.5f,
+                    true
             ).run();
 
             try {
