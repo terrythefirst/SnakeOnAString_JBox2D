@@ -75,14 +75,15 @@ public class DrawUtil {
 
     public void stepDraw(TexDrawer painter) {
         //先画背景
-        painter.drawTex(
-                TexManager.getTex(backgroundImg),
-                Constant.SCREEN_WIDTH / 2,
-                Constant.SCREEN_HEIGHT / 2,
-                Constant.SCREEN_WIDTH,
-                Constant.SCREEN_HEIGHT,
-                0
-        );
+        if(backgroundImg!=null)
+            painter.drawTex(
+                    TexManager.getTex(backgroundImg),
+                    Constant.SCREEN_WIDTH / 2,
+                    Constant.SCREEN_HEIGHT / 2,
+                    Constant.SCREEN_WIDTH,
+                    Constant.SCREEN_HEIGHT,
+                    0
+            );
 
         drawFloorAndCenterLayer(painter);
         drawAnimationLayer(painter);

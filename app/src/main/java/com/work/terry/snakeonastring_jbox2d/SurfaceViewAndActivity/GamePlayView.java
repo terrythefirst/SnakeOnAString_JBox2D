@@ -26,6 +26,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 public class GamePlayView extends GLSurfaceView {
     public int nowViewIndex = 0;
     public MyView nowView = null;
+    public MyMenu nowMenu = null;
     private SceneRenderer sceneRenderer;
 
     public GamePlayView(Context context){
@@ -83,6 +84,7 @@ public class GamePlayView extends GLSurfaceView {
         @Override
         public void onDrawFrame(GL10 gl){
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT|GLES30.GL_COLOR_BUFFER_BIT);
+            if(nowMenu!=null)nowMenu.getDrawUtil().stepDraw(texDrawer);
             nowView.getDrawUtil().stepDraw(texDrawer);
         }
         @Override
