@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.UI;
 
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
+import java.net.PortUnreachableException;
 import java.nio.channels.FileLock;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.NailShadowImg;
@@ -15,7 +16,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeightColo
 public class Button extends GameElements {
     //public float buttonDefaultHeight ;
     public boolean disabled = false;
-
+    public ButtonListener buttonListener = null;
     public Button(
             int id,
             float x,float y,
@@ -44,6 +45,9 @@ public class Button extends GameElements {
         //jumpHeight = defaultHeight;
         //this.defaultHeight = 0;
     }
+    public void setButtonListener(ButtonListener buttonListener){
+        this.buttonListener = buttonListener;
+    }
     public void setDisabled(boolean x){
         disabled = x;
     }
@@ -56,12 +60,6 @@ public class Button extends GameElements {
     }
     public void whenReleased(){
         jumpHeight = 0;
-    }
-    public boolean testTouch(float touchX,float touchY){
-        return touchX>x-width/2-scaleWidth/2
-                &&touchX<x+width/2+scaleWidth/2
-                &&touchY>y-height/2-scaleHeight/2
-                &&touchY<y+height/2+(jumpHeight+defaultHeight)+scaleHeight/2
-                ;
+        if(buttonListener!=null)buttonListener.doButtonStuff();
     }
 }

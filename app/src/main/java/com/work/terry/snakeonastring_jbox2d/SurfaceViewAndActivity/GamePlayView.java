@@ -46,7 +46,10 @@ public class GamePlayView extends GLSurfaceView {
         x = xy[0];
         y = xy[1];
 
-        nowView.onTouchEvent(event,x,y);
+        if(nowMenu!=null&&nowMenu.testTouch(x,y)){
+            nowMenu.onTouchEvent(event,x,y);
+        }else
+            nowView.onTouchEvent(event,x,y);
         return true;
     }
 
@@ -64,9 +67,7 @@ public class GamePlayView extends GLSurfaceView {
         }
         switch (index){
             case START_VIEW:
-                nowView = new StartView(null);
-                break;
-            case MENU_VIEW:
+                nowView = new StartView(this,null);
                 break;
             case GAMEPLAY_VIEW:
                 nowView = new GamePlay();
@@ -75,6 +76,10 @@ public class GamePlayView extends GLSurfaceView {
     }
     public int getNowView(){
         return nowViewIndex;
+    }
+    public void setNowMenu(MyMenu menu){
+        this.nowMenu = menu;
+        nowView.getDrawUtil().setMenu(nowMenu);
     }
 
     private  class  SceneRenderer implements Renderer {

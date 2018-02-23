@@ -16,8 +16,7 @@ public class Constant {
     //界面标志
     public static final int CHANGE_BY_DEFAULT_VIEW = -1;
     public static final int START_VIEW = 0;
-    public static final int MENU_VIEW = 1;
-    public static final int GAMEPLAY_VIEW = 2;
+    public static final int GAMEPLAY_VIEW = 1;
 
     //文件前缀
     public static String PicDirectoryPrefix = "pic/";
@@ -100,6 +99,7 @@ public class Constant {
 
     //按钮
     public static final String PauseButtonImg = "pause.png";
+    public static final String DeleteImg = "delete.png";
 
     //磁铁
     public static final String FoodMagnetImg = "magnet.png";

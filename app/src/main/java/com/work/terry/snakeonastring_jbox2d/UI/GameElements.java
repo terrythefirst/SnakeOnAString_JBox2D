@@ -9,6 +9,8 @@ import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
+import org.jbox2d.common.Vec2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +124,13 @@ public class GameElements{
                 rotateAngleGameElements
         );
     }
-
+    public boolean testTouch(float touchX,float touchY){
+        return touchX>x-width/2-scaleWidth/2
+                &&touchX<x+width/2+scaleWidth/2
+                &&touchY>y-height/2-scaleHeight/2
+                &&touchY<y+height/2+(jumpHeight+defaultHeight)+scaleHeight/2
+                ;
+    }
     public void setDoDrawHeight(boolean x){
         this.doDrawHeight = x;
     }
@@ -255,7 +263,10 @@ public class GameElements{
             );
         }
     }
-
+    public void setXY(float x,float y){
+          this.x = x;
+          this.y = y;
+    }
     public static void drawNumber(
             TexDrawer painter,
             int number,

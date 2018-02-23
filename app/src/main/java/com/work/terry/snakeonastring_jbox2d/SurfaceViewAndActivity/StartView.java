@@ -7,14 +7,18 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
+import com.work.terry.snakeonastring_jbox2d.UI.ButtonListener;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
 import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.ListJiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.UI.PullMoveAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
+
+import org.jbox2d.common.Vec2;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +32,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class StartView extends MyView {
+    public GamePlayView gamePlayView;
     private String backgroundImg = BackgroundImg;
     private ImgButton musicButton;
     private ImgButton statisticsButton;
@@ -91,14 +96,16 @@ public class StartView extends MyView {
 
 
     public StartView(
+        GamePlayView gamePlayView,
         String backgroundImg
     ){
+        this.gamePlayView = gamePlayView;
         if(backgroundImg!=null)this.backgroundImg = backgroundImg;
         drawUtil = new DrawUtil(this.backgroundImg);
+        initSnake();
         initButtons();
         initLetterSnake();
         initOnAString();
-        initSnake();
         initScoreBoard();
     }
     public void initScoreBoard(){
@@ -115,7 +122,7 @@ public class StartView extends MyView {
                 Constant.StarFavoriteImg
         ) ;
         yellowStar.setDoDrawHeight(false);
-        drawUtil.addToTopLayer(yellowStar);
+        drawUtil.addToCenterLayer(yellowStar);
 
         yellowStarScoreboard = new ScoreBoard(
                 1000,140,
@@ -127,28 +134,11 @@ public class StartView extends MyView {
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor
         );
-        drawUtil.addToTopLayer(yellowStarScoreboard);
+        drawUtil.addToCenterLayer(yellowStarScoreboard);
 
     }
     public void initSnake(){
         int NodeIndex = 0;
-        switchButton = new ImgButton(
-                0,
-                720,SnakeY,
-                150,150,
-                Constant.C0LOR_CYAN,
-                30,
-                0,
-                0,
-                Constant.ButtonBlockHeightColorFactor,
-                Constant.ButtonBlockFloorColorFactor,
-                Constant.ArrowsSwitchImg,
-                Constant.SnakeBodyImg
-        );
-        switchButton.setTopImgRatio(0.7f);
-        buttons.add(switchButton);
-        drawUtil.addToTopLayer(switchButton);
-
         while (NodeIndex < 8){
             SnakeNode snakeNode = new SnakeNode(
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
@@ -199,7 +189,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterSnakeList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 5,
@@ -215,7 +205,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterSnakeList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 5,
@@ -231,7 +221,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterSnakeList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 5,
@@ -247,7 +237,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterSnakeList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 5,
@@ -263,7 +253,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterSnakeList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         new ListJiggleAnimation(
                 letterSnakeList,
@@ -290,7 +280,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -306,7 +296,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -322,7 +312,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
 
         tempt = new Button(
@@ -339,7 +329,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -355,7 +345,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -371,7 +361,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -387,7 +377,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -403,7 +393,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         tempt = new Button(
                 9,
@@ -419,7 +409,7 @@ public class StartView extends MyView {
         );
         tempt.setDoDrawHeight(false);
         letterOnAStringList.add(tempt);
-        drawUtil.addToTopLayer(tempt);
+        drawUtil.addToCenterLayer(tempt);
 
         new ListJiggleAnimation(
                 letterOnAStringList,
@@ -432,6 +422,23 @@ public class StartView extends MyView {
         ).start();
     }
     public void initButtons(){
+        switchButton = new ImgButton(
+                0,
+                720,SnakeY,
+                150,150,
+                Constant.C0LOR_CYAN,
+                30,
+                0,
+                0,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.ArrowsSwitchImg,
+                Constant.SnakeBodyImg
+        );
+        switchButton.setTopImgRatio(0.7f);
+        buttons.add(switchButton);
+        drawUtil.addToTopLayer(switchButton);
+
         musicButton = new ImgButton(
                 0,
                 100,140,
@@ -445,7 +452,7 @@ public class StartView extends MyView {
                 Constant.SoundOutloud,
                 Constant.SnakeBodyImg
         );
-        drawUtil.addToTopLayer(musicButton);
+        drawUtil.addToCenterLayer(musicButton);
         buttons.add(musicButton);
 
         statisticsButton = new ImgButton(
@@ -461,7 +468,7 @@ public class StartView extends MyView {
                 Constant.StatisticsBars,
                 Constant.SnakeBodyImg
         );
-        drawUtil.addToTopLayer(statisticsButton);
+        drawUtil.addToCenterLayer(statisticsButton);
         buttons.add(statisticsButton);
 
         initThreeButtons();
@@ -483,7 +490,7 @@ public class StartView extends MyView {
         );
         originalPlayButton.setTopImgRatio(0.5f);
         originalPlayButton.setDisabled(true);
-        drawUtil.addToTopLayer(originalPlayButton);
+        drawUtil.addToCenterLayer(originalPlayButton);
         buttons.add(originalPlayButton);
         new Thread(){
             @Override
@@ -520,7 +527,7 @@ public class StartView extends MyView {
                 Constant.LetterOriginal
         ) ;
         originalPlayBand.setDoDrawHeight(false);
-        drawUtil.addToTopLayer(originalPlayBand);
+        drawUtil.addToCenterLayer(originalPlayBand);
 
         endlessPlayButton= new ImgButton(
                 0,
@@ -536,7 +543,40 @@ public class StartView extends MyView {
                 Constant.RoundEdgeCube
         );
         endlessPlayButton.setTopImgRatio(0.5f);
-        drawUtil.addToTopLayer(endlessPlayButton);
+        endlessPlayButton.setButtonListener(
+                new ButtonListener(){
+                    @Override
+                    public void doButtonStuff(){
+                        gamePlayView.setNowMenu(
+                                new MyMenu(
+                                        "menu",
+                                        Constant.SCREEN_WIDTH/2,
+                                        Constant.SCREEN_HEIGHT/2+100,//+Constant.SCREEN_HEIGHT*3/8,
+                                        1230,
+                                        2100,
+                                        100,
+                                        Constant.C0LOR_CYAN,
+                                        Constant.ButtonBlockDefaultHeight,
+                                        0,
+                                        Constant.ButtonBlockTopOffSetColorFactor,
+                                        Constant.ButtonBlockHeightColorFactor,
+                                        Constant.ButtonBlockFloorColorFactor,
+                                        null
+                                )
+                        );
+
+//                        new PullMoveAnimation(
+//                                gamePlayView.nowMenu,
+//                                new Vec2(Constant.SCREEN_WIDTH/2,
+//                                        Constant.SCREEN_HEIGHT),
+//                                0.8f,
+//                                0.01f,
+//                                3
+//                        ).start();
+                    }
+                }
+        );
+        drawUtil.addToCenterLayer(endlessPlayButton);
         buttons.add(endlessPlayButton);
         new Thread(){
             @Override
@@ -574,7 +614,7 @@ public class StartView extends MyView {
                 Constant.LetterEndless
         ) ;
         endlessPlayBand.setDoDrawHeight(false);
-        drawUtil.addToTopLayer(endlessPlayBand);
+        drawUtil.addToCenterLayer(endlessPlayBand);
     }
     public void initThreeButtons(){
         threeButtonsY = 2260;
@@ -592,7 +632,7 @@ public class StartView extends MyView {
                 Constant.StatisticsBars,
                 Constant.SnakeBodyImg
         );
-        drawUtil.addToTopLayer(favoriteButton);
+        drawUtil.addToCenterLayer(favoriteButton);
         buttons.add(favoriteButton);
 
         rateButton = new ImgButton(
@@ -609,7 +649,7 @@ public class StartView extends MyView {
                 Constant.SnakeBodyImg
         );
         rateButton.setTopImgRatio(0.6f);
-        drawUtil.addToTopLayer(rateButton);
+        drawUtil.addToCenterLayer(rateButton);
         buttons.add(rateButton);
 
         likeButton = new ImgButton(
@@ -626,7 +666,7 @@ public class StartView extends MyView {
                 Constant.SnakeBodyImg
         );
         likeButton.setTopImgRatio(0.6f);
-        drawUtil.addToTopLayer(likeButton);
+        drawUtil.addToCenterLayer(likeButton);
         buttons.add(likeButton);
     }
 

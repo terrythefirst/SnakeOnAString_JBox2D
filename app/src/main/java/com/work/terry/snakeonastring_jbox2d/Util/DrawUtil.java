@@ -1,5 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.MyMenu;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class DrawUtil {
 
     public List<GameElements> removeSequence = null;
 
+    public MyMenu myMenu;
+
 
     public DrawUtil(String backgroundImg) {
         this.backgroundImg = backgroundImg;
@@ -29,7 +32,9 @@ public class DrawUtil {
 
         removeSequence = new ArrayList<>();
     }
-
+    public void setMenu(MyMenu menu){
+        this.myMenu = menu;
+    }
     public synchronized void addToTopLayer(GameElements gameElements) {
         synchronized (topLayerDrawSequence) {
             topLayerDrawSequence.add(gameElements);
@@ -88,6 +93,13 @@ public class DrawUtil {
         drawFloorAndCenterLayer(painter);
         drawAnimationLayer(painter);
         drawTopLayer(painter);
+
+        if(myMenu!=null){
+            myMenu.drawFloorShadow(painter);
+            myMenu.drawHeight(painter);
+            myMenu.drawSelf(painter);
+        }
+
         cleanNotDraw();
     }
     public void cleanNotDraw(){

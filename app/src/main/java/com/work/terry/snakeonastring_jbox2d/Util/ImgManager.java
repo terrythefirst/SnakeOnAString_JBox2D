@@ -52,6 +52,7 @@ public class ImgManager {
             NailShadowImg,
 
             PauseButtonImg,
+            DeleteImg,
 
             StarFavoriteImg,
             LikeImg,
