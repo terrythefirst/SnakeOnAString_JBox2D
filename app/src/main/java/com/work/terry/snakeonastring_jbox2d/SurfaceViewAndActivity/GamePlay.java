@@ -327,15 +327,15 @@ public class GamePlay extends MyView{
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                Button tempt = whichButtonTouched(x,y);
-                if(tempt!=null)tempt.whenPressed();
+                nowPressedButton = whichButtonTouched(x,y);
+                if(nowPressedButton!=null)nowPressedButton.whenPressed();
                 else {
                     snake.whenMotionDown(x,y);
                 }
                 break;
             case MotionEvent.ACTION_UP:
                // if(pauseButton.testTouch(x,y))pauseButton
-                whenReleased();
+                whenUp(x,y);
                 snake.whenMotionUp();
                 break;
         }

@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
@@ -436,6 +437,9 @@ public class StartView extends MyView {
                 Constant.SnakeBodyImg
         );
         switchButton.setTopImgRatio(0.7f);
+        switchButton.setButtonListener(
+                ()->Log.d("switchButton","clicked!")
+        );
         buttons.add(switchButton);
         drawUtil.addToTopLayer(switchButton);
 
@@ -544,14 +548,13 @@ public class StartView extends MyView {
         );
         endlessPlayButton.setTopImgRatio(0.5f);
         endlessPlayButton.setButtonListener(
-                new ButtonListener(){
-                    @Override
-                    public void doButtonStuff(){
+                ()->{
                         gamePlayView.setNowMenu(
                                 new MyMenu(
+                                        gamePlayView,
                                         "menu",
                                         Constant.SCREEN_WIDTH/2,
-                                        Constant.SCREEN_HEIGHT/2+100,//+Constant.SCREEN_HEIGHT*3/8,
+                                        Constant.SCREEN_HEIGHT,//+Constant.SCREEN_HEIGHT*3/8,
                                         1230,
                                         2100,
                                         100,
@@ -565,16 +568,15 @@ public class StartView extends MyView {
                                 )
                         );
 
-//                        new PullMoveAnimation(
-//                                gamePlayView.nowMenu,
-//                                new Vec2(Constant.SCREEN_WIDTH/2,
-//                                        Constant.SCREEN_HEIGHT),
-//                                0.8f,
-//                                0.01f,
-//                                3
-//                        ).start();
+                        new PullMoveAnimation(
+                                gamePlayView.nowMenu,
+                                new Vec2(Constant.SCREEN_WIDTH/2,
+                                        Constant.SCREEN_HEIGHT/2+100),
+                                100f,
+                                0.01f,
+                                2
+                        ).start();
                     }
-                }
         );
         drawUtil.addToCenterLayer(endlessPlayButton);
         buttons.add(endlessPlayButton);
@@ -675,12 +677,14 @@ public class StartView extends MyView {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                Button tempt = whichButtonTouched(x,y);
-                if(tempt!=null)tempt.whenPressed();
+                Button tempt = nowPressedButton;
+                nowPressedButton = whichButtonTouched(x,y);
+                if(tempt!=null&&nowPressedButton!=tempt)tempt.whenReleased(false);
+                if(nowPressedButton!=null)nowPressedButton.whenPressed();
                 break;
             case MotionEvent.ACTION_UP:
                 // if(pauseButton.testTouch(x,y))pauseButton
-                whenReleased();
+                whenUp(x,y);
                 break;
         }
     }

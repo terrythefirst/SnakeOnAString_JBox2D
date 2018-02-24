@@ -161,8 +161,8 @@ public class GameElements{
                     HeightColorFactor
             );
     }
+
     public void drawFloorShadow(TexDrawer painter){
-        Log.d(id,"defaultHeight="+defaultHeight+" jumpHeight="+jumpHeight);
             painter.drawShadow(
                     TexManager.getTex(Img),
                     ColorManager.getColor(Constant.COLOR_GREY),

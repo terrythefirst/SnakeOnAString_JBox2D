@@ -48,7 +48,7 @@ public class GamePlayView extends GLSurfaceView {
 
         if(nowMenu!=null&&nowMenu.testTouch(x,y)){
             nowMenu.onTouchEvent(event,x,y);
-        }else
+        }else if(nowView!=null)
             nowView.onTouchEvent(event,x,y);
         return true;
     }

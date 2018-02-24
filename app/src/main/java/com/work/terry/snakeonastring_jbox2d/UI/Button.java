@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 import java.net.PortUnreachableException;
@@ -46,6 +48,7 @@ public class Button extends GameElements {
         //this.defaultHeight = 0;
     }
     public void setButtonListener(ButtonListener buttonListener){
+        Log.d("setButtonListener","set");
         this.buttonListener = buttonListener;
     }
     public void setDisabled(boolean x){
@@ -58,8 +61,8 @@ public class Button extends GameElements {
             jumpHeight = -defaultHeight*1/4;
         }
     }
-    public void whenReleased(){
+    public void whenReleased(boolean within){
         jumpHeight = 0;
-        if(buttonListener!=null)buttonListener.doButtonStuff();
+        if(within&&buttonListener!=null)buttonListener.doButtonStuff();
     }
 }

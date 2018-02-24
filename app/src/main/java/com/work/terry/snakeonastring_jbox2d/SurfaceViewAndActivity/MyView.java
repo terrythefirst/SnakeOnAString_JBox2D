@@ -18,6 +18,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
 public abstract class MyView {
     public DrawUtil drawUtil;
     public List<Button> buttons = new ArrayList<>();
+    public Button nowPressedButton;
     public void setDrawUtilAndBacktoundImg(String Img){
         drawUtil = new DrawUtil(Img);
     }
@@ -27,10 +28,9 @@ public abstract class MyView {
         }
         return null;
     }
-    public void whenReleased(){
-        for(Button b:buttons){
-            b.whenReleased();
-        }
+    public void whenUp(float x,float y){
+        if(nowPressedButton!=null)
+            nowPressedButton.whenReleased(nowPressedButton.testTouch(x,y));
     }
     public DrawUtil getDrawUtil(){
         return drawUtil;

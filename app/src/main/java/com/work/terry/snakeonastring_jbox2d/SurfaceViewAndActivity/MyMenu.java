@@ -29,6 +29,7 @@ import java.util.List;
  */
 
 public class MyMenu extends GameElements {
+    public GamePlayView gamePlayView;
     public float angleRadius;
     public ImgButton closeButton;
     public Button circleButton;
@@ -38,9 +39,11 @@ public class MyMenu extends GameElements {
     public DrawUtil drawUtil;
     public List<GameElements>  gameElementsList = new ArrayList<>();
     public List<Button> buttons = new ArrayList<>();
+    public Button nowPressedButton;
 
     public MyMenu
             (
+                    GamePlayView gamePlayView,
                     String id,
                     float x, float y,
                     float width, float height,
@@ -66,6 +69,7 @@ public class MyMenu extends GameElements {
                 floorShadowColorFactor,
                 Img
         );
+        this.gamePlayView = gamePlayView;
         this.angleRadius = angleRadius;
         drawUtil = new DrawUtil(null);
         closeButton = new ImgButton(
@@ -84,10 +88,21 @@ public class MyMenu extends GameElements {
         );
         closeButton.setTopImgRatio(0.4f);
         closeButton.setButtonListener(
-                new ButtonListener(){
-                    @Override
-                    public void doButtonStuff(){
-                        Log.d("closeButton","clicked!!");
+                ()->{
+                    Thread thread = new PullMoveAnimation(
+                            this,
+                            new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT+height/2),
+                            100f,
+                            0.01f,
+                            1
+                    );
+
+                    thread.start();
+                    try {
+                        thread.join();
+                        gamePlayView.setNowMenu(null);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
         );
@@ -224,28 +239,28 @@ public class MyMenu extends GameElements {
         }
         return null;
     }
-    private void whenReleased(){
-        for(Button b:buttons){
-            b.whenReleased();
-        }
+    private void whenUp(float x,float y){
+        if(nowPressedButton!=null)
+            nowPressedButton.whenReleased(nowPressedButton.testTouch(x,y));
     }
     public void onTouchEvent(MotionEvent event, int x, int y){
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                Button tempt = whichButtonTouched(x,y);
-                if(tempt!=null)tempt.whenPressed();
+                Button tempt = nowPressedButton;
+                nowPressedButton = whichButtonTouched(x,y);
+                if(tempt!=null&&nowPressedButton!=tempt)tempt.whenReleased(false);
+                if(nowPressedButton!=null)nowPressedButton.whenPressed();
                 break;
             case MotionEvent.ACTION_UP:
                 // if(pauseButton.testTouch(x,y))pauseButton
-                whenReleased();
+                whenUp(x,y);
                 break;
         }
     }
     @Override
     public boolean testTouch(float touchX,float touchY){
-        closeButtonUnder.setXY(x+width/2,y-height/2);
-        return closeButtonUnder.testTouch(x,y)||(touchX>x-width/2-scaleWidth/2
+        return closeButtonUnder.testTouch(touchX,touchY)||(touchX>x-width/2-scaleWidth/2
                 &&touchX<x+width/2+scaleWidth/2
                 &&touchY>y-height/2-scaleHeight/2
                 &&touchY<y+height/2+(jumpHeight+defaultHeight)+scaleHeight/2)
