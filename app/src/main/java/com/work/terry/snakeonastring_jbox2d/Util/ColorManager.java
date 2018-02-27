@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
+import android.graphics.Color;
+
 /**
  * Created by Terry on 2017/12/30.
  */
@@ -10,8 +12,13 @@ public class ColorManager {
             {0,0,0},//黑
             {139,131,134},//灰
             {255,250,240},//默认蛇的米白色
-            {127,255,212},
-            {255,127,80},
+            {82,194,170},//青绿
+            {255,127,80},//橙色
+            {100,220,255},//天蓝
+            {255,216,0},//金黄
+            {255,96,93},//红
+            {40,91,116},//墨蓝
+            {179,255,184},//浅绿
     };
     public static float[] getColorByRGB255(float[] color255){
         return new float[]{

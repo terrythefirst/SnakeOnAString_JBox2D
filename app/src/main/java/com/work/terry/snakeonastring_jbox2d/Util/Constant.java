@@ -165,6 +165,12 @@ public class Constant {
     public static final int COLOR_BLACK=1;
     public static final int COLOR_GREY = 2;
     public static final int C0LOR_SNAKE_WHITE = 3;
-    public static final int COLOR_ORANGE = 4;
-    public static final int C0LOR_CYAN = 5;
+    public static final int C0LOR_CYAN = 4;
+    public static final int COLOR_ORANGE = 5;
+    public static final int COLOR_SKYBLUE = 6;
+    public static final int COLOR_GOLDEN = 7;
+    public static final int COLOR_RED = 8;
+    public static final int COLOR_BLACKBLUE = 9;
+    public static final int COLOR_GREEN = 10;
+
 }
