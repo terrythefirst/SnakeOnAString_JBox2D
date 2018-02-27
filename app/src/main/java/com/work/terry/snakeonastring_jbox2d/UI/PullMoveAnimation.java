@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
@@ -45,6 +47,8 @@ public class PullMoveAnimation extends Thread {
         while (passTimes/2 <= maxPassTimes){
             lastTimeA = AVector;
             AVector = new Vec2(targetPoint.x-gameElements.x,targetPoint.y-gameElements.y);
+            //AVector = new Vec2((float)(Math.pow(AVector.x,2)*2),(float)(Math.pow(AVector.y,2)*2));
+            //AVector = new Vec2((float)(Math.pow(AVector.x,2)*K),(float)(Math.pow(AVector.y,2)*K));
             AVector = VectorUtil.Mul2D(VectorUtil.normalize2D(AVector),K);
 
             V.x += AVector.x;
@@ -53,7 +57,9 @@ public class PullMoveAnimation extends Thread {
             gameElements.x += V.x*sleepInterval+AVector.x*((float)(Math.pow(sleepInterval,2)));
             gameElements.y += V.y*sleepInterval+AVector.y*((float)(Math.pow(sleepInterval,2)));
 
-            if(VectorUtil.dotMul2D(lastTimeA,AVector)<0)passTimes+=2;
+            Log.d("AVector","x="+AVector.x+" y="+AVector.y);
+            Log.d("passTimes",passTimes+"");
+            if(VectorUtil.isReverse2D(lastTimeA,AVector))passTimes+=2;
             try {
                 sleep((long)(sleepInterval*1000));
             }catch (Exception e){

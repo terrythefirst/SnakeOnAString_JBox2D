@@ -95,9 +95,11 @@ public class DrawUtil {
         drawTopLayer(painter);
 
         if(myMenu!=null){
-            myMenu.drawFloorShadow(painter);
-            myMenu.drawHeight(painter);
-            myMenu.drawSelf(painter);
+            synchronized (myMenu){
+                myMenu.drawFloorShadow(painter);
+                myMenu.drawHeight(painter);
+                myMenu.drawSelf(painter);
+            }
         }
 
         cleanNotDraw();

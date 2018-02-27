@@ -10,6 +10,8 @@ import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
 import com.work.terry.snakeonastring_jbox2d.UI.LockDownAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.PullMoveAnimation;
+import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
+import com.work.terry.snakeonastring_jbox2d.UI.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
@@ -28,16 +30,20 @@ import java.util.List;
  * Created by Terry on 2018/2/21.
  */
 
-public class MyMenu extends GameElements {
+public class MyMenu extends RoundEdgeRect {
     public GamePlayView gamePlayView;
-    public float angleRadius;
     public ImgButton closeButton;
-    public Button circleButton;
     public Button closeButtonUnder;
-    public Button rectButton1;
-    public Button rectButton2;
+
     public DrawUtil drawUtil;
     public List<GameElements>  gameElementsList = new ArrayList<>();
+    /*
+    * 注：gameElementsList里的东西坐标随整个Menu的移动而移动
+    *   记住一定要设置xy常量才能计算  setConstantXY6
+    *   为了方便计算 坐标系如下
+    *       x轴方向不变 但原点在menu的x从处
+    *       y轴方向不变 原点变为menu的顶部y
+    * */
     public List<Button> buttons = new ArrayList<>();
     public Button nowPressedButton;
 
@@ -61,6 +67,7 @@ public class MyMenu extends GameElements {
                 id,
                 x, y,
                 width, height,
+                angleRadius,
                 color,
                 defaultHeight,
                 topOffset,
@@ -70,15 +77,14 @@ public class MyMenu extends GameElements {
                 Img
         );
         this.gamePlayView = gamePlayView;
-        this.angleRadius = angleRadius;
         drawUtil = new DrawUtil(null);
         closeButton = new ImgButton(
                 0,
                 x,y,
-                100,
-                100,
+                90,
+                90,
                 Constant.COLOR_GREY,
-                20,
+                10,
                 topOffset,
                 topOffsetColorFactor,
                 heightColorFactor,
@@ -89,12 +95,26 @@ public class MyMenu extends GameElements {
         closeButton.setTopImgRatio(0.4f);
         closeButton.setButtonListener(
                 ()->{
-                    Thread thread = new PullMoveAnimation(
+//                    Thread thread = new PullMoveAnimation(
+//                            this,
+//                            new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT+height/2),
+//                            100f,
+//                            0.01f,
+//                            1
+//                    );
+//
+//                    thread.start();
+//                    try {
+//                        thread.join();
+//                        gamePlayView.setNowMenu(null);
+//                    }catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+
+                    Thread thread = new UniformMotionAnimation(
                             this,
                             new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT+height/2),
-                            100f,
-                            0.01f,
-                            1
+                            0.5f
                     );
 
                     thread.start();
@@ -111,8 +131,8 @@ public class MyMenu extends GameElements {
         closeButtonUnder = new Button(
                 0,
                 x,y,
-                angleRadius*2,
-                angleRadius*2,
+                160,
+                160,
                 color,
                 defaultHeight,
                 topOffset,
@@ -121,116 +141,60 @@ public class MyMenu extends GameElements {
                 floorShadowColorFactor,
                 Constant.SnakeBodyImg
         );
-        circleButton = new Button(
-                0,
-                0,0,
-                angleRadius*2,
-                angleRadius*2,
-                color,
-                defaultHeight,
-                topOffset,
-                topOffsetColorFactor,
-                heightColorFactor,
-                floorShadowColorFactor,
-                Constant.SnakeBodyImg
-        );
-        rectButton1 = new Button(
-                0,
-                x,y,
-                width,
-                height-angleRadius*2,
-                color,
-                defaultHeight,
-                topOffset,
-                topOffsetColorFactor,
-                heightColorFactor,
-                floorShadowColorFactor,
-                Constant.SnakeBodyHeightImg
-        );
-        rectButton2 = new Button(
-                0,
-                x,y,
-                width-angleRadius*2,
-                height,
-                color,
-                defaultHeight,
-                topOffset,
-                topOffsetColorFactor,
-                heightColorFactor,
-                floorShadowColorFactor,
-                Constant.SnakeBodyHeightImg
-        );
+
     }
     public DrawUtil getDrawUtil(){
         return drawUtil;
     }
     public static void PopFromButtom(MyMenu myMenu){
-        new PullMoveAnimation(
-                myMenu,
-                new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT/2),
-                2,
-                0.01f,
-                3
-        ).start();
+//        new PullMoveAnimation(
+//                myMenu,
+//                new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT/2),
+//                0.4f,
+//                0.01f,
+//                3
+//        ).start();
     }
     public void addToMenu(GameElements gameElements){
         gameElementsList.add(gameElements);
+        drawUtil.addToTopLayer(gameElements);
     }
+    public void addButton(Button button){
+        buttons.add(button);
+        gameElementsList.add(button);
+        drawUtil.addToTopLayer(button);
+    }
+
     @Override
     public void drawSelf(TexDrawer painter){
-        closeButtonUnder.setXY(x+width/2,y-height/2);
+        closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
         closeButtonUnder.drawSelf(painter);
-        circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
-        circleButton.drawSelf(painter);
-        circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
-        circleButton.drawSelf(painter);
-        circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
-        circleButton.drawSelf(painter);
-        circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
-        circleButton.drawSelf(painter);
-        rectButton1.setXY(x,y);
-        rectButton1.drawSelf(painter);
-        rectButton2.setXY(x,y);
-        rectButton2.drawSelf(painter);
-
-        closeButton.setXY(x+width/2,y-height/2-(closeButtonUnder.jumpHeight+closeButtonUnder.defaultHeight));
+        super.drawSelf(painter);
+        closeButton.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3-(closeButtonUnder.jumpHeight+closeButtonUnder.defaultHeight));
         closeButton.drawFloorShadow(painter);
         closeButton.drawHeight(painter);
         closeButton.drawSelf(painter);
+
+        for(GameElements gameElements:gameElementsList){
+            gameElements.setXY(
+                    x+gameElements.constantXY.x,
+                    y-height/2+gameElements.constantXY.y
+            );
+            //Log.d("Menu GameElementsList","x="+gameElements.x+" y="+gameElements.y);
+        }
+        drawUtil.stepDraw(painter);
     }
     @Override
     public void drawHeight(TexDrawer painter){
-        closeButtonUnder.setXY(x+width/2,y-height/2);
+        closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
         closeButtonUnder.drawHeight(painter);
-        circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
-        circleButton.drawHeight(painter);
-        circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
-        circleButton.drawHeight(painter);
-        circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
-        circleButton.drawHeight(painter);
-        circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
-        circleButton.drawHeight(painter);
-        rectButton1.setXY(x,y);
-        rectButton1.drawHeight(painter);
-        rectButton2.setXY(x,y);
-        rectButton2.drawHeight(painter);
+        super.drawHeight(painter);
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){
-        closeButtonUnder.setXY(x+width/2,y-height/2);
+        closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
         closeButtonUnder.drawFloorShadow(painter);
-        circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
-        circleButton.drawFloorShadow(painter);
-        circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
-        circleButton.drawFloorShadow(painter);
-        circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
-        circleButton.drawFloorShadow(painter);
-        circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
-        circleButton.drawFloorShadow(painter);
-        rectButton1.setXY(x,y);
-        rectButton1.drawFloorShadow(painter);
-        rectButton2.setXY(x,y);
-        rectButton2.drawFloorShadow(painter);
+        super.drawFloorShadow(painter);
     }
 
     private Button whichButtonTouched(float x,float y){

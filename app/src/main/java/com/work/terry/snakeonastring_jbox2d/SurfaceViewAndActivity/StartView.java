@@ -15,6 +15,7 @@ import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.PullMoveAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
+import com.work.terry.snakeonastring_jbox2d.UI.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -549,32 +550,15 @@ public class StartView extends MyView {
         endlessPlayButton.setTopImgRatio(0.5f);
         endlessPlayButton.setButtonListener(
                 ()->{
+                        MyMenu endlessPlayMenu = new EndlessPlayMenu(gamePlayView);
                         gamePlayView.setNowMenu(
-                                new MyMenu(
-                                        gamePlayView,
-                                        "menu",
-                                        Constant.SCREEN_WIDTH/2,
-                                        Constant.SCREEN_HEIGHT,//+Constant.SCREEN_HEIGHT*3/8,
-                                        1230,
-                                        2100,
-                                        100,
-                                        Constant.C0LOR_CYAN,
-                                        Constant.ButtonBlockDefaultHeight,
-                                        0,
-                                        Constant.ButtonBlockTopOffSetColorFactor,
-                                        Constant.ButtonBlockHeightColorFactor,
-                                        Constant.ButtonBlockFloorColorFactor,
-                                        null
-                                )
+                                endlessPlayMenu
                         );
-
-                        new PullMoveAnimation(
-                                gamePlayView.nowMenu,
+                        new UniformMotionAnimation(
+                                endlessPlayMenu,
                                 new Vec2(Constant.SCREEN_WIDTH/2,
                                         Constant.SCREEN_HEIGHT/2+100),
-                                100f,
-                                0.01f,
-                                2
+                                0.5f
                         ).start();
                     }
         );

@@ -10,7 +10,7 @@ import org.jbox2d.common.Vec2;
 
 public class VectorUtil {
     public static boolean isReverse2D(Vec2 v1,Vec2 v2){
-        return v2.x*v1.y-v1.x*v2.y == 0&&((v1.x*v2.x<=0)||(v2.y*v1.y<=0));
+        return ((v1.x*v2.x<0)||(v2.y*v1.y<0));
     }
     public static float calDistance(double dx,double dy){
         return (float)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));

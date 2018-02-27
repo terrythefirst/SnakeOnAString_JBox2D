@@ -49,7 +49,10 @@ public class GameElements{
     public String Img;
 
     public boolean doDrawHeight = true;
+    public boolean doDrawFloorShadow = true;
     public boolean doDraw = true;
+
+    public Vec2 constantXY;
 
     public GameElements(
             String id,
@@ -93,6 +96,9 @@ public class GameElements{
         this.TopWidth = width*TopRatio;
         this.TopHeight = height*TopRatio;
     }
+    public void setConstantXY(Vec2 xy){
+        constantXY = xy;
+    }
     public void setFloorShadowFactorX(float x){
         this.floorShadowFactorX = x;
     }
@@ -134,6 +140,7 @@ public class GameElements{
     public void setDoDrawHeight(boolean x){
         this.doDrawHeight = x;
     }
+    public void setDoDrawFloorShadow(boolean x){this.doDrawFloorShadow = x;}
     public void setDoDraw(boolean x){
         this.doDraw = x;
     }
@@ -163,6 +170,7 @@ public class GameElements{
     }
 
     public void drawFloorShadow(TexDrawer painter){
+        if(doDrawFloorShadow)
             painter.drawShadow(
                     TexManager.getTex(Img),
                     ColorManager.getColor(Constant.COLOR_GREY),
