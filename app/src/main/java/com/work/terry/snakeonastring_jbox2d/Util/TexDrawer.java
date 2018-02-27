@@ -202,7 +202,7 @@ public class TexDrawer {
     public void drawShadow(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_COLOR,GLES30.GL_ONE_MINUS_SRC_COLOR);
-
+        //GLES30.glBlendFunc(GLES30.GL_ONE_MINUS_SRC_COLOR,GLES30.GL_SRC_COLOR);
         GLES30.glUseProgram(mProgramShadow);
 
         float wSacle = ScreenScaleUtil.fromPixSizeToScreenSize(width,Constant.ssr);

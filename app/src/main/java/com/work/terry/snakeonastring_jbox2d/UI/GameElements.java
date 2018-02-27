@@ -308,6 +308,9 @@ public class GameElements{
             );
         }
     }
+    public void setColor(int x){
+        this.color = x;
+    }
     public void onPause(SharedPreferences.Editor editor){
         editor.putFloat(id+"x",x);
         editor.putFloat(id+"x",y);
