@@ -1,16 +1,12 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyDistanceJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
-import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
-import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
-import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
 
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import java.util.ArrayList;

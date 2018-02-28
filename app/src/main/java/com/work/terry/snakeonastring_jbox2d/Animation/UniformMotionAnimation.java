@@ -1,4 +1,6 @@
-package com.work.terry.snakeonastring_jbox2d.UI;
+package com.work.terry.snakeonastring_jbox2d.Animation;
+
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 
 import org.jbox2d.common.Vec2;
 

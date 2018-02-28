@@ -4,26 +4,22 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.UI.ButtonListener;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
-import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
-import com.work.terry.snakeonastring_jbox2d.UI.ListJiggleAnimation;
-import com.work.terry.snakeonastring_jbox2d.UI.PullMoveAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
-import com.work.terry.snakeonastring_jbox2d.UI.UniformMotionAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 import org.jbox2d.common.Vec2;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -126,7 +122,9 @@ public class StartView extends MyView {
         yellowStar.setDoDrawHeight(false);
         drawUtil.addToCenterLayer(yellowStar);
 
+        Score yellowStarScore = new Score(33);
         yellowStarScoreboard = new ScoreBoard(
+                yellowStarScore,
                 1000,140,
                 400,150,
                 Constant.COLOR_WHITE,

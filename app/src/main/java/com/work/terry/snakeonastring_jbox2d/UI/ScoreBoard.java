@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.UI;
 
 import android.graphics.Color;
 
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -12,11 +13,10 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class ScoreBoard extends GameElements {
-    private byte[] scoreLock = new byte[0];
-    public int Score = 0;
-
+    public Score score;
     public float scoreWidth;
     public ScoreBoard(
+            Score score,
             float x, float y,
             float width, float height,
             int color,
@@ -38,22 +38,17 @@ public class ScoreBoard extends GameElements {
                 floorShadowColorFactor,
                 ""
         );
+        this.score = score;
         setDoDrawHeight(false);
         this.scoreWidth = width;
     }
-    public void plusScore(int x){
-        synchronized (scoreLock){
-            this.Score+=x;
-        }
-    }
-    public int getScore(){
-        return Score;
-    }
+
+
     @Override
     public void drawSelf(TexDrawer painter){
         drawNumberColorFactor(
                 painter,
-                Score,
+                score.getScore(),
                 x,y-jumpHeight-defaultHeight+TopOffset,
                 width,height,
                 color,
@@ -61,7 +56,7 @@ public class ScoreBoard extends GameElements {
         );
         drawNumber(
                 painter,
-                Score,
+                score.getScore(),
                 x,y-jumpHeight-defaultHeight,
                 width,height,
                 color
@@ -71,7 +66,7 @@ public class ScoreBoard extends GameElements {
     public void drawFloorShadow(TexDrawer painter){
         drawNumberShadow(
                 painter,
-                Score,
+                score.getScore(),
                 x,y,
                 width,height,
                 Constant.COLOR_GREY,

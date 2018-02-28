@@ -1,8 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
-import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
-import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
 
 /**
  * Created by Terry on 2018/2/2.

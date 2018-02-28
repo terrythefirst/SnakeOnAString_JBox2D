@@ -1,4 +1,4 @@
-package com.work.terry.snakeonastring_jbox2d.UI;
+package com.work.terry.snakeonastring_jbox2d.GamePlayElements;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;

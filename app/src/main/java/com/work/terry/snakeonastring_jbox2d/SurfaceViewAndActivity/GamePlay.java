@@ -3,11 +3,11 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.ButtonBlock;
+import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
-import com.work.terry.snakeonastring_jbox2d.UI.BreathAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.UI.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
@@ -15,7 +15,9 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
-import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
@@ -23,7 +25,6 @@ import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.nio.channels.FileLock;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +44,8 @@ public class GamePlay extends MyView{
 //    public int Score ;
 //    private byte[] scoreLock = new byte[0];
     public ScoreBoard scoreBoard;
+    public Score score = new Score(0);
+
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
@@ -67,16 +70,8 @@ public class GamePlay extends MyView{
 
         snake = new Snake(world,this, Constant.C0LOR_SNAKE_WHITE,drawUtil);
         addPauseButton();
-        scoreBoard = new ScoreBoard(
-                200,120,
-                280,150,
-                Constant.C0LOR_SNAKE_WHITE,
-                20,
-                10,
-                ButtonBlockTopOffSetColorFactor,
-                0,
-                ButtonBlockFloorColorFactor
-        );
+        addScoreBoard();
+
         float dia = 20+(float)Math.random()*80;
         float rotateAngle = (float)Math.random();
         drawUtil.addToTopLayer(scoreBoard);
@@ -123,7 +118,22 @@ public class GamePlay extends MyView{
 
         snake.moving();
         jBox2DThread.start();
-
+    }
+    public void plusScore(int x){
+        score.plusScore(x);
+    }
+    public void addScoreBoard(){
+        scoreBoard = new ScoreBoard(
+                score,
+                200,120,
+                280,150,
+                Constant.C0LOR_SNAKE_WHITE,
+                20,
+                10,
+                ButtonBlockTopOffSetColorFactor,
+                0,
+                ButtonBlockFloorColorFactor
+        );
     }
     public void addPauseButton(){
         pauseButton = new Button(
@@ -142,7 +152,14 @@ public class GamePlay extends MyView{
         buttons.add(pauseButton);
         drawUtil.addToTopLayer(pauseButton);
     }
+    public void addGameElements(GameElements gameElements,int layer){
+        switch (layer){
+            case LAYER_TOP:drawUtil.addToTopLayer(gameElements);break;
+            case LAYER_CENTER:drawUtil.addToCenterLayer(gameElements);break;
+            case LAYER_FLOOR:drawUtil.addToFloorLayer(gameElements);break;
 
+        }
+    }
     public void checkShouldAddFoodOrBomb(){
         if (snakeFoodMap != null){
             boolean allEaten = true;

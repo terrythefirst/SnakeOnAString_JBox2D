@@ -1,28 +1,19 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.UI.ButtonListener;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
-import com.work.terry.snakeonastring_jbox2d.UI.LockDownAnimation;
-import com.work.terry.snakeonastring_jbox2d.UI.PullMoveAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
-import com.work.terry.snakeonastring_jbox2d.UI.UniformMotionAnimation;
-import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
+import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
-import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.contacts.PolygonAndCircleContact;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.List;
 

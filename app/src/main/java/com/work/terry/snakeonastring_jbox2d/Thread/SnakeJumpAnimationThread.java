@@ -3,9 +3,8 @@ package com.work.terry.snakeonastring_jbox2d.Thread;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
-import com.work.terry.snakeonastring_jbox2d.UI.JiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
-import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
 /**
  * Created by Terry on 2018/1/31.

@@ -1,7 +1,8 @@
-package com.work.terry.snakeonastring_jbox2d.UI;
+package com.work.terry.snakeonastring_jbox2d.Animation;
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
 /**

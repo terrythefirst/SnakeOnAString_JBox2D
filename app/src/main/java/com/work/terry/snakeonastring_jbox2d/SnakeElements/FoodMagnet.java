@@ -3,19 +3,12 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
-import com.work.terry.snakeonastring_jbox2d.UI.LockDownAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
-import java.util.List;
-
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColorFactor;
 
 /**

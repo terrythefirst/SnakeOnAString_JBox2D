@@ -1,4 +1,6 @@
-package com.work.terry.snakeonastring_jbox2d.UI;
+package com.work.terry.snakeonastring_jbox2d.Animation;
+
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 
 /**
  * Created by Terry on 2018/2/3.

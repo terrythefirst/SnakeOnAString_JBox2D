@@ -2,9 +2,8 @@ package com.work.terry.snakeonastring_jbox2d.Thread;
 
 import android.util.Log;
 
-import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
-import com.work.terry.snakeonastring_jbox2d.UI.LockDownAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.LockDownAnimation;
 
 /**
  * Created by Terry on 2018/2/2.

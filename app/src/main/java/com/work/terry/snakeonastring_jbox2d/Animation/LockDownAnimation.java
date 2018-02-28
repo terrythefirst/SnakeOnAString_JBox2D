@@ -1,9 +1,8 @@
-package com.work.terry.snakeonastring_jbox2d.UI;
+package com.work.terry.snakeonastring_jbox2d.Animation;
 
+import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-
-import org.jbox2d.common.Vec2;
 
 /**
  * Created by Terry on 2018/2/3.
