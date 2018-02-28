@@ -50,7 +50,7 @@ public class GamePlay extends MyView{
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
     public Map<Integer,FoodMagnet> foodMagnetMap = new HashMap<>();
-    //public Map<Integer,Vec2> snakeFoodLocationMap = new HashMap<>();
+
     public int foodIndex = 0;
     public int bombIndex = 0;
     public int foodMagnetIndex = 0;
@@ -68,13 +68,12 @@ public class GamePlay extends MyView{
         MyContactListener myContactListener = new MyContactListener(GamePlay.this);
         world.setContactListener(myContactListener);
 
-        snake = new Snake(world,this, Constant.C0LOR_SNAKE_WHITE,drawUtil);
+        //snake = new Snake(world,this, Constant.C0LOR_SNAKE_WHITE,drawUtil);
         addPauseButton();
         addScoreBoard();
 
         float dia = 20+(float)Math.random()*80;
         float rotateAngle = (float)Math.random();
-        drawUtil.addToTopLayer(scoreBoard);
             drawUtil.addToCenterLayer(
                     new ButtonBlock(
                             world,
@@ -89,11 +88,6 @@ public class GamePlay extends MyView{
                             Constant.COLOR_WHITE
                     )
             );
-//        snakeFoodLocationMap.put(0,new Vec2(200,600));
-//        snakeFoodLocationMap.put(1,new Vec2(200,1800));
-//        snakeFoodLocationMap.put(2,new Vec2(1200,600));
-//        snakeFoodLocationMap.put(3,new Vec2(1200,1800));
-
 
         ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
                 world,
@@ -159,6 +153,10 @@ public class GamePlay extends MyView{
             case LAYER_FLOOR:drawUtil.addToFloorLayer(gameElements);break;
 
         }
+    }
+    public void setSnake(Snake snake){
+        this.snake = snake;
+        addGameElements(snake.snakeHead,Constant.LAYER_CENTER);
     }
     public void checkShouldAddFoodOrBomb(){
         if (snakeFoodMap != null){
