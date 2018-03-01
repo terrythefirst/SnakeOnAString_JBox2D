@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 public class SnakeSkinManager {
     public static final int SKIN_DEFAULT = 0;
+    public static final int SKIN_DRAGON = 1;
 
     public static Map<Integer,SnakeSkin> skinMap  = new HashMap<>();
     public static List<Object> getSkin(int SkinNumber,int nodeNumber){

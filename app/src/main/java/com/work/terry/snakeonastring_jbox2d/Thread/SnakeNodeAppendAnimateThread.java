@@ -9,7 +9,6 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeAnimateDraw;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeBodyRadius;
 
 /**
  * Created by Terry on 2018/1/27.

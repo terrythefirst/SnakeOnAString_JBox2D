@@ -67,7 +67,7 @@ public class StartView extends MyView {
     float letterOnAStringSpanX = 10;
     float letterOnAStringGapX = 100;
 
-    float scaleRatio = 2;
+    float scaleRatio = 1;
     float SnakeY = 1400;
     float SnakeYSpan = 100;
     float SnakeXSpan = 90;
@@ -139,7 +139,7 @@ public class StartView extends MyView {
 
     }
     public void initSnake(){
-        int nowSkin = SnakeSkinManager.SKIN_DEFAULT;
+        int nowSkin = SnakeSkinManager.SKIN_DRAGON;
 
         int NodeIndex = 0;
         while (NodeIndex < 8){

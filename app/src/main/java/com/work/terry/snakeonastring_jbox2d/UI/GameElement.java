@@ -49,6 +49,7 @@ public class GameElement {
 
     public String Img;
     public String TopImg;
+    public boolean isPureColor = false;
 
     public boolean doDrawHeight = true;
     public boolean doDrawFloorShadow = true;
@@ -108,6 +109,7 @@ public class GameElement {
     }
     public void setTopImg(String x){
         this.TopImg = x;
+        if(TopImg==null)isPureColor = true;
     }
     public void setConstantXY(Vec2 xy){
         constantXY = xy;

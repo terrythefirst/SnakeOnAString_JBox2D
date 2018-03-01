@@ -29,13 +29,19 @@ public class SnakeSkin {
         return skinInfo;
     }
     public List<Object> getSkin(int nodeIndex){
-        if(cycle == 0){
+        if(nodeIndex == 0){
+            return skinInfo.get(0);
+        }else if(cycle == 0){
             return skinInfo.get(-1);
-        }else if(cycle == 1){
-            return skinInfo.get(1);
         }else {
+            if(cycle == 1)cycle++;
+
             nodeIndex %= cycle;
-            return skinInfo.get(nodeIndex);
+            try {
+                return skinInfo.get(nodeIndex==0?cycle:nodeIndex);
+            }catch (Exception e){
+                return skinInfo.get(-1);
+            }
         }
     }
     public String getSkinName(){

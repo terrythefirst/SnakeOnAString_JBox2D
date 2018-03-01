@@ -47,6 +47,7 @@ public class LoadSkinUtil {
                 skinPerInfo.add(color);
 
                 String imgName = tempsp[2];
+                if(imgName.equals("null"))imgName = null;
                 skinPerInfo.add(imgName);
 
                 String[] radiusStrings = tempsp[3].split(",");

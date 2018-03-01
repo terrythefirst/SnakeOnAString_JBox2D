@@ -68,7 +68,7 @@ public class SnakeNode extends CircleBody{
         );
         this.setColorFloat(colors);
         this.snake = null;
-        this.TopImg = SkinImgSnake;
+        setTopImg( SkinImgSnake);
     }
     public SnakeNode(Snake snake,World world,CircleBody frontNode,float[] colors,float radius,String SkinImgSnake,int id){
         super(
@@ -90,7 +90,7 @@ public class SnakeNode extends CircleBody{
         this.setColorFloat(colors);
         this.snake = snake;
         this.front = frontNode;
-        this.TopImg = SkinImgSnake;
+        setTopImg( SkinImgSnake);
 
         initSelf();
         createCircleBody(
@@ -295,6 +295,10 @@ public class SnakeNode extends CircleBody{
 //    }
     @Override
     public void drawSelf(TexDrawer painter){
+        if(TopImg.equals("snake_skin/skin_img/snake_body_minty.png")){
+            super.drawSelf(painter);
+            return;
+        }
         if(body!=null)
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
         //offSet
