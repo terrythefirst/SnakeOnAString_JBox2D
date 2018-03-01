@@ -22,6 +22,8 @@ public class Constant {
     public static String PicDirectoryPrefix = "pic/";
     public static String NumbersPicDirectoryPrefix = "numbers/";
     public static String LettersPicDirectoryPrefix = "letters/";
+    public static String SnakeSkinDirectoryPrefix = "snake_skin/";
+    public static String SnakeSkinPicDirectoryPrefix = SnakeSkinDirectoryPrefix+"skin_img/";
 
     public static String Number0Img = NumbersPicDirectoryPrefix+"number_zero.png";
     public static String Number1Img = NumbersPicDirectoryPrefix+"number_one.png";

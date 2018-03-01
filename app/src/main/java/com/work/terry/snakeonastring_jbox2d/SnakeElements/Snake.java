@@ -8,11 +8,12 @@ import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetSearchThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeJumpAnimationThread;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeRemoveAnimateThread;
+import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
+
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
@@ -47,6 +48,8 @@ public class Snake {
     public byte[] snakeAjaxLengthLock = new byte[0];
     public int SnakeAjaxLength ;
 
+    private int Skin;
+
     public boolean initFinnished = false;
 
     public byte[] addAnimationLock = new byte[0];
@@ -60,7 +63,7 @@ public class Snake {
     public float searchRadius = 300;
 
     public List<CircleBody> snakeBodies = null;//包括头！！！
-    private int color = Constant.C0LOR_SNAKE_WHITE;
+    //private int color = Constant.C0LOR_SNAKE_WHITE;
     public boolean paused = false;
     public boolean isDead = false;
     private DrawUtil drawUtil;
@@ -68,31 +71,98 @@ public class Snake {
     public Snake(
             World world,
             GamePlay gamePlay,
-            int color,
+            int skin,
             DrawUtil drawUtil
     ){
         this.gamePlay = gamePlay;
         this.world = world;
-        this.color = color;
+        //this.color = color;
+        this.Skin = skin;
         this.drawUtil = drawUtil;
 
         snakeBodies = new ArrayList<>();
 
-        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,Constant.SnakeDefaultHeight);
-        snakeBodies.add(snakeHead);
-        drawUtil.addToCenterLayer(snakeHead);
+        float x = 720;
+        float y = 1280;
+        float vx = 0;
+        float vy = 1;
+        float scaleRatio = 1;
+        float jumpHeight = Constant.SnakeDefaultHeight;
 
-        for(int i = 1;i<=Constant.SnakeBodyDefaultLength;i++){
-            addBody();
+        for(int index=0;index <=Constant.SnakeBodyDefaultLength;index++){
+            List<Object> skinInfo = SnakeSkinManager.getSkin(Skin,0);
+            float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
+            String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
+            float[] radiuses = (float[])skinInfo.get(2);
+
+            if(index==0){
+                snakeHead = new SnakeHead(
+                        this,
+                        world,
+                        x,y,
+                        vx,vy,
+                        scaleRatio*radiuses[1],
+                        color,
+                        picName,
+                        jumpHeight
+                );
+                snakeBodies.add(snakeHead);
+                drawUtil.addToCenterLayer(snakeHead);
+            }else {
+                addBody();
+            }
         }
+
+//        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,null,Constant.SnakeDefaultHeight);
+//        snakeBodies.add(snakeHead);
+//        drawUtil.addToCenterLayer(snakeHead);
+//
+//        for(int i = 1;i<=Constant.SnakeBodyDefaultLength;i++){
+//            addBody();
+//        }
         SnakeAjaxLength = getLength();
 
         //animateThread = new AnimateThread();
        // animateThread.start();
-
         initFinnished = true;
     }
+    public void addBody(){
+        SnakeNode tempt;
+        int index = snakeBodies.size();
 
+        List<Object> skinInfo = SnakeSkinManager.getSkin(Skin,index);
+        float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
+        String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
+        float[] radiuses = (float[])skinInfo.get(2);
+
+        if(index==1){
+            tempt = new SnakeNode(
+                    this,world,
+                    snakeHead,
+                    color,
+                    radiuses[1],
+                    picName,
+                    index);
+        }else{
+            tempt = new SnakeNode(
+                    this,
+                    world,
+                    (SnakeNode) snakeBodies.get(index-1),
+                    color,
+                    radiuses[1],
+                    picName,
+                    index);
+        }
+        //snakeBodies.add(tempt);
+
+        if(initFinnished){
+            tempt.setDoDraw(false);
+            new SnakeNodeAppendAnimateThread(tempt,drawUtil,getAnEarliestAddJumpAnimationThread()).start();
+        }else {
+            snakeBodies.add(tempt);
+        }
+        drawUtil.addToCenterLayer(tempt);
+    }
     public void setDead(){
         Log.d("snake","DEAD!");
         isDead = true;
@@ -203,25 +273,7 @@ public class Snake {
 
         new SnakeNodeRemoveAnimateThread(tempt,drawUtil,getAnEarliestRemoveJumpAnimationThread()).start();
     }
-    public void addBody(){
-        SnakeNode tempt;
-        int index = snakeBodies.size();
 
-        if(index==1){
-            tempt = new SnakeNode(this,world,snakeHead,index);
-        }else{
-            tempt = new SnakeNode(this,world,(SnakeNode) snakeBodies.get(index-1),index);
-        }
-        //snakeBodies.add(tempt);
-
-        if(initFinnished){
-            tempt.setDoDraw(false);
-            new SnakeNodeAppendAnimateThread(tempt,drawUtil,getAnEarliestAddJumpAnimationThread()).start();
-        }else {
-            snakeBodies.add(tempt);
-        }
-        drawUtil.addToCenterLayer(tempt);
-    }
 
     public void setDizzy(){
         new Thread(){
@@ -255,11 +307,8 @@ public class Snake {
         if(isDead()||isPaused())return;
         snakeHead.whenMotionUp();
     }
-    public void setColor(int index){
-       this.color = index;
-       for (GameElements g:snakeBodies){
-           g.color = color;
-       }
+    public void setSkin(int index){
+       this.Skin = index;
     }
     public void doAfterDead(){
         for (CircleBody sn:snakeBodies){

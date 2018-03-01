@@ -6,6 +6,10 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLUtils;
+import android.util.Log;
+
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Terry on 2017/12/25.
@@ -41,9 +46,10 @@ public class TexManager {
         InputStream is = null;
         Bitmap bitmap = null;
         try{
-            is = r.getAssets().open(Constant.PicDirectoryPrefix+texFileName);
+            is = r.getAssets().open(texFileName);
             bitmap = BitmapFactory.decodeStream(is);
         }catch (Exception e){
+            Log.e("loadTex","PicName: "+texFileName);
             e.printStackTrace();
         }finally {
             try{
@@ -74,7 +80,18 @@ public class TexManager {
 
     public static void loadTextures(Resources r){
         for(String tn:texName){
-            tex.put(tn,initTexture(r,tn));
+            tex.put(tn,initTexture(r,Constant.PicDirectoryPrefix+tn));
+        }
+    }
+    public static void loadSkinTextures(Resources r){
+        Set<Integer> set = SnakeSkinManager.skinMap.keySet();
+        for (Integer i:set){
+            Map<Integer,List<Object>> skinInfo = SnakeSkinManager.skinMap.get(i).getSkinInfo();
+            Set<Integer> keyset = skinInfo.keySet();
+            for (Integer k:keyset){
+                String snakeSkinPicName = (String)skinInfo.get(k).get(1);
+                tex.put(Constant.SnakeSkinPicDirectoryPrefix+snakeSkinPicName,initTexture(r,Constant.SnakeSkinPicDirectoryPrefix+snakeSkinPicName));
+            }
         }
     }
     public static int getTex(String tn){return tex.get(tn);}

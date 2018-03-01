@@ -1,14 +1,14 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 /**
  * Created by Terry on 2018/2/3.
  */
 
 public class BreathAnimation extends Thread {
-    GameElements gameElements;
+    GameElement gameElement;
     float jumpSpan;
     float maxScaleRate;
     boolean doScale;
@@ -16,11 +16,11 @@ public class BreathAnimation extends Thread {
     public boolean stopped = false;
 
     public BreathAnimation(
-            GameElements gameElements,
+            GameElement gameElement,
             float jumpSpan,
             boolean doScale,
             float maxScaleRate){
-        this.gameElements = gameElements;
+        this.gameElement = gameElement;
         this.jumpSpan = jumpSpan;
         this.doScale = doScale;
         this.maxScaleRate = maxScaleRate;
@@ -29,11 +29,11 @@ public class BreathAnimation extends Thread {
     public void run(){
         float degrees = 0;
         while (!stopped){
-            gameElements.jumpHeight = (float) Math.abs(Math.sin(Math.toRadians(degrees)))*jumpSpan;
+            gameElement.jumpHeight = (float) Math.abs(Math.sin(Math.toRadians(degrees)))*jumpSpan;
 
             if (doScale){
-                gameElements.scaleWidth = (jumpSpan-gameElements.jumpHeight)*maxScaleRate;
-                gameElements.scaleHeight = (jumpSpan-gameElements.jumpHeight)*maxScaleRate;
+                gameElement.scaleWidth = (jumpSpan- gameElement.jumpHeight)*maxScaleRate;
+                gameElement.scaleHeight = (jumpSpan- gameElement.jumpHeight)*maxScaleRate;
             }
 
             degrees+=1f;

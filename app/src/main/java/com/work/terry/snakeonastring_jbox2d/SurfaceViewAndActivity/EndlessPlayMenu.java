@@ -1,9 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
-import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
-import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
-import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRectButton;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 
@@ -82,6 +79,11 @@ public class EndlessPlayMenu extends MyMenu {
         level2Button.setTopImgRatio(0.4f);
         level2Button.setConstantXY(new Vec2(0,levelButtonsStartY));
         level2Button.setDisabled(true);
+        level1Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW);
+                }
+        );
         addButton(level2Button);
 
         RoundEdgeRectButton level3Button = new RoundEdgeRectButton(
@@ -211,7 +213,7 @@ public class EndlessPlayMenu extends MyMenu {
         addButton(level9Button);
     }
     public void initBand(){
-        GameElements endlessBand = new GameElements(
+        GameElement endlessBand = new GameElement(
                 "endlessMenuBand",
                 0, 100,
                 800,800,

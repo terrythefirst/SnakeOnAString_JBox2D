@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
@@ -10,7 +10,7 @@ import org.jbox2d.common.Vec2;
  * Created by Terry on 2018/1/27.
  */
 
-public class SnakeNodeAnimateDraw extends GameElements{
+public class SnakeNodeAnimateDraw extends GameElement {
     public static int DrawId = 0;
     public float targetRadius;
     public float nowRadius = 0;

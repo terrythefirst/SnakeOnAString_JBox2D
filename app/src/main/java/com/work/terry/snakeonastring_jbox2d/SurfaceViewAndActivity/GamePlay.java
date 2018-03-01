@@ -16,7 +16,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -146,11 +146,11 @@ public class GamePlay extends MyView{
         buttons.add(pauseButton);
         drawUtil.addToTopLayer(pauseButton);
     }
-    public void addGameElements(GameElements gameElements,int layer){
+    public void addGameElements(GameElement gameElement, int layer){
         switch (layer){
-            case LAYER_TOP:drawUtil.addToTopLayer(gameElements);break;
-            case LAYER_CENTER:drawUtil.addToCenterLayer(gameElements);break;
-            case LAYER_FLOOR:drawUtil.addToFloorLayer(gameElements);break;
+            case LAYER_TOP:drawUtil.addToTopLayer(gameElement);break;
+            case LAYER_CENTER:drawUtil.addToCenterLayer(gameElement);break;
+            case LAYER_FLOOR:drawUtil.addToFloorLayer(gameElement);break;
 
         }
     }

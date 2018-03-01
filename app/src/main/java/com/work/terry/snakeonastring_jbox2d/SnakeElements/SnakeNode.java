@@ -35,10 +35,11 @@ public class SnakeNode extends CircleBody{
     private Thread movingThread = null;
     public float centerDistance = 0;
 
-    public SnakeNode(
+    public SnakeNode(//注： 供显示用
             float x, float y,
             float radius,
-            int color,
+            float[] colors,
+            String SkinImgSnake,
             float jumpHeight,
             int id
     ){
@@ -50,7 +51,7 @@ public class SnakeNode extends CircleBody{
                 0,0,
                 radius,
 
-                color,
+                0,
                 jumpHeight,
                 Constant.SnakeDownLittleHeight,
                 Constant.SnakeDownLittleColorFactor,
@@ -65,17 +66,19 @@ public class SnakeNode extends CircleBody{
                 false,
                 Constant.SnakeBodyImg
         );
+        this.setColorFloat(colors);
         this.snake = null;
+        this.TopImg = SkinImgSnake;
     }
-    public SnakeNode(Snake snake,World world,CircleBody frontNode,int id){
+    public SnakeNode(Snake snake,World world,CircleBody frontNode,float[] colors,float radius,String SkinImgSnake,int id){
         super(
                 world,
                 "snakeBody "+id,
                 0,0,
-                Constant.SnakeBodyRadius*2,
-                Constant.SnakeBodyRadius*2,
+                radius*2,
+                radius*2,
 
-                frontNode.color,
+                0,
                 Constant.SnakeDefaultHeight,
                 Constant.SnakeDownLittleHeight,
                 Constant.SnakeDownLittleColorFactor,
@@ -84,8 +87,10 @@ public class SnakeNode extends CircleBody{
 
                 Constant.SnakeBodyImg
         );
+        this.setColorFloat(colors);
         this.snake = snake;
         this.front = frontNode;
+        this.TopImg = SkinImgSnake;
 
         initSelf();
         createCircleBody(
@@ -94,7 +99,7 @@ public class SnakeNode extends CircleBody{
                 x,y,
                 front.body.getAngle(),
                 0,0,
-                Constant.SnakeBodyRadius,
+                radius,
                 0,
                 SnakeBodyLinearDampingRate+id*SnakeBodyLinearDampingRateFactorInter,
                 SnakeBodyDensity,
@@ -119,9 +124,6 @@ public class SnakeNode extends CircleBody{
         return VectorUtil.calDistance(minusV2D(thisXY,frontXY));
     }
     public void initSelf(){
-        while (world.isLocked()){
-            Log.d("world","LOKED!");
-        }
         frontV = getFrontV2D();
         Vec2 frontVNormalized = normalize2D(frontV);
         centerDistance = front.radius+this.radius;
@@ -291,6 +293,42 @@ public class SnakeNode extends CircleBody{
 //        //        Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
 //        rectBody.drawSelf(painter);
 //    }
+    @Override
+    public void drawSelf(TexDrawer painter){
+        if(body!=null)
+            rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
+        //offSet
+        if (TopOffset != 0) {
+            painter.drawColorFactorTex(
+                    TexManager.getTex(Img),
+                    colorFloat==null?ColorManager.getColor(color):colorFloat,
+                    x,
+                    y - jumpHeight - defaultHeight + TopOffset,
+                    width+scaleWidth,
+                    height+scaleHeight,
+                    rotateAngleGameElements,
+                    TopOffsetColorFactor
+            );
+        }
+        //drawSelf
+        painter.drawTex(
+                TexManager.getTex(TopImg==null?Img:TopImg),
+                x,
+                y - jumpHeight - defaultHeight,
+                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
+                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
+                rotateAngleGameElements
+        );
+    //        painter.drawSelf(
+    //                TexManager.getTex(axisImg),
+    //                ColorManager.getColor(Constant.C0LOR_WHITE),
+    //                x,
+    //                y-jumpHeight,
+    //                headEyesDiameter,
+    //                headEyesDiameter,
+    //                AxisRotateAngle
+    //        );
+    }
     @Override
     public void destroySelf(){
         super.destroySelf();

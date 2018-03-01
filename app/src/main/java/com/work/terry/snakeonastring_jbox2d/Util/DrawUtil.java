@@ -1,7 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.MyMenu;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,12 +13,12 @@ import java.util.List;
 
 public class DrawUtil {
     String backgroundImg = "";
-    public List<GameElements> floorLayerDrawSequence = null;
-    public List<GameElements> centerLayerDrawSequence = null;
-    public List<GameElements> animationLayerDrawSequence = null;
-    public List<GameElements> topLayerDrawSequence = null;
+    public List<GameElement> floorLayerDrawSequence = null;
+    public List<GameElement> centerLayerDrawSequence = null;
+    public List<GameElement> animationLayerDrawSequence = null;
+    public List<GameElement> topLayerDrawSequence = null;
 
-    public List<GameElements> removeSequence = null;
+    public List<GameElement> removeSequence = null;
 
     public MyMenu myMenu;
 
@@ -35,46 +35,46 @@ public class DrawUtil {
     public void setMenu(MyMenu menu){
         this.myMenu = menu;
     }
-    public synchronized void addToTopLayer(GameElements gameElements) {
+    public synchronized void addToTopLayer(GameElement gameElement) {
         synchronized (topLayerDrawSequence) {
-            topLayerDrawSequence.add(gameElements);
+            topLayerDrawSequence.add(gameElement);
         }
     }
 
-    public void addToCenterLayer(GameElements gameElements) {
+    public void addToCenterLayer(GameElement gameElement) {
         synchronized (centerLayerDrawSequence){
-            centerLayerDrawSequence.add(gameElements);
+            centerLayerDrawSequence.add(gameElement);
         }
     }
 
-    public void addToAnimationLayer(GameElements gameElements){
+    public void addToAnimationLayer(GameElement gameElement){
         synchronized (animationLayerDrawSequence){
-            animationLayerDrawSequence.add(gameElements);
+            animationLayerDrawSequence.add(gameElement);
         }
     }
 
-    public void addToFloorLayer(GameElements gameElements) {
+    public void addToFloorLayer(GameElement gameElement) {
         synchronized (floorLayerDrawSequence){
-            floorLayerDrawSequence.add(gameElements);
+            floorLayerDrawSequence.add(gameElement);
         }
     }
-    public void addToRemoveSequence(GameElements gameElements){
+    public void addToRemoveSequence(GameElement gameElement){
         synchronized (removeSequence){
-            removeSequence.add(gameElements);
+            removeSequence.add(gameElement);
         }
     }
-    private void deleteElement(GameElements gameElements) {
+    private void deleteElement(GameElement gameElement) {
         synchronized (animationLayerDrawSequence){
-            animationLayerDrawSequence.remove(gameElements);
+            animationLayerDrawSequence.remove(gameElement);
         }
         synchronized (centerLayerDrawSequence){
-            centerLayerDrawSequence.remove(gameElements);
+            centerLayerDrawSequence.remove(gameElement);
         }
         synchronized (animationLayerDrawSequence){
-            animationLayerDrawSequence.remove(gameElements);
+            animationLayerDrawSequence.remove(gameElement);
         }
         synchronized (floorLayerDrawSequence){
-            floorLayerDrawSequence.remove(gameElements);
+            floorLayerDrawSequence.remove(gameElement);
         }
     }
 
@@ -176,7 +176,7 @@ public class DrawUtil {
     public void drawTopLayer(TexDrawer painter){
         //上层元素
         synchronized (topLayerDrawSequence){
-            for (GameElements g : topLayerDrawSequence) {
+            for (GameElement g : topLayerDrawSequence) {
                 g.drawFloorShadow(painter);
             }
             //top

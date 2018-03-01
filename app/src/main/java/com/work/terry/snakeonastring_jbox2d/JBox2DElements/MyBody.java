@@ -2,7 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
 import android.content.SharedPreferences;
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
@@ -16,7 +16,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
  * Created by Terry on 2018/1/14.
  */
 
-public abstract class MyBody extends GameElements
+public abstract class MyBody extends GameElement
 {
     public boolean destroyed = false;
 

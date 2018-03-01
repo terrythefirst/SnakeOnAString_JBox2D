@@ -3,14 +3,12 @@ package com.work.terry.snakeonastring_jbox2d.GamePlayElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
@@ -28,14 +26,14 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
  * Created by Yearn on 2018/1/21.
  */
 
-public class ButtonBlock extends GameElements {
+public class ButtonBlock extends GameElement {
     World world;
     CircleBody circleBody1;
     CircleBody circleBody2;
     RectBody rectBody;
 
     DrawUtil drawUtil;
-    List<GameElements> drawSequence;
+    List<GameElement> drawSequence;
 
     boolean isStatic;
 

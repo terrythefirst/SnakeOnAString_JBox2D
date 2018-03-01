@@ -19,7 +19,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  * Created by Terry on 2018/1/2.
  */
 
-public class GameElements{
+public class GameElement {
     public String id;
     public float x;
     public float y;
@@ -31,6 +31,7 @@ public class GameElements{
     public float TopRatio;
 
     public int color;
+    public float[] colorFloat;
     public float defaultHeight;
     public float jumpHeight;
     public float TopOffset=0;
@@ -47,14 +48,14 @@ public class GameElements{
     public float TopHeight;
 
     public String Img;
+    public String TopImg;
 
     public boolean doDrawHeight = true;
     public boolean doDrawFloorShadow = true;
     public boolean doDraw = true;
 
     public Vec2 constantXY;
-
-    public GameElements(
+    public GameElement(
             String id,
             float x,float y,
             float width,float height,
@@ -96,6 +97,18 @@ public class GameElements{
         this.TopWidth = width*TopRatio;
         this.TopHeight = height*TopRatio;
     }
+    public void setDrawArgs(
+            float topOffsetColorFactor,
+            float heightColorFactor,
+            float floorShadowColorFactor
+    ){
+        this.TopOffsetColorFactor = topOffsetColorFactor;
+        this.HeightColorFactor = heightColorFactor;
+        this.FloorShadowColorFactor = floorShadowColorFactor;
+    }
+    public void setTopImg(String x){
+        this.TopImg = x;
+    }
     public void setConstantXY(Vec2 xy){
         constantXY = xy;
     }
@@ -110,7 +123,7 @@ public class GameElements{
         if (TopOffset != 0) {
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
-                    ColorManager.getColor(color),
+                    colorFloat==null?ColorManager.getColor(color):colorFloat,
                     x,
                     y - jumpHeight - defaultHeight + TopOffset,
                     width+scaleWidth,
@@ -121,8 +134,8 @@ public class GameElements{
         }
         //drawSelf
         painter.drawColorSelf(
-                TexManager.getTex(Img),
-                ColorManager.getColor(color),
+                TexManager.getTex(TopImg==null?Img:TopImg),
+                colorFloat==null?ColorManager.getColor(color):colorFloat,
                 x,
                 y - jumpHeight - defaultHeight,
                 (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
@@ -149,7 +162,7 @@ public class GameElements{
         //drawHeight
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
-                    ColorManager.getColor(color),
+                    colorFloat==null?ColorManager.getColor(color):colorFloat,
                     x,
                     y,
                     width+scaleWidth,
@@ -159,7 +172,7 @@ public class GameElements{
             );
             painter.drawColorFactorTex(
                     TexManager.getTex(SnakeBodyHeightImg),
-                    ColorManager.getColor(color),
+                    colorFloat==null?ColorManager.getColor(color):colorFloat,
                     x,
                     y - jumpHeight / 2 - defaultHeight / 2,
                     width+scaleWidth,
@@ -309,7 +322,11 @@ public class GameElements{
         }
     }
     public void setColor(int x){
-        this.color = x;
+                this.color = x;
+                setColorFloat(ColorManager.getColor(color));
+    }
+    public void setColorFloat(float[] floats){
+        colorFloat = floats;
     }
     public void onPause(SharedPreferences.Editor editor){
         editor.putFloat(id+"x",x);

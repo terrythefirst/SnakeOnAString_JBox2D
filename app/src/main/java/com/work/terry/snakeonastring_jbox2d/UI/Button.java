@@ -2,20 +2,11 @@ package com.work.terry.snakeonastring_jbox2d.UI;
 
 import android.util.Log;
 
-import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
-
-import java.net.PortUnreachableException;
-import java.nio.channels.FileLock;
-
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.NailShadowImg;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeFloorColorFactor;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeightColorFactor;
-
 /**
  * Created by Terry on 2017/12/30.
  */
 
-public class Button extends GameElements {
+public class Button extends GameElement {
     //public float buttonDefaultHeight ;
     public boolean disabled = false;
     public ButtonListener buttonListener = null;

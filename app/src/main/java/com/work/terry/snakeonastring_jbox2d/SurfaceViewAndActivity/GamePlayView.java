@@ -6,6 +6,7 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.MatrixState;
@@ -113,6 +114,8 @@ public class GamePlayView extends GLSurfaceView {
 
             TexManager.addTexArray(ImgManager.picName);
             TexManager.loadTextures(GamePlayView.this.getResources());
+            SnakeSkinManager.initSkinsFromFileSystem(GamePlayView.this.getResources());
+
             GLES30.glDisable(GLES30.GL_CULL_FACE);
 
             setNowViewIndex(START_VIEW);

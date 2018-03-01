@@ -4,7 +4,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
 import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
@@ -27,7 +27,7 @@ public class MyMenu extends RoundEdgeRect {
     public Button closeButtonUnder;
 
     public DrawUtil drawUtil;
-    public List<GameElements>  gameElementsList = new ArrayList<>();
+    public List<GameElement> gameElementList = new ArrayList<>();
     /*
     * 注：gameElementsList里的东西坐标随整个Menu的移动而移动
     *   记住一定要设置xy常量才能计算  setConstantXY6
@@ -146,13 +146,13 @@ public class MyMenu extends RoundEdgeRect {
 //                3
 //        ).start();
     }
-    public void addToMenu(GameElements gameElements){
-        gameElementsList.add(gameElements);
-        drawUtil.addToTopLayer(gameElements);
+    public void addToMenu(GameElement gameElement){
+        gameElementList.add(gameElement);
+        drawUtil.addToTopLayer(gameElement);
     }
     public void addButton(Button button){
         buttons.add(button);
-        gameElementsList.add(button);
+        gameElementList.add(button);
         drawUtil.addToTopLayer(button);
     }
 
@@ -166,12 +166,12 @@ public class MyMenu extends RoundEdgeRect {
         closeButton.drawHeight(painter);
         closeButton.drawSelf(painter);
 
-        for(GameElements gameElements:gameElementsList){
-            gameElements.setXY(
-                    x+gameElements.constantXY.x,
-                    y-height/2+gameElements.constantXY.y
+        for(GameElement gameElement : gameElementList){
+            gameElement.setXY(
+                    x+ gameElement.constantXY.x,
+                    y-height/2+ gameElement.constantXY.y
             );
-            //Log.d("Menu GameElementsList","x="+gameElements.x+" y="+gameElements.y);
+            //Log.d("Menu GameElementsList","x="+gameElement.x+" y="+gameElement.y);
         }
         drawUtil.stepDraw(painter);
     }

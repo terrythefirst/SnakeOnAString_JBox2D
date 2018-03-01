@@ -1,16 +1,13 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
-import android.util.Log;
-
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
-import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 /**
  * Created by Terry on 2018/1/31.
  */
 
 public class JiggleAnimation extends Thread{
-    GameElements gameElements;
+    GameElement gameElement;
     float jumpSpan;
     float timeSpan;
     //float times;
@@ -31,7 +28,7 @@ public class JiggleAnimation extends Thread{
         return firstRoundFinished;
     }
     public JiggleAnimation(
-            GameElements gameElements,
+            GameElement gameElement,
             float jumpSpan,
             float timeSpan,
 
@@ -39,15 +36,15 @@ public class JiggleAnimation extends Thread{
             float maxRatio,
             boolean doHeight
     ){
-        this.gameElements = gameElements;
+        this.gameElement = gameElement;
         this.jumpSpan = jumpSpan;
         this.timeSpan = timeSpan;
         this.maxRatio = maxRatio;
 
         this.doScale = doScale;
         if(doScale){
-            defaultHeight = gameElements.width;
-            defaultWidth = gameElements.height;
+            defaultHeight = gameElement.width;
+            defaultWidth = gameElement.height;
         }
         this.doHeight = doHeight;
         this.G = (float) (2*jumpSpan/Math.pow(timeSpan/2,2));
@@ -90,12 +87,12 @@ public class JiggleAnimation extends Thread{
                 jumpHeight = tempCurrY;
             }
 
-            if(doHeight)gameElements.jumpHeight = jumpHeight;
+            if(doHeight) gameElement.jumpHeight = jumpHeight;
 
             if(doScale){
                 float ratio = jumpHeight/jumpSpan * maxRatio;
-                gameElements.scaleWidth = defaultWidth*ratio;
-                gameElements.scaleHeight = defaultHeight*ratio;
+                gameElement.scaleWidth = defaultWidth*ratio;
+                gameElement.scaleHeight = defaultHeight*ratio;
             }
 
             try {

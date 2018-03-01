@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 import org.jbox2d.common.Vec2;
 
@@ -9,7 +9,7 @@ import org.jbox2d.common.Vec2;
  */
 
 public class UniformMotionAnimation extends Thread {
-    GameElements gameElements;
+    GameElement gameElement;
     Vec2 targetPoint;
     float timeSpan;
 
@@ -18,21 +18,21 @@ public class UniformMotionAnimation extends Thread {
     long sleepInterval = 10;
 
     public UniformMotionAnimation(
-            GameElements gameElements,
+            GameElement gameElement,
             Vec2 targetPoint,
             float timeSpan
     ){
-        this.gameElements = gameElements;
+        this.gameElement = gameElement;
         this.targetPoint = targetPoint;
         this.timeSpan = timeSpan;
-        this.V = new Vec2((targetPoint.x-gameElements.x)/timeSpan,(targetPoint.y-gameElements.y)/timeSpan);
+        this.V = new Vec2((targetPoint.x- gameElement.x)/timeSpan,(targetPoint.y- gameElement.y)/timeSpan);
     }
     @Override
     public void run(){
         long time = 0;
         while (time<timeSpan*1000){
-            gameElements.x+=V.x*sleepInterval*0.001f;
-            gameElements.y+=V.y*sleepInterval*0.001f;
+            gameElement.x+=V.x*sleepInterval*0.001f;
+            gameElement.y+=V.y*sleepInterval*0.001f;
 
             time+=sleepInterval;
             try {

@@ -1,18 +1,13 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
-import android.graphics.Color;
-
-import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 /**
  * Created by Terry on 2018/2/1.
  */
 
-public class ScoreBoard extends GameElements {
+public class ScoreBoard extends GameElement {
     public Score score;
     public float scoreWidth;
     public ScoreBoard(

@@ -1,7 +1,5 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
-import android.util.Log;
-
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
@@ -9,7 +7,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
  * Created by Terry on 2018/2/27.
  */
 
-public class RoundEdgeRect extends GameElements{
+public class RoundEdgeRect extends GameElement {
     public Button rectButton1;
     public Button rectButton2;
     public Button circleButton;

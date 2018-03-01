@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 
@@ -11,7 +11,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 public class LockDownAnimation extends Thread {
     public static int AnimationNum = 0;
 
-    GameElements gameElements;
+    GameElement gameElement;
     DrawUtil drawUtil;
     MyAnimation myAnimation;
     boolean expand;
@@ -21,12 +21,12 @@ public class LockDownAnimation extends Thread {
     float maxScaleRate;
 
     public LockDownAnimation(
-            GameElements gameElements,
+            GameElement gameElement,
             DrawUtil drawUtil,
             boolean expand,
             float maxScaleRate,
             float timeSpan){
-        this.gameElements = gameElements;
+        this.gameElement = gameElement;
         this.drawUtil = drawUtil;
         this.expand = expand;
         this.timeSpan = timeSpan;
@@ -35,14 +35,14 @@ public class LockDownAnimation extends Thread {
         startWidth = 0;
         startHeight = 0;
         if(!expand){
-            startWidth = gameElements.width*maxScaleRate;
-            startHeight = gameElements.height*maxScaleRate;
+            startWidth = gameElement.width*maxScaleRate;
+            startHeight = gameElement.height*maxScaleRate;
         }
 
         myAnimation = new MyAnimation(
                 AnimationNum++,
-                gameElements.x,gameElements.y,
-                gameElements.width,gameElements.height,
+                gameElement.x, gameElement.y,
+                gameElement.width, gameElement.height,
                 Constant.C0LOR_SNAKE_WHITE,
                 0,
                 0,
@@ -71,8 +71,8 @@ public class LockDownAnimation extends Thread {
         float clickTimes = timeSpan*1000/interval;
 
         while (clockTick < clickTimes){
-            myAnimation.x = gameElements.x;
-            myAnimation.y = gameElements.y;
+            myAnimation.x = gameElement.x;
+            myAnimation.y = gameElement.y;
 
             if(expand){
                 degrees += perDegrees;

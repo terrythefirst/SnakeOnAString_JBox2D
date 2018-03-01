@@ -6,14 +6,16 @@ import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
 import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
+import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 
@@ -35,19 +37,19 @@ public class StartView extends MyView {
     private ImgButton musicButton;
     private ImgButton statisticsButton;
     private ScoreBoard yellowStarScoreboard;
-    private GameElements yellowStar;
+    private GameElement yellowStar;
     private ImgButton switchButton;
     private ImgButton originalPlayButton;
-    private GameElements originalPlayBand;
+    private GameElement originalPlayBand;
     private ImgButton endlessPlayButton;
-    private GameElements endlessPlayBand;
+    private GameElement endlessPlayBand;
     private ImgButton favoriteButton;
     private ImgButton rateButton;
     private ImgButton likeButton;
 
-    private List<GameElements> letterSnakeList = new ArrayList<>();
-    private List<GameElements> letterOnAStringList = new ArrayList<>();
-    private List<GameElements> snake = new ArrayList<>();
+    private List<GameElement> letterSnakeList = new ArrayList<>();
+    private List<GameElement> letterOnAStringList = new ArrayList<>();
+    private List<GameElement> snake = new ArrayList<>();
 
     float letterSnakeDefaultHeight = 30;
     float letterSnakeBeginX = 250;
@@ -65,8 +67,7 @@ public class StartView extends MyView {
     float letterOnAStringSpanX = 10;
     float letterOnAStringGapX = 100;
 
-    float HeadRadius = 50;
-    float NodeRadius = 50;
+    float scaleRatio = 2;
     float SnakeY = 1400;
     float SnakeYSpan = 100;
     float SnakeXSpan = 90;
@@ -138,28 +139,42 @@ public class StartView extends MyView {
 
     }
     public void initSnake(){
+        int nowSkin = SnakeSkinManager.SKIN_DEFAULT;
+
         int NodeIndex = 0;
         while (NodeIndex < 8){
+            List<Object> skinInfo = SnakeSkinManager.getSkin(nowSkin,NodeIndex+1);
+            float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
+            String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
+            float[] radiuses = (float[])skinInfo.get(2);
+
             SnakeNode snakeNode = new SnakeNode(
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
-                    NodeRadius,
-                    Constant.C0LOR_SNAKE_WHITE,
+                    scaleRatio*radiuses[1],
+                    color,
+                    picName,
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
             );
-            snakeNode.setTopRatio(0.95f);
+            snakeNode.setTopRatio(radiuses[0]/radiuses[1]);
             drawUtil.addToCenterLayer(snakeNode);
             snake.add(snakeNode);
         }
 
+
+        List<Object> skinInfo = SnakeSkinManager.getSkin(nowSkin,0);
+        float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
+        String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
+        float[] radiuses = (float[])skinInfo.get(2);
         SnakeHead snakeHead = new SnakeHead(
                 720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                 1,1,
-                NodeRadius,
-                Constant.C0LOR_SNAKE_WHITE,
+                scaleRatio*radiuses[1],
+                color,
+                picName,
                 Constant.SnakeDefaultHeight
         );
-        snakeHead.setTopRatio(0.95f);
+        snakeHead.setTopRatio(radiuses[0]/radiuses[1]);
         drawUtil.addToCenterLayer(snakeHead);
         snake.add(snakeHead);
 

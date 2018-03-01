@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class ListJiggleAnimation extends Thread {
-    private List<GameElements> list;
+    private List<GameElement> list;
     private boolean doScale;
     private boolean doHeight;
     private float jumSpan;
@@ -18,7 +18,7 @@ public class ListJiggleAnimation extends Thread {
     private long sleepInterval;
 
     public ListJiggleAnimation(
-            List<GameElements> list,
+            List<GameElement> list,
             float jumpSpan,
             float perTimeSpan,
             long sleepInterval,
@@ -41,7 +41,7 @@ public class ListJiggleAnimation extends Thread {
     public void run(){
         int index = 0;
         while (true){
-            for (GameElements ge:list){
+            for (GameElement ge:list){
                 new JiggleAnimation(
                         ge,
                         jumSpan,

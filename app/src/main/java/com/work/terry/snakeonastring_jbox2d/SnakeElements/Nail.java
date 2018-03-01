@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
-import com.work.terry.snakeonastring_jbox2d.UI.GameElements;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
@@ -13,7 +13,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeightColo
  * Created by Terry on 2018/1/31.
  */
 
-public class Nail extends GameElements {
+public class Nail extends GameElement {
     public float TargetHeadVX = 0;
     public float TargetHeadVY = 1;
     public Nail(float x, float y, float vx, float vy, int color) {
