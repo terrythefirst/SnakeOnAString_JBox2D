@@ -23,7 +23,7 @@ public class SnakeSkinManager {
     public static final int SKIN_DRAGON = 1;
 
     public static Map<Integer,SnakeSkin> skinMap  = new HashMap<>();
-    public static List<Object> getSkin(int SkinNumber,int nodeNumber){
+    public static SnakeNodeSkinInfo getSkin(int SkinNumber,int nodeNumber){
         return skinMap.get(SkinNumber).getSkin(nodeNumber);
     }
 

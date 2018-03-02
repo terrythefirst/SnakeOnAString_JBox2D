@@ -8,6 +8,7 @@ import android.opengl.GLES30;
 import android.opengl.GLUtils;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeSkinInfo;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 
@@ -86,14 +87,21 @@ public class TexManager {
     public static void loadSkinTextures(Resources r){
         Set<Integer> set = SnakeSkinManager.skinMap.keySet();
         for (Integer i:set){
-            Map<Integer,List<Object>> skinInfo = SnakeSkinManager.skinMap.get(i).getSkinInfo();
+            Map<Integer,SnakeNodeSkinInfo> skinInfo = SnakeSkinManager.skinMap.get(i).getSkinInfo();
             Set<Integer> keyset = skinInfo.keySet();
             for (Integer k:keyset){
-                String snakeSkinPicName = (String)skinInfo.get(k).get(1);
-                tex.put(Constant.SnakeSkinPicDirectoryPrefix+snakeSkinPicName,initTexture(r,Constant.SnakeSkinPicDirectoryPrefix+snakeSkinPicName));
+                String snakeSkinPicName = skinInfo.get(k).getImg();
+                if(snakeSkinPicName==null||snakeSkinPicName.equals("null"))continue;
+                tex.put(snakeSkinPicName,initTexture(r,Constant.SnakeSkinPicDirectoryPrefix+snakeSkinPicName));
             }
         }
     }
-    public static int getTex(String tn){return tex.get(tn);}
+    public static int getTex(String tn){
+        try{
+            return tex.get(tn);
+        }catch (Exception e){
+            throw new RuntimeException("wrongPicDirectory:"+tn);
+        }
+    }
 
 }

@@ -50,7 +50,7 @@ public class Snake {
 
     private int Skin;
 
-    public boolean initFinnished = false;
+    public boolean initFinished = false;
 
     public byte[] addAnimationLock = new byte[0];
     public boolean addAnimating = false;
@@ -69,31 +69,32 @@ public class Snake {
     private DrawUtil drawUtil;
 
     public Snake(
-            World world,
             GamePlay gamePlay,
-            int skin,
-            DrawUtil drawUtil
+            Vec2 headLoc,
+            Vec2 headV,
+            float scaleRatio,
+            int totalLength,
+            int skin
     ){
         this.gamePlay = gamePlay;
-        this.world = world;
+        this.world = gamePlay.world;
         //this.color = color;
         this.Skin = skin;
-        this.drawUtil = drawUtil;
+        this.drawUtil = gamePlay.getDrawUtil();
 
         snakeBodies = new ArrayList<>();
 
-        float x = 720;
-        float y = 1280;
-        float vx = 0;
-        float vy = 1;
-        float scaleRatio = 1;
-        float jumpHeight = Constant.SnakeDefaultHeight;
+        float x = headLoc.x;
+        float y = headLoc.y;
+        float vx = headV.x;
+        float vy = headV.y;
+        float jumpHeight = Constant.SnakeDefaultHeight*scaleRatio;
 
-        for(int index=0;index <=Constant.SnakeBodyDefaultLength;index++){
-            List<Object> skinInfo = SnakeSkinManager.getSkin(Skin,0);
-            float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
-            String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
-            float[] radiuses = (float[])skinInfo.get(2);
+        for(int index=0;index <=totalLength;index++){
+            SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(Skin,0);
+            float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
+            String picName = snakeNodeSkinInfo.getImg();
+            float[] radii = snakeNodeSkinInfo.getRadii();
 
             if(index==0){
                 snakeHead = new SnakeHead(
@@ -101,7 +102,7 @@ public class Snake {
                         world,
                         x,y,
                         vx,vy,
-                        scaleRatio*radiuses[1],
+                        scaleRatio*radii[1],
                         color,
                         picName,
                         jumpHeight
@@ -124,23 +125,23 @@ public class Snake {
 
         //animateThread = new AnimateThread();
        // animateThread.start();
-        initFinnished = true;
+        initFinished = true;
     }
     public void addBody(){
         SnakeNode tempt;
         int index = snakeBodies.size();
 
-        List<Object> skinInfo = SnakeSkinManager.getSkin(Skin,index);
-        float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
-        String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
-        float[] radiuses = (float[])skinInfo.get(2);
+        SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(Skin,index);
+        float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
+        String picName = snakeNodeSkinInfo.getImg();
+        float[] radii = snakeNodeSkinInfo.getRadii();
 
         if(index==1){
             tempt = new SnakeNode(
                     this,world,
                     snakeHead,
                     color,
-                    radiuses[1],
+                    radii[1],
                     picName,
                     index);
         }else{
@@ -149,13 +150,13 @@ public class Snake {
                     world,
                     (SnakeNode) snakeBodies.get(index-1),
                     color,
-                    radiuses[1],
+                    radii[1],
                     picName,
                     index);
         }
         //snakeBodies.add(tempt);
 
-        if(initFinnished){
+        if(initFinished){
             tempt.setDoDraw(false);
             new SnakeNodeAppendAnimateThread(tempt,drawUtil,getAnEarliestAddJumpAnimationThread()).start();
         }else {

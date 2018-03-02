@@ -47,7 +47,7 @@ public class ImgButton extends Button{
         this.TopImgRatio = rate;
     }
     public void drawSelf(TexDrawer painter){
-        if(disabled)this.color = Constant.COLOR_GREY;
+        if(disabled)setColor(Constant.COLOR_GREY);
         super.drawSelf(painter);
 
         painter.drawColorSelf(

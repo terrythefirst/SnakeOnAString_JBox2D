@@ -20,6 +20,7 @@ import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 import org.jbox2d.common.Vec2;
@@ -39,6 +40,7 @@ public class GamePlay extends MyView{
     public boolean IS_PLAYING = true;
     public World world;
     public JBox2DThread jBox2DThread = null;
+
     public Snake snake ;
 
 //    public int Score ;
@@ -46,6 +48,7 @@ public class GamePlay extends MyView{
     public ScoreBoard scoreBoard;
     public Score score = new Score(0);
 
+    public int gameMode;
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
@@ -57,9 +60,10 @@ public class GamePlay extends MyView{
 
     public Button pauseButton;
 
-    public GamePlay (){
-        setDrawUtilAndBacktoundImg(BackgroundImg);
-
+    public GamePlay (int gameMode){
+        drawUtil = new DrawUtil(null);
+        //setDrawUtilAndBacktoundImg(BackgroundImg);
+        this.gameMode = gameMode;
         Vec2 gravity = new Vec2(0,0);
         world = new World(gravity);
         constructWallsAndStaticBody();
@@ -68,45 +72,47 @@ public class GamePlay extends MyView{
         MyContactListener myContactListener = new MyContactListener(GamePlay.this);
         world.setContactListener(myContactListener);
 
-        //snake = new Snake(world,this, Constant.C0LOR_SNAKE_WHITE,drawUtil);
         addPauseButton();
-        addScoreBoard();
+        if(gameMode==Constant.GAME_MODE_ENDLESS)
+            addScoreBoard();
 
-        float dia = 20+(float)Math.random()*80;
-        float rotateAngle = (float)Math.random();
-            drawUtil.addToCenterLayer(
-                    new ButtonBlock(
-                            world,
-                            "",
-                            720,400,
-                            dia,
-                            rotateAngle*400+dia,
-                            0.95f,
-                            ButtonBlockDefaultHeight,
-                            rotateAngle*360,
-                            true,
-                            Constant.COLOR_WHITE
-                    )
-            );
+//        float dia = 20+(float)Math.random()*80;
+//        float rotateAngle = (float)Math.random();
+//            drawUtil.addToCenterLayer(
+//                    new ButtonBlock(
+//                            world,
+//                            "",
+//                            720,400,
+//                            dia,
+//                            rotateAngle*400+dia,
+//                            0.95f,
+//                            ButtonBlockDefaultHeight,
+//                            rotateAngle*360,
+//                            true,
+//                            Constant.COLOR_WHITE
+//                    )
+//            );
 
-        ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
-                world,
-                720,2000,
-                60,
-                Constant.C0LOR_CYAN,
+//        ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
+//                world,
+//                720,2000,
+//                60,
+//                Constant.C0LOR_CYAN,
+//
+//                true,
+//                ButtonBlockDefaultHeight,
+//                1
+//        );
+//        drawUtil.addToCenterLayer(buttonBlockCircle);
+//        new BreathAnimation(
+//                buttonBlockCircle,
+//                40,
+//                true,
+//                2f
+//        ).start();
 
-                true,
-                ButtonBlockDefaultHeight,
-                1
-        );
-        drawUtil.addToCenterLayer(buttonBlockCircle);
-        new BreathAnimation(
-                buttonBlockCircle,
-                40,
-                true,
-                2f
-        ).start();
-
+    }
+    public void startGame(){
         jBox2DThread = new JBox2DThread(GamePlay.this);
         addBomb();
 

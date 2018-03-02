@@ -9,26 +9,26 @@ import java.util.Map;
 
 public class SnakeSkin {
     String SkinName;
-    Map<Integer,List<Object>> skinInfo;
+    Map<Integer,SnakeNodeSkinInfo> skinInfo;
 
     int cycle;
 
     public SnakeSkin(
             String SkinName,
-            Map<Integer,List<Object>> skinInfo
+            Map<Integer,SnakeNodeSkinInfo> skinNodeInfo
     ){
         this.SkinName = SkinName;
-        this.skinInfo = skinInfo;
+        this.skinInfo = skinNodeInfo;
         cycle = Integer.MIN_VALUE;
         for(Object x:skinInfo.keySet()){
             Integer k = (Integer)x;
             if(cycle<k)cycle = k;
         }
     }
-    public Map<Integer,List<Object>> getSkinInfo(){
+    public Map<Integer,SnakeNodeSkinInfo> getSkinInfo(){
         return skinInfo;
     }
-    public List<Object> getSkin(int nodeIndex){
+    public SnakeNodeSkinInfo getSkin(int nodeIndex){
         if(nodeIndex == 0){
             return skinInfo.get(0);
         }else if(cycle == 0){
@@ -47,4 +47,6 @@ public class SnakeSkin {
     public String getSkinName(){
         return SkinName;
     }
+
+
 }

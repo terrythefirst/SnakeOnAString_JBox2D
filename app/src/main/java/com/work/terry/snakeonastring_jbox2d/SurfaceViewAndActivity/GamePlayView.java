@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
+import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MatrixState;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -66,13 +67,13 @@ public class GamePlayView extends GLSurfaceView {
         }else {
             nowViewIndex = index;
         }
-        switch (index){
-            case START_VIEW:
-                nowView = new StartView(this,null);
-                break;
-            case GAMEPLAY_VIEW:
-                nowView = new GamePlay();
-                break;
+
+        if(index == START_VIEW){
+            nowView = new StartView(this,null);
+        }else if(index > GAMEPLAY_VIEW_ORIGINAL&&index <GAMEPLAY_VIEW_ORIGINAL+10){
+            nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",getResources());
+        }else if(index > GAMEPLAY_VIEW_ENDLESS&&index <GAMEPLAY_VIEW_ENDLESS+10){
+            nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",getResources());
         }
     }
     public int getNowView(){

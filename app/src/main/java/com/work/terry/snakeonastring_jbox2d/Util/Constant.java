@@ -16,7 +16,9 @@ public class Constant {
     //界面标志
     public static final int CHANGE_BY_DEFAULT_VIEW = -1;
     public static final int START_VIEW = 0;
-    public static final int GAMEPLAY_VIEW = 1;
+    public static final int GAMEPLAY_VIEW_ORIGINAL = 10;
+
+    public static final int GAMEPLAY_VIEW_ENDLESS = 20;
 
     //文件前缀
     public static String PicDirectoryPrefix = "pic/";
@@ -24,6 +26,8 @@ public class Constant {
     public static String LettersPicDirectoryPrefix = "letters/";
     public static String SnakeSkinDirectoryPrefix = "snake_skin/";
     public static String SnakeSkinPicDirectoryPrefix = SnakeSkinDirectoryPrefix+"skin_img/";
+    public static final String OriginalPlayDirectoryPrefix = "game_level/original_play/";
+    public static final String EndlessPlayDirectoryPrefix = "game_level/endless_play/";
 
     public static String Number0Img = NumbersPicDirectoryPrefix+"number_zero.png";
     public static String Number1Img = NumbersPicDirectoryPrefix+"number_one.png";
@@ -178,4 +182,7 @@ public class Constant {
     public static final int LAYER_TOP = 0;
     public static final int LAYER_CENTER = 1;
     public static final int LAYER_FLOOR= 2;
+
+    public static final int GAME_MODE_ORIGINAL = 0;
+    public static final int GAME_MODE_ENDLESS = 1;
 }

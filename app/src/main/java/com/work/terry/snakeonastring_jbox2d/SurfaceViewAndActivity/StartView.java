@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeSkinInfo;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
@@ -143,38 +144,39 @@ public class StartView extends MyView {
 
         int NodeIndex = 0;
         while (NodeIndex < 8){
-            List<Object> skinInfo = SnakeSkinManager.getSkin(nowSkin,NodeIndex+1);
-            float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
-            String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
-            float[] radiuses = (float[])skinInfo.get(2);
+            SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(nowSkin,NodeIndex+1);
+            float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
+            String picName = snakeNodeSkinInfo.getImg();
+            float[] radii = (float[])snakeNodeSkinInfo.getRadii();
 
             SnakeNode snakeNode = new SnakeNode(
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
-                    scaleRatio*radiuses[1],
+                    scaleRatio*radii[1],
                     color,
                     picName,
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
             );
-            snakeNode.setTopRatio(radiuses[0]/radiuses[1]);
+            snakeNode.setTopRatio(radii[0]/radii[1]);
             drawUtil.addToCenterLayer(snakeNode);
             snake.add(snakeNode);
         }
 
 
-        List<Object> skinInfo = SnakeSkinManager.getSkin(nowSkin,0);
-        float[] color = ColorManager.getColorByRGB255((float[]) skinInfo.get(0));
-        String picName = Constant.SnakeSkinPicDirectoryPrefix+(String)skinInfo.get(1);
-        float[] radiuses = (float[])skinInfo.get(2);
+        SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(nowSkin,0);
+        float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
+        String picName = snakeNodeSkinInfo.getImg();
+        float[] radii = snakeNodeSkinInfo.getRadii();
+
         SnakeHead snakeHead = new SnakeHead(
                 720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                 1,1,
-                scaleRatio*radiuses[1],
+                scaleRatio*radii[1],
                 color,
                 picName,
                 Constant.SnakeDefaultHeight
         );
-        snakeHead.setTopRatio(radiuses[0]/radiuses[1]);
+        snakeHead.setTopRatio(radii[0]/radii[1]);
         drawUtil.addToCenterLayer(snakeHead);
         snake.add(snakeHead);
 

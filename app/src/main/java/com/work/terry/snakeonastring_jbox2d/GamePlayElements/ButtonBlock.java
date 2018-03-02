@@ -51,19 +51,17 @@ public class ButtonBlock extends GameElement {
             float circleDiameter,
             float totalLength,
 
-            float TopRatio,
-
             float defaultHeight,
             float rotateAngleDegrees,//0 horizontal   90 vertical  clockwise
             boolean isStatic,
-            int color
+            float[] colorFloats
             ){
         super(
                 id,
                 x,y,
                 totalLength,circleDiameter,
 
-                color,
+                0,
                 defaultHeight,
                 ButtonBlockTopOffSet,
                 ButtonBlockTopOffSetColorFactor,
@@ -72,10 +70,11 @@ public class ButtonBlock extends GameElement {
 
                 ""
         );
+        setColorFloats255(colorFloats);
         this.world = world;
         this.x = x;
         this.y = y;
-        this.TopRatio = TopRatio;
+        this.setTopRatio(Constant.ButtonBlockTopRatio);
 
         this.rotateAngleGameElements = rotateAngleDegrees;
         this.rotateAngleRectRadian = (float)Math.toRadians(rotateAngleDegrees-90);
@@ -102,7 +101,7 @@ public class ButtonBlock extends GameElement {
                 circleDiameter/2,
                 rectLength/2,
 
-                this.color,
+                color,
                 ButtonBlockDefaultHeight,
                 TopOffset,
                 ButtonBlockTopOffSetColorFactor,

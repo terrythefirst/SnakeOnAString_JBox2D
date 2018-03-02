@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRectButton;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
 
 import org.jbox2d.common.Vec2;
 
@@ -81,7 +82,8 @@ public class EndlessPlayMenu extends MyMenu {
         level2Button.setDisabled(true);
         level1Button.setButtonListener(
                 ()->{
-                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW);
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+1);
+                    closeButton.doButtonStuff();
                 }
         );
         addButton(level2Button);

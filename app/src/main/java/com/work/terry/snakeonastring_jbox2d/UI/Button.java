@@ -56,4 +56,7 @@ public class Button extends GameElement {
         jumpHeight = 0;
         if(within&&buttonListener!=null)buttonListener.doButtonStuff();
     }
+    public void doButtonStuff(){
+        if(buttonListener!=null)buttonListener.doButtonStuff();
+    }
 }

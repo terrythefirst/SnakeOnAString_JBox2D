@@ -1,5 +1,18 @@
-sn:loc width-200,height-160;dir 0,-1;len 4;size 1;
-bbc:loc width/2,height/2-600|width/2,height/2+600;rad 50;co red;
-bb:loc width/2-400-50,height/2-400|width/2+400+50,height/2-400|width/2-400-50,height/2+400|width/2+400+50,height/2+400;len 160;rad 50;dir 90;co orangeyellow;
-bb:loc width/2-400,height/2-400-50|width/2+400,height/2-400-50|width/2-400,height/2+400+50|width/2+400+50,height/2+400+50;len 160;rad 50;dir 0;co orangeyellow;
 bg:null;
+sn:loc width-200,height-160;dir 0,-1;len 4;scale 1;
+
+bbc:loc width/2,height/2-600;rad 50;co 239,123,98;dfh 30;id 1;
+bbc:loc width/2,height/2+600;rad 50;co 239,123,98;dfh 30;id 2;
+
+bb:loc width/2-400-50,height/2-400;len 160;rad 50;dir 90;co 255,217,120;dfh 40;id 3;
+bb:loc width/2+400+50,height/2-400;len 160;rad 50;dir 90;co 255,217,120;dfh 40;id 4;
+bb:loc width/2-400-50,height/2+400;len 160;rad 50;dir 90;co 255,217,120;dfh 40;id 5;
+bb:loc width/2+400+50,height/2+400;len 160;rad 50;dir 90;co 255,217,120;dfh 40;id 6;
+
+bb:loc width/2-400,height/2-400-50;len 160;rad 50;dir 0;co 255,217,120;dfh 40;id 7;
+bb:loc width/2+400,height/2-400-50;len 160;rad 50;dir 0;co 255,217,120;dfh 40;id 8;
+bb:loc width/2-400,height/2+400+50;len 160;rad 50;dir 0;co 255,217,120;dfh 40;id 9;
+bb:loc width/2+400,height/2+400+50;len 160;rad 50;dir 0;co 255,217,120;dfh 40;id 10;
+
+
+

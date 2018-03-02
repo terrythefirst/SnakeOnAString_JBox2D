@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeSkinInfo;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 
@@ -24,7 +25,7 @@ public class LoadSkinUtil {
         SnakeSkin snakeSkin = null;
 
         String skinName;
-        Map<Integer,List<Object>> skinInfo = new HashMap<>();
+        Map<Integer,SnakeNodeSkinInfo> skinInfo = new HashMap<>();
 
         try {
             InputStream in = r.getAssets().open(Constant.SnakeSkinDirectoryPrefix+file);
@@ -35,27 +36,23 @@ public class LoadSkinUtil {
             skinName = br.readLine();
             if(skinName==null) Log.e("LoadSkinUtil","skinName NULL!!");
 
-            List<Object> skinPerInfo ;
+            SnakeNodeSkinInfo skinPerInfo = null ;
             while ((temps=br.readLine())!=null){
-                skinPerInfo = new ArrayList<>();
-
                 String[] tempsp = temps.split("[ ]+");//引号
                 Integer number = new Integer(tempsp[0]);
 
                 String[] colorStrings = tempsp[1].split("[,]+");
                 float[] color = new float[]{Float.parseFloat(colorStrings[0]),Float.parseFloat(colorStrings[1]),Float.parseFloat(colorStrings[2])};
-                skinPerInfo.add(color);
 
                 String imgName = tempsp[2];
                 if(imgName.equals("null"))imgName = null;
-                skinPerInfo.add(imgName);
 
                 String[] radiusStrings = tempsp[3].split(",");
-                float[] radiuses = new float[]{Float.parseFloat(radiusStrings[0]),Float.parseFloat(radiusStrings[1])};
-                skinPerInfo.add(radiuses);
+                float[] radii = new float[]{Float.parseFloat(radiusStrings[0]),Float.parseFloat(radiusStrings[1])};
 
-                skinInfo.put(number,skinPerInfo);
+                skinInfo.put(number,new SnakeNodeSkinInfo(color,imgName,radii));
             }
+
             snakeSkin = new SnakeSkin(skinName,skinInfo);
         } catch (Exception e) {
             e.printStackTrace();

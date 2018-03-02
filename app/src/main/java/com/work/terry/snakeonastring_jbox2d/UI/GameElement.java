@@ -31,7 +31,7 @@ public class GameElement {
     public float TopRatio;
 
     public int color;
-    public float[] colorFloat;
+    public float[] colorFloats;
     public float defaultHeight;
     public float jumpHeight;
     public float TopOffset=0;
@@ -61,6 +61,39 @@ public class GameElement {
             float x,float y,
             float width,float height,
 
+            float[] colorFloats,
+            float defaultHeight,
+            float topOffset,
+            float topOffsetColorFactor,
+            float heightColorFactor,
+            float floorShadowColorFactor,
+
+            String Img
+    ){
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.TopWidth = width;
+        this.TopHeight = height;
+        this.Img = Img;
+        this.colorFloats = ColorManager.getColorByRGB255(colorFloats);
+        this.defaultHeight = defaultHeight;
+        this.TopOffset = topOffset;
+        this.TopOffsetColorFactor = topOffsetColorFactor;
+        this.HeightColorFactor = heightColorFactor;
+        this.FloorShadowColorFactor = floorShadowColorFactor;
+        this.jumpHeight = 0;
+
+        this.floorShadowFactorX = Constant.FloorShadowFactorX;
+        this.floorShadowFactorY = Constant.FloorShadowFactorY;
+    }
+    public GameElement(
+            String id,
+            float x,float y,
+            float width,float height,
+
             int color,
             float defaultHeight,
             float topOffset,
@@ -78,7 +111,7 @@ public class GameElement {
         this.TopWidth = width;
         this.TopHeight = height;
         this.Img = Img;
-        this.color = color;
+        this.colorFloats = ColorManager.getColor(color);
         this.defaultHeight = defaultHeight;
         this.TopOffset = topOffset;
         this.TopOffsetColorFactor = topOffsetColorFactor;
@@ -88,7 +121,6 @@ public class GameElement {
 
         this.floorShadowFactorX = Constant.FloorShadowFactorX;
         this.floorShadowFactorY = Constant.FloorShadowFactorY;
-
     }
     public void setTopRatio(float TopRatio){
         this.TopRatio = TopRatio;
@@ -109,7 +141,8 @@ public class GameElement {
     }
     public void setTopImg(String x){
         this.TopImg = x;
-        if(TopImg==null)isPureColor = true;
+        if(TopImg==null||TopImg.equals("null"))isPureColor = true;
+
     }
     public void setConstantXY(Vec2 xy){
         constantXY = xy;
@@ -125,7 +158,7 @@ public class GameElement {
         if (TopOffset != 0) {
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
-                    colorFloat==null?ColorManager.getColor(color):colorFloat,
+                    colorFloats,
                     x,
                     y - jumpHeight - defaultHeight + TopOffset,
                     width+scaleWidth,
@@ -137,7 +170,7 @@ public class GameElement {
         //drawSelf
         painter.drawColorSelf(
                 TexManager.getTex(TopImg==null?Img:TopImg),
-                colorFloat==null?ColorManager.getColor(color):colorFloat,
+                colorFloats,
                 x,
                 y - jumpHeight - defaultHeight,
                 (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
@@ -164,7 +197,7 @@ public class GameElement {
         //drawHeight
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
-                    colorFloat==null?ColorManager.getColor(color):colorFloat,
+                    colorFloats,
                     x,
                     y,
                     width+scaleWidth,
@@ -174,7 +207,7 @@ public class GameElement {
             );
             painter.drawColorFactorTex(
                     TexManager.getTex(SnakeBodyHeightImg),
-                    colorFloat==null?ColorManager.getColor(color):colorFloat,
+                    colorFloats,
                     x,
                     y - jumpHeight / 2 - defaultHeight / 2,
                     width+scaleWidth,
@@ -324,11 +357,13 @@ public class GameElement {
         }
     }
     public void setColor(int x){
-                this.color = x;
-                setColorFloat(ColorManager.getColor(color));
+        setColorFloats(ColorManager.getColor(x));
     }
-    public void setColorFloat(float[] floats){
-        colorFloat = floats;
+    public void setColorFloats255(float[] floats){
+        setColorFloats(ColorManager.getColorByRGB255(floats));
+    }
+    public void setColorFloats(float[] floats){
+        this.colorFloats = floats;
     }
     public void onPause(SharedPreferences.Editor editor){
         editor.putFloat(id+"x",x);

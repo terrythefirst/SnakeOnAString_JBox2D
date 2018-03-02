@@ -80,7 +80,7 @@ public class DrawUtil {
 
     public void stepDraw(TexDrawer painter) {
         //先画背景
-        if(backgroundImg!=null)
+        if(backgroundImg!=null&&!backgroundImg.contains("null"))
             painter.drawTex(
                     TexManager.getTex(backgroundImg),
                     Constant.SCREEN_WIDTH / 2,

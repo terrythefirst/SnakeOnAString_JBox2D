@@ -66,7 +66,7 @@ public class SnakeNode extends CircleBody{
                 false,
                 Constant.SnakeBodyImg
         );
-        this.setColorFloat(colors);
+        this.setColorFloats(colors);
         this.snake = null;
         setTopImg( SkinImgSnake);
     }
@@ -87,7 +87,7 @@ public class SnakeNode extends CircleBody{
 
                 Constant.SnakeBodyImg
         );
-        this.setColorFloat(colors);
+        this.setColorFloats(colors);
         this.snake = snake;
         this.front = frontNode;
         setTopImg( SkinImgSnake);
@@ -295,7 +295,7 @@ public class SnakeNode extends CircleBody{
 //    }
     @Override
     public void drawSelf(TexDrawer painter){
-        if(TopImg.equals("snake_skin/skin_img/snake_body_minty.png")){
+        if(isPureColor){
             super.drawSelf(painter);
             return;
         }
@@ -305,7 +305,7 @@ public class SnakeNode extends CircleBody{
         if (TopOffset != 0) {
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
-                    colorFloat==null?ColorManager.getColor(color):colorFloat,
+                    colorFloats==null?ColorManager.getColor(color):colorFloats,
                     x,
                     y - jumpHeight - defaultHeight + TopOffset,
                     width+scaleWidth,

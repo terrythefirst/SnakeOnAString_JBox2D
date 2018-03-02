@@ -41,7 +41,7 @@ public class ButtonBlockCircle extends CircleBody{
             World world,
             float x, float y,
             float radius,
-            int color,
+            float[] colorFloats,
             boolean isStatic,
             float defaultHeight,
             int id
@@ -54,7 +54,7 @@ public class ButtonBlockCircle extends CircleBody{
                 0,0,
                 radius,
 
-                color,
+                0,
                 defaultHeight,
 
                 Constant.SnakeDownLittleHeight,
@@ -71,6 +71,7 @@ public class ButtonBlockCircle extends CircleBody{
 
                 Constant.SnakeBodyImg
         );
+        this.setColorFloats(colorFloats);
         setTopRatio(Constant.ButtonBlockTopRatio);
         if(isStatic){
             initJoint();
