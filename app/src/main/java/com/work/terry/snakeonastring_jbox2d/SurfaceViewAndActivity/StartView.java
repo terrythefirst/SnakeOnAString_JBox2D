@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.ListBreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeSkinInfo;
@@ -429,10 +430,10 @@ public class StartView extends MyView {
         letterOnAStringList.add(tempt);
         drawUtil.addToCenterLayer(tempt);
 
-        new ListJiggleAnimation(
+        new ListBreathAnimation(
                 letterOnAStringList,
-                20,
-                1f,
+                40,
+                0.8f,
                 1500,
                 true,
                 0.2f,
