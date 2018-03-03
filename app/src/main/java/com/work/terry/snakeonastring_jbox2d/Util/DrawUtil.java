@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
+import android.provider.ContactsContract;
+
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.MyMenu;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
@@ -20,9 +22,6 @@ public class DrawUtil {
 
     public List<GameElement> removeSequence = null;
 
-    public MyMenu myMenu;
-
-
     public DrawUtil(String backgroundImg) {
         this.backgroundImg = backgroundImg;
         floorLayerDrawSequence = new ArrayList<>();
@@ -32,21 +31,19 @@ public class DrawUtil {
 
         removeSequence = new ArrayList<>();
     }
-    public void setMenu(MyMenu menu){
-        this.myMenu = menu;
+    public void setBackgroundImg(String Img){
+        this.backgroundImg = Img;
     }
     public synchronized void addToTopLayer(GameElement gameElement) {
         synchronized (topLayerDrawSequence) {
             topLayerDrawSequence.add(gameElement);
         }
     }
-
     public void addToCenterLayer(GameElement gameElement) {
         synchronized (centerLayerDrawSequence){
             centerLayerDrawSequence.add(gameElement);
         }
     }
-
     public void addToAnimationLayer(GameElement gameElement){
         synchronized (animationLayerDrawSequence){
             animationLayerDrawSequence.add(gameElement);
@@ -93,14 +90,6 @@ public class DrawUtil {
         drawFloorAndCenterLayer(painter);
         drawAnimationLayer(painter);
         drawTopLayer(painter);
-
-        if(myMenu!=null){
-            synchronized (myMenu){
-                myMenu.drawFloorShadow(painter);
-                myMenu.drawHeight(painter);
-                myMenu.drawSelf(painter);
-            }
-        }
 
         cleanNotDraw();
     }
@@ -191,6 +180,7 @@ public class DrawUtil {
                     );
         }
     }
+
 
 }
 

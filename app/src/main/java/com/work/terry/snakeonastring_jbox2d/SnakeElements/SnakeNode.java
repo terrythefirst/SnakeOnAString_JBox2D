@@ -37,6 +37,7 @@ public class SnakeNode extends CircleBody{
 
     public SnakeNode(//注： 供显示用
             float x, float y,
+            float vx,float vy,
             float radius,
             float[] colors,
             String SkinImgSnake,
@@ -48,7 +49,7 @@ public class SnakeNode extends CircleBody{
                 "snakeBody "+id,
                 x,y,
                 0,
-                0,0,
+                vx,vy,
                 radius,
 
                 0,
@@ -93,12 +94,13 @@ public class SnakeNode extends CircleBody{
         setTopImg( SkinImgSnake);
 
         initSelf();
+        Vec2 frontV = getFrontV2D();
         createCircleBody(
                 world,
                 "snakeBody "+id,
                 x,y,
                 front.body.getAngle(),
-                0,0,
+                frontV.x,frontV.y,
                 radius,
                 0,
                 SnakeBodyLinearDampingRate+id*SnakeBodyLinearDampingRateFactorInter,

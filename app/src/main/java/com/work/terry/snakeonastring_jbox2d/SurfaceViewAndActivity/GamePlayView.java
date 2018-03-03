@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
@@ -26,6 +28,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GamePlayView extends GLSurfaceView {
+    public int SnakeSkinNumber = 0;
     public int nowViewIndex = 0;
     public MyView nowView = null;
     public MyMenu nowMenu = null;
@@ -71,17 +74,23 @@ public class GamePlayView extends GLSurfaceView {
         if(index == START_VIEW){
             nowView = new StartView(this,null);
         }else if(index > GAMEPLAY_VIEW_ORIGINAL&&index <GAMEPLAY_VIEW_ORIGINAL+10){
-            nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",getResources());
+            nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",getResources(),getSnakeSkinNumber());
         }else if(index > GAMEPLAY_VIEW_ENDLESS&&index <GAMEPLAY_VIEW_ENDLESS+10){
-            nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",getResources());
+            nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",getResources(),getSnakeSkinNumber());
         }
+    }
+    public int getSnakeSkinNumber(){
+        return SnakeSkinNumber;
+    }
+    public void setSnakeSkinNumber(int x){
+        this.SnakeSkinNumber = x;
     }
     public int getNowView(){
         return nowViewIndex;
     }
     public void setNowMenu(MyMenu menu){
         this.nowMenu = menu;
-        nowView.getDrawUtil().setMenu(nowMenu);
+        //nowView.getDrawUtil().setMenu(nowMenu);
     }
 
     private  class  SceneRenderer implements Renderer {
@@ -91,8 +100,18 @@ public class GamePlayView extends GLSurfaceView {
         @Override
         public void onDrawFrame(GL10 gl){
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT|GLES30.GL_COLOR_BUFFER_BIT);
-            if(nowMenu!=null)nowMenu.getDrawUtil().stepDraw(texDrawer);
+
             nowView.getDrawUtil().stepDraw(texDrawer);
+            nowMenuStepDraw(texDrawer);
+        }
+        public void nowMenuStepDraw(TexDrawer painter){
+            if(nowMenu!=null){
+                synchronized (nowMenu){
+                    nowMenu.drawFloorShadow(painter);
+                    nowMenu.drawHeight(painter);
+                    nowMenu.drawSelf(painter);
+                }
+            }
         }
         @Override
         public void onSurfaceChanged(GL10 gl, int width,int height){
@@ -119,13 +138,14 @@ public class GamePlayView extends GLSurfaceView {
 
             GLES30.glDisable(GLES30.GL_CULL_FACE);
 
+            setSnakeSkinNumber(SnakeSkinManager.SKIN_DRAGON);
+
             setNowViewIndex(START_VIEW);
             setNowView(START_VIEW);
         }
     }
     public void onResume(){
         super.onResume();
-
     }
     public void onPause(SharedPreferences.Editor editor){
         if(nowView!=null)nowView.onResume();

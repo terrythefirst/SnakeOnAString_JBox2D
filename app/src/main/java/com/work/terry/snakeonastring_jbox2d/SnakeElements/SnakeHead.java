@@ -66,6 +66,8 @@ public class SnakeHead extends CircleBody{
         this.setColorFloats(colors);
         this.snake = null;
         this.rotateAngleGameElements = calRotateAngleDegrees(vx,vy);
+        this.HeadVX = vx;
+        this.HeadVY = vy;
         setTopImg( SkinImgSnake);
     }
     public SnakeHead(Snake snake,World world,float x, float y, float vx, float vy,float radius,float[] colors,String SkinImgSnake,float defaultHeight){
@@ -163,8 +165,13 @@ public class SnakeHead extends CircleBody{
 //    }
     @Override
     public void drawSelf(TexDrawer painter){
-        if(body!=null)
+        if(snake!=null&&snake.isDead()){
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
+            //Vec2 v = getBodyVelocityNormalized();
+            //rotateAngle =calRotateAngleDegrees(v.x,v.y);
+        }else {
+            rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);
+        }
         //offSet
         if (TopOffset != 0) {
             painter.drawColorFactorTex(

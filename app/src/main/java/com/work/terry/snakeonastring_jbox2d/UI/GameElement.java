@@ -20,6 +20,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GameElement {
+    public static int classCount = 1000;
     public String id;
     public float x;
     public float y;
@@ -142,7 +143,9 @@ public class GameElement {
     public void setTopImg(String x){
         this.TopImg = x;
         if(TopImg==null||TopImg.equals("null"))isPureColor = true;
-
+    }
+    public void setIsPureColor(boolean isPureColor){
+        this.isPureColor = isPureColor;
     }
     public void setConstantXY(Vec2 xy){
         constantXY = xy;

@@ -29,7 +29,8 @@ public class EndlessPlayMenu extends MyMenu {
                 Constant.ButtonBlockTopOffSetColorFactor,
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor,
-                null
+                null,
+                true
         );
 
         initBand();

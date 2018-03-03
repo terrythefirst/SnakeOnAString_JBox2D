@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
@@ -24,9 +25,9 @@ import java.util.List;
 public class MyMenu extends RoundEdgeRect {
     public GamePlayView gamePlayView;
     public ImgButton closeButton;
+    public boolean needDefaultCloseButton = true;
     public Button closeButtonUnder;
 
-    public DrawUtil drawUtil;
     public List<GameElement> gameElementList = new ArrayList<>();
     /*
     * 注：gameElementsList里的东西坐标随整个Menu的移动而移动
@@ -37,6 +38,7 @@ public class MyMenu extends RoundEdgeRect {
     * */
     public List<Button> buttons = new ArrayList<>();
     public Button nowPressedButton;
+
 
     public MyMenu
             (
@@ -51,7 +53,8 @@ public class MyMenu extends RoundEdgeRect {
                     float topOffsetColorFactor,
                     float heightColorFactor,
                     float floorShadowColorFactor,
-                    String Img
+                    String Img,
+                    boolean needDefaultCloseButton
             )
     {
         super(
@@ -67,8 +70,9 @@ public class MyMenu extends RoundEdgeRect {
                 floorShadowColorFactor,
                 Img
         );
+        this.needDefaultCloseButton = needDefaultCloseButton;
         this.gamePlayView = gamePlayView;
-        drawUtil = new DrawUtil(null);
+        //drawUtil = new DrawUtil(null);
         closeButton = new ImgButton(
                 0,
                 x,y,
@@ -117,7 +121,9 @@ public class MyMenu extends RoundEdgeRect {
                     }
                 }
         );
-        buttons.add(closeButton);
+        if (needDefaultCloseButton){
+            buttons.add(closeButton);
+        }
 
         closeButtonUnder = new Button(
                 0,
@@ -134,9 +140,6 @@ public class MyMenu extends RoundEdgeRect {
         );
 
     }
-    public DrawUtil getDrawUtil(){
-        return drawUtil;
-    }
     public static void PopFromButtom(MyMenu myMenu){
 //        new PullMoveAnimation(
 //                myMenu,
@@ -148,43 +151,52 @@ public class MyMenu extends RoundEdgeRect {
     }
     public void addToMenu(GameElement gameElement){
         gameElementList.add(gameElement);
-        drawUtil.addToTopLayer(gameElement);
     }
     public void addButton(Button button){
         buttons.add(button);
         gameElementList.add(button);
-        drawUtil.addToTopLayer(button);
     }
 
     @Override
     public void drawSelf(TexDrawer painter){
-        closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
-        closeButtonUnder.drawSelf(painter);
+        if (needDefaultCloseButton){
+            closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
+            closeButtonUnder.drawSelf(painter);
+        }
         super.drawSelf(painter);
-        closeButton.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3-(closeButtonUnder.jumpHeight+closeButtonUnder.defaultHeight));
-        closeButton.drawFloorShadow(painter);
-        closeButton.drawHeight(painter);
-        closeButton.drawSelf(painter);
-
+        if (needDefaultCloseButton){
+            closeButton.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3-(closeButtonUnder.jumpHeight+closeButtonUnder.defaultHeight));
+            closeButton.drawFloorShadow(painter);
+            closeButton.drawHeight(painter);
+            closeButton.drawSelf(painter);
+        }
         for(GameElement gameElement : gameElementList){
             gameElement.setXY(
                     x+ gameElement.constantXY.x,
                     y-height/2+ gameElement.constantXY.y
             );
+            gameElement.drawFloorShadow(painter);
+            gameElement.drawHeight(painter);
+            gameElement.drawSelf(painter);
             //Log.d("Menu GameElementsList","x="+gameElement.x+" y="+gameElement.y);
         }
-        drawUtil.stepDraw(painter);
+        //drawUtil.stepDraw(painter);
     }
     @Override
     public void drawHeight(TexDrawer painter){
-        closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
-        closeButtonUnder.drawHeight(painter);
+        if (needDefaultCloseButton){
+            closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
+            closeButtonUnder.drawHeight(painter);
+        }
+
         super.drawHeight(painter);
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){
-        closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
-        closeButtonUnder.drawFloorShadow(painter);
+        if (needDefaultCloseButton){
+            closeButtonUnder.setXY(x+width/2-angleRadius/3,y-height/2+angleRadius/3);
+            closeButtonUnder.drawFloorShadow(painter);
+        }
         super.drawFloorShadow(painter);
     }
 

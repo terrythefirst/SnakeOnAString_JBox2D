@@ -46,7 +46,7 @@ public class ButtonBlock extends GameElement {
 
     public ButtonBlock(
             World world,
-            String id,
+            int id,
             float x,float y,
             float circleDiameter,
             float totalLength,
@@ -57,7 +57,7 @@ public class ButtonBlock extends GameElement {
             float[] colorFloats
             ){
         super(
-                id,
+                "ButtonBlock "+id,
                 x,y,
                 totalLength,circleDiameter,
 
@@ -94,7 +94,7 @@ public class ButtonBlock extends GameElement {
     public void initBody(){
         rectBody = new RectBody(
                 world,
-                (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"RectBody",
+                (isStatic)?"Static":"Dynamic"+id+"RectBody",
                 x,y,
                 rotateAngleRectRadian,
                 0,0,
@@ -114,6 +114,8 @@ public class ButtonBlock extends GameElement {
                 ButtonImgRect,
                 isStatic
         );
+        rectBody.setColorFloats(colorFloats);
+        rectBody.setIsPureColor(true);
         //rectBody.setTopRatio(TopRatio);
 
         Vec2 angleVector = Mul2D(
@@ -133,7 +135,7 @@ public class ButtonBlock extends GameElement {
         );
         circleBody1 = new CircleBody(
                 world,
-                (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"CircleBody",
+                (isStatic)?"Static":"Dynamic"+id+"CircleBody",
                 circleBody1XY.x,circleBody1XY.y,
                 rotateAngleCB1Radian,
                 0,0,
@@ -154,10 +156,12 @@ public class ButtonBlock extends GameElement {
                 isStatic,
                 Constant.ButtonImgCircleDown
         );
+        circleBody1.setColorFloats(colorFloats);
+        circleBody1.setIsPureColor(true);
         //circleBody1.setTopRatio(TopRatio);
         circleBody2 = new CircleBody(
                 world,
-                (isStatic)?"Static":"Dynamic"+"ButtonBlock"+"CircleBody",
+                (isStatic)?"Static":"Dynamic"+id+"CircleBody",
                 circleBody2XY.x,circleBody2XY.y,
                 rotateAngleCB2Radian,
                 0,0,
@@ -178,6 +182,8 @@ public class ButtonBlock extends GameElement {
                 isStatic,
                 Constant.ButtonImgCircleUp
         );
+        circleBody2.setIsPureColor(true);
+        circleBody2.setColorFloats(colorFloats);
         //circleBody2.setTopRatio(TopRatio);
 
         drawSequence.add(rectBody);
@@ -185,7 +191,7 @@ public class ButtonBlock extends GameElement {
         drawSequence.add(circleBody2);
 
         new MyWeldJoint(
-                "ButtonBlock"+"WeldJoint1",
+                id+"WeldJoint1",
                 world,
                 true,
                 rectBody,
@@ -196,7 +202,7 @@ public class ButtonBlock extends GameElement {
                 0.0f
         );
         new MyWeldJoint(
-                "ButtonBlock"+"WeldJoint2",
+                id+"WeldJoint2",
                 world,
                 true,
                 rectBody,
@@ -234,6 +240,7 @@ public class ButtonBlock extends GameElement {
     }
     @Override
     public void drawSelf(TexDrawer painter){
+
         circleBody1.rotateAngleGameElements = 180-(float)Math.toDegrees( rectBody.body.getAngle());
 //        circleBody1.drawSelf(painter);
 //
@@ -241,7 +248,7 @@ public class ButtonBlock extends GameElement {
 //        circleBody2.drawSelf(painter);
         rotateAngleGameElements = -(float)Math.toDegrees( rectBody.body.getAngle());
         rectBody.rotateAngleGameElements = rotateAngleGameElements;
-        Log.d("ButtonBlock","rotateAngle"+rectBody.rotateAngleGameElements%360);
+        Log.d(id,"rotateAngle"+rectBody.rotateAngleGameElements%360);
 
         rectBody.drawSelf(painter);
         circleBody1.drawSelf(painter);
@@ -249,7 +256,7 @@ public class ButtonBlock extends GameElement {
         //float height = calDistance(minusV2D(circleBody1.getBodyXY(),circleBody2.getBodyXY()));
         painter.drawColorSelf(
                 TexManager.getTex(rectBody.Img),
-                ColorManager.getColor(rectBody.color),
+                colorFloats,
                 x,
                 y - rectBody.jumpHeight - rectBody.defaultHeight,
                 (rectBody.TopWidth+rectBody.scaleWidth)*((TopRatio==0)?1:TopRatio),
@@ -260,7 +267,7 @@ public class ButtonBlock extends GameElement {
 
         painter.drawColorSelf(
                 TexManager.getTex(SnakeBodyImg),
-                ColorManager.getColor(circleBody1.color),
+                colorFloats,
                 circleBody1.x,
                 circleBody1.y - circleBody1.jumpHeight - circleBody1.defaultHeight,
                 (circleBody1.TopWidth+circleBody1.scaleWidth)*((TopRatio==0)?1:TopRatio),
@@ -270,7 +277,7 @@ public class ButtonBlock extends GameElement {
 
         painter.drawColorSelf(
                 TexManager.getTex(SnakeBodyImg),
-                ColorManager.getColor(circleBody2.color),
+                colorFloats,
                 circleBody2.x,
                 circleBody2.y - circleBody2.jumpHeight - circleBody2.defaultHeight,
                 (circleBody2.TopWidth+circleBody2.scaleWidth)*((TopRatio==0)?1:TopRatio),

@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlock;
@@ -134,6 +135,7 @@ public class GamePlay extends MyView{
                 0,
                 ButtonBlockFloorColorFactor
         );
+        drawUtil.addToTopLayer(scoreBoard);
     }
     public void addPauseButton(){
         pauseButton = new Button(

@@ -107,6 +107,7 @@ public class Snake {
                         picName,
                         jumpHeight
                 );
+                snakeHead.setTopRatio(radii[0]/radii[1]);
                 snakeBodies.add(snakeHead);
                 drawUtil.addToCenterLayer(snakeHead);
             }else {
@@ -154,6 +155,7 @@ public class Snake {
                     picName,
                     index);
         }
+        tempt.setTopRatio(radii[0]/radii[1]);
         //snakeBodies.add(tempt);
 
         if(initFinished){

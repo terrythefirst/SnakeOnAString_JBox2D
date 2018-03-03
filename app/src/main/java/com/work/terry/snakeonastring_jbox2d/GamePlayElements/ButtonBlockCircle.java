@@ -48,7 +48,7 @@ public class ButtonBlockCircle extends CircleBody{
     ){
         super(
                 world,
-                "ButtonBlockCircle"+id,
+                "ButtonBlockCircle "+id,
                 x,y,
                 0,
                 0,0,
@@ -71,13 +71,7 @@ public class ButtonBlockCircle extends CircleBody{
 
                 Constant.SnakeBodyImg
         );
-        this.setColorFloats(colorFloats);
+        this.setColorFloats255(colorFloats);
         setTopRatio(Constant.ButtonBlockTopRatio);
-        if(isStatic){
-            initJoint();
-        }
-    }
-    public void initJoint(){
-
     }
 }

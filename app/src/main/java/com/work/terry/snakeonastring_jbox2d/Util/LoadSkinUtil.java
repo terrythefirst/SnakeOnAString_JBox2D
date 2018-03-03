@@ -22,6 +22,7 @@ import java.util.Map;
 public class LoadSkinUtil {
     public static SnakeSkin loadSkinFromFile
             (String file, Resources r) {
+        Log.d("loadSnakeSkinFromFile","start");
         SnakeSkin snakeSkin = null;
 
         String skinName;
@@ -57,6 +58,7 @@ public class LoadSkinUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Log.d("loadSnakeSkinFromFile","finish");
         return snakeSkin;
     }
 }

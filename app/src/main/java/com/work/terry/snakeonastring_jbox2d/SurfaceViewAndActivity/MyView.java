@@ -20,7 +20,14 @@ public abstract class MyView {
     public List<Button> buttons = new ArrayList<>();
     public Button nowPressedButton;
     public void setDrawUtilAndBacktoundImg(String Img){
-        drawUtil = new DrawUtil(Img);
+        setBackgroundImg(Img);
+    }
+    public void setBackgroundImg(String Img){
+        if(drawUtil==null){
+            drawUtil = new DrawUtil(Img);
+        }else {
+            drawUtil.setBackgroundImg(Img);
+        }
     }
     public Button whichButtonTouched(float x,float y){
         for(Button b:buttons){
