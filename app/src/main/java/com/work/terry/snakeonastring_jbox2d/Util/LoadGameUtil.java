@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.Util;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
@@ -16,7 +17,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +66,8 @@ public class LoadGameUtil {
                     loadButtonBlock(gamePlay,subStrings);
                 }else if(tempsp[0].trim().equals("bbc")){
                     loadButtonBlockCircle(gamePlay,subStrings);
+                }else if(tempsp[0].trim().equals("lja")){
+                    loadListJiggleAnimation(tempsp[1]);
                 }
             }
         }catch (Exception e){
@@ -93,8 +98,32 @@ public class LoadGameUtil {
     }
     public float[] getColor(String ss){
         String[] spColor = ss.trim().split(",");
-        Log.e("getColor","spColor[0])"+spColor[0]+"spColor[1])"+spColor[1]+"spColor[2])"+spColor[2]);
         return new float[]{Float.parseFloat(spColor[0]),Float.parseFloat(spColor[1]),Float.parseFloat(spColor[2])};
+    }
+    public void loadListJiggleAnimation(String subString){
+        String[] tempsp = subString.split("[ ]+");
+
+        String[] number = tempsp[0].split(",");
+        List<GameElement> gameElements = new ArrayList<>();
+        for(String ss:number){
+            gameElements.add(loadHelper.get(new Integer(ss)));
+        }
+        float jumpSpan = Float.parseFloat(tempsp[1]);
+        float perTimeSpan = Float.parseFloat(tempsp[2]);
+        long sleepInterval = Long.parseLong(tempsp[3]);
+        boolean doScale = (tempsp[4].trim().equals("t")||tempsp[4].trim().equals("T"))?true:false;
+        float maxScaleRate = Float.parseFloat(tempsp[5]);
+        boolean doHeight = (tempsp[6].trim().equals("t")||tempsp[6].trim().equals("T"))?true:false;
+
+        new ListJiggleAnimation(
+                gameElements,
+                jumpSpan,
+                perTimeSpan,
+                sleepInterval,
+                doScale,
+                maxScaleRate,
+                doHeight
+        ).start();
     }
     public void loadButtonBlock(GamePlay gamePlay,String[] bbcString){
         Vec2 XY = null;

@@ -250,6 +250,9 @@ public class ButtonBlock extends GameElement {
         rectBody.rotateAngleGameElements = rotateAngleGameElements;
         Log.d(id,"rotateAngle"+rectBody.rotateAngleGameElements%360);
 
+        rectBody.jumpHeight = jumpHeight;
+        circleBody1.jumpHeight = jumpHeight;
+        circleBody2.jumpHeight = jumpHeight;
         rectBody.drawSelf(painter);
         circleBody1.drawSelf(painter);
         circleBody2.drawSelf(painter);
@@ -258,7 +261,7 @@ public class ButtonBlock extends GameElement {
                 TexManager.getTex(rectBody.Img),
                 colorFloats,
                 x,
-                y - rectBody.jumpHeight - rectBody.defaultHeight,
+                y - jumpHeight - rectBody.defaultHeight,
                 (rectBody.TopWidth+rectBody.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (rectBody.height+rectBody.scaleHeight)+circleBody1.radius*(1-TopRatio)+circleBody2.radius*(1-TopRatio),
                 rectBody.rotateAngleGameElements
@@ -269,7 +272,7 @@ public class ButtonBlock extends GameElement {
                 TexManager.getTex(SnakeBodyImg),
                 colorFloats,
                 circleBody1.x,
-                circleBody1.y - circleBody1.jumpHeight - circleBody1.defaultHeight,
+                circleBody1.y - jumpHeight - circleBody1.defaultHeight,
                 (circleBody1.TopWidth+circleBody1.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (circleBody1.TopHeight+circleBody1.scaleHeight)*((TopRatio==0)?1:TopRatio),
                 circleBody1.rotateAngleGameElements
@@ -279,7 +282,7 @@ public class ButtonBlock extends GameElement {
                 TexManager.getTex(SnakeBodyImg),
                 colorFloats,
                 circleBody2.x,
-                circleBody2.y - circleBody2.jumpHeight - circleBody2.defaultHeight,
+                circleBody2.y - jumpHeight - circleBody2.defaultHeight,
                 (circleBody2.TopWidth+circleBody2.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (circleBody2.TopHeight+circleBody2.scaleHeight)*((TopRatio==0)?1:TopRatio),
                 circleBody2.rotateAngleGameElements
@@ -300,6 +303,7 @@ public class ButtonBlock extends GameElement {
                 .forEach(
                         x -> {
                             //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
+                            x.jumpHeight = jumpHeight;
                             x.drawHeight(painter);
                         }
                 );

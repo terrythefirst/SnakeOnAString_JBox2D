@@ -27,7 +27,9 @@ import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -159,7 +161,6 @@ public class GamePlay extends MyView{
             case LAYER_TOP:drawUtil.addToTopLayer(gameElement);break;
             case LAYER_CENTER:drawUtil.addToCenterLayer(gameElement);break;
             case LAYER_FLOOR:drawUtil.addToFloorLayer(gameElement);break;
-
         }
     }
     public void setSnake(Snake snake){
@@ -369,7 +370,6 @@ public class GamePlay extends MyView{
         jBox2DThread = new JBox2DThread(GamePlay.this);
         snake.moving();
         jBox2DThread.start();
-
         if(snake!=null)snake.onResume();
     }
     @Override

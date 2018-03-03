@@ -14,5 +14,5 @@ bb:loc width/2+350-80,height/2-400-50;len 160;rad 50;dir 0;co 255,217,120;dfh 40
 bb:loc width/2-350+80,height/2+400+50;len 160;rad 50;dir 0;co 255,217,120;dfh 40;id 9;
 bb:loc width/2+350-80,height/2+400+50;len 160;rad 50;dir 0;co 255,217,120;dfh 40;id 10;
 
-
+lja:3,7,8,4,6,10,9,5 40 0.8f 2000 f 0 t
 
