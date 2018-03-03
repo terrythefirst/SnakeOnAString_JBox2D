@@ -12,24 +12,34 @@ public class BreathAnimation extends Thread {
     float jumpSpan;
     float maxScaleRate;
     boolean doScale;
+    boolean doHeight;
 
-    public boolean stopped = false;
+//    public boolean stopped = false;
+    int times;
+    long sleepInterval;
 
     public BreathAnimation(
             GameElement gameElement,
+            boolean doHeight,
             float jumpSpan,
             boolean doScale,
-            float maxScaleRate){
+            float maxScaleRate,
+            float timeSpan
+    ){
+        this.doHeight = doHeight;
         this.gameElement = gameElement;
         this.jumpSpan = jumpSpan;
         this.doScale = doScale;
         this.maxScaleRate = maxScaleRate;
+
+        sleepInterval = (long)(timeSpan*1000/180);
     }
     @Override
     public void run(){
         float degrees = 0;
-        while (!stopped){
-            gameElement.jumpHeight = (float) Math.abs(Math.sin(Math.toRadians(degrees)))*jumpSpan;
+        while (degrees<180){
+            if(doHeight)
+                gameElement.jumpHeight = (float) Math.abs(Math.sin(Math.toRadians(degrees)))*jumpSpan;
 
             if (doScale){
                 gameElement.scaleWidth = (jumpSpan- gameElement.jumpHeight)*maxScaleRate;
@@ -38,7 +48,7 @@ public class BreathAnimation extends Thread {
 
             degrees+=1f;
             try {
-                sleep(50);
+                sleep(sleepInterval);
             }catch (Exception e){
                 e.printStackTrace();
             }

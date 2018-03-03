@@ -89,7 +89,12 @@ public class GamePlayView extends GLSurfaceView {
         return nowViewIndex;
     }
     public void setNowMenu(MyMenu menu){
-        this.nowMenu = menu;
+        if(menu==null){
+            this.nowMenu.setDoDraw(false);
+        }else {
+            this.nowMenu = menu;
+        }
+
         //nowView.getDrawUtil().setMenu(nowMenu);
     }
 
@@ -105,11 +110,15 @@ public class GamePlayView extends GLSurfaceView {
             nowMenuStepDraw(texDrawer);
         }
         public void nowMenuStepDraw(TexDrawer painter){
+
             if(nowMenu!=null){
-                synchronized (nowMenu){
-                    nowMenu.drawFloorShadow(painter);
-                    nowMenu.drawHeight(painter);
-                    nowMenu.drawSelf(painter);
+                if(nowMenu.doDraw==false)nowMenu=null;
+                else {
+                    synchronized (nowMenu){
+                        nowMenu.drawFloorShadow(painter);
+                        nowMenu.drawHeight(painter);
+                        nowMenu.drawSelf(painter);
+                    }
                 }
             }
         }
