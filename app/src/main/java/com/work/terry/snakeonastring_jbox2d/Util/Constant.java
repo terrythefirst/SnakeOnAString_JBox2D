@@ -164,6 +164,8 @@ public class Constant {
     public static String ButtonImgCircleDown = "button_circle_down.png";
     public static String ButtonImgRect = SnakeBodyHeightImg;
 
+    public static String EntranceImg = "entrance.png";
+
     public static String AxisImg = "axis_with_direction.png";
     public static int AxisWidth = SnakeHeadRadius;
 

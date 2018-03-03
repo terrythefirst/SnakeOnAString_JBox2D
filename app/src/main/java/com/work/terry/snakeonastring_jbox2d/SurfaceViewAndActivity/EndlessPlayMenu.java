@@ -47,7 +47,7 @@ public class EndlessPlayMenu extends MyMenu {
 
 
         RoundEdgeRectButton level1Button = new RoundEdgeRectButton(
-                0,
+                1,
                 0,0,
                 levelButtonsWidth,levelButtonHeight,
                 levelButtonsAngleRadius,
@@ -63,9 +63,16 @@ public class EndlessPlayMenu extends MyMenu {
         level1Button.setTopImgRatio(0.4f);
         level1Button.setConstantXY(new Vec2(-(levelButtonsXSpan+levelButtonsWidth),levelButtonsStartY));
         addButton(level1Button);
+        level1Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,1,gamePlayView.getResources()));
+        level1Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+1);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level2Button = new RoundEdgeRectButton(
-                0,
+                2,
                 0,0,
                 levelButtonsWidth,levelButtonHeight,
                 levelButtonsAngleRadius,
@@ -80,10 +87,10 @@ public class EndlessPlayMenu extends MyMenu {
         );
         level2Button.setTopImgRatio(0.4f);
         level2Button.setConstantXY(new Vec2(0,levelButtonsStartY));
-        level2Button.setDisabled(true);
-        level1Button.setButtonListener(
+        level2Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,2,gamePlayView.getResources()));
+        level2Button.setButtonListener(
                 ()->{
-                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+1);
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+2);
                     closeButton.doButtonStuff();
                 }
         );
@@ -106,6 +113,13 @@ public class EndlessPlayMenu extends MyMenu {
         level3Button.setTopImgRatio(0.4f);
         level3Button.setConstantXY(new Vec2((levelButtonsXSpan+levelButtonsWidth),levelButtonsStartY));
         addButton(level3Button);
+        level3Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,3,gamePlayView.getResources()));
+        level3Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+3);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level4Button = new RoundEdgeRectButton(
                 0,
@@ -124,6 +138,13 @@ public class EndlessPlayMenu extends MyMenu {
         level4Button.setTopImgRatio(0.4f);
         level4Button.setConstantXY(new Vec2(-(levelButtonsXSpan+levelButtonsWidth),levelButtonsStartY+levelButtonsYSpan+levelButtonHeight));
         addButton(level4Button);
+        level4Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,4,gamePlayView.getResources()));
+        level4Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+4);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level5Button = new RoundEdgeRectButton(
                 0,
@@ -142,6 +163,13 @@ public class EndlessPlayMenu extends MyMenu {
         level5Button.setTopImgRatio(0.4f);
         level5Button.setConstantXY(new Vec2(0,levelButtonsStartY+levelButtonsYSpan+levelButtonHeight));
         addButton(level5Button);
+        level5Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,5,gamePlayView.getResources()));
+        level5Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+5);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level6Button = new RoundEdgeRectButton(
                 0,
@@ -160,6 +188,13 @@ public class EndlessPlayMenu extends MyMenu {
         level6Button.setTopImgRatio(0.4f);
         level6Button.setConstantXY(new Vec2((levelButtonsXSpan+levelButtonsWidth),levelButtonsStartY+levelButtonsYSpan+levelButtonHeight));
         addButton(level6Button);
+        level6Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,6,gamePlayView.getResources()));
+        level6Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+6);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level7Button = new RoundEdgeRectButton(
                 0,
@@ -178,6 +213,13 @@ public class EndlessPlayMenu extends MyMenu {
         level7Button.setTopImgRatio(0.4f);
         level7Button.setConstantXY(new Vec2(-(levelButtonsXSpan+levelButtonsWidth),levelButtonsStartY+(levelButtonsYSpan+levelButtonHeight)*2));
         addButton(level7Button);
+        level7Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,7,gamePlayView.getResources()));
+        level7Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+7);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level8Button = new RoundEdgeRectButton(
                 0,
@@ -196,6 +238,13 @@ public class EndlessPlayMenu extends MyMenu {
         level8Button.setTopImgRatio(0.4f);
         level8Button.setConstantXY(new Vec2(0,levelButtonsStartY+(levelButtonsYSpan+levelButtonHeight)*2));
         addButton(level8Button);
+        level8Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,8,gamePlayView.getResources()));
+        level8Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+8);
+                    closeButton.doButtonStuff();
+                }
+        );
 
         RoundEdgeRectButton level9Button = new RoundEdgeRectButton(
                 0,
@@ -214,6 +263,13 @@ public class EndlessPlayMenu extends MyMenu {
         level9Button.setTopImgRatio(0.4f);
         level9Button.setConstantXY(new Vec2((levelButtonsXSpan+levelButtonsWidth),levelButtonsStartY+(levelButtonsYSpan+levelButtonHeight)*2));
         addButton(level9Button);
+        level9Button.setDisabled(!LoadGameUtil.doLevelExist(Constant.GAME_MODE_ENDLESS,9,gamePlayView.getResources()));
+        level9Button.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(Constant.GAMEPLAY_VIEW_ENDLESS+9);
+                    closeButton.doButtonStuff();
+                }
+        );
     }
     public void initBand(){
         GameElement endlessBand = new GameElement(

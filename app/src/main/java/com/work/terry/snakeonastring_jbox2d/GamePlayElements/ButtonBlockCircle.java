@@ -72,6 +72,7 @@ public class ButtonBlockCircle extends CircleBody{
                 Constant.SnakeBodyImg
         );
         this.setColorFloats255(colorFloats);
+        this.setIsPureColor(true);
         setTopRatio(Constant.ButtonBlockTopRatio);
     }
 }

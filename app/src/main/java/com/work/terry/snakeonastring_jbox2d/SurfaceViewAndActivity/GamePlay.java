@@ -329,6 +329,11 @@ public class GamePlay extends MyView{
                 "",
                 true
         );
+
+
+        JBox2DUtil.staticBody = rightWall.body;
+    }
+    public void constructButtonWall(){
         RectBody buttonWall = new RectBody(
                 world,
                 "buttomWall",
@@ -343,15 +348,15 @@ public class GamePlay extends MyView{
                 "",
                 true
         );
-
-        JBox2DUtil.staticBody = buttonWall.body;
     }
     @Override
     public void onTouchEvent(MotionEvent event,int x,int y){
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
+                Button tempt = nowPressedButton;
                 nowPressedButton = whichButtonTouched(x,y);
+                if(tempt!=null&&nowPressedButton!=tempt)tempt.whenReleased(false);
                 if(nowPressedButton!=null)nowPressedButton.whenPressed();
                 else {
                     snake.whenMotionDown(x,y);

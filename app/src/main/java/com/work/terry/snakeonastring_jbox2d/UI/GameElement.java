@@ -50,7 +50,7 @@ public class GameElement {
 
     public String Img;
     public String TopImg;
-    public boolean isPureColor = false;
+    public boolean isPureColor = true;
 
     public boolean doDrawHeight = true;
     public boolean doDrawFloorShadow = true;
@@ -142,7 +142,6 @@ public class GameElement {
     }
     public void setTopImg(String x){
         this.TopImg = x;
-        if(TopImg==null||TopImg.equals("null"))isPureColor = true;
     }
     public void setIsPureColor(boolean isPureColor){
         this.isPureColor = isPureColor;
@@ -170,16 +169,28 @@ public class GameElement {
                     TopOffsetColorFactor
             );
         }
-        //drawSelf
-        painter.drawColorSelf(
-                TexManager.getTex(TopImg==null?Img:TopImg),
-                colorFloats,
-                x,
-                y - jumpHeight - defaultHeight,
-                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
-                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
-                rotateAngleGameElements
-        );
+        if(isPureColor){
+            //drawSelf
+            painter.drawColorSelf(
+                    TexManager.getTex(TopImg==null?Img:TopImg),
+                    colorFloats,
+                    x,
+                    y - jumpHeight - defaultHeight,
+                    (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
+                    (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
+                    rotateAngleGameElements
+            );
+        }else {
+            painter.drawTex(
+                    TexManager.getTex(TopImg==null?Img:TopImg),
+                    x,
+                    y - jumpHeight - defaultHeight,
+                    (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
+                    (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
+                    rotateAngleGameElements
+            );
+        }
+
     }
     public boolean testTouch(float touchX,float touchY){
         return touchX>x-width/2-scaleWidth/2

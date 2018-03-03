@@ -1,5 +1,5 @@
 bg:null;
-sn:loc width-200,height-160;dir 0,-1;len 4;scale 1;
+sn:loc width-400,height-300;dir 0,-1;len 4;scale 1;
 
 bbc:loc width/2,height/2-800;rad 50;co 239,123,98;dfh 30;id 1;
 bbc:loc width/2,height/2+800;rad 50;co 239,123,98;dfh 30;id 2;

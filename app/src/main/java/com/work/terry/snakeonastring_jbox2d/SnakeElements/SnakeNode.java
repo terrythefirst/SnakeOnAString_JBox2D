@@ -297,34 +297,35 @@ public class SnakeNode extends CircleBody{
 //    }
     @Override
     public void drawSelf(TexDrawer painter){
-        if(isPureColor){
-            super.drawSelf(painter);
-            return;
-        }
+//        if(isPureColor){
+//            super.drawSelf(painter);
+//            return;
+//        }
         if(body!=null)
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
+        super.drawSelf(painter);
         //offSet
-        if (TopOffset != 0) {
-            painter.drawColorFactorTex(
-                    TexManager.getTex(Img),
-                    colorFloats==null?ColorManager.getColor(color):colorFloats,
-                    x,
-                    y - jumpHeight - defaultHeight + TopOffset,
-                    width+scaleWidth,
-                    height+scaleHeight,
-                    rotateAngleGameElements,
-                    TopOffsetColorFactor
-            );
-        }
-        //drawSelf
-        painter.drawTex(
-                TexManager.getTex(TopImg==null?Img:TopImg),
-                x,
-                y - jumpHeight - defaultHeight,
-                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
-                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
-                rotateAngleGameElements
-        );
+//        if (TopOffset != 0) {
+//            painter.drawColorFactorTex(
+//                    TexManager.getTex(Img),
+//                    colorFloats==null?ColorManager.getColor(color):colorFloats,
+//                    x,
+//                    y - jumpHeight - defaultHeight + TopOffset,
+//                    width+scaleWidth,
+//                    height+scaleHeight,
+//                    rotateAngleGameElements,
+//                    TopOffsetColorFactor
+//            );
+//        }
+//        //drawSelf
+//        painter.drawTex(
+//                TexManager.getTex(TopImg==null?Img:TopImg),
+//                x,
+//                y - jumpHeight - defaultHeight,
+//                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
+//                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
+//                rotateAngleGameElements
+//        );
     //        painter.drawSelf(
     //                TexManager.getTex(axisImg),
     //                ColorManager.getColor(Constant.C0LOR_WHITE),

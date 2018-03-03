@@ -70,6 +70,7 @@ public class MyMenu extends RoundEdgeRect {
                 floorShadowColorFactor,
                 Img
         );
+        setIsPureColor(true);
         this.needDefaultCloseButton = needDefaultCloseButton;
         this.gamePlayView = gamePlayView;
         //drawUtil = new DrawUtil(null);

@@ -174,7 +174,7 @@ public class RoundEdgeRectButton extends ImgButton {
         for (Button button:buttons){
             button.jumpHeight = 0;
         }
-        if(within&&buttonListener!=null)buttonListener.doButtonStuff();
+        if(!disabled&&within&&buttonListener!=null)buttonListener.doButtonStuff();
 
     }
 }

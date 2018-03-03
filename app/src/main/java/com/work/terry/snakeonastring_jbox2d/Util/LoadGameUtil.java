@@ -6,9 +6,10 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.GamePlayElements.Entrance;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
-import com.work.terry.snakeonastring_jbox2d.UI.Button;
+import com.work.terry.snakeonastring_jbox2d.Thread.EntranceThread;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 import org.jbox2d.common.Vec2;
@@ -16,7 +17,6 @@ import org.jbox2d.common.Vec2;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +28,19 @@ import java.util.Map;
 
 public class LoadGameUtil {
     public Map<Integer,GameElement> loadHelper  = null;
+    public static boolean doLevelExist(int gameMode,int i,Resources r){
+        String file = (gameMode==Constant.GAME_MODE_ORIGINAL)?Constant.OriginalPlayDirectoryPrefix:Constant.EndlessPlayDirectoryPrefix+ i+".gl";
+
+        boolean res;
+        try {
+            r.getAssets().open(file);
+            res = true;
+        }catch (Exception e){
+            res = false;
+        }
+        return res;
+    }
+
     public GamePlay loadGameFromFile
             (String file, Resources r,int SnakeSkinNumber){
         Log.d("loadGameFromFile","start");
@@ -81,7 +94,6 @@ public class LoadGameUtil {
     }
     public Vec2 getXY(String ss){
         String[] spXY = ss.trim().split(",");
-        Log.e("spXY","spXY[0]"+spXY[0]+"spXY[1]"+spXY[1]);
         float x = 0;
         float y = 0;
         try{
@@ -240,5 +252,16 @@ public class LoadGameUtil {
                 SnakeSkinNumber
         );
         gamePlay.setSnake(snake);
+
+        Entrance entrance = new Entrance(
+                gamePlay.world,
+                XY.x,XY.y+350,
+                400,500
+        );
+        gamePlay.addGameElements(
+                entrance,
+                Constant.LAYER_TOP
+        );
+        new EntranceThread(snake, entrance).start();
     }
 }

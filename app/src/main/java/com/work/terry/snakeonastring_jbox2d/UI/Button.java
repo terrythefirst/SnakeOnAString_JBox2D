@@ -34,6 +34,7 @@ public class Button extends GameElement {
                 heightColorFactor,
                 floorShadowColorFactor,
                 Img);
+        setIsPureColor(true);
         //buttonDefaultHeight = defaultHeight;
         //jumpHeight = defaultHeight;
         //this.defaultHeight = 0;
@@ -54,7 +55,7 @@ public class Button extends GameElement {
     }
     public void whenReleased(boolean within){
         jumpHeight = 0;
-        if(within&&buttonListener!=null)buttonListener.doButtonStuff();
+        if(!disabled&&within&&buttonListener!=null)buttonListener.doButtonStuff();
     }
     public void doButtonStuff(){
         if(buttonListener!=null)buttonListener.doButtonStuff();

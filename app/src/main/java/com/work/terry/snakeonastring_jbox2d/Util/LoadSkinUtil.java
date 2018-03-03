@@ -46,7 +46,7 @@ public class LoadSkinUtil {
                 float[] color = new float[]{Float.parseFloat(colorStrings[0]),Float.parseFloat(colorStrings[1]),Float.parseFloat(colorStrings[2])};
 
                 String imgName = tempsp[2];
-                if(imgName.equals("null"))imgName = null;
+                if(imgName.contains("null"))imgName = null;
 
                 String[] radiusStrings = tempsp[3].split(",");
                 float[] radii = new float[]{Float.parseFloat(radiusStrings[0]),Float.parseFloat(radiusStrings[1])};

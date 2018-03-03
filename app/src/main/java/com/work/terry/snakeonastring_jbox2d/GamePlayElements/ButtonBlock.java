@@ -248,7 +248,8 @@ public class ButtonBlock extends GameElement {
 //        circleBody2.drawSelf(painter);
         rotateAngleGameElements = -(float)Math.toDegrees( rectBody.body.getAngle());
         rectBody.rotateAngleGameElements = rotateAngleGameElements;
-        Log.d(id,"rotateAngle"+rectBody.rotateAngleGameElements%360);
+
+        if(!isStatic)Log.d(id,"rotateAngle"+rectBody.rotateAngleGameElements%360);
 
         rectBody.jumpHeight = jumpHeight;
         circleBody1.jumpHeight = jumpHeight;

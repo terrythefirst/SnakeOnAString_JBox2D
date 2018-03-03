@@ -10,6 +10,7 @@ public class ImgManager {
     public static String[] picName = {
             SnakeBodyImg,
             BackgroundImg,
+            EntranceImg,
             AxisImg,
             SnakeBodyHeightImg,
             SnakeHeadEyesImg,
