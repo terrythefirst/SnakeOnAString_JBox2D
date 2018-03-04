@@ -200,25 +200,6 @@ public class Snake {
                     new FoodMagnetMoveThread(sf,snakeHead).start();
             }
         }
-//        for (int i=0;i<numRays;i++)//遍历numRays条光线
-//        {
-//            float angle = (i/(float)numRays)*360*0.01745329f;//光线旋转角
-//            Vec2 rayDir=new Vec2((float)Math.sin(angle),(float)Math.cos(angle));
-//            Vec2 rayEnd =center.add(rayDir.mul(blastRadius));
-//            callback = new RayCastClosestCallback();
-//            world.raycast(callback, center, rayEnd);//物理世界调用光线投射方法
-//            if (
-//                    callback.body!=null
-//                            &&callback.body.getUserData().toString().contains("snakeFood")
-//                    )//若光线遇到了刚体
-//            {
-//                SnakeFood snakeFood = gamePlay.getFood(
-//                        Integer.parseInt( callback.body.getUserData().toString().split(" ")[1])
-//                );
-//                new FoodMagnetMoveThread(snakeFood,snakeHead).start();
-//            }
-//        }
-
     }
     public void startAnAddJumpAnimationThread(){
         Thread thread = new SnakeJumpAnimationThread(this,getLength());

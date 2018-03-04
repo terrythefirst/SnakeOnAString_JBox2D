@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListBreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
@@ -76,19 +77,23 @@ public class StartView extends MyView {
     float SnakeXTotalSpan = 8*SnakeXSpan;
 
     float OriginalEndlessY = 1850;
-    float OriginalEndlessSpan = 400;
-    float OriginalEndlessWidth = 250;
-    float OriginalEndlessHeight = 250;
-    float OriginalEndlessDefaultHeight = 60;
+    float OriginalEndlessSpan = 600;
+    float OriginalEndlessWidth = 200;
+    float OriginalEndlessHeight = 200;
+    float OriginalEndlessDefaultHeight = 40;
+
+    float OriginalEndlessMaxScaleRate = 0.1f;
+    float OriginalEndlessJumpSpan = 30;
+    float OriginalEndlessTimeSpan = 1f;
 
     float OriginalButtonBandSpan = 200;
     float OriginalBandWidth = 260;
     float OriginalBandHeight = 260;
     float OriginalBandDefaultHeight = 10;
 
-    float EndlessButtonBandSpan = 200;
-    float EndlessBandWidth = 260;
-    float EndlessBandHeight = 260;
+    float EndlessButtonBandSpan = OriginalButtonBandSpan;
+    float EndlessBandWidth = OriginalBandWidth;
+    float EndlessBandHeight = OriginalBandHeight;
     float EndlessBandDefaultHeight = 10;
 
     private float threeButtonsY = 2260;
@@ -501,13 +506,13 @@ public class StartView extends MyView {
             @Override
             public void run(){
                 while(true){
-                    Thread thread = new JiggleAnimation(
+                    Thread thread = new BreathAnimation(
                             originalPlayButton,
-                            20,
-                            3f,
                             true,
-                            0.4f,
-                            false
+                            OriginalEndlessJumpSpan,
+                            true,
+                            OriginalEndlessMaxScaleRate,
+                            OriginalEndlessTimeSpan
                     );
 
                     thread.start();
@@ -558,7 +563,7 @@ public class StartView extends MyView {
                                 endlessPlayMenu,
                                 new Vec2(Constant.SCREEN_WIDTH/2,
                                         Constant.SCREEN_HEIGHT/2+100),
-                                0.5f
+                                0.2f
                         ).start();
                     }
         );
@@ -567,14 +572,19 @@ public class StartView extends MyView {
         new Thread(){
             @Override
             public void run(){
+                try {
+                    sleep((long)(OriginalEndlessTimeSpan*1000/2));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 while(true){
-                    Thread thread = new JiggleAnimation(
+                    Thread thread = new BreathAnimation(
                             endlessPlayButton,
-                            20,
-                            3f,
                             true,
-                            0.4f,
-                            false
+                            OriginalEndlessJumpSpan,
+                            true,
+                            OriginalEndlessMaxScaleRate,
+                            OriginalEndlessTimeSpan
                     );
 
                     thread.start();
@@ -598,7 +608,7 @@ public class StartView extends MyView {
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor,
                 Constant.LetterEndless
-        ) ;
+        );
         endlessPlayBand.setDoDrawHeight(false);
         drawUtil.addToCenterLayer(endlessPlayBand);
     }

@@ -6,3 +6,5 @@ dragon
 0 247,201,221 snake_head_dragon.png 60,55
 1 244,22,68 null 40,45
 2 247,201,221 null 45,50
+3 244,22,68 snake_body_dragon_flower.png 60,55
+4 247,201,221 null 45,50

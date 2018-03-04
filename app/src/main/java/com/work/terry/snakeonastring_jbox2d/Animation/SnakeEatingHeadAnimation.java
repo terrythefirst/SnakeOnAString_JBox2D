@@ -30,7 +30,7 @@ public class SnakeEatingHeadAnimation extends Thread {
             open=!open;
             if(open)time++;
             try {
-                sleep(500);
+                sleep(250);
             }catch (Exception e){
                 e.printStackTrace();
             }

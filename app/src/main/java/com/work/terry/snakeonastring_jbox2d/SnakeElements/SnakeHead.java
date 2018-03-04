@@ -69,6 +69,7 @@ public class SnakeHead extends CircleBody{
         setTopImg( snakeNodeSkinInfo.getImg());
         //this.nowFace = this.TopImg;
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
+        setIsPureColor(false);
     }
     public SnakeHead(Snake snake,World world,float x, float y, float vx, float vy,SnakeNodeSkinInfo snakeNodeSkinInfo,float defaultHeight){
         super(
@@ -97,6 +98,7 @@ public class SnakeHead extends CircleBody{
         this.snake = snake;
         setTopImg( snakeNodeSkinInfo.getImg());
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
+        setIsPureColor(false);
 
         rotateAngleGameElements = calRotateAngleDegrees(vx,vy);
         HeadVX = vx;
@@ -173,28 +175,29 @@ public class SnakeHead extends CircleBody{
         }else {
             rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);
         }
+        super.drawSelf(painter);
         //offSet
-        if (TopOffset != 0) {
-            painter.drawColorFactorTex(
-                    TexManager.getTex(Img),
-                    colorFloats==null?ColorManager.getColor(color):colorFloats,
-                    x,
-                    y - jumpHeight - defaultHeight + TopOffset,
-                    width+scaleWidth,
-                    height+scaleHeight,
-                    rotateAngleGameElements,
-                    TopOffsetColorFactor
-            );
-        }
-        //drawSelf
-        painter.drawTex(
-                TexManager.getTex(TopImg==null?Img:TopImg),
-                x,
-                y - jumpHeight - defaultHeight,
-                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
-                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
-                rotateAngleGameElements
-        );
+//        if (TopOffset != 0) {
+//            painter.drawColorFactorTex(
+//                    TexManager.getTex(Img),
+//                    colorFloats==null?ColorManager.getColor(color):colorFloats,
+//                    x,
+//                    y - jumpHeight - defaultHeight + TopOffset,
+//                    width+scaleWidth,
+//                    height+scaleHeight,
+//                    rotateAngleGameElements,
+//                    TopOffsetColorFactor
+//            );
+//        }
+//        //drawSelf
+//        painter.drawTex(
+//                TexManager.getTex(TopImg==null?Img:TopImg),
+//                x,
+//                y - jumpHeight - defaultHeight,
+//                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
+//                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
+//                rotateAngleGameElements
+//        );
         //        painter.drawSelf(
         //                TexManager.getTex(axisImg),
         //                ColorManager.getColor(Constant.C0LOR_WHITE),

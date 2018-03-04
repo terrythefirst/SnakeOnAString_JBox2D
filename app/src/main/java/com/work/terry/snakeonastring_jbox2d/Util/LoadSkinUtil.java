@@ -34,7 +34,6 @@ public class LoadSkinUtil {
             String temps;
 
             skinName = br.readLine();
-            if(skinName==null) Log.e("LoadSkinUtil","skinName NULL!!");
             Log.d("loadSnakeSkinFromFile",skinName+" start");
 
             while ((temps=br.readLine())!=null){

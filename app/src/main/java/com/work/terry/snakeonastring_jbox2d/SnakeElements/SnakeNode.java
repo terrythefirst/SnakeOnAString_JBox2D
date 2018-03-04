@@ -68,6 +68,7 @@ public class SnakeNode extends CircleBody{
         this.setColorFloats255(snakeNodeSkinInfo.getColor255());
         this.snake = null;
         setTopImg( snakeNodeSkinInfo.getImg());
+        if(!(TopImg==null||TopImg.contains("null")))setIsPureColor(false);
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
     }
     public SnakeNode(Snake snake,World world,CircleBody frontNode,SnakeNodeSkinInfo snakeNodeSkinInfo,int id){
@@ -91,6 +92,7 @@ public class SnakeNode extends CircleBody{
         this.snake = snake;
         this.front = frontNode;
         setTopImg( snakeNodeSkinInfo.getImg());
+        if(!(TopImg==null||TopImg.contains("null")))setIsPureColor(false);
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
 
         initSelf();

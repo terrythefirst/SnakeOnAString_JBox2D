@@ -147,7 +147,7 @@ public class GamePlayView extends GLSurfaceView {
 
             GLES30.glDisable(GLES30.GL_CULL_FACE);
 
-            setSnakeSkinNumber(SnakeSkinManager.SKIN_DRAGON);
+            setSnakeSkinNumber(SnakeSkinManager.SKIN_BEE);
 
             setNowViewIndex(START_VIEW);
             setNowView(START_VIEW);
