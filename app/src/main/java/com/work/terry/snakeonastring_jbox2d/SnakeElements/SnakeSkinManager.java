@@ -24,7 +24,7 @@ public class SnakeSkinManager {
 
     public static Map<Integer,SnakeSkin> skinMap  = new HashMap<>();
     public static SnakeNodeSkinInfo getSkin(int SkinNumber,int nodeNumber){
-        return skinMap.get(SkinNumber).getSkin(nodeNumber);
+        return skinMap.get(SkinNumber).getSkinNodeInfo(nodeNumber);
     }
 
     public static void initSkinsFromFileSystem(

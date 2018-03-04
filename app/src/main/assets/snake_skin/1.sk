@@ -1,4 +1,8 @@
 dragon
+-5 247,201,221 snake_head_dragon_eating_close.png 60,55
+-4 247,201,221 snake_head_dragon_eating_open.png 60,55
+-3 247,201,221 snake_head_dragon_dizzy.png 60,55
+-2 247,201,221 snake_head_dragon_dead.png 60,55
 0 247,201,221 snake_head_dragon.png 60,55
 1 244,22,68 null 40,45
 2 247,201,221 null 45,50

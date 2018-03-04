@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 
-import java.util.List;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import java.util.Map;
 
 /**
@@ -28,11 +28,11 @@ public class SnakeSkin {
     public Map<Integer,SnakeNodeSkinInfo> getSkinInfo(){
         return skinInfo;
     }
-    public SnakeNodeSkinInfo getSkin(int nodeIndex){
-        if(nodeIndex == 0){
-            return skinInfo.get(0);
+    public SnakeNodeSkinInfo getSkinNodeInfo(int nodeIndex){
+        if(nodeIndex <= SnakeHeadImgCode){
+            return skinInfo.get(nodeIndex);
         }else if(cycle == 0){
-            return skinInfo.get(-1);
+            return skinInfo.get(SnakeBodyDeafaltImgCode);
         }else {
             if(cycle == 1)cycle++;
 
@@ -40,7 +40,7 @@ public class SnakeSkin {
             try {
                 return skinInfo.get(nodeIndex==0?cycle:nodeIndex);
             }catch (Exception e){
-                return skinInfo.get(-1);
+                return skinInfo.get(SnakeBodyDeafaltImgCode);
             }
         }
     }

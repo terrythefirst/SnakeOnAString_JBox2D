@@ -9,6 +9,8 @@ public class SnakeNodeSkinInfo{
     String img;
     float[] radii;
 
+    float TopRatio;
+
     public SnakeNodeSkinInfo(
             float[] color255,
             String img,
@@ -17,6 +19,7 @@ public class SnakeNodeSkinInfo{
         this.color255 = color255;
         this.img = img;
         this.radii = radii;
+        this.TopRatio = radii[0]/radii[1];
     }
     public float[] getColor255(){
         return color255;
@@ -26,5 +29,8 @@ public class SnakeNodeSkinInfo{
     }
     public float[] getRadii(){
         return radii;
+    }
+    public float getTopRatio(){
+        return TopRatio;
     }
 }

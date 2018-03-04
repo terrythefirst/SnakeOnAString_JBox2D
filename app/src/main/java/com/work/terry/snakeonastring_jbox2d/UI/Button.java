@@ -40,7 +40,6 @@ public class Button extends GameElement {
         //this.defaultHeight = 0;
     }
     public void setButtonListener(ButtonListener buttonListener){
-        Log.d("setButtonListener","set");
         this.buttonListener = buttonListener;
     }
     public void setDisabled(boolean x){

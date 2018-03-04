@@ -38,9 +38,7 @@ public class SnakeNode extends CircleBody{
     public SnakeNode(//注： 供显示用
             float x, float y,
             float vx,float vy,
-            float radius,
-            float[] colors,
-            String SkinImgSnake,
+            SnakeNodeSkinInfo snakeNodeSkinInfo,
             float jumpHeight,
             int id
     ){
@@ -50,7 +48,7 @@ public class SnakeNode extends CircleBody{
                 x,y,
                 0,
                 vx,vy,
-                radius,
+                snakeNodeSkinInfo.getRadii()[1],
 
                 0,
                 jumpHeight,
@@ -67,17 +65,18 @@ public class SnakeNode extends CircleBody{
                 false,
                 Constant.SnakeBodyImg
         );
-        this.setColorFloats(colors);
+        this.setColorFloats255(snakeNodeSkinInfo.getColor255());
         this.snake = null;
-        setTopImg( SkinImgSnake);
+        setTopImg( snakeNodeSkinInfo.getImg());
+        setTopRatio(snakeNodeSkinInfo.getTopRatio());
     }
-    public SnakeNode(Snake snake,World world,CircleBody frontNode,float[] colors,float radius,String SkinImgSnake,int id){
+    public SnakeNode(Snake snake,World world,CircleBody frontNode,SnakeNodeSkinInfo snakeNodeSkinInfo,int id){
         super(
                 world,
                 "snakeBody "+id,
                 0,0,
-                radius*2,
-                radius*2,
+                snakeNodeSkinInfo.getRadii()[1]*2,
+                snakeNodeSkinInfo.getRadii()[1]*2,
 
                 0,
                 Constant.SnakeDefaultHeight,
@@ -88,10 +87,11 @@ public class SnakeNode extends CircleBody{
 
                 Constant.SnakeBodyImg
         );
-        this.setColorFloats(colors);
+        this.setColorFloats255(snakeNodeSkinInfo.getColor255());
         this.snake = snake;
         this.front = frontNode;
-        setTopImg( SkinImgSnake);
+        setTopImg( snakeNodeSkinInfo.getImg());
+        setTopRatio(snakeNodeSkinInfo.getTopRatio());
 
         initSelf();
         Vec2 frontV = getFrontV2D();

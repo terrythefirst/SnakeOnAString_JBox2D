@@ -4,6 +4,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.SnakeEatingHeadAnimation;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetSearchThread;
@@ -40,6 +41,7 @@ public class Snake {
     public Queue<Thread> removeJumpAnimationThreads = new LinkedList<Thread>();
 
     public Thread foodMagnetSearchThread = null;
+    public Thread snakeEatingHeadAnimationThread = null;
     public float MagneticDuration = 0;
     public float snakeMaxMagneticDuration = 4;
     public byte[] MagneticDurationLock = new byte[0];
@@ -91,23 +93,15 @@ public class Snake {
         float jumpHeight = Constant.SnakeDefaultHeight*scaleRatio;
 
         for(int index=0;index <=totalLength;index++){
-            SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(Skin,0);
-            float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
-            String picName = snakeNodeSkinInfo.getImg();
-            float[] radii = snakeNodeSkinInfo.getRadii();
-
             if(index==0){
                 snakeHead = new SnakeHead(
                         this,
                         world,
                         x,y,
                         vx,vy,
-                        scaleRatio*radii[1],
-                        color,
-                        picName,
+                        SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode),
                         jumpHeight
                 );
-                snakeHead.setTopRatio(radii[0]/radii[1]);
                 snakeBodies.add(snakeHead);
                 drawUtil.addToCenterLayer(snakeHead);
             }else {
@@ -128,34 +122,27 @@ public class Snake {
        // animateThread.start();
         initFinished = true;
     }
+    public int getSkinNumber(){
+        return Skin;
+    }
     public void addBody(){
         SnakeNode tempt;
         int index = snakeBodies.size();
-
-        SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(Skin,index);
-        float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
-        String picName = snakeNodeSkinInfo.getImg();
-        float[] radii = snakeNodeSkinInfo.getRadii();
 
         if(index==1){
             tempt = new SnakeNode(
                     this,world,
                     snakeHead,
-                    color,
-                    radii[1],
-                    picName,
+                    SnakeSkinManager.getSkin(Skin,index),
                     index);
         }else{
             tempt = new SnakeNode(
                     this,
                     world,
                     (SnakeNode) snakeBodies.get(index-1),
-                    color,
-                    radii[1],
-                    picName,
+                    SnakeSkinManager.getSkin(Skin,index),
                     index);
         }
-        tempt.setTopRatio(radii[0]/radii[1]);
         //snakeBodies.add(tempt);
 
         if(initFinished){
@@ -166,10 +153,27 @@ public class Snake {
         }
         drawUtil.addToCenterLayer(tempt);
     }
+    public void setDizzy(){
+        new Thread(){
+            @Override
+            public void run() {
+                Log.e("SnakeSkinManager.skinMap.get(Skin)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode).getImg()+"");
+                Log.e("SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)==null?"null":"not null");
+                snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDizzyImgCode).getImg());
+                try {
+                    sleep(800);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if(!isDead())
+                    snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode).getImg());
+            }
+        }.start();
+    }
     public void setDead(){
         Log.d("snake","DEAD!");
         isDead = true;
-        snakeHead.changeFace(Constant.SnakeHeadDeadEyesImg);//Constant.SnakeHeadDizzyEyesImg);
+        snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDeadImgCode).getImg());//Constant.SnakeHeadDizzyEyesImg);
     }
     public boolean isDead(){
         return isDead;
@@ -225,6 +229,35 @@ public class Snake {
         Thread thread = addJumpAnimationThreads.poll();
         return thread;
     }
+    public void whenEatBomb(){
+        startARemoveJumpAnimationThread();
+        minusOneSnakeAjaxLength();
+    }
+    public void whenEatSnakeFood(SnakeFood sf){
+        if(snakeEatingHeadAnimationThread==null){
+            new Thread(){
+                @Override
+                public void run(){
+                    snakeEatingHeadAnimationThread = new SnakeEatingHeadAnimation(
+                            snakeHead,
+                            3
+                    );
+                    snakeEatingHeadAnimationThread.start();
+                    try {
+                        snakeEatingHeadAnimationThread.join();
+                        snakeEatingHeadAnimationThread = null;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+        }
+
+        gamePlay.plusScore(sf.score);
+        startAnAddJumpAnimationThread();
+        plusOneSnakeAjaxLength();
+    }
     public void whenEatFoodMagnet(FoodMagnet foodMagnet){
         addDuration(foodMagnet.duration);
         if(foodMagnetSearchThread==null||!foodMagnetSearchThread.isAlive()){
@@ -277,22 +310,6 @@ public class Snake {
         new SnakeNodeRemoveAnimateThread(tempt,drawUtil,getAnEarliestRemoveJumpAnimationThread()).start();
     }
 
-
-    public void setDizzy(){
-        new Thread(){
-            @Override
-            public void run() {
-                snakeHead.changeFace(Constant.SnakeHeadDizzyEyesImg);
-                try {
-                    sleep(800);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                if(!isDead())
-                    snakeHead.changeFace(Constant.SnakeHeadEyesImg);
-            }
-        }.start();
-    }
 
     public int getLength(){
        // Log.d("getLength",""+snakeBodies.size());

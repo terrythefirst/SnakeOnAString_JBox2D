@@ -145,40 +145,23 @@ public class StartView extends MyView {
 
         int NodeIndex = 0;
         while (NodeIndex < 8){
-            SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(nowSkin,8-NodeIndex);
-            float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
-            String picName = snakeNodeSkinInfo.getImg();
-            float[] radii = (float[])snakeNodeSkinInfo.getRadii();
-
             SnakeNode snakeNode = new SnakeNode(
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                     0,0,
-                    scaleRatio*radii[1],
-                    color,
-                    picName,
+                    SnakeSkinManager.getSkin(nowSkin,8-NodeIndex),
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
             );
-            snakeNode.setTopRatio(radii[0]/radii[1]);
             drawUtil.addToCenterLayer(snakeNode);
             snake.add(snakeNode);
         }
 
-
-        SnakeNodeSkinInfo snakeNodeSkinInfo = SnakeSkinManager.getSkin(nowSkin,0);
-        float[] color = ColorManager.getColorByRGB255(snakeNodeSkinInfo.getColor255());
-        String picName = snakeNodeSkinInfo.getImg();
-        float[] radii = snakeNodeSkinInfo.getRadii();
-
         SnakeHead snakeHead = new SnakeHead(
                 720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                 1,1,
-                scaleRatio*radii[1],
-                color,
-                picName,
+                SnakeSkinManager.getSkin(nowSkin,0),
                 Constant.SnakeDefaultHeight
         );
-        snakeHead.setTopRatio(radii[0]/radii[1]);
         drawUtil.addToCenterLayer(snakeHead);
         snake.add(snakeHead);
 

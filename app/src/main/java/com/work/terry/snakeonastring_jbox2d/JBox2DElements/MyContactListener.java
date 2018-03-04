@@ -65,13 +65,10 @@ public class MyContactListener implements ContactListener {
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
 					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idB.split(" ")[1]));
 					sf.setEaten();
-					gamePlay.plusScore(sf.score);
-					gamePlay.snake.startAnAddJumpAnimationThread();
-					gamePlay.snake.plusOneSnakeAjaxLength();
+					gamePlay.snake.whenEatSnakeFood(sf);
 				}else  if(idB.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idB.split(" ")[1])).setEaten();
-					gamePlay.snake.startARemoveJumpAnimationThread();
-					gamePlay.snake.minusOneSnakeAjaxLength();
+					gamePlay.snake.whenEatBomb();
 				}else if(idB.contains("FoodMagnet")){
 					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idB.split(" ")[1]));
 					foodMagnet.setEaten();
@@ -102,13 +99,10 @@ public class MyContactListener implements ContactListener {
 					Log.d("ContactListener",idB+" equals snakeHead "+idA+" contains snakeFood");
 					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idA.split(" ")[1]));
 					sf.setEaten();
-					gamePlay.plusScore(sf.score);
-					gamePlay.snake.startAnAddJumpAnimationThread();
-					gamePlay.snake.plusOneSnakeAjaxLength();
+					gamePlay.snake.whenEatSnakeFood(sf);
 				}else  if(idA.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idA.split(" ")[1])).setEaten();
-					gamePlay.snake.startARemoveJumpAnimationThread();
-					gamePlay.snake.minusOneSnakeAjaxLength();
+					gamePlay.snake.whenEatBomb();
 				}else if(idA.contains("FoodMagnet")){
 					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idA.split(" ")[1]));
 					foodMagnet.setEaten();

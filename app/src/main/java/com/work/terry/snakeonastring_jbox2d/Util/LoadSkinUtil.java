@@ -22,22 +22,21 @@ import java.util.Map;
 public class LoadSkinUtil {
     public static SnakeSkin loadSkinFromFile
             (String file, Resources r) {
-        Log.d("loadSnakeSkinFromFile","start");
         SnakeSkin snakeSkin = null;
 
-        String skinName;
+        String skinName = "";
         Map<Integer,SnakeNodeSkinInfo> skinInfo = new HashMap<>();
 
         try {
             InputStream in = r.getAssets().open(Constant.SnakeSkinDirectoryPrefix+file);
             InputStreamReader isr = new InputStreamReader(in);
             BufferedReader br = new BufferedReader(isr);
-            String temps = null;
+            String temps;
 
             skinName = br.readLine();
             if(skinName==null) Log.e("LoadSkinUtil","skinName NULL!!");
+            Log.d("loadSnakeSkinFromFile",skinName+" start");
 
-            SnakeNodeSkinInfo skinPerInfo = null ;
             while ((temps=br.readLine())!=null){
                 String[] tempsp = temps.split("[ ]+");//引号
                 Integer number = new Integer(tempsp[0]);
@@ -52,13 +51,14 @@ public class LoadSkinUtil {
                 float[] radii = new float[]{Float.parseFloat(radiusStrings[0]),Float.parseFloat(radiusStrings[1])};
 
                 skinInfo.put(number,new SnakeNodeSkinInfo(color,imgName,radii));
+                Log.e("put number",number+" name:"+imgName);
             }
 
             snakeSkin = new SnakeSkin(skinName,skinInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("loadSnakeSkinFromFile","finish");
+        Log.d("loadSnakeSkinFromFile",skinName+" finish");
         return snakeSkin;
     }
 }

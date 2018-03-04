@@ -22,7 +22,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
 public class SnakeHead extends CircleBody{
     public Snake snake;
 
-    public String nowFace = SnakeHeadEyesImg;
+    //public String nowFace;
 
     public float speed = SnakeHeadSpeed;
     public int SpeedFactor = SnakeHeadSpeedFactor;
@@ -35,9 +35,7 @@ public class SnakeHead extends CircleBody{
     public SnakeHead(//注： 供显示用
             float x, float y,
             float vx, float vy,
-            float radius,
-            float[] colors,
-            String SkinImgSnake,
+            SnakeNodeSkinInfo snakeNodeSkinInfo,
             float jumpHeight
     ){
         super(
@@ -46,7 +44,7 @@ public class SnakeHead extends CircleBody{
                 x,y,
                 0,
                 0,0,
-                radius,
+                snakeNodeSkinInfo.getRadii()[1],
 
                 0,
                 jumpHeight,
@@ -63,22 +61,23 @@ public class SnakeHead extends CircleBody{
                 false,
                 Constant.SnakeBodyImg
         );
-        this.setColorFloats(colors);
+        this.setColorFloats255(snakeNodeSkinInfo.getColor255());
         this.snake = null;
         this.rotateAngleGameElements = calRotateAngleDegrees(vx,vy);
         this.HeadVX = vx;
         this.HeadVY = vy;
-        setTopImg( SkinImgSnake);
+        setTopImg( snakeNodeSkinInfo.getImg());
+        //this.nowFace = this.TopImg;
+        setTopRatio(snakeNodeSkinInfo.getTopRatio());
     }
-    public SnakeHead(Snake snake,World world,float x, float y, float vx, float vy,float radius,float[] colors,String SkinImgSnake,float defaultHeight){
+    public SnakeHead(Snake snake,World world,float x, float y, float vx, float vy,SnakeNodeSkinInfo snakeNodeSkinInfo,float defaultHeight){
         super(
                 world,
                 "snakeHead",
                 x,y,
                 (float) ((135/360)*Math.PI),
                 vx,vy,
-                radius,
-
+                snakeNodeSkinInfo.getRadii()[1],
                 0,
                 defaultHeight,
                 SnakeDownLittleHeight,
@@ -94,9 +93,10 @@ public class SnakeHead extends CircleBody{
                 false,
                 Constant.SnakeBodyImg
         );
-        this.setColorFloats(colors);
+        this.setColorFloats255(snakeNodeSkinInfo.getColor255());
         this.snake = snake;
-        setTopImg( SkinImgSnake);
+        setTopImg( snakeNodeSkinInfo.getImg());
+        setTopRatio(snakeNodeSkinInfo.getTopRatio());
 
         rotateAngleGameElements = calRotateAngleDegrees(vx,vy);
         HeadVX = vx;
@@ -165,6 +165,7 @@ public class SnakeHead extends CircleBody{
 //    }
     @Override
     public void drawSelf(TexDrawer painter){
+        //TopImg = nowFace;
         if(snake!=null&&snake.isDead()){
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
             //Vec2 v = getBodyVelocityNormalized();
@@ -205,7 +206,7 @@ public class SnakeHead extends CircleBody{
         //        );
     }
     public void changeFace(String face){
-        nowFace = face;
+        TopImg = face;
     }
     public void startMoving(){
         target = new Nail(

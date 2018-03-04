@@ -130,6 +130,13 @@ public class Constant {
     public static final float JumpMathFactor = 4;
 
     //蛇头
+    public static final int SnakeHeadImgCode = 0;
+    public static final int SnakeBodyDeafaltImgCode = -1;
+    public static final int SnakeHeadDeadImgCode = -2;
+    public static final int SnakeHeadDizzyImgCode = -3;
+    public static final int SnakeHeadEatingOpenImgCode = -4;
+    public static final int SnakeHeadEatingCloseImgCode = -5;
+
     public static String SnakeHeadID = "snakeHead";
     public static String SnakeHeadEyesImg = "snake_head_eyes_version_2.png";
     public static String SnakeHeadDeadEyesImg = "snake_head_eyes_dead_version_2.png";
