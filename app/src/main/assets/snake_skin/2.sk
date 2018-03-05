@@ -6,7 +6,7 @@ bee
 0 254,218,0 snake_head_bee.png 60,55
 1 254,218,0 snake_body_bee.png 30,35
 2 254,218,0 snake_body_bee.png 35,40
-3 254,218,0 snake_body_bee.png 55,50
+3 254,218,0 snake_body_bee.png 50,55
 4 254,218,0 snake_body_bee.png 35,40
 5 254,218,0 snake_body_bee.png 30,35
 6 98,98,98 null 20,25

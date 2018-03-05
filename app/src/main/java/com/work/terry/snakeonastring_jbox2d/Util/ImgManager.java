@@ -59,6 +59,12 @@ public class ImgManager {
             LikeImg,
             RateImg,
 
+            LuckImg,
+            ShapeImg,
+            ArrowBackImg,
+
+            SpeedImg,
+
             RoundEdgeCube,
             ArrowsSwitchImg,
             SoundAltImg,

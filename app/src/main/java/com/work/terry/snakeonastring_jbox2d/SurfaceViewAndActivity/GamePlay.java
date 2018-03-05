@@ -52,6 +52,7 @@ public class GamePlay extends MyView{
     public Score score = new Score(0);
 
     public int gameMode;
+    public int level;
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();

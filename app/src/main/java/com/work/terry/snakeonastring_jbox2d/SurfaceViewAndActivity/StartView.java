@@ -418,15 +418,49 @@ public class StartView extends MyView {
         letterOnAStringList.add(tempt);
         drawUtil.addToCenterLayer(tempt);
 
-        new ListBreathAnimation(
-                letterOnAStringList,
-                40,
-                0.8f,
-                1500,
-                true,
-                0.2f,
-                false
-        ).start();
+        float perTimeSpan = 1.5f;
+        float jumpSpan = 40;
+        float maxScaleRate = 0.2f;
+        new Thread(){
+            @Override
+            public void run(){
+                for(GameElement ge:letterOnAStringList){
+                    new Thread(){
+                        public void run(){
+                            while (true){
+                                new BreathAnimation(
+                                        ge,
+                                        false,
+                                        jumpSpan,
+                                        true,
+                                        maxScaleRate,
+                                        perTimeSpan
+                                ).start();
+                                try {
+                                    sleep((long)(perTimeSpan*1000));
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }.start();
+                    try {
+                        sleep((long)(perTimeSpan*200));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+//        new ListBreathAnimation(
+//                letterOnAStringList,
+//                40,
+//                0.8f,
+//                1500,
+//                true,
+//                0.2f,
+//                false
+//        ).start();
     }
     public void initButtons(){
         switchButton = new ImgButton(

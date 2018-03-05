@@ -17,8 +17,8 @@ public class Constant {
     public static final int CHANGE_BY_DEFAULT_VIEW = -1;
     public static final int START_VIEW = 0;
     public static final int GAMEPLAY_VIEW_ORIGINAL = 10;
-
     public static final int GAMEPLAY_VIEW_ENDLESS = 20;
+    public static final int SKIN_CHANGING_VIEW = 30;
 
     //文件前缀
     public static String PicDirectoryPrefix = "pic/";
@@ -68,6 +68,11 @@ public class Constant {
     public static String RateImg = "thumbs_up.png";
     public static String LikeImg = "love.png";
 
+    public static String LuckImg = "luck.png";
+    public static String ShapeImg = "shape.png";
+    public static String ArrowBackImg = "arrow_back.png";
+
+
     //JBOX2D相关1
     public static final float RATE = 10;//屏幕到现实世界的比例 10px：1m;
     public static final float JBOX2D_TIME_STEP = 2.0f/60.0f;//模拟的的频率
@@ -97,6 +102,8 @@ public class Constant {
     public static final String SnakeFoodImg = "snake_food.png";
     //炸弹
     public static final String BombImg = "my_bomb.png";
+    //Speed
+    public static final String SpeedImg = "speed.png";
     //钉子
     public static final String NailVerticalImg = "nail_vertical.png";
     public static final String NailShadowImg = "nail_shadow.png";
