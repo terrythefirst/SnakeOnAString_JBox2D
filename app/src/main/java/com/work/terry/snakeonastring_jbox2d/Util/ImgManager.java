@@ -64,6 +64,8 @@ public class ImgManager {
             ArrowBackImg,
 
             SpeedImg,
+            SelectChineseImg,
+            RoundRectSector,
 
             RoundEdgeCube,
             ArrowsSwitchImg,

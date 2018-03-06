@@ -77,6 +77,14 @@ public class GamePlayView extends GLSurfaceView {
             nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",getResources(),getSnakeSkinNumber());
         }else if(index > GAMEPLAY_VIEW_ENDLESS&&index <GAMEPLAY_VIEW_ENDLESS+10){
             nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",getResources(),getSnakeSkinNumber());
+        }else if(index==SKIN_CHANGING_VIEW){
+            if(nowView instanceof StartView){
+                nowView = new SkinChangingView(this,null);
+            }else if(nowView instanceof GamePlay){
+                int gameMode = ((GamePlay)nowView).gameMode;
+                int level = ((GamePlay)nowView).level;
+                nowView = new SkinChangingView(this,null,gameMode,level);
+            }
         }
     }
     public int getSnakeSkinNumber(){

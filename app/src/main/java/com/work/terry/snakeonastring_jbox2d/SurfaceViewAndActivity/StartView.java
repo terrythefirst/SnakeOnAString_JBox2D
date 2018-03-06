@@ -84,7 +84,7 @@ public class StartView extends MyView {
 
     float OriginalEndlessMaxScaleRate = 0.1f;
     float OriginalEndlessJumpSpan = 30;
-    float OriginalEndlessTimeSpan = 1f;
+    float OriginalEndlessTimeSpan = 2f;
 
     float OriginalButtonBandSpan = 200;
     float OriginalBandWidth = 260;
@@ -418,7 +418,7 @@ public class StartView extends MyView {
         letterOnAStringList.add(tempt);
         drawUtil.addToCenterLayer(tempt);
 
-        float perTimeSpan = 1.5f;
+        float perTimeSpan = 2.0f;
         float jumpSpan = 40;
         float maxScaleRate = 0.2f;
         new Thread(){
@@ -478,7 +478,9 @@ public class StartView extends MyView {
         );
         switchButton.setTopImgRatio(0.7f);
         switchButton.setButtonListener(
-                ()->Log.d("switchButton","clicked!")
+                ()->{
+                    gamePlayView.setNowView(Constant.SKIN_CHANGING_VIEW);
+                }
         );
         buttons.add(switchButton);
         drawUtil.addToTopLayer(switchButton);
@@ -542,7 +544,7 @@ public class StartView extends MyView {
                 while(true){
                     Thread thread = new BreathAnimation(
                             originalPlayButton,
-                            true,
+                            false,
                             OriginalEndlessJumpSpan,
                             true,
                             OriginalEndlessMaxScaleRate,
@@ -614,7 +616,7 @@ public class StartView extends MyView {
                 while(true){
                     Thread thread = new BreathAnimation(
                             endlessPlayButton,
-                            true,
+                            false,
                             OriginalEndlessJumpSpan,
                             true,
                             OriginalEndlessMaxScaleRate,

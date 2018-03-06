@@ -72,6 +72,10 @@ public class Constant {
     public static String ShapeImg = "shape.png";
     public static String ArrowBackImg = "arrow_back.png";
 
+    public static String SelectChineseImg = "select_chinese.png";
+
+    public static String RoundRectSector = "round_rect_sector1.png";
+
 
     //JBOX2D相关1
     public static final float RATE = 10;//屏幕到现实世界的比例 10px：1m;

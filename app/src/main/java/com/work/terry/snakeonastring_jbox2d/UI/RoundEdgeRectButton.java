@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -18,6 +20,7 @@ public class RoundEdgeRectButton extends ImgButton {
     public Button circleButton;
     public float angleRadius;
     public List<Button> buttons = new ArrayList<Button>();
+
     public RoundEdgeRectButton(
             int id,
             float x,float y,
@@ -57,7 +60,7 @@ public class RoundEdgeRectButton extends ImgButton {
                 topOffsetColorFactor,
                 heightColorFactor,
                 floorShadowColorFactor,
-                Constant.SnakeBodyImg
+                Constant.RoundRectSector
         );
         buttons.add(circleButton);
         rectButton1 = new Button(
@@ -98,14 +101,45 @@ public class RoundEdgeRectButton extends ImgButton {
     }
     @Override
     public void drawSelf(TexDrawer painter){
+        float ratio = this.scaleWidth/this.width;
+        float width = this.width+this.scaleWidth;
+        float height = this.height+this.scaleHeight;
+        float angleRadius = this.angleRadius*(1+ratio);
+        circleButton.scaleWidth = this.angleRadius*ratio*2;
+        circleButton.scaleHeight = this.angleRadius*ratio*2;
+        rectButton1.scaleWidth =  this.scaleWidth;
+        rectButton1.scaleHeight = (this.height-this.angleRadius*2)*ratio;
+        rectButton2.scaleWidth =  (this.width-this.angleRadius*2)*ratio;
+        rectButton2.scaleHeight =  this.scaleHeight;
+
         if(disabled)setColor(Constant.COLOR_GREY);
 
+//        circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
+//        circleButton.drawSelf(painter);
+//        if(((width/2-angleRadius)!=0)){
+//            circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
+//            circleButton.drawSelf(painter);
+//        }
+//        if((height/2-angleRadius)!=0){
+//            circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
+//            circleButton.drawSelf(painter);
+//        }
+//        if((height/2-angleRadius)!=0||(width/2-angleRadius)!=0){
+//            circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
+//            circleButton.drawSelf(painter);
+//        }
+        int startAngle = 0;
+
+        circleButton.rotateAngleGameElements = startAngle;
         circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
         circleButton.drawSelf(painter);
+        circleButton.rotateAngleGameElements = startAngle+270;
         circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
         circleButton.drawSelf(painter);
+        circleButton.rotateAngleGameElements = startAngle+90;
         circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
         circleButton.drawSelf(painter);
+        circleButton.rotateAngleGameElements = startAngle+180;
         circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
         circleButton.drawSelf(painter);
         rectButton1.setXY(x,y);
@@ -126,14 +160,33 @@ public class RoundEdgeRectButton extends ImgButton {
     }
     @Override
     public void drawHeight(TexDrawer painter){
+        float ratio = this.scaleWidth/this.width;
+        float width = this.width+this.scaleWidth;
+        float height = this.height+this.scaleHeight;
+        float angleRadius = this.angleRadius*(1+ratio);
+        circleButton.scaleWidth = this.angleRadius*ratio*2;
+        circleButton.scaleHeight = this.angleRadius*ratio*2;
+        rectButton1.scaleWidth =  this.scaleWidth;
+        rectButton1.scaleHeight = (this.height-this.angleRadius*2)*ratio;
+        rectButton2.scaleWidth =  (this.width-this.angleRadius*2)*ratio;
+        rectButton2.scaleHeight =  this.scaleHeight;
+
+        int startAngle = 0;
+
+        circleButton.rotateAngleGameElements = startAngle;
         circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
         circleButton.drawHeight(painter);
+        circleButton.rotateAngleGameElements = startAngle+270;
         circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
         circleButton.drawHeight(painter);
+        circleButton.rotateAngleGameElements = startAngle+90;
         circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
         circleButton.drawHeight(painter);
+        circleButton.rotateAngleGameElements = startAngle+180;
         circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
         circleButton.drawHeight(painter);
+
+
         rectButton1.setXY(x,y);
         rectButton1.drawHeight(painter);
         rectButton2.setXY(x,y);
@@ -141,12 +194,29 @@ public class RoundEdgeRectButton extends ImgButton {
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){
+        float ratio = this.scaleWidth/this.width;
+        float width = this.width+this.scaleWidth;
+        float height = this.height+this.scaleHeight;
+        float angleRadius = this.angleRadius*(1+ratio);
+        circleButton.scaleWidth = this.angleRadius*ratio*2;
+        circleButton.scaleHeight = this.angleRadius*ratio*2;
+        rectButton1.scaleWidth =  this.scaleWidth;
+        rectButton1.scaleHeight = (this.height-this.angleRadius*2)*ratio;
+        rectButton2.scaleWidth =  (this.width-this.angleRadius*2)*ratio;
+        rectButton2.scaleHeight =  this.scaleHeight;
+
+        int startAngle = 0;
+
+        circleButton.rotateAngleGameElements = startAngle;
         circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
         circleButton.drawFloorShadow(painter);
+        circleButton.rotateAngleGameElements = startAngle+270;
         circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
         circleButton.drawFloorShadow(painter);
+        circleButton.rotateAngleGameElements = startAngle+90;
         circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
         circleButton.drawFloorShadow(painter);
+        circleButton.rotateAngleGameElements = startAngle+180;
         circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
         circleButton.drawFloorShadow(painter);
         rectButton1.setXY(x,y);
