@@ -1,9 +1,14 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
@@ -12,6 +17,14 @@ import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
+
+import java.nio.channels.FileLock;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SelectChineseImg;
@@ -26,6 +39,21 @@ public class SkinChangingView extends MyView {
     private ScoreBoard yellowStarScoreboard;
     private GameElement yellowStar;
     GamePlayView gamePlayView;
+
+    float SnakePickAreaStartY = 300;
+    float SnakePickAreaEndY = 1200;
+    float SnakePickTouchRatio = 0.9f;
+    float SnakePickMaxScaleRate = 0.5f;
+    float SnakePickSelectSpeed = 5;
+    float previousX;
+
+    Map<Integer,List<GameElement>> snakes = new HashMap<>();
+    float SnakeXInterval = 400;
+    float SnakeXSpan = 90;
+    float SnakeYSpan = 80;
+    float SnakeY = 800;
+
+    int nowSelect = -1;
 
     ImgButton returnButton;
     RoundEdgeRectButton selectButton;
@@ -58,6 +86,52 @@ public class SkinChangingView extends MyView {
     public void initOthers(){
         initScoreBoard();
         initSelectButton();
+        initSnakes();
+    }
+    public void initSnakes(){
+        nowSelect = gamePlayView.getSnakeSkinNumber();//SnakeSkinManager.SKIN_DEFAULT;
+
+        for(int x:SnakeSkinManager.skinMap.keySet()){
+            initSnake(x);
+        }
+    }
+    public void initSnake(int skinNumber){
+        List<GameElement> snake = new ArrayList<>();
+
+        int NodeIndex = 0;
+        while (NodeIndex < 8){
+            SnakeNode snakeNode = new SnakeNode(
+                    720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
+                    0,0,
+                    SnakeSkinManager.getSkin(skinNumber,8-NodeIndex),
+                    Constant.SnakeDefaultHeight,
+                    NodeIndex++
+            );
+            drawUtil.addToCenterLayer(snakeNode);
+            snake.add(snakeNode);
+        }
+
+        SnakeHead snakeHead = new SnakeHead(
+                720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
+                1,1,
+                SnakeSkinManager.getSkin(skinNumber,0),
+                Constant.SnakeDefaultHeight
+        );
+        drawUtil.addToCenterLayer(snakeHead);
+        snake.add(snakeHead);
+
+        Collections.reverse(snake);
+        new ListJiggleAnimation(
+                snake,
+                40,
+                0.3f,
+                2000,
+                false,
+                0,
+                true
+        ).start();
+
+        snakes.put(skinNumber,snake);
     }
     public void initSelectButton(){
         selectButton = new RoundEdgeRectButton(
@@ -74,6 +148,12 @@ public class SkinChangingView extends MyView {
                 0.9f,
                 SelectChineseImg,
                 null
+        );
+        selectButton.setButtonListener(
+                ()->{
+                    gamePlayView.setSnakeSkinNumber(nowSelect);
+                    returnButton.doButtonStuff();
+                }
         );
         buttons.add(selectButton);
         drawUtil.addToCenterLayer(selectButton);
@@ -152,10 +232,18 @@ public class SkinChangingView extends MyView {
         drawUtil.addToCenterLayer(returnButton);
     }
     @Override
-    public void onTouchEvent(MotionEvent event, int x, int y) {
+    public void onTouchEvent(MotionEvent event, float x, float y) {
         switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
+                if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
+                    float dx = x-previousX;
+                    moveSnakes(dx);
+                }
+            case MotionEvent.ACTION_DOWN:
+                if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
+                    previousX = x;
+                    break;
+                }
                 Button tempt = nowPressedButton;
                 nowPressedButton = whichButtonTouched(x,y);
                 if(tempt!=null&&nowPressedButton!=tempt)tempt.whenReleased(false);
@@ -166,8 +254,50 @@ public class SkinChangingView extends MyView {
                 whenUp(x,y);
                 break;
         }
-    }
 
+    }
+    public void moveSnakes(float dx){
+        dx*=SnakePickTouchRatio;
+        Log.e("dx",dx+"");
+        Log.e("nowSelect",nowSelect+"");
+        int minSkinNumber = Collections.min(snakes.keySet());
+        int maxSkinNumber = Collections.max(snakes.keySet());
+        if(nowSelect==minSkinNumber&&dx>0)return;
+        if(nowSelect==maxSkinNumber&&dx<0)return;
+
+//        if(Math.abs(dx)>SnakeXInterval/3){
+//            nowSelect+=(dx>0)?-1:1;
+//
+//            if(nowSelect<minSkinNumber)nowSelect = minSkinNumber;
+//            else if (nowSelect>maxSkinNumber)nowSelect = maxSkinNumber;
+//        }
+
+        for(Integer index:snakes.keySet()){
+            float dx720 = Math.abs(snakes.get(index).get(4).x-720);
+
+            for(GameElement ge:snakes.get(index)){
+                ge.x += dx;
+//                if(index==nowSelect){
+//                    if(Math.abs(ge.x-720)<=SnakePickSelectSpeed)
+//                        ge.x += (ge.x-720)>0?SnakePickSelectSpeed:-SnakePickSelectSpeed;
+//                    else ge.x = 720;
+//                }
+                if(dx720 <SnakeXInterval/2) {
+                    float scaleRate =MyMath.smoothStep(0.5f,1,( 1 - dx720 / SnakeXInterval)) * SnakePickMaxScaleRate;
+                    ge.scaleWidth = ge.width * scaleRate;
+                    ge.scaleHeight = ge.height * scaleRate;
+                }else {
+                    ge.scaleWidth = 0;
+                    ge.scaleHeight = 0;
+                }
+            }
+            if(Math.abs(snakes.get(index).get(8).x-720)<SnakeXInterval/2){
+                nowSelect = index;
+            }
+
+        }
+
+    }
     @Override
     public void onResume() {
 

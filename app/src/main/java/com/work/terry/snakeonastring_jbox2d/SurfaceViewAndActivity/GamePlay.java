@@ -351,7 +351,7 @@ public class GamePlay extends MyView{
         );
     }
     @Override
-    public void onTouchEvent(MotionEvent event,int x,int y){
+    public void onTouchEvent(MotionEvent event, float x, float y){
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:

@@ -300,7 +300,7 @@ public class Snake {
         snakeHead.startMoving();
         drawUtil.addToFloorLayer(snakeHead.target);
     }
-    public void whenMotionDown(int x,int y){
+    public void whenMotionDown( float x, float y){
         if(isDead()||isPaused())return;
         snakeHead.whenMotionDown(x,y);
     }

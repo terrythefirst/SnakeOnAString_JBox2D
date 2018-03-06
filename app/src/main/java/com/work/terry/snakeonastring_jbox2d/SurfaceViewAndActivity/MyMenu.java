@@ -211,7 +211,7 @@ public class MyMenu extends RoundEdgeRect {
         if(nowPressedButton!=null)
             nowPressedButton.whenReleased(nowPressedButton.testTouch(x,y));
     }
-    public void onTouchEvent(MotionEvent event, int x, int y){
+    public void onTouchEvent(MotionEvent event, float x, float y){
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:

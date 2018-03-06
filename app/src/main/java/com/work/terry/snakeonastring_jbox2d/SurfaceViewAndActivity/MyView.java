@@ -42,7 +42,7 @@ public abstract class MyView {
     public DrawUtil getDrawUtil(){
         return drawUtil;
     }
-    public abstract void onTouchEvent(MotionEvent event, int x, int y);
+    public abstract void onTouchEvent(MotionEvent event, float x, float y);
     public abstract void onResume();
     public abstract void onPause(SharedPreferences.Editor editor);
 }

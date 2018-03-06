@@ -220,7 +220,7 @@ public class SnakeHead extends CircleBody{
         movingThread =  new SnakeHeadMovingThread(this);
         movingThread.start();
     }
-    public void whenMotionDown(int touchX,int touchY){
+    public void whenMotionDown(float touchX,float touchY){
         if(target!=null)target.setDoDraw(false);
 
         if(touchX!=x||touchY!=y){
