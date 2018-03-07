@@ -46,7 +46,7 @@ public class BreathAnimation extends Thread {
         float degrees = 0;
         float jumpHeight = 0;
         while (degrees<360){
-            jumpHeight= (float) Math.sin(Math.toRadians(degrees))*jumpSpan;
+            jumpHeight= (float) -Math.cos(Math.toRadians(degrees))*jumpSpan+jumpSpan;
             if(doHeight)
                 gameElement.jumpHeight =jumpHeight;
 

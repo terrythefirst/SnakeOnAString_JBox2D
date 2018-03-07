@@ -44,7 +44,7 @@ public class SkinChangingView extends MyView {
     float SnakePickAreaEndY = 1400;
     float SnakePickTouchRatio = 0.8f;
     float SnakePickMaxScaleRate = 0.5f;
-    float SnakePickSelectSpeed = 5;
+    float SnakePickSelectSpeed = 2;
     float previousX;
 
     Map<Integer,List<GameElement>> snakes = new HashMap<>();
@@ -311,6 +311,10 @@ public class SkinChangingView extends MyView {
         };
         whenUpMoveSnakeThread.start();
     }
+    public void setNowSelect(int x){
+        this.nowSelect = x;
+
+    }
     public void scaleSnakeByX(int skinNumber,float dx){
         List<GameElement> list = snakes.get(skinNumber);
 
@@ -320,8 +324,8 @@ public class SkinChangingView extends MyView {
         while (NodeIndex <= 8){
             GameElement ge = list.get(NodeIndex);
             float scaleRate =0;
-            if(dx720 <SnakeXInterval*2/3) {
-                scaleRate =(1-MyMath.smoothStep(0.33f,1,dx720 / SnakeXInterval) )* SnakePickMaxScaleRate;
+            if(dx720 <SnakeXInterval) {
+                scaleRate =(1-MyMath.smoothStep(0,1,dx720 / SnakeXInterval) )* SnakePickMaxScaleRate;
                 ge.scaleWidth = ge.width * scaleRate;
                 ge.scaleHeight = ge.height * scaleRate;
             }else {
