@@ -41,8 +41,8 @@ public class SkinChangingView extends MyView {
     GamePlayView gamePlayView;
 
     float SnakePickAreaStartY = 300;
-    float SnakePickAreaEndY = 1200;
-    float SnakePickTouchRatio = 0.9f;
+    float SnakePickAreaEndY = 1400;
+    float SnakePickTouchRatio = 0.8f;
     float SnakePickMaxScaleRate = 0.5f;
     float SnakePickSelectSpeed = 5;
     float previousX;
@@ -241,10 +241,13 @@ public class SkinChangingView extends MyView {
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
                     float dx = x-previousX;
                     whenMoveMoveSnakes(dx);
+                    MotionDown = true;
+                    break;
                 }
             case MotionEvent.ACTION_DOWN:
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
                     previousX = x;
+                    MotionDown = true;
                     break;
                 }
                 Button tempt = nowPressedButton;
@@ -254,13 +257,59 @@ public class SkinChangingView extends MyView {
                 break;
             case MotionEvent.ACTION_UP:
                 // if(pauseButton.testTouch(x,y))pauseButton
+                MotionDown = false;
                 whenUpMoveSnake();
                 whenUp(x,y);
                 break;
         }
     }
+    boolean MotionDown = false;
+    Thread whenUpMoveSnakeThread = null;
     public void whenUpMoveSnake(){
+        for(Integer index:snakes.keySet()){
+            if(Math.abs(snakes.get(index).get(8).x-720)<SnakeXInterval/2){
+                nowSelect = index;
+            }
+        }
 
+        List<GameElement> nowSelectSkin = snakes.get(nowSelect);
+        if (whenUpMoveSnakeThread!=null&&whenUpMoveSnakeThread.isAlive()){
+            MotionDown=true;
+            try {
+                whenUpMoveSnakeThread.interrupt();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            whenUpMoveSnakeThread=null;
+            MotionDown = false;
+        }
+        whenUpMoveSnakeThread = new Thread(){
+            @Override
+            public void run(){
+                for (float nowDx = 720-nowSelectSkin.get(8).x;
+                     !MotionDown&&(Math.abs(nowDx)!=0)&&Math.abs(nowDx)<=SnakeXInterval;
+                     nowDx = 720-nowSelectSkin.get(8).x
+                        ){
+                    //Log.e("whenUpMove","nowDx"+nowDx);
+                    if(Math.abs(nowDx)<=SnakePickSelectSpeed){
+                        for(Integer index:snakes.keySet()){
+                            scaleSnakeByX(index,nowDx/2);
+                        }
+                    }else {
+                        for(Integer index:snakes.keySet()){
+                            scaleSnakeByX(index,(nowDx>0)?SnakePickSelectSpeed:-SnakePickSelectSpeed);
+                        }
+                    }
+
+                    try {
+                        sleep(100);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        whenUpMoveSnakeThread.start();
     }
     public void scaleSnakeByX(int skinNumber,float dx){
         List<GameElement> list = snakes.get(skinNumber);
@@ -271,9 +320,8 @@ public class SkinChangingView extends MyView {
         while (NodeIndex <= 8){
             GameElement ge = list.get(NodeIndex);
             float scaleRate =0;
-            if(dx720 <SnakeXInterval/2) {
-                scaleRate =MyMath.smoothStep(0.5f,1,( 1 - dx720 / SnakeXInterval)) * SnakePickMaxScaleRate;
-                Log.e("ScaleRate",""+scaleRate);
+            if(dx720 <SnakeXInterval*2/3) {
+                scaleRate =(1-MyMath.smoothStep(0.33f,1,dx720 / SnakeXInterval) )* SnakePickMaxScaleRate;
                 ge.scaleWidth = ge.width * scaleRate;
                 ge.scaleHeight = ge.height * scaleRate;
             }else {
@@ -292,26 +340,17 @@ public class SkinChangingView extends MyView {
         int minSkinNumber = Collections.min(snakes.keySet());
         int maxSkinNumber = Collections.max(snakes.keySet());
         Log.e("dx",dx+"");
-        Log.e("nowSelect",nowSelect+"");
-        Log.e("whenMove","snakes.get(maxSkinNumber).get(4).x = "+snakes.get(maxSkinNumber).get(4).x);
-        Log.e("whenMove","snakes.get(minSkinNumber).get(4).x = "+snakes.get(minSkinNumber).get(4).x);
 
-//        if(nowSelect==minSkinNumber&&dx>0)return;
-//        if(nowSelect==maxSkinNumber&&dx<0)return;
+//        Log.e("whenMove","snakes.get(maxSkinNumber).get(4).x = "+snakes.get(maxSkinNumber).get(4).x);
+//        Log.e("whenMove","snakes.get(minSkinNumber).get(4).x = "+snakes.get(minSkinNumber).get(4).x);
+
         if((snakes.get(maxSkinNumber).get(4).x<=720&&dx<=0)
                 ||(snakes.get(minSkinNumber).get(4).x>=720&&dx>=0))return;
-//        if(Math.abs(dx)>SnakeXInterval/3){
-//            nowSelect+=(dx>0)?-1:1;
-//
-//            if(nowSelect<minSkinNumber)nowSelect = minSkinNumber;
-//            else if (nowSelect>maxSkinNumber)nowSelect = maxSkinNumber;
-//        }
+        if(Math.abs(dx)>SnakeXInterval)dx=SnakeXInterval;
+
 
         for(Integer index:snakes.keySet()){
             scaleSnakeByX(index,dx);
-            if(Math.abs(snakes.get(index).get(8).x-720)<SnakeXInterval/2){
-                nowSelect = index;
-            }
         }
 
     }
