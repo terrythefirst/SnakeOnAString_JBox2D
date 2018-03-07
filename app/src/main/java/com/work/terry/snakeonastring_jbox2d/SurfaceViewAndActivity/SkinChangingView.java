@@ -132,6 +132,9 @@ public class SkinChangingView extends MyView {
         ).start();
 
         snakes.put(skinNumber,snake);
+        for(Integer integer:snakes.keySet()){
+            scaleSnakeByX(integer,0);
+        }
     }
     public void initSelectButton(){
         selectButton = new RoundEdgeRectButton(
@@ -237,7 +240,7 @@ public class SkinChangingView extends MyView {
             case MotionEvent.ACTION_MOVE:
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
                     float dx = x-previousX;
-                    moveSnakes(dx);
+                    whenMoveMoveSnakes(dx);
                 }
             case MotionEvent.ACTION_DOWN:
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
@@ -251,20 +254,52 @@ public class SkinChangingView extends MyView {
                 break;
             case MotionEvent.ACTION_UP:
                 // if(pauseButton.testTouch(x,y))pauseButton
+                whenUpMoveSnake();
                 whenUp(x,y);
                 break;
         }
+    }
+    public void whenUpMoveSnake(){
 
     }
-    public void moveSnakes(float dx){
+    public void scaleSnakeByX(int skinNumber,float dx){
+        List<GameElement> list = snakes.get(skinNumber);
+
+        float dx720 = Math.abs(list.get(8).x-720);
+
+        int NodeIndex = 0;
+        while (NodeIndex <= 8){
+            GameElement ge = list.get(NodeIndex);
+            float scaleRate =0;
+            if(dx720 <SnakeXInterval/2) {
+                scaleRate =MyMath.smoothStep(0.5f,1,( 1 - dx720 / SnakeXInterval)) * SnakePickMaxScaleRate;
+                Log.e("ScaleRate",""+scaleRate);
+                ge.scaleWidth = ge.width * scaleRate;
+                ge.scaleHeight = ge.height * scaleRate;
+            }else {
+                ge.scaleWidth = 0;
+                ge.scaleHeight = 0;
+            }
+            ge.setXY(
+                    720+(skinNumber-nowSelect)*SnakeXInterval-SnakeXSpan*(1+scaleRate)*((float)Math.sin(0.25*Math.PI*NodeIndex))+dx,
+                    SnakeY+SnakeYSpan*(4-NodeIndex)*(1+scaleRate)
+            );
+            NodeIndex++;
+        }
+    }
+    public void whenMoveMoveSnakes(float dx){
         dx*=SnakePickTouchRatio;
-        Log.e("dx",dx+"");
-        Log.e("nowSelect",nowSelect+"");
         int minSkinNumber = Collections.min(snakes.keySet());
         int maxSkinNumber = Collections.max(snakes.keySet());
-        if(nowSelect==minSkinNumber&&dx>0)return;
-        if(nowSelect==maxSkinNumber&&dx<0)return;
+        Log.e("dx",dx+"");
+        Log.e("nowSelect",nowSelect+"");
+        Log.e("whenMove","snakes.get(maxSkinNumber).get(4).x = "+snakes.get(maxSkinNumber).get(4).x);
+        Log.e("whenMove","snakes.get(minSkinNumber).get(4).x = "+snakes.get(minSkinNumber).get(4).x);
 
+//        if(nowSelect==minSkinNumber&&dx>0)return;
+//        if(nowSelect==maxSkinNumber&&dx<0)return;
+        if((snakes.get(maxSkinNumber).get(4).x<=720&&dx<=0)
+                ||(snakes.get(minSkinNumber).get(4).x>=720&&dx>=0))return;
 //        if(Math.abs(dx)>SnakeXInterval/3){
 //            nowSelect+=(dx>0)?-1:1;
 //
@@ -273,28 +308,10 @@ public class SkinChangingView extends MyView {
 //        }
 
         for(Integer index:snakes.keySet()){
-            float dx720 = Math.abs(snakes.get(index).get(4).x-720);
-
-            for(GameElement ge:snakes.get(index)){
-                ge.x += dx;
-//                if(index==nowSelect){
-//                    if(Math.abs(ge.x-720)<=SnakePickSelectSpeed)
-//                        ge.x += (ge.x-720)>0?SnakePickSelectSpeed:-SnakePickSelectSpeed;
-//                    else ge.x = 720;
-//                }
-                if(dx720 <SnakeXInterval/2) {
-                    float scaleRate =MyMath.smoothStep(0.5f,1,( 1 - dx720 / SnakeXInterval)) * SnakePickMaxScaleRate;
-                    ge.scaleWidth = ge.width * scaleRate;
-                    ge.scaleHeight = ge.height * scaleRate;
-                }else {
-                    ge.scaleWidth = 0;
-                    ge.scaleHeight = 0;
-                }
-            }
+            scaleSnakeByX(index,dx);
             if(Math.abs(snakes.get(index).get(8).x-720)<SnakeXInterval/2){
                 nowSelect = index;
             }
-
         }
 
     }

@@ -344,8 +344,8 @@ public class SnakeNode extends CircleBody{
         rectBody.destroySelf();
     }
     public void startMoving(){
-        movingThread = new SnakeNodeMovingThread(this);
-        movingThread.start();
+//        movingThread = new SnakeNodeMovingThread(this);
+//        movingThread.start();
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){
