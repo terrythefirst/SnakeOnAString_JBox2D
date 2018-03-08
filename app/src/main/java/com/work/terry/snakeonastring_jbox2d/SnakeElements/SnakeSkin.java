@@ -32,7 +32,7 @@ public class SnakeSkin {
         if(nodeIndex <= SnakeHeadImgCode){
             return skinInfo.get(nodeIndex);
         }else if(cycle == 0){
-            return skinInfo.get(SnakeBodyDeafaltImgCode);
+            return skinInfo.get(SnakeBodyDefaultImgCode);
         }else {
             if(cycle == 1)cycle++;
 
@@ -40,7 +40,7 @@ public class SnakeSkin {
             try {
                 return skinInfo.get(nodeIndex==0?cycle:nodeIndex);
             }catch (Exception e){
-                return skinInfo.get(SnakeBodyDeafaltImgCode);
+                return skinInfo.get(SnakeBodyDefaultImgCode);
             }
         }
     }

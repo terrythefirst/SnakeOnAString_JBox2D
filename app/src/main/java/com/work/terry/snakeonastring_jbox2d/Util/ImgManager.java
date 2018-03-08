@@ -65,6 +65,8 @@ public class ImgManager {
 
             SpeedImg,
             SelectChineseImg,
+            UnlockChineseImg,
+            LockImg,
             RoundRectSector,
 
             RoundEdgeCube,

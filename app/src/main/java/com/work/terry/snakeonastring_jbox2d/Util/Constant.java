@@ -73,6 +73,7 @@ public class Constant {
     public static String ArrowBackImg = "arrow_back.png";
 
     public static String SelectChineseImg = "select_chinese.png";
+    public static String UnlockChineseImg = "unlock_chinese.png";
 
     public static String RoundRectSector = "round_rect_sector1.png";
 
@@ -142,7 +143,7 @@ public class Constant {
 
     //蛇头
     public static final int SnakeHeadImgCode = 0;
-    public static final int SnakeBodyDeafaltImgCode = -1;
+    public static final int SnakeBodyDefaultImgCode = -1;
     public static final int SnakeHeadDeadImgCode = -2;
     public static final int SnakeHeadDizzyImgCode = -3;
     public static final int SnakeHeadEatingOpenImgCode = -4;
@@ -177,6 +178,7 @@ public class Constant {
     public static final float FloorShadowFactorY = 0.5f;
 
     public static String BackgroundImg = "Strips_background.png";
+    public static String LockImg = "lock.png";
 
     public static String ButtonImgCircleUp = "button_circle_up.png";
     public static String ButtonImgCircleDown = "button_circle_down.png";

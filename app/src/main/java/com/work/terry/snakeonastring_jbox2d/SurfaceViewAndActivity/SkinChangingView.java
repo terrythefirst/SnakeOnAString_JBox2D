@@ -4,11 +4,13 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
+import com.work.terry.snakeonastring_jbox2d.Animation.DisappearAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
+import com.work.terry.snakeonastring_jbox2d.Thread.StoppableBreathAnimationThread;
+import com.work.terry.snakeonastring_jbox2d.Thread.WhenUpMoveSnakeThread;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
@@ -19,7 +21,6 @@ import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SelectChineseImg;
+import static com.work.terry.snakeonastring_jbox2d.Util.Constant.UnlockChineseImg;
 
 
 /**
@@ -38,25 +40,33 @@ public class SkinChangingView extends MyView {
     private String backgroundImg = BackgroundImg;
     private ScoreBoard yellowStarScoreboard;
     private GameElement yellowStar;
+    private GameElement lock;
+    private ScoreBoard lockStarNumber;
+    private GameElement lockStar;
     GamePlayView gamePlayView;
 
-    float SnakePickAreaStartY = 300;
-    float SnakePickAreaEndY = 1400;
-    float SnakePickTouchRatio = 0.8f;
-    float SnakePickMaxScaleRate = 0.5f;
-    float SnakePickSelectSpeed = 2;
-    float previousX;
+    public float SnakePickAreaStartY = 300;
+    public float SnakePickAreaEndY = 1400;
+    public float SnakePickTouchRatio = 0.8f;
+    public float SnakePickMaxScaleRate = 0.5f;
+    public float SnakePickSelectSpeed = 2;
+    public float previousX;
 
-    Map<Integer,List<GameElement>> snakes = new HashMap<>();
-    float SnakeXInterval = 400;
-    float SnakeXSpan = 90;
-    float SnakeYSpan = 80;
-    float SnakeY = 800;
+    public Map<Integer,List<GameElement>> snakes = new HashMap<>();
+    public float SnakeXInterval = 400;
+    public float SnakeXSpan = 90;
+    public float SnakeYSpan = 80;
+    public float SnakeY = 800;
 
-    int nowSelect = -1;
+    public int nowSelect = -1;
 
     ImgButton returnButton;
     RoundEdgeRectButton selectButton;
+    StoppableBreathAnimationThread selectButtonBreathAnimationThread = null;
+    StoppableBreathAnimationThread lockBreathAnimationThread = null;
+
+    WhenUpMoveSnakeThread whenUpMoveSnakeThread = null;
+
 
     public SkinChangingView(GamePlayView gamePlayView,String backgroundImg){
         this.gamePlayView = gamePlayView;
@@ -86,10 +96,11 @@ public class SkinChangingView extends MyView {
     public void initOthers(){
         initScoreBoard();
         initSelectButton();
+        initLockAndLockStar();
         initSnakes();
     }
     public void initSnakes(){
-        nowSelect = gamePlayView.getSnakeSkinNumber();//SnakeSkinManager.SKIN_DEFAULT;
+        setNowSelect(gamePlayView.getSnakeSkinNumber());//SnakeSkinManager.SKIN_DEFAULT;
 
         for(int x:SnakeSkinManager.skinMap.keySet()){
             initSnake(x);
@@ -136,49 +147,83 @@ public class SkinChangingView extends MyView {
             scaleSnakeByX(integer,0);
         }
     }
-    public void initSelectButton(){
+    public boolean isPossessedSkin(int number){
+        boolean ans = true;
+        if(number==1){
+            ans = false;
+        }
+        return ans;
+    }
+    public boolean haveMoney(int price){
+        return true;
+    }
+    private void initSelectButton(){
+        if(selectButton!=null){
+            drawUtil.addToRemoveSequence(selectButton);
+            buttons.remove(selectButton);
+        }
+
+        boolean isPossessed = (isPossessedSkin(nowSelect));
         selectButton = new RoundEdgeRectButton(
                 0,
                 720,2560-300,
                 600,160,
                 80,
-                Constant.COLOR_GOLDEN,
+                (isPossessed)?Constant.COLOR_GOLDEN:Constant.COLOR_GREEN,
                 20,
 
                 0,
                 0,
                 Constant.ButtonBlockHeightColorFactor,
                 0.9f,
-                SelectChineseImg,
+                (isPossessed)?SelectChineseImg:UnlockChineseImg,
                 null
         );
-        selectButton.setButtonListener(
-                ()->{
-                    gamePlayView.setSnakeSkinNumber(nowSelect);
-                    returnButton.doButtonStuff();
-                }
-        );
+        if(isPossessed)
+            selectButton.setButtonListener(
+                    ()->{
+                        gamePlayView.setSnakeSkinNumber(nowSelect);
+                        returnButton.doButtonStuff();
+                    }
+            );
+        else
+            selectButton.setButtonListener(
+                    ()->{
+                        Log.e("selectButton","unlock!!!!");
+                    }
+            );
         buttons.add(selectButton);
         drawUtil.addToCenterLayer(selectButton);
+
         new Thread(){
             @Override
             public void run(){
-                while(true){
-                    Thread thread = new BreathAnimation(
+                Thread thread = new DisappearAnimation(
+                        selectButton,
+                        false,
+                        0.5f
+                );
+                thread.start();
+
+                try {
+                    thread.join();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if(nowSelect!=gamePlayView.getSnakeSkinNumber()){
+                    if(selectButtonBreathAnimationThread!=null){
+                        selectButtonBreathAnimationThread.setShouldDie();
+                        selectButtonBreathAnimationThread = null;
+                    }
+                    selectButtonBreathAnimationThread = new StoppableBreathAnimationThread(
                             selectButton,
-                            false,
                             30,
                             true,
                             0.2f,
+                            false,
                             2f
                     );
-
-                    thread.start();
-                    try {
-                        thread.join();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                    selectButtonBreathAnimationThread.start();
                 }
             }
         }.start();
@@ -234,20 +279,165 @@ public class SkinChangingView extends MyView {
         buttons.add(returnButton);
         drawUtil.addToCenterLayer(returnButton);
     }
+    public void initLockAndLockStar(){
+        boolean isPossessed = (isPossessedSkin(nowSelect));
+        if(isPossessed||lock!=null||lockStar!=null||lockStarNumber!=null){
+            drawUtil.addToRemoveSequence(lock);
+            drawUtil.addToRemoveSequence(lockStar);
+            drawUtil.addToRemoveSequence(lockStarNumber);
+            return;
+        }
+
+
+        lock = new GameElement(
+                "Lock",
+                720,SnakeY,
+                200,200,
+                Constant.COLOR_WHITE,
+                5,
+                5,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.LockImg
+        );
+        lock.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(lock);
+
+        new Thread(){
+            @Override
+            public void run(){
+                Thread thread = new DisappearAnimation(
+                        lock,
+                        false,
+                        0.5f
+                );
+                thread.start();
+                try {
+                    thread.join();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if(nowSelect!=gamePlayView.getSnakeSkinNumber()){
+                    if(lockBreathAnimationThread!=null){
+                        lockBreathAnimationThread.setShouldDie();
+                        lockBreathAnimationThread = null;
+                    }
+                    lockBreathAnimationThread = new StoppableBreathAnimationThread(
+                            lock,
+                            30,
+                            true,
+                            0.1f,
+                            false,
+                            2f
+                    );
+                    lockBreathAnimationThread.start();
+                }
+            }
+        }.start();
+
+        Score score = new Score(80);
+        boolean haveMoney = haveMoney(score.getScore());
+
+        float lockStarNumberWidth = 100;
+        float lockStarNumberHeight = 80;
+        float lockStarNumberX = 720-lockStarNumberWidth/2+20;
+        float lockStarNumberY = lock.y+lock.height/2+30;
+
+        lockStarNumber = new ScoreBoard(
+                score,
+                lockStarNumberX,lockStarNumberY,
+                lockStarNumberWidth,lockStarNumberHeight,
+                0,
+                0,
+                0,
+                0,0,
+                Constant.ButtonBlockFloorColorFactor
+        );
+        if(haveMoney)lockStarNumber.setDoDraw(false);
+        drawUtil.addToTopLayer(lockStarNumber);
+
+        float lockStarWidth = 80;
+        float lockStarHeight = lockStarWidth;
+        float lockStarX = 720 + lockStarWidth/2+10;
+        float lockStarY = lockStarNumberY;
+        lockStar = new Button(
+                0,
+                lockStarX,lockStarY,
+                lockStarWidth,lockStarHeight,
+                Constant.COLOR_GOLDEN,
+                30,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.StarFavoriteImg
+        ) ;
+        if(haveMoney)lockStar.setDoDraw(false);
+        lockStar.setDoDrawHeight(false);
+        drawUtil.addToTopLayer(lockStar);
+    }
+    public void whenTouchDownPickSnake(){
+        if (whenUpMoveSnakeThread!=null){
+            whenUpMoveSnakeThread.setShouldDie();
+            whenUpMoveSnakeThread=null;
+        }
+        if(selectButtonBreathAnimationThread!=null){
+            selectButtonBreathAnimationThread.setShouldDie();
+            selectButtonBreathAnimationThread = null;
+        }
+        if(lockBreathAnimationThread!=null){
+            lockBreathAnimationThread.setShouldDie();
+            lockBreathAnimationThread = null;
+        }
+
+        new DisappearAnimation(
+                selectButton,
+                true,
+                0.5f
+        ).start();
+        if(lock!=null){
+            new DisappearAnimation(
+                    lock,
+                    true,
+                    0.5f
+            ).start();
+        }
+        if(lockStar!=null){
+            new DisappearAnimation(
+                    lockStar,
+                    true,
+                    0.5f
+            ).start();
+        }
+        if(lockStarNumber!=null){
+            new DisappearAnimation(
+                    lockStarNumber,
+                    true,
+                    0.5f
+            ).start();
+        }
+
+        if(selectButton!=null){
+            drawUtil.addToRemoveSequence(selectButton);
+            buttons.remove(selectButton);
+        }
+    }
     @Override
     public void onTouchEvent(MotionEvent event, float x, float y) {
         switch (event.getAction()){
             case MotionEvent.ACTION_MOVE:
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
                     float dx = x-previousX;
+
                     whenMoveMoveSnakes(dx);
-                    MotionDown = true;
+                    whenTouchDownPickSnake();
                     break;
                 }
             case MotionEvent.ACTION_DOWN:
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
                     previousX = x;
-                    MotionDown = true;
+                    whenTouchDownPickSnake();
                     break;
                 }
                 Button tempt = nowPressedButton;
@@ -257,63 +447,31 @@ public class SkinChangingView extends MyView {
                 break;
             case MotionEvent.ACTION_UP:
                 // if(pauseButton.testTouch(x,y))pauseButton
-                MotionDown = false;
                 whenUpMoveSnake();
                 whenUp(x,y);
                 break;
         }
     }
-    boolean MotionDown = false;
-    Thread whenUpMoveSnakeThread = null;
-    public void whenUpMoveSnake(){
+    public void checkNowSelectByX(){
         for(Integer index:snakes.keySet()){
             if(Math.abs(snakes.get(index).get(8).x-720)<SnakeXInterval/2){
-                nowSelect = index;
+                setNowSelect(index);
             }
         }
-
-        List<GameElement> nowSelectSkin = snakes.get(nowSelect);
-        if (whenUpMoveSnakeThread!=null&&whenUpMoveSnakeThread.isAlive()){
-            MotionDown=true;
-            try {
-                whenUpMoveSnakeThread.interrupt();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+    }
+    public void whenUpMoveSnake(){
+        checkNowSelectByX();
+        if (whenUpMoveSnakeThread!=null){
+            whenUpMoveSnakeThread.setShouldDie();
             whenUpMoveSnakeThread=null;
-            MotionDown = false;
         }
-        whenUpMoveSnakeThread = new Thread(){
-            @Override
-            public void run(){
-                for (float nowDx = 720-nowSelectSkin.get(8).x;
-                     !MotionDown&&(Math.abs(nowDx)!=0)&&Math.abs(nowDx)<=SnakeXInterval;
-                     nowDx = 720-nowSelectSkin.get(8).x
-                        ){
-                    //Log.e("whenUpMove","nowDx"+nowDx);
-                    if(Math.abs(nowDx)<=SnakePickSelectSpeed){
-                        for(Integer index:snakes.keySet()){
-                            scaleSnakeByX(index,nowDx/2);
-                        }
-                    }else {
-                        for(Integer index:snakes.keySet()){
-                            scaleSnakeByX(index,(nowDx>0)?SnakePickSelectSpeed:-SnakePickSelectSpeed);
-                        }
-                    }
-
-                    try {
-                        sleep(100);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
+        whenUpMoveSnakeThread = new WhenUpMoveSnakeThread(this);
         whenUpMoveSnakeThread.start();
     }
     public void setNowSelect(int x){
         this.nowSelect = x;
-
+        initSelectButton();
+        initLockAndLockStar();
     }
     public void scaleSnakeByX(int skinNumber,float dx){
         List<GameElement> list = snakes.get(skinNumber);

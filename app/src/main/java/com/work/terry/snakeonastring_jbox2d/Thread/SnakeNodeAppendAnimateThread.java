@@ -37,7 +37,6 @@ public class SnakeNodeAppendAnimateThread extends Thread {
             e.printStackTrace();
         }
         if(snakeNode.snake.getSnakeAjaxLength()>snakeNode.snake.getLength()) {
-
             while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
                 snakeNodeAnimateDraw.AnimationStep(0.5f);
 
@@ -49,8 +48,6 @@ public class SnakeNodeAppendAnimateThread extends Thread {
             }
             //drawUtil.deleteElement(snakeNodeAnimateDraw);
             snakeNodeAnimateDraw.setDoDraw(false);
-
-
         }
 
         snakeNode.snake.endAddAnimation();
