@@ -281,13 +281,12 @@ public class SkinChangingView extends MyView {
     }
     public void initLockAndLockStar(){
         boolean isPossessed = (isPossessedSkin(nowSelect));
-        if(isPossessed||lock!=null||lockStar!=null||lockStarNumber!=null){
-            drawUtil.addToRemoveSequence(lock);
-            drawUtil.addToRemoveSequence(lockStar);
-            drawUtil.addToRemoveSequence(lockStarNumber);
+        drawUtil.addToRemoveSequence(lock);
+        drawUtil.addToRemoveSequence(lockStar);
+        drawUtil.addToRemoveSequence(lockStarNumber);
+        if(isPossessed){
             return;
         }
-
 
         lock = new GameElement(
                 "Lock",
@@ -402,6 +401,7 @@ public class SkinChangingView extends MyView {
                     true,
                     0.5f
             ).start();
+
         }
         if(lockStar!=null){
             new DisappearAnimation(
@@ -422,6 +422,9 @@ public class SkinChangingView extends MyView {
             drawUtil.addToRemoveSequence(selectButton);
             buttons.remove(selectButton);
         }
+        drawUtil.addToRemoveSequence(lock);
+        drawUtil.addToRemoveSequence(lockStar);
+        drawUtil.addToRemoveSequence(lockStarNumber);
     }
     @Override
     public void onTouchEvent(MotionEvent event, float x, float y) {
