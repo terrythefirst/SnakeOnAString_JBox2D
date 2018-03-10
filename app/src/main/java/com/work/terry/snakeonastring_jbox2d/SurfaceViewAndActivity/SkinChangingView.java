@@ -56,7 +56,7 @@ public class SkinChangingView extends MyView {
     public float SnakeXInterval = 400;
     public float SnakeXSpan = 90;
     public float SnakeYSpan = 80;
-    public float SnakeY = 800;
+    public float SnakeY = 1200;
 
     public int nowSelect = -1;
 
@@ -258,6 +258,7 @@ public class SkinChangingView extends MyView {
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor
         );
+        yellowStarScoreboard.setDoDrawFloorShadow(true);
         drawUtil.addToCenterLayer(yellowStarScoreboard);
 
     }
@@ -281,7 +282,6 @@ public class SkinChangingView extends MyView {
         buttons.add(returnButton);
         drawUtil.addToCenterLayer(returnButton);
     }
-    public int lockCount = 0;
     public void initLockAndLockStar(){
         boolean isPossessed = (isPossessedSkin(nowSelect));
         if(isPossessed){
@@ -348,13 +348,14 @@ public class SkinChangingView extends MyView {
         float lockStarNumberHeight = 100;
         float lockStarNumberX = 720-lockStarNumberWidth/2;
         float lockStarNumberY = lock.y+lock.height/2+60;
+        float lockStarNumberDefaultHeight = 20;
 
         lockStarNumber = new ScoreBoard(
                 score,
                 lockStarNumberX,lockStarNumberY,
                 lockStarNumberWidth,lockStarNumberHeight,
                 0,
-                0,
+                lockStarNumberDefaultHeight,
                 5,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 0,
@@ -371,8 +372,8 @@ public class SkinChangingView extends MyView {
         float lockStarWidth = 120;
         float lockStarHeight = lockStarWidth;
         float lockStarX = 720 + lockStarWidth/2+30;
-        float lockStarDefaultHeight = 20;
-        float lockStarY = lockStarNumberY+lockStarDefaultHeight;
+        float lockStarDefaultHeight = lockStarNumberDefaultHeight;
+        float lockStarY = lockStarNumberY;
         lockStar = new Button(
                 0,
                 lockStarX,lockStarY,

@@ -36,7 +36,8 @@ public class StoppableBreathAnimationThread extends Thread implements Stoppable{
     }
     @Override
     public void setShouldDie(){
-        thread.setShouldDie();
+        if(thread!=null)
+            thread.setShouldDie();
         shouldDie = true;
     }
     @Override
@@ -58,6 +59,5 @@ public class StoppableBreathAnimationThread extends Thread implements Stoppable{
                 e.printStackTrace();
             }
         }
-        Log.e(gameElement.id+"stoppableBreathAnimationThread","dead");
     }
 }
