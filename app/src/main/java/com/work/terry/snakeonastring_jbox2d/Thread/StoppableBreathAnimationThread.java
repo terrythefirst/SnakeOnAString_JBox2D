@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
@@ -7,8 +9,9 @@ import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
  * Created by Terry on 2018/3/8.
  */
 
-public class StoppableBreathAnimationThread extends Thread {
-    boolean shouldDie = false;
+public class StoppableBreathAnimationThread extends Thread implements Stoppable{
+    BreathAnimation thread;
+    boolean shouldDie;
     GameElement gameElement;
     float jumpSpan;
     boolean doScale;
@@ -31,13 +34,15 @@ public class StoppableBreathAnimationThread extends Thread {
         this.maxScaleRate = maxScaleRate;
         this.timeSpan = timeSpan;
     }
+    @Override
     public void setShouldDie(){
+        thread.setShouldDie();
         shouldDie = true;
     }
     @Override
     public void run(){
-        while(!shouldDie){
-            Thread thread = new BreathAnimation(
+        while(!shouldDie&&gameElement!=null){
+            thread = new BreathAnimation(
                     gameElement,
                     doHeight,
                     jumpSpan,
@@ -53,5 +58,6 @@ public class StoppableBreathAnimationThread extends Thread {
                 e.printStackTrace();
             }
         }
+        Log.e(gameElement.id+"stoppableBreathAnimationThread","dead");
     }
 }

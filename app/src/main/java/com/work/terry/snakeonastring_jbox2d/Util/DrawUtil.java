@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Util;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.MyMenu;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
@@ -63,6 +64,9 @@ public class DrawUtil {
     private void deleteElement(GameElement gameElement) {
         synchronized (animationLayerDrawSequence){
             animationLayerDrawSequence.remove(gameElement);
+        }
+        synchronized (topLayerDrawSequence){
+            topLayerDrawSequence.remove(gameElement);
         }
         synchronized (centerLayerDrawSequence){
             centerLayerDrawSequence.remove(gameElement);
@@ -165,15 +169,13 @@ public class DrawUtil {
     public void drawTopLayer(TexDrawer painter){
         //上层元素
         synchronized (topLayerDrawSequence){
-            for (GameElement g : topLayerDrawSequence) {
-                g.drawFloorShadow(painter);
-            }
             //top
             topLayerDrawSequence.stream()
                     .filter(x->x.doDraw)
                     .sorted(Comparator.comparing(x -> x.y))
                     .forEach(
                             x -> {
+                                x.drawFloorShadow(painter);
                                 x.drawHeight(painter);
                                 x.drawSelf(painter);
                             }

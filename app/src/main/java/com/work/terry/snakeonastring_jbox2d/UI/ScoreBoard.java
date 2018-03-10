@@ -45,7 +45,7 @@ public class ScoreBoard extends GameElement {
                 painter,
                 score.getScore(),
                 x,y-jumpHeight-defaultHeight+TopOffset,
-                width,height,
+                width+scaleWidth,height+scaleWidth,
                 color,
                 TopOffsetColorFactor
         );
@@ -53,7 +53,7 @@ public class ScoreBoard extends GameElement {
                 painter,
                 score.getScore(),
                 x,y-jumpHeight-defaultHeight,
-                width,height,
+                width+scaleWidth,height+scaleWidth,
                 color
         );
     }
@@ -63,7 +63,7 @@ public class ScoreBoard extends GameElement {
                 painter,
                 score.getScore(),
                 x,y,
-                width,height,
+                width+scaleWidth,height+scaleWidth,
                 Constant.COLOR_GREY,
                 FloorShadowColorFactor
         );

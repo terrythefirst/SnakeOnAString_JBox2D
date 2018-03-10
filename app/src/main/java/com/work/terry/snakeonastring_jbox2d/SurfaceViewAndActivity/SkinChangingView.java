@@ -95,8 +95,9 @@ public class SkinChangingView extends MyView {
     }
     public void initOthers(){
         initScoreBoard();
-        initSelectButton();
-        initLockAndLockStar();
+        //initSelectButton();
+        //initLockAndLockStar();
+        checkNowSelectByX();
         initSnakes();
     }
     public void initSnakes(){
@@ -152,10 +153,11 @@ public class SkinChangingView extends MyView {
         if(number==1){
             ans = false;
         }
+        Log.e("isPossessedSkin",((ans)?"has":"has not")+" skin"+number);
         return ans;
     }
     public boolean haveMoney(int price){
-        return true;
+        return (yellowStarScoreboard.score.getScore()>=price);
     }
     private void initSelectButton(){
         if(selectButton!=null){
@@ -165,7 +167,7 @@ public class SkinChangingView extends MyView {
 
         boolean isPossessed = (isPossessedSkin(nowSelect));
         selectButton = new RoundEdgeRectButton(
-                0,
+                1212,
                 720,2560-300,
                 600,160,
                 80,
@@ -279,17 +281,21 @@ public class SkinChangingView extends MyView {
         buttons.add(returnButton);
         drawUtil.addToCenterLayer(returnButton);
     }
+    public int lockCount = 0;
     public void initLockAndLockStar(){
         boolean isPossessed = (isPossessedSkin(nowSelect));
-        drawUtil.addToRemoveSequence(lock);
-        drawUtil.addToRemoveSequence(lockStar);
-        drawUtil.addToRemoveSequence(lockStarNumber);
         if(isPossessed){
             return;
         }
+        if(lock!=null)
+            drawUtil.addToRemoveSequence(lock);
+        if(lockStar!=null)
+            drawUtil.addToRemoveSequence(lockStar);
+        if(lockStarNumber!=null)
+            drawUtil.addToRemoveSequence(lockStarNumber);
 
-        lock = new GameElement(
-                "Lock",
+        lock = new Button(
+                3030,
                 720,SnakeY,
                 200,200,
                 Constant.COLOR_WHITE,
@@ -299,7 +305,7 @@ public class SkinChangingView extends MyView {
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor,
                 Constant.LockImg
-        );
+        ) ;
         lock.setDoDrawHeight(false);
         drawUtil.addToTopLayer(lock);
 
@@ -338,10 +344,10 @@ public class SkinChangingView extends MyView {
         Score score = new Score(80);
         boolean haveMoney = haveMoney(score.getScore());
 
-        float lockStarNumberWidth = 100;
-        float lockStarNumberHeight = 80;
-        float lockStarNumberX = 720-lockStarNumberWidth/2+20;
-        float lockStarNumberY = lock.y+lock.height/2+30;
+        float lockStarNumberWidth = 150;
+        float lockStarNumberHeight = 100;
+        float lockStarNumberX = 720-lockStarNumberWidth/2;
+        float lockStarNumberY = lock.y+lock.height/2+60;
 
         lockStarNumber = new ScoreBoard(
                 score,
@@ -349,24 +355,31 @@ public class SkinChangingView extends MyView {
                 lockStarNumberWidth,lockStarNumberHeight,
                 0,
                 0,
+                5,
+                Constant.ButtonBlockTopOffSetColorFactor,
                 0,
-                0,0,
                 Constant.ButtonBlockFloorColorFactor
         );
         if(haveMoney)lockStarNumber.setDoDraw(false);
         drawUtil.addToTopLayer(lockStarNumber);
+        new DisappearAnimation(
+                lockStarNumber,
+                false,
+                0.5f
+        ).start();
 
-        float lockStarWidth = 80;
+        float lockStarWidth = 120;
         float lockStarHeight = lockStarWidth;
-        float lockStarX = 720 + lockStarWidth/2+10;
-        float lockStarY = lockStarNumberY;
+        float lockStarX = 720 + lockStarWidth/2+30;
+        float lockStarDefaultHeight = 20;
+        float lockStarY = lockStarNumberY+lockStarDefaultHeight;
         lockStar = new Button(
                 0,
                 lockStarX,lockStarY,
                 lockStarWidth,lockStarHeight,
                 Constant.COLOR_GOLDEN,
-                30,
-                10,
+                lockStarDefaultHeight,
+                5,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor,
@@ -375,56 +388,143 @@ public class SkinChangingView extends MyView {
         if(haveMoney)lockStar.setDoDraw(false);
         lockStar.setDoDrawHeight(false);
         drawUtil.addToTopLayer(lockStar);
-    }
-    public void whenTouchDownPickSnake(){
-        if (whenUpMoveSnakeThread!=null){
-            whenUpMoveSnakeThread.setShouldDie();
-            whenUpMoveSnakeThread=null;
-        }
-        if(selectButtonBreathAnimationThread!=null){
-            selectButtonBreathAnimationThread.setShouldDie();
-            selectButtonBreathAnimationThread = null;
-        }
-        if(lockBreathAnimationThread!=null){
-            lockBreathAnimationThread.setShouldDie();
-            lockBreathAnimationThread = null;
-        }
-
         new DisappearAnimation(
-                selectButton,
-                true,
+                lockStar,
+                false,
                 0.5f
         ).start();
-        if(lock!=null){
-            new DisappearAnimation(
-                    lock,
-                    true,
-                    0.5f
-            ).start();
+    }
+    public void whenTouchDownPickSnake(){
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                if (whenUpMoveSnakeThread!=null){
+                    whenUpMoveSnakeThread.setShouldDie();
+                    try {
+                        whenUpMoveSnakeThread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    whenUpMoveSnakeThread=null;
+                }
 
+                if(selectButtonBreathAnimationThread!=null){
+                    selectButtonBreathAnimationThread.setShouldDie();
+                    try {
+                        selectButtonBreathAnimationThread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    selectButtonBreathAnimationThread = null;
+                }
+
+                if(lockBreathAnimationThread!=null){
+                    lockBreathAnimationThread.setShouldDie();
+                    try {
+                        lockBreathAnimationThread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    lockBreathAnimationThread = null;
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        if(lockStar!=null){
-            new DisappearAnimation(
-                    lockStar,
-                    true,
-                    0.5f
-            ).start();
-        }
-        if(lockStarNumber!=null){
-            new DisappearAnimation(
-                    lockStarNumber,
-                    true,
-                    0.5f
-            ).start();
-        }
+
 
         if(selectButton!=null){
-            drawUtil.addToRemoveSequence(selectButton);
+            GameElement tempt = selectButton;
+            selectButton=null;
+
+            new Thread(){
+                @Override
+                public void run(){
+                    Thread thread = new DisappearAnimation(
+                            tempt,
+                            true,
+                            0.5f
+                    );
+                    thread.start();
+                    try {
+                        thread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    drawUtil.addToRemoveSequence(tempt);
+                }
+            }.start();
             buttons.remove(selectButton);
         }
-        drawUtil.addToRemoveSequence(lock);
-        drawUtil.addToRemoveSequence(lockStar);
-        drawUtil.addToRemoveSequence(lockStarNumber);
+
+        if(lock!=null){
+            GameElement tempt = lock;
+            lock = null;
+
+            new Thread(){
+                @Override
+                public void run(){
+                    Thread thread = new DisappearAnimation(
+                            tempt,
+                            true,
+                            0.5f
+                    );
+                    thread.start();
+                    try {
+                        thread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    drawUtil.addToRemoveSequence(tempt);
+                }
+            }.start();
+        }
+        if(lockStar!=null){
+            GameElement tempt = lockStar;
+            lockStar = null;
+            new Thread(){
+                @Override
+                public void run(){
+                    Thread thread = new DisappearAnimation(
+                            tempt,
+                            true,
+                            0.5f
+                    );
+                    thread.start();
+                    try {
+                        thread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    drawUtil.addToRemoveSequence(tempt);
+                }
+            }.start();
+        }
+        if(lockStarNumber!=null){
+            GameElement tempt = lockStarNumber;
+            lockStarNumber = null;
+            new Thread(){
+                @Override
+                public void run(){
+                    Thread thread = new DisappearAnimation(
+                            tempt,
+                            true,
+                            0.5f
+                    );
+                    thread.start();
+                    try {
+                        thread.join();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    drawUtil.addToRemoveSequence(tempt);
+                }
+            }.start();
+        }
     }
     @Override
     public void onTouchEvent(MotionEvent event, float x, float y) {
@@ -432,7 +532,6 @@ public class SkinChangingView extends MyView {
             case MotionEvent.ACTION_MOVE:
                 if(y>SnakePickAreaStartY&&y<SnakePickAreaEndY){
                     float dx = x-previousX;
-
                     whenMoveMoveSnakes(dx);
                     whenTouchDownPickSnake();
                     break;

@@ -1,13 +1,15 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
 
+import com.work.terry.snakeonastring_jbox2d.Thread.Stoppable;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
 /**
  * Created by Terry on 2018/2/3.
  */
 
-public class BreathAnimation extends Thread {
+public class BreathAnimation extends Thread implements Stoppable{
+    boolean shouldDie = false;
     GameElement gameElement;
     float jumpSpan;
     float maxScaleRate;
@@ -42,10 +44,14 @@ public class BreathAnimation extends Thread {
         sleepInterval = (long)(timeSpan*1000/360);
     }
     @Override
+    public void setShouldDie(){
+        shouldDie = true;
+    }
+    @Override
     public void run(){
         float degrees = 0;
         float jumpHeight = 0;
-        while (degrees<360){
+        while (!shouldDie&&degrees<360){
             jumpHeight= (float) -Math.cos(Math.toRadians(degrees))*jumpSpan+jumpSpan;
             if(doHeight)
                 gameElement.jumpHeight =jumpHeight;
