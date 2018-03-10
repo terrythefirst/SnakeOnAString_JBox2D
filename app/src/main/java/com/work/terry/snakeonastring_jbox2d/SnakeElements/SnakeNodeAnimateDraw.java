@@ -30,6 +30,7 @@ public class SnakeNodeAnimateDraw extends GameElement {
                 snakeNode.HeightColorFactor,
                 snakeNode.FloorShadowColorFactor,
                 snakeNode.Img);
+        this.setColorFloats(snakeNode.colorFloats);
         this.snakeNode = snakeNode;
         if(code == Constant.SNAKE_ANIMATION_REMOVE){
             this.nowRadius = snakeNode.radius;

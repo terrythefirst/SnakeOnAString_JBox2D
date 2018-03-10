@@ -50,7 +50,7 @@ public class LoadSkinUtil {
                 float[] radii = new float[]{Float.parseFloat(radiusStrings[0]),Float.parseFloat(radiusStrings[1])};
 
                 skinInfo.put(number,new SnakeNodeSkinInfo(color,imgName,radii));
-                Log.e("put number",number+" name:"+imgName);
+                Log.d("put number",number+" name:"+imgName);
             }
 
             snakeSkin = new SnakeSkin(skinName,skinInfo);

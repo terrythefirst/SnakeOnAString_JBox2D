@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -23,14 +24,14 @@ public class Bomb extends CircleBody {
     public int score;
     public Bomb(
             DrawUtil drawUtil,
-            World world,
+            GamePlay gamePlay,
             int id,
             float x,float y,
             float radius,
             int color,
             int score){
         super(
-                world,
+                gamePlay,
                 "Bomb "+id,
                 x,y,
                 0,0,0,

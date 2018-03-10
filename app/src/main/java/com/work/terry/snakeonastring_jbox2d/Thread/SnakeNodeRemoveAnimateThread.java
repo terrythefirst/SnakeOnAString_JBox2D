@@ -6,7 +6,6 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeAnimateDraw;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 /**
  * Created by Terry on 2018/1/31.
@@ -50,7 +49,7 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
             snakeNodeAnimateDraw.setDoDraw(false);
             drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
 
-            JBox2DUtil.removeBodyList.add(snakeNode);
+            snakeNode.gamePlay.jBox2DThread.removeBodyList.add(snakeNode);
             snakeNode.snake.snakeBodies.remove(snakeNode);
             drawUtil.addToRemoveSequence(snakeNode);
         }

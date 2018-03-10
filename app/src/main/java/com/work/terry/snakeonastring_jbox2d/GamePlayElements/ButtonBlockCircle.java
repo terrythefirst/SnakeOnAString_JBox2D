@@ -5,6 +5,7 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -38,7 +39,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.plusV2D;
 
 public class ButtonBlockCircle extends CircleBody{
     public ButtonBlockCircle(
-            World world,
+            GamePlay gamePlay,
             float x, float y,
             float radius,
             float[] colorFloats,
@@ -47,7 +48,7 @@ public class ButtonBlockCircle extends CircleBody{
             int id
     ){
         super(
-                world,
+                gamePlay,
                 "ButtonBlockCircle "+id,
                 x,y,
                 0,

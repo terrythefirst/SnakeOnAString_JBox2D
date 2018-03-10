@@ -1,17 +1,17 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
-import android.util.Log;
-
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
-import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
-import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
-import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
-import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
+
+import org.jbox2d.dynamics.Body;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
@@ -19,20 +19,30 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  * Created by Terry on 2018/1/13.
  */
 
-public class JBox2DThread extends Thread{
+public class JBox2DThread extends Thread implements Stoppable{
+    public List<MyBody> Bodies= new ArrayList<>();//所有对Bodies的操作要求再 STEP期间做
+    public List<MyBody> removeBodyList = new ArrayList<>();
+    public List<MyJoint> Joints = new ArrayList<>();
+
+    public Body staticBody = null;
+
+    boolean shouldDie = false;
     GamePlay gamePlay;
 
+    public void setShouldDie(){
+        shouldDie = true;
+    }
     public JBox2DThread(GamePlay gamePlay){
         this.gamePlay = gamePlay;
     }
     @Override
     public void run(){
-        while(gamePlay.IS_PLAYING)//&&!gamePlayView.snake.isDead())
+        while(!shouldDie&&gamePlay.IS_PLAYING)//&&!gamePlayView.snake.isDead())
         {
            // Log.d("JBOX2DTHREAD","worldBodySize="+gamePlay.world.getBodyCount()+" myBodiesSize="+JBox2DUtil.Bodies.size());
             gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
 
-            JBox2DUtil.MyJBox2DStep();
+            MyJBox2DStep();
 
             gamePlay.checkShouldAddFoodOrBomb();
 
@@ -44,5 +54,40 @@ public class JBox2DThread extends Thread{
                     gamePlay.snake.searchWithin();
             }
         }
+    }
+
+    public void MyJBox2DStep(){
+        for (MyBody mb : Bodies) {
+            mb.popXYfromBody();
+            //mb.pushWidthHeightIntoBody();
+            if(mb instanceof ButtonBlockCircle){
+                ((ButtonBlockCircle)mb).body.getFixtureList().getShape().setRadius((((ButtonBlockCircle) mb).radius+((ButtonBlockCircle) mb).scaleWidth/2)/RATE);
+            }
+            if (mb instanceof SnakeFood) {
+                if (((SnakeFood) mb).eatean) {
+                    mb.setDoDraw(false);
+                    removeBodyList.add(mb);
+                }
+            }
+            if(mb instanceof Bomb){
+                if(((Bomb)mb).eatean){
+                    mb.setDoDraw(false);
+                    removeBodyList.add(mb);
+                }
+            }
+            if(mb instanceof FoodMagnet){
+                if(((FoodMagnet)mb).eatean){
+                    mb.setDoDraw(false);
+                    removeBodyList.add(mb);
+                }
+            }
+        }
+        synchronized (removeBodyList){
+            for(MyBody mb:removeBodyList){
+                Bodies.remove(mb);
+                mb.destroySelf();
+            }
+        }
+        removeBodyList.clear();
     }
 }

@@ -1,31 +1,30 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.RevoluteJoint;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
-import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
-
 public class MyBox2DRevoluteJoint extends MyJoint{
-	public MyBox2DRevoluteJoint(String id,//关节id
-                                World world,//物理层里的物理世界
-                                boolean collideConnected,
-                                MyBody A,
-                                MyBody B,
-                                Vec2 anchor,
-                                boolean enableLimit,//是否开启限制
-                                float lowerAngleScale,//底部角度，弧度制
-                                float upperAngleScale,//顶部角度，弧度制
-                                boolean enableMotor,//是否开启马达
-                                float motorSpeed,//马达速度n*Math.PI
-                                float maxMotorTorque//马达扭矩
-			)
+	public MyBox2DRevoluteJoint(
+			String id,//关节id
+			GamePlay gamePlay,//物理层里的物理世界
+			boolean collideConnected,
+			MyBody A,
+			MyBody B,
+			Vec2 anchor,
+			boolean enableLimit,//是否开启限制
+			float lowerAngleScale,//底部角度，弧度制
+			float upperAngleScale,//顶部角度，弧度制
+			boolean enableMotor,//是否开启马达
+			float motorSpeed,//马达速度n*Math.PI
+			float maxMotorTorque//马达扭矩
+	)
 	{
-		this.world=world;
+		this.world=gamePlay.world;
+		this.gamePlay = gamePlay;
 		RevoluteJointDef rjd=new RevoluteJointDef();//创建旋转关节描述对象
 		rjd.collideConnected=collideConnected;//给是否允许碰撞标志赋值
 		rjd.userData=id;						//给关节描述的用户数据赋予关节id
@@ -40,6 +39,6 @@ public class MyBox2DRevoluteJoint extends MyJoint{
 		rjd.initialize(A.body, B.body, anchor);//调用旋转关节描述的初始化函数
 		joint=(RevoluteJoint)world.createJoint(rjd);		//在物理世界里增添旋转关节
 
-		JBox2DUtil.Joints.add(this);
+		gamePlay.jBox2DThread.Joints.add(this);
 	}
 }

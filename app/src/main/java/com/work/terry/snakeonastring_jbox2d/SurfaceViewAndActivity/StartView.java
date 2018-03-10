@@ -35,7 +35,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class StartView extends MyView {
-    public GamePlayView gamePlayView;
     private String backgroundImg = BackgroundImg;
     private ImgButton musicButton;
     private ImgButton statisticsButton;

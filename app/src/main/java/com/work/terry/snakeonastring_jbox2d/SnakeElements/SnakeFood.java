@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeFoodJumpScoreThread;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -25,7 +26,7 @@ public class SnakeFood extends CircleBody{
     public int score;
     public SnakeFood(
             DrawUtil drawUtil,
-            World world,
+            GamePlay gamePlay,
             int id,
             float x,float y,
             float raius,
@@ -33,7 +34,7 @@ public class SnakeFood extends CircleBody{
             int score,
             String Img){
         super(
-                world,
+                gamePlay,
                 "snakeFood "+id,
                 x,y,
                 0,0,0,

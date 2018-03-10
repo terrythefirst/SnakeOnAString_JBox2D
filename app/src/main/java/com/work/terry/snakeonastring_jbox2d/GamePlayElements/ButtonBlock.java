@@ -5,6 +5,7 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -45,7 +46,7 @@ public class ButtonBlock extends GameElement {
     private float rotateAngleCB2Radian;
 
     public ButtonBlock(
-            World world,
+            GamePlay gamePlay,
             int id,
             float x,float y,
             float circleDiameter,
@@ -88,12 +89,12 @@ public class ButtonBlock extends GameElement {
         this.isStatic = isStatic;
 
         drawSequence = new ArrayList<>();
-        initBody();
+        initBody(gamePlay);
 
     }
-    public void initBody(){
+    public void initBody(GamePlay gamePlay){
         rectBody = new RectBody(
-                world,
+                gamePlay,
                 (isStatic)?"Static":"Dynamic"+id+"RectBody",
                 x,y,
                 rotateAngleRectRadian,
@@ -134,7 +135,7 @@ public class ButtonBlock extends GameElement {
                 angleVector
         );
         circleBody1 = new CircleBody(
-                world,
+                gamePlay,
                 (isStatic)?"Static":"Dynamic"+id+"CircleBody",
                 circleBody1XY.x,circleBody1XY.y,
                 rotateAngleCB1Radian,
@@ -160,7 +161,7 @@ public class ButtonBlock extends GameElement {
         circleBody1.setIsPureColor(true);
         //circleBody1.setTopRatio(TopRatio);
         circleBody2 = new CircleBody(
-                world,
+                gamePlay,
                 (isStatic)?"Static":"Dynamic"+id+"CircleBody",
                 circleBody2XY.x,circleBody2XY.y,
                 rotateAngleCB2Radian,
@@ -192,7 +193,7 @@ public class ButtonBlock extends GameElement {
 
         new MyWeldJoint(
                 id+"WeldJoint1",
-                world,
+                gamePlay,
                 true,
                 rectBody,
                 circleBody1,
@@ -203,7 +204,7 @@ public class ButtonBlock extends GameElement {
         );
         new MyWeldJoint(
                 id+"WeldJoint2",
-                world,
+                gamePlay,
                 true,
                 rectBody,
                 circleBody2,
@@ -212,31 +213,6 @@ public class ButtonBlock extends GameElement {
                 0.0f,
                 0.0f
         );
-
-//        new MyBox2DRevoluteJoint(
-//                "revoluteJoint ",
-//                world,
-//                false,
-//                rectBody,
-//                JBox2DUtil.staticBody,
-//                0
-//        )
-//        new MyPrismaticJoint(
-//                "",
-//                world,
-//                true,
-//                JBox2DUtil.staticBody,
-//                rectBody.body,
-//                rectBody.getBodyXY(),
-//                new Vec2(1,0),
-//                0,
-//                true,
-//                -400/RATE,
-//                400/RATE,
-//                true,
-//                5,
-//                200
-//        );
     }
     @Override
     public void drawSelf(TexDrawer painter){

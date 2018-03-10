@@ -4,11 +4,9 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlock;
+import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
-import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
-import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactFilter;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyContactListener;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
@@ -18,18 +16,16 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
+import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRectButton;
 import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -51,8 +47,9 @@ public class GamePlay extends MyView{
     public ScoreBoard scoreBoard;
     public Score score = new Score(0);
 
-    public int gameMode;
-    public int level;
+    public RoundEdgeRectButton changeSkinButton;
+
+    public int gameModeAndLevel;
 
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
@@ -64,12 +61,17 @@ public class GamePlay extends MyView{
 
     public Button pauseButton;
 
-    public GamePlay (int gameMode){
+    public GamePlay (GamePlayView gamePlayView,int gameModeAndLevel){
+        this.gamePlayView = gamePlayView;
+        this.gameModeAndLevel = gameModeAndLevel;
+
         drawUtil = new DrawUtil(null);
-        //setDrawUtilAndBacktoundImg(BackgroundImg);
-        this.gameMode = gameMode;
+
         Vec2 gravity = new Vec2(0,0);
         world = new World(gravity);
+        jBox2DThread = new JBox2DThread(this);
+
+
         constructWallsAndStaticBody();
 
         world.setContactFilter(new MyContactFilter(GamePlay.this));
@@ -77,25 +79,9 @@ public class GamePlay extends MyView{
         world.setContactListener(myContactListener);
 
         addPauseButton();
-        if(gameMode==Constant.GAME_MODE_ENDLESS)
+        if(gameModeAndLevel>=Constant.GAMEPLAY_VIEW_ENDLESS&&gameModeAndLevel<Constant.GAMEPLAY_VIEW_ENDLESS+10)
             addScoreBoard();
-
-//        float dia = 20+(float)Math.random()*80;
-//        float rotateAngle = (float)Math.random();
-//            drawUtil.addToCenterLayer(
-//                    new ButtonBlock(
-//                            world,
-//                            "",
-//                            720,400,
-//                            dia,
-//                            rotateAngle*400+dia,
-//                            0.95f,
-//                            ButtonBlockDefaultHeight,
-//                            rotateAngle*360,
-//                            true,
-//                            Constant.COLOR_WHITE
-//                    )
-//            );
+        initChangeSkinButton();
 
 //        ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
 //                world,
@@ -116,8 +102,36 @@ public class GamePlay extends MyView{
 //        ).start();
 
     }
+    public void initChangeSkinButton(){
+        float changeSkinButtonWidth = 400;
+        float changeSkinButtonHeight = 100;
+        float changeSkinButtonY = changeSkinButtonHeight/2+50;
+        changeSkinButton = new RoundEdgeRectButton(
+               0,
+                720,-changeSkinButtonHeight,
+                changeSkinButtonWidth,changeSkinButtonHeight,
+                40,
+                Constant.COLOR_DEEP_PINK,
+                30,
+                5,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.ChangeSkinChineseImg,
+                null
+        );
+        changeSkinButton.setButtonListener(
+                ()->gamePlayView.setNowView(Constant.SKIN_CHANGING_VIEW)
+        );
+        buttons.add(changeSkinButton);
+        drawUtil.addToTopLayer(changeSkinButton);
+        new UniformMotionAnimation(
+                changeSkinButton,
+                new Vec2(720,changeSkinButtonY),
+                0.5f
+        ).start();
+    }
     public void startGame(){
-        jBox2DThread = new JBox2DThread(GamePlay.this);
         addBomb();
 
         snake.moving();
@@ -152,6 +166,11 @@ public class GamePlay extends MyView{
                 ButtonBlockHeightColorFactor,
                 ButtonBlockFloorColorFactor,
                 PauseButtonImg
+        );
+        pauseButton.setButtonListener(
+                ()->{
+                    Log.d("pauseButton","touch!");
+                }
         );
         pauseButton.setDoDrawHeight(false);
         buttons.add(pauseButton);
@@ -207,7 +226,7 @@ public class GamePlay extends MyView{
         //Log.d("foodCount",foodCount+"");
         FoodMagnet tempt = new FoodMagnet(
                 getDrawUtil(),
-                world,
+                this,
                 foodMagnetIndex,
                 rx,ry,
                 45,
@@ -229,7 +248,7 @@ public class GamePlay extends MyView{
         //Log.d("foodCount",foodCount+"");
         SnakeFood tempt = new SnakeFood(
                     getDrawUtil(),
-                    world,
+                    this,
                     foodIndex,
                     rx,ry,
                     35,
@@ -251,7 +270,7 @@ public class GamePlay extends MyView{
         float ry = (float) Math.random()*1800+200;
         Bomb tempt  = new Bomb(
                     drawUtil,
-                    world,
+                    this,
                     bombIndex,
                     rx,ry,
                     65,
@@ -289,7 +308,7 @@ public class GamePlay extends MyView{
     }
     public void constructWallsAndStaticBody(){
         RectBody upWall = new RectBody(
-                world,
+                this,
                 "upWall",
                 SCREEN_WIDTH/2,-8,
                 0,
@@ -303,7 +322,7 @@ public class GamePlay extends MyView{
                 true
         );
         RectBody leftWall = new RectBody(
-                world,
+                this,
                 "leftWall",
                 -8,SCREEN_HEIGHT/2,
                 0,
@@ -317,7 +336,7 @@ public class GamePlay extends MyView{
                 true
         );
         RectBody rightWall = new RectBody(
-                world,
+                this,
                 "rightWall",
                 SCREEN_WIDTH+8,SCREEN_HEIGHT/2,
                 0,
@@ -332,11 +351,11 @@ public class GamePlay extends MyView{
         );
 
 
-        JBox2DUtil.staticBody = rightWall.body;
+        jBox2DThread.staticBody = rightWall.body;
     }
     public void constructButtonWall(){
         RectBody buttonWall = new RectBody(
-                world,
+                this,
                 "buttomWall",
                 SCREEN_WIDTH/2,SCREEN_HEIGHT+8,
                 0,
@@ -372,15 +391,16 @@ public class GamePlay extends MyView{
     }
     @Override
     public void onResume(){
-        IS_PLAYING = true;
-        jBox2DThread = new JBox2DThread(GamePlay.this);
-        snake.moving();
-        jBox2DThread.start();
-        if(snake!=null)snake.onResume();
+//        IS_PLAYING = true;
+//        jBox2DThread = new JBox2DThread(GamePlay.this);
+//        snake.moving();
+//        jBox2DThread.start();
+//        if(snake!=null)snake.onResume();
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){
         IS_PLAYING = false;
-        if(snake!=null)snake.onPause(editor);
+        jBox2DThread.setShouldDie();
+        //if(snake!=null)snake.onPause(editor);
     }
 }

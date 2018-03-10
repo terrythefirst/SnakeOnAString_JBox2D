@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -25,7 +26,7 @@ public class FoodMagnet extends CircleBody {
 
     public FoodMagnet(
             DrawUtil drawUtil,
-            World world,
+            GamePlay gamePlay,
             int id,
             float x,float y,
             float radius,
@@ -35,7 +36,7 @@ public class FoodMagnet extends CircleBody {
 
             String Img){
         super(
-                world,
+                gamePlay,
                 "FoodMagnet "+id,
                 x,y,
                 0,0,0,

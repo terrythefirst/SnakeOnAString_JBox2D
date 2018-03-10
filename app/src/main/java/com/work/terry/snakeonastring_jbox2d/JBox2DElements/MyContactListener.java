@@ -7,8 +7,6 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
-import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetSearchThread;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
@@ -16,7 +14,6 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.contacts.Contact;
 

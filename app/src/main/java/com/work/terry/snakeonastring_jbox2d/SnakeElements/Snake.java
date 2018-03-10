@@ -9,14 +9,11 @@ import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetSearchThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeJumpAnimationThread;
-import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeRemoveAnimateThread;
-import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 
 
 import org.jbox2d.common.Vec2;
@@ -96,7 +93,7 @@ public class Snake {
             if(index==0){
                 snakeHead = new SnakeHead(
                         this,
-                        world,
+                        gamePlay,
                         x,y,
                         vx,vy,
                         SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode),
@@ -131,14 +128,15 @@ public class Snake {
 
         if(index==1){
             tempt = new SnakeNode(
-                    this,world,
+                    this,
+                    gamePlay,
                     snakeHead,
                     SnakeSkinManager.getSkin(Skin,index),
                     index);
         }else{
             tempt = new SnakeNode(
                     this,
-                    world,
+                    gamePlay,
                     (SnakeNode) snakeBodies.get(index-1),
                     SnakeSkinManager.getSkin(Skin,index),
                     index);
@@ -317,7 +315,7 @@ public class Snake {
                ((SnakeNode) sn).rectBody.destroySelf();
             }
         }
-        for (MyJoint mj : JBox2DUtil.Joints) {
+        for (MyJoint mj : gamePlay.jBox2DThread.Joints) {
             mj.destroySelf();
         }
     }

@@ -8,6 +8,7 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBox2DRevoluteJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyDistanceJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeMovingThread;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -71,9 +72,15 @@ public class SnakeNode extends CircleBody{
         if(!(TopImg==null||TopImg.contains("null")))setIsPureColor(false);
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
     }
-    public SnakeNode(Snake snake,World world,CircleBody frontNode,SnakeNodeSkinInfo snakeNodeSkinInfo,int id){
+    public SnakeNode(
+            Snake snake,
+            GamePlay gamePlay,
+            CircleBody frontNode,
+            SnakeNodeSkinInfo snakeNodeSkinInfo,
+            int id
+    ){
         super(
-                world,
+                gamePlay,
                 "snakeBody "+id,
                 0,0,
                 snakeNodeSkinInfo.getRadii()[1]*2,
@@ -143,7 +150,7 @@ public class SnakeNode extends CircleBody{
         float angle = calBodyRadians(front.x-x,front.y-y);//front.body.getAngle();//calBodyRadians(-frontV.x,-frontV.y);
         float rectBodyLenth = getBodyCenterDistance();
         rectBody = new RectBody(
-                world,
+                gamePlay,
                 body.getUserData().toString()+" Rect",
                 center.x,center.y,
                 angle,
@@ -165,7 +172,7 @@ public class SnakeNode extends CircleBody{
         //        if(frontBody instanceof SnakeHead){
 //            new MyBox2DRevoluteJoint(
 //                    ""+body.getUserData().toString()+"RevoltJoint1",
-//                    world,
+//                    gamePlay,
 //                    true,
 //                    rectBody,
 //                    frontBody,
@@ -181,7 +188,7 @@ public class SnakeNode extends CircleBody{
 
 //        new MyBox2DRevoluteJoint(
 //                ""+body.getUserData().toString()+"RevoltJoint1",
-//                world,
+//                gamePlay,
 //                true,
 //                rectBody,
 //                front,
@@ -193,7 +200,7 @@ public class SnakeNode extends CircleBody{
 //        );
 //        new MyBox2DRevoluteJoint(
 //                ""+body.getUserData().toString()+"RevoltJoint2",
-//                world,
+//                gamePlay,
 //                true,
 //                rectBody,
 //                this,
@@ -206,7 +213,7 @@ public class SnakeNode extends CircleBody{
 //        if(front instanceof SnakeHead){
 //            new MyWeldJoint(
 //                    body.getUserData().toString()+" WeldJoint 1",
-//                    world,
+//                    gamePlay,
 //                    false,
 //                    rectBody,
 //                    front,
@@ -218,7 +225,7 @@ public class SnakeNode extends CircleBody{
 //        }else {
             new MyWeldJoint(
                     body.getUserData().toString()+" WeldJoint 1",
-                    world,
+                    gamePlay,
                     false,
                     rectBody,
                     front,
@@ -231,7 +238,7 @@ public class SnakeNode extends CircleBody{
 
         new MyWeldJoint(
                 body.getUserData().toString()+" WeldJoint 2",
-                world,
+                gamePlay,
                 false,
                 rectBody,
                 this,
@@ -242,7 +249,7 @@ public class SnakeNode extends CircleBody{
 //
         new MyDistanceJoint(
                 body.getUserData().toString() +" DistanceJoint 1",
-                world,
+                gamePlay,
                 false,
                 this,
                 front,
@@ -253,7 +260,7 @@ public class SnakeNode extends CircleBody{
         );
 //            new MyBox2DRevoluteJoint(
 //                    body.getUserData().toString()+" RevoluteJoint 1",
-//                    world,
+//                    gamePlay,
 //                    false,
 //                    front,
 //                    rectBody,
@@ -266,7 +273,7 @@ public class SnakeNode extends CircleBody{
 //            );
 //        new MyBox2DRevoluteJoint(
 //                body.getUserData().toString() +" RevoluteJoint 1",
-//                world,
+//                gamePlay,
 //                false,
 //                this,
 //                rectBody,
@@ -278,7 +285,7 @@ public class SnakeNode extends CircleBody{
 //        );
 //        new MyDistanceJoint(
 //                "snake and body joint",
-//                world,
+//                gamePlay,
 //                true,
 //                this,
 //                frontBody,
@@ -288,55 +295,11 @@ public class SnakeNode extends CircleBody{
 //                0f
 //        );
     }
-//    @Override
-//    public void drawSelf(TexDrawer painter){
-//        super.drawSelf(painter);
-//
-//        rectBody.rotateAngleGameElements = -(float)Math.toDegrees(rectBody.body.getAngle());
-//        //rectBody.rotateAngleGameElements = 0;
-//        //        Log.d("rectBody","rotateAngle"+rectBody.rotateAngleGameElements%360);
-//        rectBody.drawSelf(painter);
-//    }
     @Override
     public void drawSelf(TexDrawer painter){
-//        if(isPureColor){
-//            super.drawSelf(painter);
-//            return;
-//        }
         if(body!=null)
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
         super.drawSelf(painter);
-        //offSet
-//        if (TopOffset != 0) {
-//            painter.drawColorFactorTex(
-//                    TexManager.getTex(Img),
-//                    colorFloats==null?ColorManager.getColor(color):colorFloats,
-//                    x,
-//                    y - jumpHeight - defaultHeight + TopOffset,
-//                    width+scaleWidth,
-//                    height+scaleHeight,
-//                    rotateAngleGameElements,
-//                    TopOffsetColorFactor
-//            );
-//        }
-//        //drawSelf
-//        painter.drawTex(
-//                TexManager.getTex(TopImg==null?Img:TopImg),
-//                x,
-//                y - jumpHeight - defaultHeight,
-//                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
-//                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
-//                rotateAngleGameElements
-//        );
-    //        painter.drawSelf(
-    //                TexManager.getTex(axisImg),
-    //                ColorManager.getColor(Constant.C0LOR_WHITE),
-    //                x,
-    //                y-jumpHeight,
-    //                headEyesDiameter,
-    //                headEyesDiameter,
-    //                AxisRotateAngle
-    //        );
     }
     @Override
     public void destroySelf(){

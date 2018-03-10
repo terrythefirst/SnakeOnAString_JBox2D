@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeHeadMovingThread;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -71,9 +72,9 @@ public class SnakeHead extends CircleBody{
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
         setIsPureColor(false);
     }
-    public SnakeHead(Snake snake,World world,float x, float y, float vx, float vy,SnakeNodeSkinInfo snakeNodeSkinInfo,float defaultHeight){
+    public SnakeHead(Snake snake, GamePlay gamePlay, float x, float y, float vx, float vy, SnakeNodeSkinInfo snakeNodeSkinInfo, float defaultHeight){
         super(
-                world,
+                gamePlay,
                 "snakeHead",
                 x,y,
                 (float) ((135/360)*Math.PI),
@@ -109,104 +110,14 @@ public class SnakeHead extends CircleBody{
     public Vec2 getV2D(){
         return new Vec2(HeadVX,HeadVY);
     }
-//    @Override
-//    public void drawSelf(TexDrawer painter){
-//        if(body!=null)
-//            Log.d(
-//                    "Draw"+body.getUserData().toString(),
-//                    "BODYx="+body.getPosition().x*RATE
-//                            +" BODYy="+body.getPosition().y*RATE
-//                      +"\nx="+x
-//                            +" y="+y
-//                            +" HeadvX="+HeadVX
-//                            +" HeadvY="+HeadVY
-//            );
-//        if(snake!=null)
-//            if(snake.isDead()){
-//                rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
-//               //Vec2 v = getBodyVelocityNormalized();
-//               //rotateAngle =calRotateAngleDegrees(v.x,v.y);
-//            }else {
-//                rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);
-//            }
-//        //rotateAngle =(float) Math.toDegrees(body.getAngle())+90;
-//        //float AxisRotateAngle =(float) Math.toDegrees(body.getAngle());
-//        //calRotateAngleRadius(body.getLinearVelocity().x,body.getLinearVelocity().y);
-//
-//        //drawSelf
-//        super.drawSelf(painter);
-//        float SnakeHeadEyesDiameter = radius/Constant.SnakeHeadRatio*2;
-//        painter.drawColorFactorTex(
-//                TexManager.getTex(SnakeHeadEyesBallImg),
-//                ColorManager.getColor(color),
-//                x,
-//                y -jumpHeight-defaultHeight+Constant.SnakeEyesDownLittleHeight,
-//                SnakeHeadEyesDiameter,
-//                SnakeHeadEyesDiameter,
-//                rotateAngleGameElements,
-//                Constant.SnakeEyesDownLittleColorFactor
-//        );
-//        painter.drawTex(
-//                TexManager.getTex(nowFace),
-//                x,
-//                y-jumpHeight-defaultHeight,
-//                SnakeHeadEyesDiameter,
-//                SnakeHeadEyesDiameter,
-//                rotateAngleGameElements
-//        );
-//
-////        painter.drawSelf(
-////                TexManager.getTex(axisImg),
-////                ColorManager.getColor(Constant.C0LOR_WHITE),
-////                x,
-////                y-jumpHeight,
-////                headEyesDiameter,
-////                headEyesDiameter,
-////                AxisRotateAngle
-////        );
-//    }
     @Override
     public void drawSelf(TexDrawer painter){
-        //TopImg = nowFace;
         if(snake!=null&&snake.isDead()){
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
-            //Vec2 v = getBodyVelocityNormalized();
-            //rotateAngle =calRotateAngleDegrees(v.x,v.y);
         }else {
             rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);
         }
         super.drawSelf(painter);
-        //offSet
-//        if (TopOffset != 0) {
-//            painter.drawColorFactorTex(
-//                    TexManager.getTex(Img),
-//                    colorFloats==null?ColorManager.getColor(color):colorFloats,
-//                    x,
-//                    y - jumpHeight - defaultHeight + TopOffset,
-//                    width+scaleWidth,
-//                    height+scaleHeight,
-//                    rotateAngleGameElements,
-//                    TopOffsetColorFactor
-//            );
-//        }
-//        //drawSelf
-//        painter.drawTex(
-//                TexManager.getTex(TopImg==null?Img:TopImg),
-//                x,
-//                y - jumpHeight - defaultHeight,
-//                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
-//                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
-//                rotateAngleGameElements
-//        );
-        //        painter.drawSelf(
-        //                TexManager.getTex(axisImg),
-        //                ColorManager.getColor(Constant.C0LOR_WHITE),
-        //                x,
-        //                y-jumpHeight,
-        //                headEyesDiameter,
-        //                headEyesDiameter,
-        //                AxisRotateAngle
-        //        );
     }
     public void changeFace(String face){
         TopImg = face;

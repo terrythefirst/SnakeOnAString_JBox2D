@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 
@@ -25,7 +26,7 @@ public class RectBody extends MyBody{
     float halfHeight;//声明矩形类物体半高的变量
 
     public RectBody(
-            World world,
+            GamePlay gamePlay,
             String id,
             float x,float y,
             float angle,
@@ -47,7 +48,7 @@ public class RectBody extends MyBody{
             boolean isStatic)//构造函数
     {
         super(
-                world,
+                gamePlay,
                 id,
                 x,y,
                 halfWidth*2,halfHeight*2,

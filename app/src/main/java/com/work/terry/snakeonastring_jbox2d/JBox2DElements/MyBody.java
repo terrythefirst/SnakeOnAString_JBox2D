@@ -1,9 +1,11 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
@@ -20,10 +22,11 @@ public abstract class MyBody extends GameElement
 {
     public boolean destroyed = false;
 
+    public GamePlay gamePlay;
     public World world;
     public Body body;//对应物理引擎中的刚体
     public MyBody(
-            World world,
+            GamePlay gamePlay,
             String id,
             float x,float y,
             float width,float height,
@@ -45,8 +48,16 @@ public abstract class MyBody extends GameElement
                 heightColorFactor,
                 floorShadowColorFactor,
                 Img);
-        JBox2DUtil.Bodies.add(this);
-        this.world = world;
+        this.gamePlay = gamePlay;
+        if(gamePlay==null)Log.e("MyBody gamePlay","null");
+        if(gamePlay==null){
+            world = null;
+        }else {
+            gamePlay.jBox2DThread.Bodies.add(this);
+            this.world = gamePlay.world;
+            if(world==null)Log.e("MyBody","null");
+        }
+
     }
     public Vec2 getBodyVelocityNormalized(){
         return VectorUtil.normalize2D(new Vec2(body.getLinearVelocity().x*100,body.getLinearVelocity().x*100));

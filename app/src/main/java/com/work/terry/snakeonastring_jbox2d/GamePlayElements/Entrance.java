@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.GamePlayElements;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -23,7 +24,7 @@ public class Entrance extends GameElement {
     public RectBody rectBody2;
     public boolean Enterred;
     public Snake snake;
-    public Entrance(World world,float x, float y, float width, float height) {
+    public Entrance(GamePlay gamePlay, float x, float y, float width, float height) {
         super(
                 "Entrance",
                 x, y,
@@ -39,11 +40,11 @@ public class Entrance extends GameElement {
         this.setIsPureColor(false);
         this.setDoDrawHeight(false);
         this.setDoDrawFloorShadow(false);
-        initRects(world);
+        initRects(gamePlay);
     }
-    public void initRects(World world){
+    public void initRects(GamePlay gamePlay){
         rectBody1 = new RectBody(
-                world,
+                gamePlay,
                 id+"RectBody 1",
                 x-width/2,y,
                 0,
@@ -65,7 +66,7 @@ public class Entrance extends GameElement {
                 true
         );
         rectBody2 = new RectBody(
-                world,
+                gamePlay,
                 id+"RectBody 1",
                 x+width/2,y,
                 0,

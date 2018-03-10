@@ -1,6 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -17,7 +17,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 public class MyPrismaticJoint extends MyJoint{
     public MyPrismaticJoint(
             String id,
-            World world,
+            GamePlay gamePlay,
             boolean collideConnected,
             Body A,
             Body B,
@@ -31,7 +31,8 @@ public class MyPrismaticJoint extends MyJoint{
             float motorSpeed,
             float maxMotorForce
     ){
-        this.world=world;
+        this.world=gamePlay.world;//给物理世界类对象赋值
+        this.gamePlay = gamePlay;
         PrismaticJointDef pjd=new PrismaticJointDef();//创建移动关节描述对象
         pjd.userData=id;								//给关节描述的用户数据赋予关节id
         pjd.collideConnected=collideConnected;		//给是否允许碰撞标志赋值
@@ -47,6 +48,6 @@ public class MyPrismaticJoint extends MyJoint{
         pjd.initialize(A, B, anchor, localAxisA);			//调用移动关节描述对象的初始化函数
         joint=(PrismaticJoint)world.createJoint(pjd);		//在物理世界里增添移动关节
 
-        JBox2DUtil.Joints.add(this);
+        gamePlay.jBox2DThread.Joints.add(this);
     }
 }

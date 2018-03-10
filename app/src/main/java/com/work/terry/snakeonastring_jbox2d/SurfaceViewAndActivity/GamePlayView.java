@@ -71,19 +71,19 @@ public class GamePlayView extends GLSurfaceView {
             nowViewIndex = index;
         }
 
+        if(nowView!=null)nowView.onPause(null);
         if(index == START_VIEW){
             nowView = new StartView(this,null);
         }else if(index > GAMEPLAY_VIEW_ORIGINAL&&index <GAMEPLAY_VIEW_ORIGINAL+10){
-            nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",getResources(),getSnakeSkinNumber());
+            nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",this,getSnakeSkinNumber());
         }else if(index > GAMEPLAY_VIEW_ENDLESS&&index <GAMEPLAY_VIEW_ENDLESS+10){
-            nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",getResources(),getSnakeSkinNumber());
+            nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",this,getSnakeSkinNumber());
         }else if(index==SKIN_CHANGING_VIEW){
             if(nowView instanceof StartView){
                 nowView = new SkinChangingView(this,null);
             }else if(nowView instanceof GamePlay){
-                int gameMode = ((GamePlay)nowView).gameMode;
-                int level = ((GamePlay)nowView).level;
-                nowView = new SkinChangingView(this,null,gameMode,level);
+                int gameModeAndLevel = ((GamePlay)nowView).gameModeAndLevel;
+                nowView = new SkinChangingView(this,null,gameModeAndLevel);
             }
         }
     }
@@ -99,6 +99,7 @@ public class GamePlayView extends GLSurfaceView {
     public void setNowMenu(MyMenu menu){
         if(menu==null){
             this.nowMenu.setDoDraw(false);
+            this.nowMenu = null;
         }else {
             this.nowMenu = menu;
         }

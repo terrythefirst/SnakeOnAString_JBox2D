@@ -16,6 +16,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.BackgroundImg;
  */
 
 public abstract class MyView {
+    public GamePlayView gamePlayView;
     public DrawUtil drawUtil;
     public List<Button> buttons = new ArrayList<>();
     public Button nowPressedButton;

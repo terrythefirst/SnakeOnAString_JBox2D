@@ -43,7 +43,6 @@ public class SkinChangingView extends MyView {
     private GameElement lock;
     private ScoreBoard lockStarNumber;
     private GameElement lockStar;
-    GamePlayView gamePlayView;
 
     public float SnakePickAreaStartY = 300;
     public float SnakePickAreaEndY = 1400;
@@ -80,15 +79,14 @@ public class SkinChangingView extends MyView {
         );
         initOthers();
     }
-    public SkinChangingView(GamePlayView gamePlayView,String backgroundImg,int gameMode,int gameLevel){
+    public SkinChangingView(GamePlayView gamePlayView,String backgroundImg,int gameModeAndLevel){
         this.gamePlayView = gamePlayView;
         if(backgroundImg!=null)this.backgroundImg = backgroundImg;
         drawUtil = new DrawUtil(this.backgroundImg);
         initReturnButton();
-        int gameModeNumber = (gameMode==Constant.GAME_MODE_ENDLESS)?Constant.GAMEPLAY_VIEW_ENDLESS:Constant.GAMEPLAY_VIEW_ENDLESS;
         returnButton.setButtonListener(
                 ()->{
-                    gamePlayView.setNowView(gameModeNumber+gameLevel);
+                    gamePlayView.setNowView(gameModeAndLevel);
                 }
         );
         initOthers();

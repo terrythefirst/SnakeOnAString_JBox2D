@@ -34,6 +34,11 @@ public class EntranceThread extends Thread{
                 e.printStackTrace();
             }
         }
+        new UniformMotionAnimation(
+                snake.gamePlay.changeSkinButton,
+                new Vec2(720,-snake.gamePlay.changeSkinButton.height),
+                0.5f
+        ).start();
         Thread thread = new UniformMotionAnimation(
                 entrance,
                 new Vec2(entrance.x,Constant.SCREEN_HEIGHT+entrance.height),

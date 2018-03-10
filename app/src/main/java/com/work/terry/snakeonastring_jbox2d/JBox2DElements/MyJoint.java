@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.Joint;
 
@@ -10,6 +12,7 @@ import java.net.PortUnreachableException;
  */
 
 public class MyJoint {
+    public GamePlay gamePlay;
     public World world;
     public Joint joint;
     public boolean destroyed = false;

@@ -66,6 +66,7 @@ public class ImgManager {
             SpeedImg,
             SelectChineseImg,
             UnlockChineseImg,
+            ChangeSkinChineseImg,
             LockImg,
             RoundRectSector,
 

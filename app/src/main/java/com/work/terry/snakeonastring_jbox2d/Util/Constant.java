@@ -74,6 +74,7 @@ public class Constant {
 
     public static String SelectChineseImg = "select_chinese.png";
     public static String UnlockChineseImg = "unlock_chinese.png";
+    public static String ChangeSkinChineseImg = "change_skin_chinese.png";
 
     public static String RoundRectSector = "round_rect_sector1.png";
 
@@ -200,6 +201,7 @@ public class Constant {
     public static final int COLOR_RED = 8;
     public static final int COLOR_BLACKBLUE = 9;
     public static final int COLOR_GREEN = 10;
+    public static final int COLOR_DEEP_PINK = 11;
 
     public static final int LAYER_TOP = 0;
     public static final int LAYER_CENTER = 1;

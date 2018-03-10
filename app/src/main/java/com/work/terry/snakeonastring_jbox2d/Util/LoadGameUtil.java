@@ -10,6 +10,7 @@ import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.Entrance;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlayView;
 import com.work.terry.snakeonastring_jbox2d.Thread.EntranceThread;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Terry on 2018/2/28.
@@ -43,15 +46,28 @@ public class LoadGameUtil {
     }
 
     public GamePlay loadGameFromFile
-            (String file, Resources r,int SnakeSkinNumber){
+            (String file, GamePlayView gamePlayView, int SnakeSkinNumber){
+        Resources r = gamePlayView.getResources();
         Log.d("loadGameFromFile","start");
         loadHelper = new HashMap<>();
 
         GamePlay gamePlay = null;
+        int gamePlayModeAndLevel = 0;
+
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(file);
+        //Log.e("matcher.group()",matcher.group());
+        if(matcher.find())
+            gamePlayModeAndLevel+=Integer.parseInt(matcher.group());
+        else Log.e("gameLevel wrong file name","not Found");
+
         if(file.contains("endless"))
-             gamePlay= new GamePlay(Constant.GAME_MODE_ENDLESS);
+            gamePlayModeAndLevel+=Constant.GAMEPLAY_VIEW_ENDLESS;
         else if(file.contains("original"))
-            gamePlay = new GamePlay(Constant.GAME_MODE_ORIGINAL);
+            gamePlayModeAndLevel+=Constant.GAMEPLAY_VIEW_ORIGINAL;
+
+        gamePlay = new GamePlay(gamePlayView,gamePlayModeAndLevel);
+
 
         try{
             InputStream in = r.getAssets().open(file);
@@ -198,7 +214,7 @@ public class LoadGameUtil {
             }
         }
         ButtonBlock buttonBlock = new ButtonBlock(
-                gamePlay.world,
+                gamePlay,
                 (id==-1)?ButtonBlock.classCount++:id,
                 XY.x,XY.y,
                 radius*2,
@@ -236,7 +252,7 @@ public class LoadGameUtil {
             }
         }
         ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
-                gamePlay.world,
+                gamePlay,
                 XY.x,XY.y,
                 radius,
                 color255,
@@ -267,7 +283,7 @@ public class LoadGameUtil {
 
             }
         }
-        Log.e("LoadSnake","x="+XY.x+" y="+XY.y+" vx="+V.x+" vy="+V.y+" len="+totalLength+" scale="+scaleRatio);
+        Log.d("LoadSnake","x="+XY.x+" y="+XY.y+" vx="+V.x+" vy="+V.y+" len="+totalLength+" scale="+scaleRatio);
         if (XY==null)throw new RuntimeException("XY IS NULL");
         if (V==null)throw new RuntimeException("V IS NULL");
 
@@ -282,7 +298,7 @@ public class LoadGameUtil {
         gamePlay.setSnake(snake);
 
         Entrance entrance = new Entrance(
-                gamePlay.world,
+                gamePlay,
                 XY.x,XY.y+350,
                 400,500
         );

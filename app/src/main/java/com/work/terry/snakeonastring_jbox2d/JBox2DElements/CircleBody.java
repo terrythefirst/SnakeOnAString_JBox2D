@@ -1,11 +1,8 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
-import com.work.terry.snakeonastring_jbox2d.Util.Constant;
-import com.work.terry.snakeonastring_jbox2d.Util.JBox2DUtil;
+import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -14,9 +11,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.joints.LimitState;
-
-import work.terry.com.snakeonastring_jbox2d.R;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 
@@ -27,7 +21,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
 public class CircleBody extends MyBody{
     public float radius;//声明圆形类物体半径的变量
     public CircleBody(
-            World world,
+            GamePlay gamePlay,
             String id,
             float x,float y,
             float width,float height,
@@ -41,7 +35,7 @@ public class CircleBody extends MyBody{
 
             String Img){
         super(
-                world,
+                gamePlay,
                 id,
                 x,y,
                 width,height,
@@ -55,10 +49,11 @@ public class CircleBody extends MyBody{
 
                 Img
         );
+        this.world = gamePlay.world;
         this.radius=width/2;//给圆形类物体半径变量赋值
     }
     public CircleBody(
-            World world,
+            GamePlay gamePlay,
             String id,
             float x,float y,
             float angle,
@@ -82,7 +77,7 @@ public class CircleBody extends MyBody{
     )//构造函数
     {
         super(
-                world,
+                gamePlay,
                 id,
                 x,y,
                 radius*2,radius*2,
@@ -98,7 +93,7 @@ public class CircleBody extends MyBody{
         );
         this.radius=radius;//给圆形类物体半径变量赋值
 
-        if(world != null)
+        if(gamePlay != null)
             createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);
     }
     public void createCircleBody(
