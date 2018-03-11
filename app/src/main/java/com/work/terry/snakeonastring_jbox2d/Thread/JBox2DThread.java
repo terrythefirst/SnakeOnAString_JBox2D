@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.JBox2dThreadTask;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
@@ -21,8 +22,10 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 public class JBox2DThread extends Thread implements Stoppable{
     public List<MyBody> Bodies= new ArrayList<>();//所有对Bodies的操作要求再 STEP期间做
-    public List<MyBody> removeBodyList = new ArrayList<>();
+//    public List<MyBody> removeBodyList = new ArrayList<>();
     public List<MyJoint> Joints = new ArrayList<>();
+
+    public List<JBox2dThreadTask> tasks = new ArrayList<>();
 
     public Body staticBody = null;
 
@@ -43,6 +46,7 @@ public class JBox2DThread extends Thread implements Stoppable{
             gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
 
             MyJBox2DStep();
+            stepTasks();
 
             gamePlay.checkShouldAddFoodOrBomb();
 
@@ -60,34 +64,42 @@ public class JBox2DThread extends Thread implements Stoppable{
         for (MyBody mb : Bodies) {
             mb.popXYfromBody();
             //mb.pushWidthHeightIntoBody();
-            if(mb instanceof ButtonBlockCircle){
-                ((ButtonBlockCircle)mb).body.getFixtureList().getShape().setRadius((((ButtonBlockCircle) mb).radius+((ButtonBlockCircle) mb).scaleWidth/2)/RATE);
-            }
+//            if(mb instanceof ButtonBlockCircle){
+//                ((ButtonBlockCircle)mb).body.getFixtureList().getShape().setRadius((((ButtonBlockCircle) mb).radius+((ButtonBlockCircle) mb).scaleWidth/2)/RATE);
+//            }
             if (mb instanceof SnakeFood) {
                 if (((SnakeFood) mb).eatean) {
                     mb.setDoDraw(false);
-                    removeBodyList.add(mb);
+                    addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_DELETE_BODY,mb));
                 }
             }
             if(mb instanceof Bomb){
                 if(((Bomb)mb).eatean){
                     mb.setDoDraw(false);
-                    removeBodyList.add(mb);
+                    addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_DELETE_BODY,mb));
                 }
             }
             if(mb instanceof FoodMagnet){
                 if(((FoodMagnet)mb).eatean){
                     mb.setDoDraw(false);
-                    removeBodyList.add(mb);
+                    addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_DELETE_BODY,mb));
                 }
             }
         }
-        synchronized (removeBodyList){
-            for(MyBody mb:removeBodyList){
-                Bodies.remove(mb);
-                mb.destroySelf();
+
+    }
+    public void addToTasks(JBox2dThreadTask task){
+        synchronized (tasks){
+            tasks.add(task);
+        }
+    }
+    public void stepTasks(){
+        synchronized (tasks){
+            for(JBox2dThreadTask task:tasks){
+                if(task.operation==JBox2dThreadTask.OPERATION_DELETE_BODY)Bodies.remove(task.myBody);
+                task.doTask();
             }
         }
-        removeBodyList.clear();
+        tasks.clear();
     }
 }

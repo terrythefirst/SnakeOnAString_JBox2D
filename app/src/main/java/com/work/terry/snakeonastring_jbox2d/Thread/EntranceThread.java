@@ -47,6 +47,8 @@ public class EntranceThread extends Thread{
         thread.start();
         try {
             thread.join();
+            entrance.sendDeleteTask();
+            snake.gamePlay.drawUtil.addToRemoveSequence(entrance);
             snake.gamePlay.constructButtonWall();
         }catch (Exception e){
             e.printStackTrace();

@@ -24,6 +24,7 @@ public class CircleBody extends MyBody{
             GamePlay gamePlay,
             String id,
             float x,float y,
+            float angle,
             float width,float height,
 
             int color,
@@ -32,6 +33,13 @@ public class CircleBody extends MyBody{
             float topOffsetColorFactor,
             float heightColorFactor,
             float floorShadowColorFactor,
+
+            float angularDampingRate,
+            float linearDampingRate,
+            float density,
+            float friction,
+            float restitution,
+            boolean isStatic,
 
             String Img){
         super(
@@ -47,6 +55,14 @@ public class CircleBody extends MyBody{
                 heightColorFactor,
                 floorShadowColorFactor,
 
+                angle,
+                angularDampingRate,
+                linearDampingRate,
+                density,
+                friction,
+                restitution,
+                isStatic,
+
                 Img
         );
         this.world = gamePlay.world;
@@ -57,7 +73,6 @@ public class CircleBody extends MyBody{
             String id,
             float x,float y,
             float angle,
-            float vX,float vY,
             float radius,
 
             int color,
@@ -72,7 +87,7 @@ public class CircleBody extends MyBody{
             float density,
             float friction,
             float restitution,
-            boolean isStaic,
+            boolean isStatic,
             String img
     )//构造函数
     {
@@ -89,27 +104,22 @@ public class CircleBody extends MyBody{
                 heightColorFactor,
                 floorShadowColorFactor,
 
+                angle,
+                angularDampingRate,
+                linearDampingRate,
+                density,
+                friction,
+                restitution,
+                isStatic,
+
                 img
         );
         this.radius=radius;//给圆形类物体半径变量赋值
-
-        if(gamePlay != null)
-            createCircleBody(world,id,x,y,angle,vX,vY,radius,angularDampingRate,linearDampingRate,density,friction,restitution,isStaic);
     }
-    public void createCircleBody(
-                                 World world,
-                                 String id,
-                                 float x,float y,
-                                 float angle,
-                                 float vX,float vY,
-                                 float radius,
-                                 float angularDampingRate,
-                                 float linearDampingRate,
-                                 float density,
-                                 float friction,
-                                 float restitution,
-                                 boolean isStatic
-    ){
+    @Override
+    public void createBody(){
+        if(created)return;
+
         BodyDef bd=new BodyDef();//创建刚体描述
         if(isStatic){
             bd.type= BodyType.STATIC;//设置是否为可运动刚体
@@ -119,18 +129,13 @@ public class CircleBody extends MyBody{
 
 
         bd.position.set(x/RATE, y/RATE);//设置位置
-        bd.linearVelocity.set(new Vec2(vX,vY));
-        bd.angle = angle;
+        bd.angle = angleRadian;
         bd.userData = id;
 
         bd.setAngularDamping(angularDampingRate);
         bd.setLinearDamping(linearDampingRate);
-//        while (world.isLocked()){
-//            Log.d("world","LOKED!");
-//        }
         Body bodyTemp = world.createBody(bd);//在世界中创建刚体
 
-        //Log.d("CircleBody",(bodyTemp==null)?"NULL":"NOT NULL!");
         CircleShape cs=new CircleShape();//创建刚体形状
         cs.m_radius=radius/RATE;//获得物理世界圆的半径
         FixtureDef fd=new FixtureDef();//创建刚体物理描述
@@ -140,6 +145,8 @@ public class CircleBody extends MyBody{
         fd.shape=cs;//设置形状
         bodyTemp.createFixture(fd);//将刚体物理描述与刚体结合
         this.body = bodyTemp;
+
+        if(this.body!=null)created=true;
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){

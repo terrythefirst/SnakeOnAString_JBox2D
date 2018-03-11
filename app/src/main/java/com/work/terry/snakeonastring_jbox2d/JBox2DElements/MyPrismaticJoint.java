@@ -15,6 +15,19 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.RATE;
  */
 
 public class MyPrismaticJoint extends MyJoint{
+    boolean collideConnected;
+    Body A;
+    Body B;
+    Vec2 anchor;
+    Vec2 localAxisA;
+    float referenceAngle;
+    boolean enableLimit;
+    float lowerTranslation;
+    float upperTranslation;
+    boolean enableMotor;
+    float motorSpeed;
+    float maxMotorForce;
+
     public MyPrismaticJoint(
             String id,
             GamePlay gamePlay,
@@ -33,6 +46,24 @@ public class MyPrismaticJoint extends MyJoint{
     ){
         this.world=gamePlay.world;//给物理世界类对象赋值
         this.gamePlay = gamePlay;
+
+        this.collideConnected = collideConnected;
+        this.A = A;
+        this.B = B;
+        this.anchor = anchor;
+        this.localAxisA = localAxisA;
+        this.referenceAngle = referenceAngle;
+        this.enableLimit = enableLimit;
+        this.lowerTranslation = lowerTranslation;
+        this.upperTranslation = upperTranslation;
+        this.enableMotor = enableMotor;
+        this.motorSpeed = motorSpeed;
+        this.maxMotorForce = maxMotorForce;
+    }
+
+    @Override
+    public void createJoint() {
+        if(created)return;
         PrismaticJointDef pjd=new PrismaticJointDef();//创建移动关节描述对象
         pjd.userData=id;								//给关节描述的用户数据赋予关节id
         pjd.collideConnected=collideConnected;		//给是否允许碰撞标志赋值
@@ -46,8 +77,8 @@ public class MyPrismaticJoint extends MyJoint{
         pjd.upperTranslation = upperTranslation / RATE;		//最大变换
         pjd.enableLimit=enableLimit;							//给是否开启关节限制赋值
         pjd.initialize(A, B, anchor, localAxisA);			//调用移动关节描述对象的初始化函数
-        joint=(PrismaticJoint)world.createJoint(pjd);		//在物理世界里增添移动关节
-
+        joint=world.createJoint(pjd);		//在物理世界里增添移动关节
+        if(joint!=null)created = true;
         gamePlay.jBox2DThread.Joints.add(this);
     }
 }

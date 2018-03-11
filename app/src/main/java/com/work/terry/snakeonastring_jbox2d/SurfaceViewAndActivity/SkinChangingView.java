@@ -112,7 +112,7 @@ public class SkinChangingView extends MyView {
         while (NodeIndex < 8){
             SnakeNode snakeNode = new SnakeNode(
                     720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
-                    0,0,
+                    0,
                     SnakeSkinManager.getSkin(skinNumber,8-NodeIndex),
                     Constant.SnakeDefaultHeight,
                     NodeIndex++

@@ -37,7 +37,7 @@ public class SnakeFood extends CircleBody{
                 gamePlay,
                 "snakeFood "+id,
                 x,y,
-                0,0,0,
+                0,
                 raius,
 
                 color,

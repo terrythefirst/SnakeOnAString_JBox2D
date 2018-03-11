@@ -9,6 +9,13 @@ import org.jbox2d.dynamics.joints.WeldJointDef;
 
 public class MyWeldJoint extends MyJoint
 {
+	boolean collideConnected;//是否允许两个刚体碰撞
+	MyBody poA;//刚体A
+	MyBody poB;//刚体B
+	Vec2 anchor;    //焊接关节的锚点
+	float frequencyHz;                //关节频率
+	float dampingRatio;          //阻尼系数
+
 	public MyWeldJoint
 	(
 			String id,//关节id
@@ -23,6 +30,18 @@ public class MyWeldJoint extends MyJoint
 	{
 		this.world=gamePlay.world;//给物理世界类对象赋值
 		this.gamePlay = gamePlay;
+
+		this.collideConnected = collideConnected;
+		this.poA = poA;
+		this.poB = poB;
+		this.anchor = anchor;
+		this.frequencyHz = frequencyHz;
+		this.dampingRatio = dampingRatio;
+	}
+
+	@Override
+	public void createJoint() {
+		if(created)return;
 		WeldJointDef wjd=new WeldJointDef();//声明焊接关节描述对象
 		wjd.userData=id;//给关节描述的用户数据赋予关节id
 		wjd.collideConnected=collideConnected;//给是否允许碰撞标志赋值
@@ -32,6 +51,7 @@ public class MyWeldJoint extends MyJoint
 
 		joint=(WeldJoint) world.createJoint(wjd);//在物理世界添加焊接关节
 
+		if(joint!=null)created = true;
 		gamePlay.jBox2DThread.Joints.add(this);
 	}
 }

@@ -11,16 +11,33 @@ import java.net.PortUnreachableException;
  * Created by Terry on 2018/1/31.
  */
 
-public class MyJoint {
+public abstract class MyJoint {
+    String id;
     public GamePlay gamePlay;
     public World world;
     public Joint joint;
+
+    public boolean created = false;
     public boolean destroyed = false;
 
-    public void destroySelf(){
+//    public void destroySelf(){
+//        if(!destroyed){
+//            world.destroyJoint(joint);
+//            destroyed = true;
+//        }
+//    }
+    public void sendCreateTask(){
         if(!destroyed){
-            world.destroyJoint(joint);
+            gamePlay.jBox2DThread.addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_ADD_JOINT,this));
             destroyed = true;
         }
+
+    }
+    public void sendDeleteTask(){
+        gamePlay.jBox2DThread.addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_DELETE_JOINT,this));
+    }
+    public abstract void createJoint();
+    public void deleteJoint(){
+        world.destroyJoint(joint);
     }
 }

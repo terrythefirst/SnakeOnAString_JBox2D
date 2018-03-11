@@ -234,6 +234,7 @@ public class GamePlay extends MyView{
                 1000,
                 FoodMagnetImg
         );
+        tempt.sendCreateTask();
         drawUtil.addToFloorLayer(tempt);
         foodMagnetMap.put(foodMagnetIndex,tempt);
         foodMagnetIndex++;
@@ -256,6 +257,7 @@ public class GamePlay extends MyView{
                     10,
                     SnakeFoodImg
             );
+        tempt.sendCreateTask();
         snakeFoodMap.put(foodIndex,tempt);
         foodIndex++;
 //        if(foodLocationCount>3){
@@ -277,6 +279,7 @@ public class GamePlay extends MyView{
                     0,
                     8
             );
+        tempt.sendCreateTask();
         drawUtil.addToFloorLayer(tempt);
 
         new Thread(){
@@ -312,7 +315,6 @@ public class GamePlay extends MyView{
                 "upWall",
                 SCREEN_WIDTH/2,-8,
                 0,
-                0,0,
                 SCREEN_WIDTH/2,5,
 
                 0,0,0, 0,0,0,
@@ -326,7 +328,6 @@ public class GamePlay extends MyView{
                 "leftWall",
                 -8,SCREEN_HEIGHT/2,
                 0,
-                0,0,
                 5,SCREEN_HEIGHT/2,
 
                 0,0, 0, 0,0,0,
@@ -340,7 +341,6 @@ public class GamePlay extends MyView{
                 "rightWall",
                 SCREEN_WIDTH+8,SCREEN_HEIGHT/2,
                 0,
-                0,0,
                 5,SCREEN_HEIGHT/2,
 
                 0,0, 0, 0,0,0,
@@ -359,7 +359,6 @@ public class GamePlay extends MyView{
                 "buttomWall",
                 SCREEN_WIDTH/2,SCREEN_HEIGHT+8,
                 0,
-                0,0,
                 SCREEN_WIDTH/2,5,
 
                 0,0,0, 0,0,0,

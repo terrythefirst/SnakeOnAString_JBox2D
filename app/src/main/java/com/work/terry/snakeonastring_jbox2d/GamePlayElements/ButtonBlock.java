@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.GamePlayElements;
 import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
@@ -27,7 +28,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
  * Created by Yearn on 2018/1/21.
  */
 
-public class ButtonBlock extends GameElement {
+public class ButtonBlock extends MyBody {
     World world;
     CircleBody circleBody1;
     CircleBody circleBody2;
@@ -35,8 +36,6 @@ public class ButtonBlock extends GameElement {
 
     DrawUtil drawUtil;
     List<GameElement> drawSequence;
-
-    boolean isStatic;
 
     private float circleDiameter;
     private float rectLength;
@@ -58,9 +57,11 @@ public class ButtonBlock extends GameElement {
             float[] colorFloats
             ){
         super(
+                gamePlay,
                 "ButtonBlock "+id,
                 x,y,
-                totalLength,circleDiameter,
+                totalLength,
+                circleDiameter,
 
                 0,
                 defaultHeight,
@@ -69,6 +70,7 @@ public class ButtonBlock extends GameElement {
                 ButtonBlockHeightColorFactor,
                 ButtonBlockFloorColorFactor,
 
+                0,0,0,0,0,0,isStatic,
                 ""
         );
         setColorFloats255(colorFloats);
@@ -89,8 +91,19 @@ public class ButtonBlock extends GameElement {
         this.isStatic = isStatic;
 
         drawSequence = new ArrayList<>();
-        initBody(gamePlay);
 
+        setDoDraw(false);
+    }
+    @Override
+    public void createBody() {
+        initBody(gamePlay);
+        setDoDraw(true);
+    }
+    @Override
+    public void deleteBody(){
+        rectBody.deleteBody();
+        circleBody1.deleteBody();
+        circleBody2.deleteBody();
     }
     public void initBody(GamePlay gamePlay){
         rectBody = new RectBody(
@@ -98,7 +111,6 @@ public class ButtonBlock extends GameElement {
                 (isStatic)?"Static":"Dynamic"+id+"RectBody",
                 x,y,
                 rotateAngleRectRadian,
-                0,0,
                 circleDiameter/2,
                 rectLength/2,
 
@@ -115,6 +127,7 @@ public class ButtonBlock extends GameElement {
                 ButtonImgRect,
                 isStatic
         );
+        rectBody.createBody();
         rectBody.setColorFloats(colorFloats);
         rectBody.setIsPureColor(true);
         //rectBody.setTopRatio(TopRatio);
@@ -139,7 +152,6 @@ public class ButtonBlock extends GameElement {
                 (isStatic)?"Static":"Dynamic"+id+"CircleBody",
                 circleBody1XY.x,circleBody1XY.y,
                 rotateAngleCB1Radian,
-                0,0,
                 circleDiameter/2,
 
                 this.color,
@@ -157,6 +169,7 @@ public class ButtonBlock extends GameElement {
                 isStatic,
                 Constant.ButtonImgCircleDown
         );
+        circleBody1.createBody();
         circleBody1.setColorFloats(colorFloats);
         circleBody1.setIsPureColor(true);
         //circleBody1.setTopRatio(TopRatio);
@@ -165,7 +178,6 @@ public class ButtonBlock extends GameElement {
                 (isStatic)?"Static":"Dynamic"+id+"CircleBody",
                 circleBody2XY.x,circleBody2XY.y,
                 rotateAngleCB2Radian,
-                0,0,
                 circleDiameter/2,
 
                 this.color,
@@ -183,6 +195,7 @@ public class ButtonBlock extends GameElement {
                 isStatic,
                 Constant.ButtonImgCircleUp
         );
+        circleBody2.createBody();
         circleBody2.setIsPureColor(true);
         circleBody2.setColorFloats(colorFloats);
         //circleBody2.setTopRatio(TopRatio);
@@ -216,7 +229,6 @@ public class ButtonBlock extends GameElement {
     }
     @Override
     public void drawSelf(TexDrawer painter){
-
         circleBody1.rotateAngleGameElements = 180-(float)Math.toDegrees( rectBody.body.getAngle());
 //        circleBody1.drawSelf(painter);
 //

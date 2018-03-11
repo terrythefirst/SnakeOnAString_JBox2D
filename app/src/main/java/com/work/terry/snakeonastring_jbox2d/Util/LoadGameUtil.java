@@ -67,6 +67,7 @@ public class LoadGameUtil {
             gamePlayModeAndLevel+=Constant.GAMEPLAY_VIEW_ORIGINAL;
 
         gamePlay = new GamePlay(gamePlayView,gamePlayModeAndLevel);
+       // gamePlay.jBox2DThread.start();
 
 
         try{
@@ -224,6 +225,7 @@ public class LoadGameUtil {
                 isStatic,
                 color255
         );
+        buttonBlock.sendCreateTask();
         if (id!=-1)
             loadHelper.put(id,buttonBlock);
         gamePlay.addGameElements(buttonBlock,Constant.LAYER_CENTER);
@@ -260,6 +262,7 @@ public class LoadGameUtil {
                 defaultHeight,
                 (id==-1)?ButtonBlockCircle.classCount++:id
         );
+        buttonBlockCircle.sendCreateTask();
         if (id!=-1)
             loadHelper.put(id,buttonBlockCircle);
         gamePlay.addGameElements(buttonBlockCircle,Constant.LAYER_CENTER);

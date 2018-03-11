@@ -34,7 +34,7 @@ public class Bomb extends CircleBody {
                 gamePlay,
                 "Bomb "+id,
                 x,y,
-                0,0,0,
+                0,
                 radius,
 
                 color,

@@ -52,7 +52,6 @@ public class ButtonBlockCircle extends CircleBody{
                 "ButtonBlockCircle "+id,
                 x,y,
                 0,
-                0,0,
                 radius,
 
                 0,

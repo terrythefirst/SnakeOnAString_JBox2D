@@ -99,11 +99,13 @@ public class Snake {
                         SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode),
                         jumpHeight
                 );
+                snakeHead.createBody();
                 snakeBodies.add(snakeHead);
                 drawUtil.addToCenterLayer(snakeHead);
             }else {
                 addBody();
             }
+            gamePlay.jBox2DThread.stepTasks();
         }
 
 //        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,null,Constant.SnakeDefaultHeight);
@@ -141,12 +143,15 @@ public class Snake {
                     SnakeSkinManager.getSkin(Skin,index),
                     index);
         }
+
         //snakeBodies.add(tempt);
 
         if(initFinished){
             tempt.setDoDraw(false);
+            tempt.sendCreateTask();
             new SnakeNodeAppendAnimateThread(tempt,drawUtil,getAnEarliestAddJumpAnimationThread()).start();
         }else {
+            tempt.createBody();
             snakeBodies.add(tempt);
         }
         drawUtil.addToCenterLayer(tempt);
@@ -190,12 +195,14 @@ public class Snake {
         float blastRadius = searchRadius;//爆炸半径
         for(Integer i:gamePlay.snakeFoodMap.keySet()){
             SnakeFood sf = gamePlay.snakeFoodMap.get(i);
-            Vec2 foodLoc = sf.getBodyXY();
+            if(sf.body!=null){
+                Vec2 foodLoc = sf.getBodyXY();
 
-            float distance = VectorUtil.calDistance(VectorUtil.minusV2D(foodLoc,headLoc));
-            if(distance<=snakeHead.radius+blastRadius){
-                if(!sf.eatean&&!sf.moving)
-                    new FoodMagnetMoveThread(sf,snakeHead).start();
+                float distance = VectorUtil.calDistance(VectorUtil.minusV2D(foodLoc,headLoc));
+                if(distance<=snakeHead.radius+blastRadius){
+                    if(!sf.eatean&&!sf.moving)
+                        new FoodMagnetMoveThread(sf,snakeHead).start();
+                }
             }
         }
     }
@@ -312,11 +319,11 @@ public class Snake {
     public void doAfterDead(){
         for (CircleBody sn:snakeBodies){
             if(sn instanceof SnakeNode){
-               ((SnakeNode) sn).rectBody.destroySelf();
+                ((SnakeNode) sn).rectBody.sendDeleteTask();
+                for (MyJoint mj : ((SnakeNode) sn).joints) {
+                    mj.sendDeleteTask();
+                }
             }
-        }
-        for (MyJoint mj : gamePlay.jBox2DThread.Joints) {
-            mj.destroySelf();
         }
     }
     public void checkLength(){

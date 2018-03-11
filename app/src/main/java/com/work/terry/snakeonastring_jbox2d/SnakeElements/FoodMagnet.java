@@ -39,7 +39,7 @@ public class FoodMagnet extends CircleBody {
                 gamePlay,
                 "FoodMagnet "+id,
                 x,y,
-                0,0,0,
+                0,
                 radius,
 
                 0,

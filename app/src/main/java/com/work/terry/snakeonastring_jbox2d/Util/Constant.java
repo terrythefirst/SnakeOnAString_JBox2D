@@ -97,6 +97,7 @@ public class Constant {
         public static final float SnakeHeadSpeedUponDead = 0.2f;
         public static final float SnakeBodySpeedUponDead = 0.2f;
 
+        public static final float SnakeBodyAngularDampingRate = SnakeHeadAngularDampingRate;
         public static final float SnakeBodyLinearDampingRate = 0.50f;
         public static final float SnakeBodyLinearDampingRateFactorInter = 0.02f;
         public static final float SnakeBodyDensity = 1.0f;

@@ -151,7 +151,7 @@ public class StartView extends MyView {
         while (NodeIndex < 8){
             SnakeNode snakeNode = new SnakeNode(
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
-                    0,0,
+                    0,
                     SnakeSkinManager.getSkin(nowSkin,8-NodeIndex),
                     Constant.SnakeDefaultHeight,
                     NodeIndex++

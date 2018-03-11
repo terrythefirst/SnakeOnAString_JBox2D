@@ -37,6 +37,13 @@ public class SnakeNodeAppendAnimateThread extends Thread {
             e.printStackTrace();
         }
         if(snakeNode.snake.getSnakeAjaxLength()>snakeNode.snake.getLength()) {
+            while (!snakeNode.created){
+                try {
+                    sleep(10);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
             while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
                 snakeNodeAnimateDraw.AnimationStep(0.5f);
 

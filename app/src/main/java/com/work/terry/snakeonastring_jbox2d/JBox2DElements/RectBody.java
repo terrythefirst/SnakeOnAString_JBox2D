@@ -30,7 +30,6 @@ public class RectBody extends MyBody{
             String id,
             float x,float y,
             float angle,
-            float vX,float vY,
             float halfWidth,//半宽
             float halfHeight,//半高
 
@@ -44,6 +43,7 @@ public class RectBody extends MyBody{
             float density,
             float friction,
             float restitution,
+
             String img,
             boolean isStatic)//构造函数
     {
@@ -58,10 +58,24 @@ public class RectBody extends MyBody{
                 topOffsetColorFactor,
                 heightColorFactor,
                 floorShadowColorFactor,
+
+                angle,
+                0,
+                0,
+                density,
+                friction,
+                restitution,
+                isStatic,
+
                 img
         );
         this.halfHeight = halfHeight;
         this.halfWidth = halfWidth;
+
+    }
+    @Override
+    public void createBody(){
+        if(created)return;
 
         BodyDef bd=new BodyDef();//创建刚体描述
         if(isStatic)//判断是否为可运动刚体
@@ -74,12 +88,8 @@ public class RectBody extends MyBody{
         }
         bd.position.set(x/RATE, y/RATE);//设置位置
         bd.userData = id;
-        bd.linearVelocity.set(new Vec2(vX,vY));
-        bd.angle = angle;
+        bd.angle = angleRadian;
 
-//        while (world.isLocked()){
-//            Log.d("world","LOKED!");
-//        }
         Body bodyTemp = world.createBody(bd);//在世界中创建刚体
         PolygonShape ps=new PolygonShape();//创建刚体形状
         ps.setAsBox(halfWidth/RATE, halfHeight/RATE);//设定边框
@@ -87,6 +97,7 @@ public class RectBody extends MyBody{
         fd.density = density;//设置密度
         fd.friction = friction;//设置摩擦系数
         fd.restitution = restitution;//设置恢复系数
+
         fd.shape=ps;//设置形状
         if(!isStatic)//将刚体物理描述与刚体结合
         {
@@ -98,6 +109,7 @@ public class RectBody extends MyBody{
         }
         this.body = bodyTemp;
 
+        if(this.body!=null)created=true;
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){

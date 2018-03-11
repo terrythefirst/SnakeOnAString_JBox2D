@@ -44,7 +44,6 @@ public class SnakeHead extends CircleBody{
                 "snakeHead ",
                 x,y,
                 0,
-                0,0,
                 snakeNodeSkinInfo.getRadii()[1],
 
                 0,
@@ -78,7 +77,6 @@ public class SnakeHead extends CircleBody{
                 "snakeHead",
                 x,y,
                 (float) ((135/360)*Math.PI),
-                vx,vy,
                 snakeNodeSkinInfo.getRadii()[1],
                 0,
                 defaultHeight,
@@ -113,6 +111,7 @@ public class SnakeHead extends CircleBody{
     @Override
     public void drawSelf(TexDrawer painter){
         if(snake!=null&&snake.isDead()){
+            changeFace(SnakeSkinManager.getSkin(snake.getSkinNumber(),SnakeHeadDeadImgCode).getImg());
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
         }else {
             rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);

@@ -49,7 +49,7 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
             snakeNodeAnimateDraw.setDoDraw(false);
             drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
 
-            snakeNode.gamePlay.jBox2DThread.removeBodyList.add(snakeNode);
+            snakeNode.sendDeleteTask();
             snakeNode.snake.snakeBodies.remove(snakeNode);
             drawUtil.addToRemoveSequence(snakeNode);
         }
