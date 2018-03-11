@@ -146,7 +146,10 @@ public class CircleBody extends MyBody{
         bodyTemp.createFixture(fd);//将刚体物理描述与刚体结合
         this.body = bodyTemp;
 
-        if(this.body!=null)created=true;
+        if(this.body!=null) {
+            created = true;
+            gamePlay.jBox2DThread.Bodies.add(this);
+        }
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){

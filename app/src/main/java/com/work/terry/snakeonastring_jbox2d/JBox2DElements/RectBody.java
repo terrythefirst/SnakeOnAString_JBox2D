@@ -71,7 +71,6 @@ public class RectBody extends MyBody{
         );
         this.halfHeight = halfHeight;
         this.halfWidth = halfWidth;
-
     }
     @Override
     public void createBody(){
@@ -109,7 +108,10 @@ public class RectBody extends MyBody{
         }
         this.body = bodyTemp;
 
-        if(this.body!=null)created=true;
+        if(this.body!=null){
+            created=true;
+            gamePlay.jBox2DThread.Bodies.add(this);
+        }
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){

@@ -82,7 +82,6 @@ public abstract class MyBody extends GameElement
         if(gamePlay==null){
             world = null;
         }else {
-            gamePlay.jBox2DThread.Bodies.add(this);
             this.world = gamePlay.world;
         }
     }
@@ -112,10 +111,7 @@ public abstract class MyBody extends GameElement
 //        body.getFixtureList().getShape().setRadius(VectorUtil.calDistance(width,height)/RATE);
 //    }
     public void popXYfromBody(){
-        if(body==null){
-            Log.e("popXYfromBody body","null!!!??");
-            return;
-        }
+        if(isStatic)return;
         Vec2 v = getBodyXY();
         this.x = v.x;
         this.y = v.y;

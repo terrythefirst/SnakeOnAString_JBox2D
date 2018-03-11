@@ -103,8 +103,8 @@ public class GamePlay extends MyView{
 
     }
     public void initChangeSkinButton(){
-        float changeSkinButtonWidth = 400;
-        float changeSkinButtonHeight = 100;
+        float changeSkinButtonWidth = 500;
+        float changeSkinButtonHeight = 160;
         float changeSkinButtonY = changeSkinButtonHeight/2+50;
         changeSkinButton = new RoundEdgeRectButton(
                0,

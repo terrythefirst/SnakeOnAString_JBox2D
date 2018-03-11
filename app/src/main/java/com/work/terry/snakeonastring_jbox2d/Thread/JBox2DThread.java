@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.JBox2dThreadTask;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Bomb;
@@ -67,6 +68,10 @@ public class JBox2DThread extends Thread implements Stoppable{
 //            if(mb instanceof ButtonBlockCircle){
 //                ((ButtonBlockCircle)mb).body.getFixtureList().getShape().setRadius((((ButtonBlockCircle) mb).radius+((ButtonBlockCircle) mb).scaleWidth/2)/RATE);
 //            }
+            if(mb instanceof CircleBody){
+
+                mb.body.getFixtureList().getShape().setRadius((((CircleBody)mb).radius+((CircleBody)mb).scaleWidth/2)/RATE);
+            }
             if (mb instanceof SnakeFood) {
                 if (((SnakeFood) mb).eatean) {
                     mb.setDoDraw(false);
