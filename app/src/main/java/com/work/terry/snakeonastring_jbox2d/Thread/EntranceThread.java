@@ -26,8 +26,7 @@ public class EntranceThread extends Thread{
     @Override
     public void run(){
         while (snake.gamePlay.IS_PLAYING&&!enterred){
-            SnakeNode snakeNode = (SnakeNode) snake.snakeBodies.get(snake.getLength()-1);
-            if(snakeNode.y< Constant.SCREEN_HEIGHT-snakeNode.radius)enterred = true;
+            if(snake.checkEntered())enterred = true;
             try {
                 sleep(50);
             }catch (Exception e){

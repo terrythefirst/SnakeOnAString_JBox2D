@@ -50,6 +50,7 @@ public class Snake {
     private int Skin;
 
     public boolean initFinished = false;
+    public boolean entered = false;
 
     public byte[] addAnimationLock = new byte[0];
     public boolean addAnimating = false;
@@ -120,6 +121,13 @@ public class Snake {
         //animateThread = new AnimateThread();
        // animateThread.start();
         initFinished = true;
+    }
+    public boolean checkEntered(){
+        if(entered)return entered;
+
+        SnakeNode snakeNode = (SnakeNode) snakeBodies.get(getLength()-1);
+        entered = (snakeNode.y< Constant.SCREEN_HEIGHT-snakeNode.radius);
+        return entered;
     }
     public int getSkinNumber(){
         return Skin;
@@ -317,11 +325,13 @@ public class Snake {
        this.Skin = index;
     }
     public void doAfterDead(){
-        for (CircleBody sn:snakeBodies){
-            if(sn instanceof SnakeNode){
-                ((SnakeNode) sn).rectBody.sendDeleteTask();
-                for (MyJoint mj : ((SnakeNode) sn).joints) {
-                    mj.sendDeleteTask();
+        synchronized (snakeBodies){
+            for (CircleBody sn:snakeBodies){
+                if(sn instanceof SnakeNode){
+                    ((SnakeNode) sn).rectBody.sendDeleteTask();
+                    for (MyJoint mj : ((SnakeNode) sn).joints) {
+                        mj.sendDeleteTask();
+                    }
                 }
             }
         }

@@ -71,51 +71,16 @@ public class MyContactListener implements ContactListener {
 					foodMagnet.setEaten();
 					gamePlay.snake.whenEatFoodMagnet(foodMagnet);
 				}else if(!idB.equals("snakeBody 1")){
-//					if(contact.getManifold().type == Manifold.ManifoldType.CIRCLES){
-//
+//					float v = VectorUtil.calDistance(gamePlay.snake.snakeHead.body.getLinearVelocity());
+//					Log.d("velocity",v+"");
+//					if(v<=1.5f){
+//						gamePlay.snake.setDizzy();
+//					}else {
+//						gamePlay.snake.setDead();
+//						changeSnakeVelocityUponDead();
 //					}
-//					Vec2 localNormal = contact.getManifold().localNormal.skew();
-//					Vec2 localPoint = contact.getManifold().localPoint;
-//
-//					float dotMul = dotMul2D(
-//							plusV2D(localNormal,localPoint),
-//							gamePlay.snake.snakeHead.getBodyVelocityNormalized()
-//					);
-//					Log.d("dotMul",dotMul+"");
-					float v = VectorUtil.calDistance(gamePlay.snake.snakeHead.body.getLinearVelocity());
-					Log.d("velocity",v+"");
-					if(v<=1.5f){
-						gamePlay.snake.setDizzy();
-					}else {
-						gamePlay.snake.setDead();
-						changeSnakeVelocityUponDead();
-					}
-				}
-			}else if(idB.toString().equals("snakeHead")){
-				if(idA.contains("snakeFood")){
-					Log.d("ContactListener",idB+" equals snakeHead "+idA+" contains snakeFood");
-					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idA.split(" ")[1]));
-					sf.setEaten();
-					gamePlay.snake.whenEatSnakeFood(sf);
-				}else  if(idA.contains("Bomb")){
-					gamePlay.getBomb(Integer.parseInt(idA.split(" ")[1])).setEaten();
-					gamePlay.snake.whenEatBomb();
-				}else if(idA.contains("FoodMagnet")){
-					FoodMagnet foodMagnet = gamePlay.getFoodMagnet(Integer.parseInt(idA.split(" ")[1]));
-					foodMagnet.setEaten();
-					gamePlay.snake.whenEatFoodMagnet(foodMagnet);
-				}else if(!idA.equals("snakeBody 1")){
-//					Vec2 localNormal = contact.getManifold().localNormal;
-//					float dotMul = dotMul2D(localNormal,gamePlay.snake.snakeHead.getBodyVelocityNormalized());
-//					Log.d("dotMul",dotMul+"");
-					float v = VectorUtil.calDistance(gamePlay.snake.snakeHead.body.getLinearVelocity());
-					Log.d("velocity",v+"");
-					if(v<=1.5f){
-						gamePlay.snake.setDizzy();
-					}else {
-						gamePlay.snake.setDead();
-						changeSnakeVelocityUponDead();
-					}
+					gamePlay.snake.setDead();
+					changeSnakeVelocityUponDead();
 				}
 			}
 		}

@@ -119,14 +119,15 @@ public class GamePlayView extends GLSurfaceView {
             nowMenuStepDraw(texDrawer);
         }
         public void nowMenuStepDraw(TexDrawer painter){
-
             if(nowMenu!=null){
                 if(nowMenu.doDraw==false)nowMenu=null;
                 else {
-                    synchronized (nowMenu){
+                    try {
                         nowMenu.drawFloorShadow(painter);
                         nowMenu.drawHeight(painter);
                         nowMenu.drawSelf(painter);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
             }

@@ -100,6 +100,20 @@ public class RoundEdgeRectButton extends ImgButton {
          }
     }
     @Override
+    public void setFloorShadowFactorX(float x){
+        super.setFloorShadowFactorX(x);
+        circleButton.setFloorShadowFactorX(x);
+        rectButton1.setFloorShadowFactorX(x);
+        rectButton2.setFloorShadowFactorX(x);
+    }
+    @Override
+    public void setFloorShadowFactorY(float y){
+        super.setFloorShadowFactorY(y);
+        circleButton.setFloorShadowFactorY(y);
+        rectButton1.setFloorShadowFactorY(y);
+        rectButton2.setFloorShadowFactorY(y);
+    }
+    @Override
     public void drawSelf(TexDrawer painter){
         float ratio = this.scaleWidth/this.width;
         float width = this.width+this.scaleWidth;

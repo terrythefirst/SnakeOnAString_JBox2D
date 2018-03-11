@@ -110,9 +110,9 @@ public class GamePlay extends MyView{
                0,
                 720,-changeSkinButtonHeight,
                 changeSkinButtonWidth,changeSkinButtonHeight,
-                40,
+                80,
                 Constant.COLOR_DEEP_PINK,
-                30,
+                10,
                 5,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 Constant.ButtonBlockHeightColorFactor,
@@ -120,6 +120,8 @@ public class GamePlay extends MyView{
                 Constant.ChangeSkinChineseImg,
                 null
         );
+        changeSkinButton.setFloorShadowFactorX(0);
+        changeSkinButton.setFloorShadowFactorY(4f);
         changeSkinButton.setButtonListener(
                 ()->gamePlayView.setNowView(Constant.SKIN_CHANGING_VIEW)
         );
@@ -323,6 +325,7 @@ public class GamePlay extends MyView{
                 "",
                 true
         );
+        upWall.sendCreateTask();
         RectBody leftWall = new RectBody(
                 this,
                 "leftWall",
@@ -336,6 +339,7 @@ public class GamePlay extends MyView{
                 "",
                 true
         );
+        leftWall.sendCreateTask();
         RectBody rightWall = new RectBody(
                 this,
                 "rightWall",
@@ -349,9 +353,7 @@ public class GamePlay extends MyView{
                 "",
                 true
         );
-
-
-        jBox2DThread.staticBody = rightWall.body;
+        rightWall.sendCreateTask();
     }
     public void constructButtonWall(){
         RectBody buttonWall = new RectBody(
@@ -367,6 +369,7 @@ public class GamePlay extends MyView{
                 "",
                 true
         );
+        buttonWall.sendCreateTask();
     }
     @Override
     public void onTouchEvent(MotionEvent event, float x, float y){

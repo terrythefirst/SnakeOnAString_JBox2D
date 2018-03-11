@@ -16,6 +16,9 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.SnakeHeightColo
 public class Nail extends GameElement {
     public float TargetHeadVX = 0;
     public float TargetHeadVY = 1;
+
+    public boolean reached = false;
+
     public Nail(float x, float y, float vx, float vy, int color) {
         super(
                 "Nail",
@@ -30,6 +33,12 @@ public class Nail extends GameElement {
                 NailShadowImg);
         setDoDrawHeight(false);
         setTarget(x,y,vx,vy);
+    }
+    public void setReached(boolean x){
+        reached = x;
+    }
+    public boolean getReached(){
+        return reached;
     }
     @Override
     public void drawSelf(TexDrawer painter){

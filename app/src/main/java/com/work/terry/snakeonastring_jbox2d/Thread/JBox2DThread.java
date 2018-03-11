@@ -28,8 +28,6 @@ public class JBox2DThread extends Thread implements Stoppable{
 
     public List<JBox2dThreadTask> tasks = new ArrayList<>();
 
-    public Body staticBody = null;
-
     boolean shouldDie = false;
     GamePlay gamePlay;
 
@@ -69,7 +67,6 @@ public class JBox2DThread extends Thread implements Stoppable{
 //                ((ButtonBlockCircle)mb).body.getFixtureList().getShape().setRadius((((ButtonBlockCircle) mb).radius+((ButtonBlockCircle) mb).scaleWidth/2)/RATE);
 //            }
             if(mb instanceof CircleBody){
-
                 mb.body.getFixtureList().getShape().setRadius((((CircleBody)mb).radius+((CircleBody)mb).scaleWidth/2)/RATE);
             }
             if (mb instanceof SnakeFood) {

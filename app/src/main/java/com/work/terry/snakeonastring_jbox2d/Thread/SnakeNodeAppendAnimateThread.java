@@ -37,13 +37,13 @@ public class SnakeNodeAppendAnimateThread extends Thread {
             e.printStackTrace();
         }
         if(snakeNode.snake.getSnakeAjaxLength()>snakeNode.snake.getLength()) {
-            while (!snakeNode.created){
-                try {
-                    sleep(10);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
+//            while (!snakeNode.created){
+//                try {
+//                    sleep(10);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
             while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
                 snakeNodeAnimateDraw.AnimationStep(0.5f);
 
@@ -58,7 +58,9 @@ public class SnakeNodeAppendAnimateThread extends Thread {
         }
 
         snakeNode.snake.endAddAnimation();
-        snakeNode.snake.snakeBodies.add(snakeNode);
+        synchronized (snakeNode.snake.snakeBodies){
+            snakeNode.snake.snakeBodies.add(snakeNode);
+        }
         snakeNode.setDoDraw(true);
         drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
         //drawUtil.addToCenterLayer(snakeNode);

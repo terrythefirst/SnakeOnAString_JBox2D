@@ -242,9 +242,9 @@ public class ButtonBlock extends MyBody {
         rectBody.jumpHeight = jumpHeight;
         circleBody1.jumpHeight = jumpHeight;
         circleBody2.jumpHeight = jumpHeight;
-        rectBody.drawSelf(painter);
-        circleBody1.drawSelf(painter);
-        circleBody2.drawSelf(painter);
+//        rectBody.drawSelf(painter);
+//        circleBody1.drawSelf(painter);
+//        circleBody2.drawSelf(painter);
         //float height = calDistance(minusV2D(circleBody1.getBodyXY(),circleBody2.getBodyXY()));
         painter.drawColorSelf(
                 TexManager.getTex(rectBody.Img),
@@ -276,14 +276,14 @@ public class ButtonBlock extends MyBody {
                 (circleBody2.TopHeight+circleBody2.scaleHeight)*((TopRatio==0)?1:TopRatio),
                 circleBody2.rotateAngleGameElements
         );
-//        drawSequence.stream()
-//                .sorted(Comparator.comparing(x -> x.y))
-//                .forEach(
-//                        x -> {
-//                            //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
-//                            x.drawSelf(painter);
-//                        }
-//                );
+        drawSequence.stream()
+                .sorted(Comparator.comparing(x -> x.y))
+                .forEach(
+                        x -> {
+                            //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
+                            x.drawSelf(painter);
+                        }
+                );
     }
     @Override
     public void drawHeight(TexDrawer painter){
