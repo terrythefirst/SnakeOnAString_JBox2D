@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.JBox2DElements;//声明包名
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.FountainAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.FoodMagnet;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
@@ -62,6 +63,18 @@ public class MyContactListener implements ContactListener {
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
 					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idB.split(" ")[1]));
 					sf.setEaten();
+					new FountainAnimation(
+							gamePlay.getDrawUtil(),
+							0,
+							sf.x,sf.y,
+							20,
+							sf.width,
+							400,
+							100,
+							20,
+							1.5f,
+							sf.colorFloats
+					);
 					gamePlay.snake.whenEatSnakeFood(sf);
 				}else  if(idB.contains("Bomb")){
 					gamePlay.getBomb(Integer.parseInt(idB.split(" ")[1])).setEaten();
@@ -80,7 +93,7 @@ public class MyContactListener implements ContactListener {
 //						changeSnakeVelocityUponDead();
 //					}
 					gamePlay.snake.setDead();
-					changeSnakeVelocityUponDead();
+					//changeSnakeVelocityUponDead();
 				}
 			}
 		}

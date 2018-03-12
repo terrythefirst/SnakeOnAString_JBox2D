@@ -156,6 +156,7 @@ public class GameElement {
         this.floorShadowFactorY = y;
     }
     public void drawSelf(TexDrawer painter){
+        if(!doDraw)return;
         //offSet
         if (TopOffset != 0) {
             painter.drawColorFactorTex(
@@ -207,7 +208,7 @@ public class GameElement {
         this.doDraw = x;
     }
     public void drawHeight(TexDrawer painter){
-        if (!doDrawHeight)return;
+        if (!doDraw||!doDrawHeight)return;
         //drawHeight
             painter.drawColorFactorTex(
                     TexManager.getTex(Img),
@@ -232,7 +233,7 @@ public class GameElement {
     }
 
     public void drawFloorShadow(TexDrawer painter){
-        if(doDrawFloorShadow)
+        if(doDraw&&doDrawFloorShadow)
             painter.drawShadow(
                     TexManager.getTex(Img),
                     ColorManager.getColor(Constant.COLOR_GREY),

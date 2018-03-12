@@ -5,6 +5,7 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeFoodJumpScoreThread;
+import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
@@ -29,7 +30,7 @@ public class SnakeFood extends CircleBody{
             GamePlay gamePlay,
             int id,
             float x,float y,
-            float raius,
+            float radius,
             int color,
             int score,
             String Img){
@@ -38,7 +39,7 @@ public class SnakeFood extends CircleBody{
                 "snakeFood "+id,
                 x,y,
                 0,
-                raius,
+                radius,
 
                 color,
                 6,0,0,0.4f,SnakeFloorColorFactor,
@@ -50,6 +51,7 @@ public class SnakeFood extends CircleBody{
         this.drawUtil = drawUtil;
         this.score = score;
         setDoDrawHeight(false);
+        setColor(Constant.COLOR_RED);
 
         drawUtil.addToFloorLayer(this);
         starttJumpScoreThread();

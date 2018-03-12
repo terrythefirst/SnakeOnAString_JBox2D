@@ -37,7 +37,7 @@ public class SnakeHeadMovingThread extends Thread {
             }else {
                 float dx = snakeHead.target.x - snakeHead.x;
                 float dy = snakeHead.target.y - snakeHead.y;
-                Log.e("calDistance(dx,dy)<10f",calDistance(dx,dy)+"");
+                //Log.e("calDistance(dx,dy)<10f",calDistance(dx,dy)+"");
                 if(calDistance(dx,dy)<10f){
                     snakeHead.target.setReached(true);
                     snakeHead.target.setDoDraw(false);

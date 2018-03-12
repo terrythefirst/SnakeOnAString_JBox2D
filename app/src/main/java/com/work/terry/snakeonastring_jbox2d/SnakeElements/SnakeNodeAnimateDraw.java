@@ -45,6 +45,7 @@ public class SnakeNodeAnimateDraw extends GameElement {
         return (nowRadius==targetRadius);
     }
     public void AnimationStep(float perRadius){
+        if(snakeNode==null||snakeNode.body==null)return;
         nowRadius += perRadius;
 
         float ratio = nowRadius/snakeNode.radius;
