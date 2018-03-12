@@ -2,6 +2,7 @@ package com.work.terry.snakeonastring_jbox2d.Thread;
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.FountainAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeAnimateDraw;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
@@ -45,6 +46,18 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
                     e.printStackTrace();
                 }
             }
+            new FountainAnimation(
+                    snakeNode.snake.gamePlay.getDrawUtil(),
+                    1,
+                    snakeNodeAnimateDraw.x,snakeNodeAnimateDraw.y,
+                    40,
+                    30,
+                    snakeNode.radius,
+                    40,
+                    30,
+                    1F,
+                    snakeNode.colorFloats
+            );
             //drawUtil.deleteElement(snakeNodeAnimateDraw);
             snakeNodeAnimateDraw.setDoDraw(false);
             drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);

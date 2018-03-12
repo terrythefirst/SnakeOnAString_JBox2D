@@ -26,6 +26,7 @@ public class SingleGrain extends GameElement {
     public float G;
 
     public SingleGrain(
+            float x,float y,
             Vec2 centerXY,
             float radius,
             float centerRadius,
@@ -69,7 +70,7 @@ public class SingleGrain extends GameElement {
         float height = (float) (vz*timeSpan-0.5*timeSpan*timeSpan*G)*RATE;
         if(height<=0)vz = -vy*0.76f;
         if(vz<0.03f)vz=0;
-        jumpHeight = height/defaultHeight;
+        jumpHeight = height>defaultHeight?height-defaultHeight:height;
     }
     @Override
     public void drawSelf(TexDrawer painter){

@@ -4,6 +4,7 @@ package com.work.terry.snakeonastring_jbox2d.SnakeElements;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.FountainAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.SnakeEatingHeadAnimation;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.FoodMagnetMoveThread;
@@ -13,6 +14,7 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeAppendAnimateThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeNodeRemoveAnimateThread;
+import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 
 
@@ -184,6 +186,18 @@ public class Snake {
     public void setDead(){
         Log.d("snake","DEAD!");
         isDead = true;
+        new FountainAnimation(
+                gamePlay.getDrawUtil(),
+                1,
+                snakeHead.x,snakeHead.y,
+                40,
+                30,
+                snakeHead.radius/2,
+                10,
+                5,
+                1F,
+                ColorManager.getColor(Constant.COLOR_GREY)
+        );
         snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDeadImgCode).getImg());//Constant.SnakeHeadDizzyEyesImg);
     }
     public boolean isDead(){

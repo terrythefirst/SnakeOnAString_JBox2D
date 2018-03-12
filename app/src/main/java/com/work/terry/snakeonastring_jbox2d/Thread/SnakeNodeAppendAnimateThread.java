@@ -3,9 +3,11 @@ package com.work.terry.snakeonastring_jbox2d.Thread;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Animation.FountainAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeAnimateDraw;
+import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 
@@ -44,6 +46,18 @@ public class SnakeNodeAppendAnimateThread extends Thread {
 //                    e.printStackTrace();
 //                }
 //            }
+            new FountainAnimation(
+                    snakeNode.snake.gamePlay.getDrawUtil(),
+                    1,
+                    snakeNodeAnimateDraw.x,snakeNodeAnimateDraw.y,
+                    40,
+                    30,
+                    snakeNode.radius,
+                    40,
+                    5,
+                    1F,
+                    snakeNode.colorFloats
+            );
             while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
                 snakeNodeAnimateDraw.AnimationStep(0.5f);
 

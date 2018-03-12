@@ -73,22 +73,23 @@ public class FountainAnimation extends GameElement {
         this.vZInit =  G*timeSpan/2;
 
         for(int i=0;i<grainCount;i++){
-            double elevation=0.35f*Math.random()*Math.PI+Math.PI*0.15f;	//仰角
-            double direction=Math.random()*Math.PI*2;		//方位角
+            double elevation=Math.random()*Math.PI*2;	//仰角
             float vy=(float)(speedSpan*Math.sin(elevation));//分解出3个轴的初速度
-            float vx=(float)(speedSpan*Math.cos(elevation)*Math.cos(direction));
-            float vz=(float)(vZInit/2*Math.cos(elevation)*Math.sin(direction))+vZInit/2;
+            float vx=(float)(speedSpan*Math.cos(elevation));
+            //float vz=(float)(vZInit/2*Math.cos(elevation)+vZInit/2);
             float radius = (float) (Math.random()*maxSingleGrainRaius/2+maxSingleGrainRaius/2);
 
             singleGrains.add(
                     new SingleGrain(
+                            centerXY.x+explosiveRadius*((float)Math.cos(elevation)),
+                            centerXY.y+explosiveRadius*((float)Math.sin(elevation)),
                             centerXY,
                             (float) Math.random()*radius,
                             explosiveRadius,
                             G,
-                            vx,vy,vz,
+                            vx,vy,vZInit,
                             colorFloats,
-                            5,
+                            10,
                             Constant.ButtonBlockFloorColorFactor
                     )
             );
@@ -99,17 +100,14 @@ public class FountainAnimation extends GameElement {
     public void step(){
         long currTimeStamp = System.nanoTime()/1000000;
         long dt = currTimeStamp-timeStamp;
-        Log.e("fountain step","currTimeStamp-startTimeStamp="+(currTimeStamp-startTimeStamp));
+        //Log.e("fountain step","currTimeStamp-startTimeStamp="+(currTimeStamp-startTimeStamp));
         if(currTimeStamp-startTimeStamp > timeSpan){
-            Log.e("fountain step","remove");
+            //Log.e("fountain step","remove");
             drawUtil.addToRemoveSequence(this);
         }
         if(dt>10){
             for(SingleGrain sg:singleGrains){
                 sg.timeSpan = +speedStep;
-                if(sg.timeSpan>10){
-                    sg.timeSpan = 0;
-                }
             }
             timeStamp = currTimeStamp;
         }
