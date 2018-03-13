@@ -67,6 +67,7 @@ public class MyBox2DRevoluteJoint extends MyJoint{
 		rjd.initialize(A.body, B.body, anchor);//调用旋转关节描述的初始化函数
 		joint=(RevoluteJoint)world.createJoint(rjd);		//在物理世界里增添旋转关节
 		if(joint!=null)created = true;
+		else throw new RuntimeException("joint create failed");
 		gamePlay.jBox2DThread.Joints.add(this);
 	}
 }

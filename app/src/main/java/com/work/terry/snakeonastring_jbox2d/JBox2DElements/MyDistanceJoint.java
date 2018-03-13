@@ -57,7 +57,9 @@ public class MyDistanceJoint extends MyJoint
         djd.frequencyHz=frequencyHz;//设置关节频率
         djd.dampingRatio=dampingRatio;//设置关节阻尼系数
         joint=(DistanceJoint) world.createJoint(djd);//在物理世界添加距离关节
+
         if(joint!=null)created = true;
+        else throw new RuntimeException("joint create failed");
         gamePlay.jBox2DThread.Joints.add(this);
     }
 }

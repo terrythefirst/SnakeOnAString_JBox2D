@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.JBox2DElements;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 
 import org.jbox2d.dynamics.World;
@@ -27,9 +29,8 @@ public abstract class MyJoint {
 //        }
 //    }
     public void sendCreateTask(){
-        if(!destroyed){
+        if(!created){
             gamePlay.jBox2DThread.addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_ADD_JOINT,this));
-            destroyed = true;
         }
 
     }
@@ -38,6 +39,9 @@ public abstract class MyJoint {
     }
     public abstract void createJoint();
     public void deleteJoint(){
-        world.destroyJoint(joint);
+        if(created&&!destroyed){
+            world.destroyJoint(joint);
+            destroyed = true;
+        }
     }
 }

@@ -69,10 +69,10 @@ public class MyContactListener implements ContactListener {
 							sf.x,sf.y,
 							20,
 							sf.width,
-							400,
-							100,
-							20,
-							1.5f,
+							500,
+							150,
+							30,
+							0.3f,
 							sf.colorFloats
 					);
 					gamePlay.snake.whenEatSnakeFood(sf);
@@ -93,7 +93,7 @@ public class MyContactListener implements ContactListener {
 //						changeSnakeVelocityUponDead();
 //					}
 					gamePlay.snake.setDead();
-					//changeSnakeVelocityUponDead();
+					changeSnakeVelocityUponDead();
 				}
 			}
 		}

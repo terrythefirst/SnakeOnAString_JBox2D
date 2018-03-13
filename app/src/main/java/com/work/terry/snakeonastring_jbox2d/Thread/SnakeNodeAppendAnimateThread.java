@@ -49,13 +49,13 @@ public class SnakeNodeAppendAnimateThread extends Thread {
             new FountainAnimation(
                     snakeNode.snake.gamePlay.getDrawUtil(),
                     1,
-                    snakeNodeAnimateDraw.x,snakeNodeAnimateDraw.y,
+                    snakeNode.front.x,snakeNode.front.y,
                     40,
                     30,
-                    snakeNode.radius,
-                    40,
-                    5,
-                    1F,
+                    100,
+                    50,
+                    20,
+                    0.5F,
                     snakeNode.colorFloats
             );
             while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){

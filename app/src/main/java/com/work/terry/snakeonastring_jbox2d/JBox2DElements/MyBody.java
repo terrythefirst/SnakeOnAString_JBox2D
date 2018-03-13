@@ -93,8 +93,10 @@ public abstract class MyBody extends GameElement
     }
     public abstract void createBody();
     public void deleteBody(){
-        if(created)
+        if(created&&!destroyed){
             world.destroyBody(body);
+            destroyed=true;
+        }
     }
     public Vec2 getBodyVelocityNormalized(){
         return VectorUtil.normalize2D(new Vec2(body.getLinearVelocity().x*100,body.getLinearVelocity().x*100));

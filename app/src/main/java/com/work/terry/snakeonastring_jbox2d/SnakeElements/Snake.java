@@ -191,11 +191,11 @@ public class Snake {
                 1,
                 snakeHead.x,snakeHead.y,
                 40,
-                30,
-                snakeHead.radius/2,
-                10,
+                50,
+                200,
                 5,
-                1F,
+                40,
+                0.5F,
                 ColorManager.getColor(Constant.COLOR_GREY)
         );
         snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDeadImgCode).getImg());//Constant.SnakeHeadDizzyEyesImg);

@@ -79,6 +79,7 @@ public class MyPrismaticJoint extends MyJoint{
         pjd.initialize(A, B, anchor, localAxisA);			//调用移动关节描述对象的初始化函数
         joint=world.createJoint(pjd);		//在物理世界里增添移动关节
         if(joint!=null)created = true;
+        else throw new RuntimeException("joint create failed");
         gamePlay.jBox2DThread.Joints.add(this);
     }
 }

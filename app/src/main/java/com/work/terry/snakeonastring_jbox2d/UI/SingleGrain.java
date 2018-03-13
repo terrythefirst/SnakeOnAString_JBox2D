@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -23,6 +25,7 @@ public class SingleGrain extends GameElement {
     float vz;
 
     public float timeSpan = 0;
+    public float dt=0;
     public float G;
 
     public SingleGrain(
@@ -58,19 +61,26 @@ public class SingleGrain extends GameElement {
     }
     public void stepMove(){
         if(!doDraw)return;
-        if(vz==0)setDoDraw(false);
-
         float centerDistance = VectorUtil.calDistance(x-centerXY.x,y-centerXY.y);
+        if(vz==0||centerDistance>centerRadius)setDoDraw(false);
         float ratio =MyMath.smoothStep(0,centerRadius,centerDistance);
-        scaleWidth = -width*ratio*0.6f;
-        scaleHeight = -height*ratio*0.6f;
+        scaleWidth = -width*ratio;
+        scaleHeight = -height*ratio;
 
-        x += vx*timeSpan*RATE;
-        y += vy*timeSpan*RATE;
-        float height = (float) (vz*timeSpan-0.5*timeSpan*timeSpan*G)*RATE;
-        if(height<=0)vz = -vy*0.76f;
-        if(vz<0.03f)vz=0;
-        jumpHeight = height>defaultHeight?height-defaultHeight:height;
+//        x =centerXY.x+ vx*timeSpan*RATE;
+//        y =centerXY.y+ vy*timeSpan*RATE;
+        timeSpan +=dt;
+        x += vx*dt*RATE;
+        y += vy*dt*RATE;
+       float height = (float) (vz*timeSpan-0.5*timeSpan*timeSpan*G);
+        if(height<=0){
+            vz = -vy*0.9f;
+            timeSpan=0;
+        }
+        if(Math.abs(vz)<1f)vz=0;
+        //else  Log.e("Math.abs(vz)",Math.abs(vz)+"");
+        jumpHeight = height;
+        //Log.e("jumpHeight",jumpHeight+"");
     }
     @Override
     public void drawSelf(TexDrawer painter){

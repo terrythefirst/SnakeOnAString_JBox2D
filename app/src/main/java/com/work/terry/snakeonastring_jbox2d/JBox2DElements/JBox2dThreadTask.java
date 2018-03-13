@@ -55,13 +55,13 @@ public class JBox2dThreadTask {
                     myBody.destroyed = true;
                 }
                 break;
-            case OPERATION_DELETE_JOINT:
-                if(!myJoint.destroyed){
-                    myJoint.deleteJoint();
-                    myJoint.destroyed = true;
-                }
+//            case OPERATION_DELETE_JOINT:
+//                if(!myJoint.destroyed){
+//                    myJoint.deleteJoint();
+//                    myJoint.destroyed = true;
+//                }
 
-                break;
+                //break;
         }
     }
 }

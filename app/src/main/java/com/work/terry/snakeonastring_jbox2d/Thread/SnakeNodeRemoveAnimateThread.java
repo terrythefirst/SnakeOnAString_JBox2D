@@ -16,15 +16,15 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
     Thread waitThread;
     private int code = Constant.SNAKE_ANIMATION_REMOVE;
     SnakeNode snakeNode;
-    SnakeNodeAnimateDraw snakeNodeAnimateDraw;
+    //SnakeNodeAnimateDraw snakeNodeAnimateDraw;
     DrawUtil drawUtil;
 
     public SnakeNodeRemoveAnimateThread (SnakeNode snakeNode, DrawUtil drawUtil,Thread waitThread){
         this.snakeNode = snakeNode;
-        this.snakeNodeAnimateDraw = new SnakeNodeAnimateDraw(snakeNode,code);
+        //this.snakeNodeAnimateDraw = new SnakeNodeAnimateDraw(snakeNode,code);
         this.drawUtil = drawUtil;
         this.waitThread = waitThread;
-        drawUtil.addToCenterLayer(snakeNodeAnimateDraw);
+        //drawUtil.addToCenterLayer(snakeNodeAnimateDraw);
     }
     @Override
     public void run(){
@@ -37,30 +37,31 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
 
         if(snakeNode.snake.getSnakeAjaxLength()<snakeNode.snake.getLength()) {
             snakeNode.setDoDraw(false);
-            while (!snakeNode.snake.isDead() && !snakeNodeAnimateDraw.isFinished()) {
-                snakeNodeAnimateDraw.AnimationStep(-0.5f);
-
-                try {
-                    sleep(10);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
             new FountainAnimation(
                     snakeNode.snake.gamePlay.getDrawUtil(),
                     1,
-                    snakeNodeAnimateDraw.x,snakeNodeAnimateDraw.y,
+                    snakeNode.x,snakeNode.y,
                     40,
-                    30,
-                    snakeNode.radius,
                     40,
-                    30,
-                    1F,
+                    400,
+                    20,
+                    100,
+                    0.5F,
                     snakeNode.colorFloats
             );
+//            while (!snakeNode.snake.isDead() && !snakeNodeAnimateDraw.isFinished()) {
+//                snakeNodeAnimateDraw.AnimationStep(-0.5f);
+//
+//                try {
+//                    sleep(10);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
             //drawUtil.deleteElement(snakeNodeAnimateDraw);
-            snakeNodeAnimateDraw.setDoDraw(false);
-            drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
+            //snakeNodeAnimateDraw.setDoDraw(false);
+            //drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
 
             snakeNode.sendDeleteTask();
             snakeNode.snake.snakeBodies.remove(snakeNode);
@@ -69,6 +70,6 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
         snakeNode.snake.endAddAnimation();
         //drawUtil.addToCenterLayer(snakeNode);
 
-        Log.d("SnakeNodeRemoveAnimateThread",snakeNodeAnimateDraw.id+"finished!");
+        //Log.d("SnakeNodeRemoveAnimateThread",snakeNodeAnimateDraw.id+"finished!");
     }
 }

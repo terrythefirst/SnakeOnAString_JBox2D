@@ -52,6 +52,7 @@ public class MyWeldJoint extends MyJoint
 		joint=(WeldJoint) world.createJoint(wjd);//在物理世界添加焊接关节
 
 		if(joint!=null)created = true;
+		else throw new RuntimeException("joint create failed");
 		gamePlay.jBox2DThread.Joints.add(this);
 	}
 }
