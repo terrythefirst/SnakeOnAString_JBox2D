@@ -7,6 +7,7 @@ import com.work.terry.snakeonastring_jbox2d.Animation.ListBreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlock;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
+import com.work.terry.snakeonastring_jbox2d.GamePlayElements.CircleButtonBlocks;
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.Entrance;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
@@ -107,6 +108,8 @@ public class LoadGameUtil {
             e.printStackTrace();
         }
 
+        loadCircleButtonBlocks(gamePlay,null);
+
         loadHelper = null;
         gamePlay.startGame();
         Log.d("loadGameFromFile","finish");
@@ -131,6 +134,24 @@ public class LoadGameUtil {
     public float[] getColor(String ss){
         String[] spColor = ss.trim().split(",");
         return new float[]{Float.parseFloat(spColor[0]),Float.parseFloat(spColor[1]),Float.parseFloat(spColor[2])};
+    }
+    public void loadCircleButtonBlocks(GamePlay gamePlay,String subString){
+        CircleButtonBlocks ccb = new CircleButtonBlocks(
+                gamePlay,
+                0,
+                720,1280,
+                100,
+                new float[]{127,255,170},
+                40,
+                10,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                (float) Math.toRadians(5),
+                5000
+        );
+        ccb.sendCreateTask();
+        gamePlay.addGameElements(ccb,Constant.LAYER_CENTER);
     }
     public void loadListBreathAnimation(String subString){
         String[] tempsp = subString.split("[ ]+");

@@ -150,6 +150,7 @@ public class CircleBody extends MyBody{
             created = true;
             gamePlay.jBox2DThread.Bodies.add(this);
         }
+        else throw new RuntimeException(id+" create Failed");
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){

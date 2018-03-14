@@ -62,7 +62,7 @@ public class GameElement {
             float x,float y,
             float width,float height,
 
-            float[] colorFloats,
+            float[] colorFloats255,
             float defaultHeight,
             float topOffset,
             float topOffsetColorFactor,
@@ -79,7 +79,7 @@ public class GameElement {
         this.TopWidth = width;
         this.TopHeight = height;
         this.Img = Img;
-        this.colorFloats = ColorManager.getColorByRGB255(colorFloats);
+        this.colorFloats = ColorManager.getColorByRGB255(colorFloats255);
         this.defaultHeight = defaultHeight;
         this.TopOffset = topOffset;
         this.TopOffsetColorFactor = topOffsetColorFactor;
@@ -139,6 +139,9 @@ public class GameElement {
         this.TopOffsetColorFactor = topOffsetColorFactor;
         this.HeightColorFactor = heightColorFactor;
         this.FloorShadowColorFactor = floorShadowColorFactor;
+    }
+    public void setTopOffset(float x){
+                TopOffset = x;
     }
     public void setTopImg(String x){
         this.TopImg = x;

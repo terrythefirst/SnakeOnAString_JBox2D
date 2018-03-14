@@ -62,7 +62,6 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 					return false;
 				}
 			}
-
 		}else if(idA.contains("FoodMagnet")||idB.contains("FoodMagnet")){
 
 			if(idA.contains("FoodMagnet")){
@@ -83,7 +82,10 @@ public class MyContactFilter extends ContactFilter//碰撞过滤相关类
 				}
 			}
 
-		}else if(idA.contains("snakeBody")&&idB.contains("Wall")){
+		}else if(idA.contains("CircleButtonBlock")&&idB.contains("CircleButtonBlock")){
+			return false;
+		}
+		else if(idA.contains("snakeBody")&&idB.contains("Wall")){
 			return false;
 		}
 

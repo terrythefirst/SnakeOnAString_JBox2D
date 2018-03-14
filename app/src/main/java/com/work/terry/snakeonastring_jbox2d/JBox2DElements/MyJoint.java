@@ -32,7 +32,6 @@ public abstract class MyJoint {
         if(!created){
             gamePlay.jBox2DThread.addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_ADD_JOINT,this));
         }
-
     }
     public void sendDeleteTask(){
         gamePlay.jBox2DThread.addToTasks(new JBox2dThreadTask(JBox2dThreadTask.OPERATION_DELETE_JOINT,this));

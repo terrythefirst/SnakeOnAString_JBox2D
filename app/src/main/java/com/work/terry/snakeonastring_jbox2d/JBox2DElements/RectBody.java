@@ -6,6 +6,7 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.JBox2DThread;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -29,7 +30,7 @@ public class RectBody extends MyBody{
             GamePlay gamePlay,
             String id,
             float x,float y,
-            float angle,
+            float angleRadian,
             float halfWidth,//半宽
             float halfHeight,//半高
 
@@ -59,7 +60,7 @@ public class RectBody extends MyBody{
                 heightColorFactor,
                 floorShadowColorFactor,
 
-                angle,
+                angleRadian,
                 0,
                 0,
                 density,
@@ -71,6 +72,11 @@ public class RectBody extends MyBody{
         );
         this.halfHeight = halfHeight;
         this.halfWidth = halfWidth;
+    }
+    @Override
+    public void drawSelf(TexDrawer painter){
+        rotateAngleGameElements = -(float)Math.toDegrees( body.getAngle());
+        super.drawSelf(painter);
     }
     @Override
     public void createBody(){
@@ -112,6 +118,7 @@ public class RectBody extends MyBody{
             created=true;
             gamePlay.jBox2DThread.Bodies.add(this);
         }
+        else throw new RuntimeException(id+" create Failed");
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){

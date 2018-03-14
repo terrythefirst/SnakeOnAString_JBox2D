@@ -170,8 +170,8 @@ public class Snake {
         new Thread(){
             @Override
             public void run() {
-                Log.e("SnakeSkinManager.skinMap.get(Skin)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode).getImg()+"");
-                Log.e("SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)==null?"null":"not null");
+                //Log.e("SnakeSkinManager.skinMap.get(Skin)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode).getImg()+"");
+                //Log.e("SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)==null?"null":"not null");
                 snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDizzyImgCode).getImg());
                 try {
                     sleep(800);

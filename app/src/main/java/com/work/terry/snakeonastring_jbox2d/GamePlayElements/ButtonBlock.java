@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
+import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
@@ -46,7 +47,7 @@ public class ButtonBlock extends MyBody {
 
     public ButtonBlock(
             GamePlay gamePlay,
-            int id,
+            String id,
             float x,float y,
             float circleDiameter,
             float totalLength,
@@ -55,10 +56,10 @@ public class ButtonBlock extends MyBody {
             float rotateAngleDegrees,//0 horizontal   90 vertical  clockwise
             boolean isStatic,
             float[] colorFloats
-            ){
+    ){
         super(
                 gamePlay,
-                "ButtonBlock "+id,
+                id,
                 x,y,
                 totalLength,
                 circleDiameter,
@@ -74,7 +75,7 @@ public class ButtonBlock extends MyBody {
                 ""
         );
         setColorFloats255(colorFloats);
-        this.world = world;
+        this.world = gamePlay.world;
         this.x = x;
         this.y = y;
         this.setTopRatio(Constant.ButtonBlockTopRatio);
@@ -94,6 +95,33 @@ public class ButtonBlock extends MyBody {
 
         setDoDraw(false);
     }
+
+    public ButtonBlock(
+            GamePlay gamePlay,
+            int id,
+            float x,float y,
+            float circleDiameter,
+            float totalLength,
+
+            float defaultHeight,
+            float rotateAngleDegrees,//0 horizontal   90 vertical  clockwise
+            boolean isStatic,
+            float[] colorFloats
+            ){
+        this(
+                gamePlay,
+                "ButtonBlock "+id,
+                x,y,
+                circleDiameter,
+                totalLength,
+
+
+                defaultHeight,
+                rotateAngleDegrees,
+                isStatic,
+                colorFloats
+        );
+    }
     @Override
     public void createBody() {
         initBody(gamePlay);
@@ -108,7 +136,7 @@ public class ButtonBlock extends MyBody {
     public void initBody(GamePlay gamePlay){
         rectBody = new RectBody(
                 gamePlay,
-                (isStatic)?"Static":"Dynamic"+id+"RectBody",
+                id+((isStatic)?"Static":"Dynamic"+id+"RectBody"),
                 x,y,
                 rotateAngleRectRadian,
                 circleDiameter/2,
@@ -128,6 +156,7 @@ public class ButtonBlock extends MyBody {
                 isStatic
         );
         rectBody.createBody();
+        this.body = rectBody.body;
         rectBody.setColorFloats(colorFloats);
         rectBody.setIsPureColor(true);
         //rectBody.setTopRatio(TopRatio);
@@ -149,7 +178,7 @@ public class ButtonBlock extends MyBody {
         );
         circleBody1 = new CircleBody(
                 gamePlay,
-                (isStatic)?"Static":"Dynamic"+id+"CircleBody",
+                id+((isStatic)?"Static":"Dynamic"+id+"CircleBody"),
                 circleBody1XY.x,circleBody1XY.y,
                 rotateAngleCB1Radian,
                 circleDiameter/2,
@@ -175,7 +204,7 @@ public class ButtonBlock extends MyBody {
         //circleBody1.setTopRatio(TopRatio);
         circleBody2 = new CircleBody(
                 gamePlay,
-                (isStatic)?"Static":"Dynamic"+id+"CircleBody",
+                id+((isStatic)?"Static":"Dynamic"+id+"CircleBody"),
                 circleBody2XY.x,circleBody2XY.y,
                 rotateAngleCB2Radian,
                 circleDiameter/2,
@@ -204,7 +233,7 @@ public class ButtonBlock extends MyBody {
         drawSequence.add(circleBody1);
         drawSequence.add(circleBody2);
 
-        new MyWeldJoint(
+        MyJoint tempt = new MyWeldJoint(
                 id+"WeldJoint1",
                 gamePlay,
                 true,
@@ -212,10 +241,11 @@ public class ButtonBlock extends MyBody {
                 circleBody1,
                 rectBody.body.getPosition(),
                 //circleBody1.body.getPosition(),
-                0.0f,
-                0.0f
+                1.0f,
+                1.0f
         );
-        new MyWeldJoint(
+        tempt.createJoint();
+        tempt = new MyWeldJoint(
                 id+"WeldJoint2",
                 gamePlay,
                 true,
@@ -223,9 +253,10 @@ public class ButtonBlock extends MyBody {
                 circleBody2,
                 rectBody.body.getPosition(),
                 //circleBody2.body.getPosition(),
-                0.0f,
-                0.0f
+                1.0f,
+                1.0f
         );
+        tempt.createJoint();
     }
     @Override
     public void drawSelf(TexDrawer painter){
@@ -249,8 +280,8 @@ public class ButtonBlock extends MyBody {
         painter.drawColorSelf(
                 TexManager.getTex(rectBody.Img),
                 colorFloats,
-                x,
-                y - jumpHeight - rectBody.defaultHeight,
+                rectBody.x,
+                rectBody.y - jumpHeight - rectBody.defaultHeight,
                 (rectBody.TopWidth+rectBody.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (rectBody.height+rectBody.scaleHeight)+circleBody1.radius*(1-TopRatio)+circleBody2.radius*(1-TopRatio),
                 rectBody.rotateAngleGameElements
