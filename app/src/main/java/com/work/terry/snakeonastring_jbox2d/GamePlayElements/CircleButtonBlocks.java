@@ -130,7 +130,7 @@ public class CircleButtonBlocks extends MyBody {
                             x,y,
                             angleRadians,
                             2,
-                            centerRadius*2,
+                            centerRadius,
                             0,
                             0,
                             0,
@@ -235,10 +235,17 @@ public class CircleButtonBlocks extends MyBody {
     public void drawSelf(TexDrawer painter){
         if(!created)return;
         buttonBlocks.stream()
-                .sorted(Comparator.comparing(x -> x.y))
                 .forEach(
                         x -> {
-                            x.drawSelf(painter);
+                            x.synchronizeAngle();
+                            x.drawOffset(painter);
+                        }
+                );
+        buttonBlocks.stream()
+                .forEach(
+                        x -> {
+                            //x.synchronizeAngle();
+                            x.drawTop(painter);
                         }
                 );
 //        rectBodies.stream()

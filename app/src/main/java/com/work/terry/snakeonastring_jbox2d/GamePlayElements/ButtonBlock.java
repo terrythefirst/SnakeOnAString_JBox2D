@@ -260,6 +260,16 @@ public class ButtonBlock extends MyBody {
     }
     @Override
     public void drawSelf(TexDrawer painter){
+        synchronizeAngle();
+        drawSequence.stream()
+                .sorted(Comparator.comparing(x -> x.y))
+                .forEach(
+                        x -> {
+                            x.drawSelf(painter);
+                        }
+                );
+    }
+    public void synchronizeAngle(){
         circleBody1.rotateAngleGameElements = 180-(float)Math.toDegrees( rectBody.body.getAngle());
 //        circleBody1.drawSelf(painter);
 //
@@ -273,46 +283,62 @@ public class ButtonBlock extends MyBody {
         rectBody.jumpHeight = jumpHeight;
         circleBody1.jumpHeight = jumpHeight;
         circleBody2.jumpHeight = jumpHeight;
+    }
+    public void drawOffset(TexDrawer painter){
 //        rectBody.drawSelf(painter);
 //        circleBody1.drawSelf(painter);
 //        circleBody2.drawSelf(painter);
         //float height = calDistance(minusV2D(circleBody1.getBodyXY(),circleBody2.getBodyXY()));
-        painter.drawColorSelf(
+        painter.drawColorFactorTex(
                 TexManager.getTex(rectBody.Img),
                 colorFloats,
                 rectBody.x,
-                rectBody.y - jumpHeight - rectBody.defaultHeight,
+                rectBody.y - jumpHeight - rectBody.defaultHeight+rectBody.TopOffset,
                 (rectBody.TopWidth+rectBody.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (rectBody.height+rectBody.scaleHeight)+circleBody1.radius*(1-TopRatio)+circleBody2.radius*(1-TopRatio),
-                rectBody.rotateAngleGameElements
+                rectBody.rotateAngleGameElements,
+                rectBody.TopOffsetColorFactor
         );
         //drawSelf
 
-        painter.drawColorSelf(
+        painter.drawColorFactorTex(
                 TexManager.getTex(SnakeBodyImg),
                 colorFloats,
                 circleBody1.x,
-                circleBody1.y - jumpHeight - circleBody1.defaultHeight,
+                circleBody1.y - jumpHeight - circleBody1.defaultHeight+circleBody1.TopOffset,
                 (circleBody1.TopWidth+circleBody1.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (circleBody1.TopHeight+circleBody1.scaleHeight)*((TopRatio==0)?1:TopRatio),
-                circleBody1.rotateAngleGameElements
+                circleBody1.rotateAngleGameElements,
+                circleBody1.TopOffsetColorFactor
         );
 
-        painter.drawColorSelf(
+        painter.drawColorFactorTex(
                 TexManager.getTex(SnakeBodyImg),
                 colorFloats,
                 circleBody2.x,
-                circleBody2.y - jumpHeight - circleBody2.defaultHeight,
+                circleBody2.y - jumpHeight - circleBody2.defaultHeight+circleBody2.TopOffset,
                 (circleBody2.TopWidth+circleBody2.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (circleBody2.TopHeight+circleBody2.scaleHeight)*((TopRatio==0)?1:TopRatio),
-                circleBody2.rotateAngleGameElements
+                circleBody2.rotateAngleGameElements,
+                circleBody2.TopOffsetColorFactor
         );
+    }
+    public void drawTop(TexDrawer painter){
         drawSequence.stream()
-                .sorted(Comparator.comparing(x -> x.y))
+                //.sorted(Comparator.comparing(x -> x.y))
                 .forEach(
-                        x -> {
+                        ge -> {
                             //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
-                            x.drawSelf(painter);
+                            //x.drawSelf(painter);
+                            painter.drawColorSelf(
+                                    TexManager.getTex(ge.TopImg==null?ge.Img:ge.TopImg),
+                                    ge.colorFloats,
+                                    ge.x,
+                                    ge.y - ge.jumpHeight - ge.defaultHeight,
+                                    (ge.TopWidth+ge.scaleWidth)*((ge.TopRatio==0)?1:ge.TopRatio),
+                                    (ge.TopHeight+ge.scaleHeight)*((ge.TopRatio==0)?1:ge.TopRatio),
+                                    ge.rotateAngleGameElements
+                            );
                         }
                 );
     }
