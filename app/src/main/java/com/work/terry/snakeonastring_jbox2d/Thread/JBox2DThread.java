@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Thread;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.GamePlayElements.ButtonBlockCircle;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.JBox2dThreadTask;
@@ -37,10 +39,15 @@ public class JBox2DThread extends Thread implements Stoppable{
     public JBox2DThread(GamePlay gamePlay){
         this.gamePlay = gamePlay;
     }
+    //long timeStamp = 0;
     @Override
     public void run(){
         while(!shouldDie&&gamePlay.IS_PLAYING)//&&!gamePlayView.snake.isDead())
         {
+//            long currTimeStamp = System.nanoTime()/1000000;
+//            long dt = currTimeStamp-timeStamp;
+//            Log.d("JBox2DThread","dt="+dt);
+
            // Log.d("JBOX2DTHREAD","worldBodySize="+gamePlay.world.getBodyCount()+" myBodiesSize="+JBox2DUtil.Bodies.size());
             gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
 
@@ -56,6 +63,8 @@ public class JBox2DThread extends Thread implements Stoppable{
                 if(gamePlay.snake.isMagnetic)
                     gamePlay.snake.searchWithin();
             }
+
+            //timeStamp = currTimeStamp;
         }
     }
 

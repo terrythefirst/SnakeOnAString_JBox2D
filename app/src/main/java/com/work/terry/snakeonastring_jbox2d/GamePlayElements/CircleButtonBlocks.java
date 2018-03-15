@@ -103,7 +103,7 @@ public class CircleButtonBlocks extends MyBody {
                     x+centerRadius*((float)Math.cos(angleRadians)),
                     y+centerRadius*((float)Math.sin(angleRadians)),
                     buttonBlocksDiameter,
-                    buttonBlocksDiameter*1.5f,
+                    buttonBlocksDiameter*1.3f,
 
                     defaultHeight,
                     angle,
@@ -179,29 +179,45 @@ public class CircleButtonBlocks extends MyBody {
             ButtonBlock bb1 = buttonBlocks.get(i);
             ButtonBlock bb2 = buttonBlocks.get(i+4);
             joints.add(
-                    new MyWeldJoint(
-                            "CircleButtonBlockWeldJoint "+i,
-                            gamePlay,
-                            false,
-                            rectBody,
-                            bb1,
-                            new Vec2(bb1.x/RATE,bb1.y/RATE),
-                            //circleBody1.body.getPosition(),
-                            1.0f,
-                            1.0f
-                    )
+//                    new MyWeldJoint(
+//                            "CircleButtonBlockWeldJoint "+i,
+//                            gamePlay,
+//                            false,
+//                            rectBody,
+//                            bb1,
+//                            new Vec2(bb1.x/RATE,bb1.y/RATE),
+//                            //circleBody1.body.getPosition(),
+//                            0.0f,
+//                            0.0f
+//                    )
+            new MyBox2DRevoluteJoint(
+                    "CircleButtonBlockRevoluteJoint "+i,
+                    gamePlay,
+                    false,
+                    bb1,rectBody,
+                    new Vec2(bb1.x/RATE,bb1.y/RATE),
+                    false,0.0f, 0.0f, false,0.0f, 0.0f
+            )
             );
             joints.add(
-                    new MyWeldJoint(
-                            "CircleButtonBlockWeldJoint "+i,
+//                    new MyWeldJoint(
+//                            "CircleButtonBlockWeldJoint "+i,
+//                            gamePlay,
+//                            false,
+//                            rectBody,
+//                            bb2,
+//                            new Vec2(bb2.x/RATE,bb2.y/RATE),
+//                            //circleBody1.body.getPosition(),
+//                            0.0f,
+//                            0.0f
+//                    )
+                    new MyBox2DRevoluteJoint(
+                            "CircleButtonBlockRevoluteJoint "+i,
                             gamePlay,
                             false,
-                            rectBody,
-                            bb2,
+                            bb2,rectBody,
                             new Vec2(bb2.x/RATE,bb2.y/RATE),
-                            //circleBody1.body.getPosition(),
-                            1.0f,
-                            1.0f
+                            false,0.0f, 0.0f, false,0.0f, 0.0f
                     )
             );
 

@@ -102,13 +102,13 @@ public class LoadGameUtil {
                     loadListJiggleAnimation(tempsp[1]);
                 }else if(tempsp[0].trim().equals("lba")){
                     loadListBreathAnimation(tempsp[1]);
+                }else if(tempsp[0].trim().equals("cbb")){
+                    loadCircleButtonBlocks(gamePlay,subStrings);
                 }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        loadCircleButtonBlocks(gamePlay,null);
 
         loadHelper = null;
         gamePlay.startGame();
@@ -135,23 +135,77 @@ public class LoadGameUtil {
         String[] spColor = ss.trim().split(",");
         return new float[]{Float.parseFloat(spColor[0]),Float.parseFloat(spColor[1]),Float.parseFloat(spColor[2])};
     }
-    public void loadCircleButtonBlocks(GamePlay gamePlay,String subString){
-        CircleButtonBlocks ccb = new CircleButtonBlocks(
+    public void loadCircleButtonBlocks(GamePlay gamePlay,String[] subStrings){
+        Vec2 XY = null;
+        float radius = 0;
+        float[] color255 = null;
+        float defaultHeight = 10;
+        float motorDegrees = 0;
+        float maxMotorTorque = 0;
+
+        float topOffset = -1;
+        float topOffsetColorFactor = -1;
+        float heightColorFactor = -1;
+        float floorShadowColorFactor = -1;
+        float floorShadowFactorX = -1;
+        float floorShadowFactorY = -1;
+
+        int id = -1;
+
+        for(String ss:subStrings){
+            String[] tempsp = ss.split("[ ]+");
+            if(tempsp[0].trim().equals("loc")){
+                XY = getXY(tempsp[1]);
+            }else if(tempsp[0].trim().equals("rad")){
+                radius = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("co")){
+                color255 = getColor(tempsp[1]);
+            }else if(tempsp[0].trim().equals("dfh")){
+                defaultHeight = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("id")){
+                id = Integer.parseInt(tempsp[1].trim());
+            } else if(tempsp[0].trim().equals("ms")){
+                //0 horizontal   90 vertical  clockwise
+                motorDegrees = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("mmt")){
+                //0 horizontal   90 vertical  clockwise
+                maxMotorTorque= Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("id")){
+                id = Integer.parseInt(tempsp[1].trim());
+            }
+            else if(tempsp[0].trim().equals("ofs")){
+                topOffset = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("ofscf")){
+                topOffsetColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("hcf")){
+                heightColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fscf")){
+                floorShadowColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fsfx")){
+                floorShadowFactorX = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fsfy")){
+                floorShadowFactorY = Float.parseFloat(tempsp[1].trim());
+            }
+        }
+
+        CircleButtonBlocks cbb = new CircleButtonBlocks(
                 gamePlay,
-                0,
-                720,1280,
-                100,
-                new float[]{127,255,170},
-                40,
-                10,
-                Constant.ButtonBlockTopOffSetColorFactor,
-                Constant.ButtonBlockHeightColorFactor,
-                Constant.ButtonBlockFloorColorFactor,
-                (float) Math.toRadians(5),
-                5000
+                (id!=-1)?id:0,
+                XY.x,XY.y,
+                radius,
+                color255,
+                defaultHeight,
+                (topOffset==-1)?10:topOffset,
+                (topOffsetColorFactor!=-1)?topOffsetColorFactor:Constant.ButtonBlockTopOffSetColorFactor,
+                (heightColorFactor!=-1)?heightColorFactor:Constant.ButtonBlockHeightColorFactor,
+                (floorShadowColorFactor!=-1)?floorShadowColorFactor:Constant.ButtonBlockFloorColorFactor,
+                (float) Math.toRadians(motorDegrees),
+                maxMotorTorque
         );
-        ccb.sendCreateTask();
-        gamePlay.addGameElements(ccb,Constant.LAYER_CENTER);
+        if(floorShadowFactorX!=-1) cbb.setFloorShadowFactorX(floorShadowFactorX);
+        if(floorShadowFactorX!=-1)cbb.setFloorShadowFactorY(floorShadowFactorY);
+        cbb.sendCreateTask();
+        gamePlay.addGameElements(cbb,Constant.LAYER_CENTER);
     }
     public void loadListBreathAnimation(String subString){
         String[] tempsp = subString.split("[ ]+");
@@ -212,6 +266,13 @@ public class LoadGameUtil {
         float defaultHeight = 0;
         float rotateAngle = 0;
 
+        float topOffset = -1;
+        float topOffsetColorFactor = -1;
+        float heightColorFactor = -1;
+        float floorShadowColorFactor = -1;
+        float floorShadowFactorX = -1;
+        float floorShadowFactorY = -1;
+
         int id = -1;
 
         for(String ss:bbcString){
@@ -234,6 +295,19 @@ public class LoadGameUtil {
             } else if(tempsp[0].trim().equals("id")){
                 id = Integer.parseInt(tempsp[1].trim());
             }
+            else if(tempsp[0].trim().equals("ofs")){
+                topOffset = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("ofscf")){
+                topOffsetColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("hcf")){
+                heightColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fscf")){
+                floorShadowColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fsfx")){
+                floorShadowFactorX = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fsfy")){
+                floorShadowFactorY = Float.parseFloat(tempsp[1].trim());
+            }
         }
         ButtonBlock buttonBlock = new ButtonBlock(
                 gamePlay,
@@ -246,6 +320,15 @@ public class LoadGameUtil {
                 isStatic,
                 color255
         );
+        if(topOffset!=-1)buttonBlock.setTopOffset(topOffset);
+        if(floorShadowFactorX!=-1) buttonBlock.setFloorShadowFactorX(floorShadowFactorX);
+        if(floorShadowFactorX!=-1)buttonBlock.setFloorShadowFactorY(floorShadowFactorY);
+        buttonBlock.setDrawArgs(
+                (topOffsetColorFactor!=-1)?topOffsetColorFactor:Constant.ButtonBlockTopOffSetColorFactor,
+                (heightColorFactor!=-1)?heightColorFactor:Constant.ButtonBlockHeightColorFactor,
+                (floorShadowColorFactor!=-1)?floorShadowColorFactor:Constant.ButtonBlockFloorColorFactor
+        );
+
         buttonBlock.sendCreateTask();
         if (id!=-1)
             loadHelper.put(id,buttonBlock);
@@ -257,6 +340,13 @@ public class LoadGameUtil {
         float[] color255 = null;
         boolean isStatic = true;
         float defaultHeight = 0;
+
+        float topOffset = -1;
+        float topOffsetColorFactor = -1;
+        float heightColorFactor = -1;
+        float floorShadowColorFactor = -1;
+        float floorShadowFactorX = -1;
+        float floorShadowFactorY = -1;
 
         int id = -1;
 
@@ -273,6 +363,19 @@ public class LoadGameUtil {
             }else if(tempsp[0].trim().equals("id")){
                 id = Integer.parseInt(tempsp[1].trim());
             }
+            else if(tempsp[0].trim().equals("ofs")){
+                topOffset = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("ofscf")){
+                topOffsetColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("hcf")){
+                heightColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fscf")){
+                floorShadowColorFactor = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fsfx")){
+                floorShadowFactorX = Float.parseFloat(tempsp[1].trim());
+            }else if(tempsp[0].trim().equals("fsfy")){
+                floorShadowFactorY = Float.parseFloat(tempsp[1].trim());
+            }
         }
         ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
                 gamePlay,
@@ -283,6 +386,14 @@ public class LoadGameUtil {
                 defaultHeight,
                 (id==-1)?ButtonBlockCircle.classCount++:id
         );
+        if(topOffset!=-1)buttonBlockCircle.setTopOffset(topOffset);
+        if(floorShadowFactorX!=-1) buttonBlockCircle.setFloorShadowFactorX(floorShadowFactorX);
+        if(floorShadowFactorX!=-1)buttonBlockCircle.setFloorShadowFactorY(floorShadowFactorY);
+        buttonBlockCircle.setDrawArgs(
+                (topOffsetColorFactor!=-1)?topOffsetColorFactor:Constant.ButtonBlockTopOffSetColorFactor,
+                (heightColorFactor!=-1)?heightColorFactor:Constant.ButtonBlockHeightColorFactor,
+                (floorShadowColorFactor!=-1)?floorShadowColorFactor:Constant.ButtonBlockFloorColorFactor
+                );
         buttonBlockCircle.sendCreateTask();
         if (id!=-1)
             loadHelper.put(id,buttonBlockCircle);

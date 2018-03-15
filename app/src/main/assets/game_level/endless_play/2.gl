@@ -1,0 +1,16 @@
+bg:null
+sn:loc width/2+50,height-300;dir 0,-1;len 4;scale 1;
+
+bb:loc 0,400;len 400;rad 100;dir 20;co 76,224,52;dfh 40;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+bb:loc width,600;len 400;rad 80;dir 160;co 76,224,52;dfh 40;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+bb:loc width/2-300,height/2+300;len 300;rad 60;dir 20;co 76,224,52;dfh 40;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+bb:loc -10,height-400;len 200;rad 60;dir 40;co 76,224,52;dfh 40;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+
+bbc:loc width+220,200;rad 300;co 76,224,52;dfh 80;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+bbc:loc width-50,height;rad 300;co 76,224,52;dfh 80;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+
+cbb:loc width/2+200,450;rad 80;co 255,213,4;ms 30;mmt 500;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+cbb:loc width/2-150,520;rad 80;co 255,213,4;ms 30;mmt 500;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+cbb:loc width/2-40,height/2;rad 60;co 255,213,4;dfh 10;ms 30;mmt 500;ofs 10;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+cbb:loc width/2+200,height/2+400;rad 100;co 255,213,4;ms 30;mmt 500;ofs 10;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
+cbb:loc width/2-120,height-400;rad 70;co 255,213,4;ms 30;mmt 500;ofs 10;ofs 10;ofscf 0.85f;hcf 0.75f;fscf 1f;fsfx 0.5f;fsfy 0.4f;
