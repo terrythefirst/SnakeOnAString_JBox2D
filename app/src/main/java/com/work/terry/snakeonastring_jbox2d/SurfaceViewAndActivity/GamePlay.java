@@ -25,7 +25,9 @@ import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -54,6 +56,8 @@ public class GamePlay extends MyView{
     public Map<Integer,SnakeFood> snakeFoodMap = new HashMap<>();
     public Map<Integer,Bomb> snakeBombMap = new HashMap<>();
     public Map<Integer,FoodMagnet> foodMagnetMap = new HashMap<>();
+
+    public List<GameElement> gameElementList = new ArrayList<>();
 
     public int foodIndex = 0;
     public int bombIndex = 0;
@@ -179,6 +183,7 @@ public class GamePlay extends MyView{
         drawUtil.addToTopLayer(pauseButton);
     }
     public void addGameElements(GameElement gameElement, int layer){
+        gameElementList.add(gameElement);
         switch (layer){
             case LAYER_TOP:drawUtil.addToTopLayer(gameElement);break;
             case LAYER_CENTER:drawUtil.addToCenterLayer(gameElement);break;
@@ -224,6 +229,14 @@ public class GamePlay extends MyView{
     public void addFoodMagnet(){
         float rx = (float) Math.random()*800+100;
         float ry = (float) Math.random()*1800+200;
+        boolean ok = true;
+        for(GameElement ge:gameElementList){
+            if(ge.testTouch(rx,ry)){
+                ok=false;
+                break;
+            }
+        }
+        if(!ok)return;
         //Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
         //Log.d("foodCount",foodCount+"");
         FoodMagnet tempt = new FoodMagnet(
@@ -247,6 +260,14 @@ public class GamePlay extends MyView{
     public void addFood(){
         float rx = (float) Math.random()*800+100;
         float ry = (float) Math.random()*1800+200;
+        boolean ok = true;
+        for(GameElement ge:gameElementList){
+            if(ge.testTouch(rx,ry)){
+                ok=false;
+                break;
+            }
+        }
+        if(!ok)return;
         //Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
         //Log.d("foodCount",foodCount+"");
         SnakeFood tempt = new SnakeFood(
@@ -272,6 +293,14 @@ public class GamePlay extends MyView{
     public void addBomb(){
         float rx = (float) Math.random()*800+100;
         float ry = (float) Math.random()*1800+200;
+        boolean ok = true;
+        for(GameElement ge:gameElementList){
+            if(ge.testTouch(rx,ry)){
+                ok=false;
+                break;
+            }
+        }
+        if(!ok)return;
         Bomb tempt  = new Bomb(
                     drawUtil,
                     this,

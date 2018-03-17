@@ -136,12 +136,20 @@ public class CircleButtonBlocks extends MyBody {
                             0,
                             0,0,0,
 
-                            1,1,1,
+                            10,1,1,
                             Constant.SnakeBodyHeightImg,
                             false
                     )
             );
         }
+    }
+    @Override
+    public boolean testTouch(float touchX,float touchY){
+        return  touchX>x-width-scaleWidth/2
+                &&touchX<x+width+scaleWidth/2
+                &&touchY>y-height-scaleHeight/2
+                &&touchY<y+height+(jumpHeight+defaultHeight)+scaleHeight/2
+                ;
     }
     public void initJoints(){
         for(int i=0;i<4;i++){

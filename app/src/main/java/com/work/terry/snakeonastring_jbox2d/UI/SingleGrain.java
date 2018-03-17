@@ -74,13 +74,13 @@ public class SingleGrain extends GameElement {
         y += vy*dt*RATE;
        float height = (float) (vz*timeSpan-0.5*timeSpan*timeSpan*G);
         if(height<=0){
-            vz = -vy*0.9f;
+            vz = vz*0.65f;
             timeSpan=0;
         }
-        if(Math.abs(vz)<1f)vz=0;
+        if(Math.abs(vz)<0.1f)vz=0;
         //else  Log.e("Math.abs(vz)",Math.abs(vz)+"");
         jumpHeight = height;
-        //Log.e("jumpHeight",jumpHeight+"");
+        Log.e("singleGrain jumpHeight",jumpHeight+"");
     }
     @Override
     public void drawSelf(TexDrawer painter){

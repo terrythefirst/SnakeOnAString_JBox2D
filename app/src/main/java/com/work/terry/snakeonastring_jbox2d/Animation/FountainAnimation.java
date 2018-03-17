@@ -70,7 +70,7 @@ public class FountainAnimation extends GameElement {
         this.speedSpan = speedSpan;
 
         this.G = (float) (2*jumpSpan/Math.pow(timeSpan/2,2));
-        this.vZInit =  G*timeSpan/2;
+        this.vZInit =(float) (Math.sqrt(2*G*jumpSpan));//G*timeSpan/2;
 
         for(int i=0;i<grainCount;i++){
             double elevation=Math.random()*Math.PI*2;	//仰角

@@ -149,7 +149,7 @@ public class ButtonBlock extends MyBody {
                 ButtonBlockHeightColorFactor,
                 ButtonBlockFloorColorFactor,
 
-                1.0f,
+                0.0f,
                 0.01f,
                 0.1f,
                 ButtonImgRect,
@@ -192,7 +192,7 @@ public class ButtonBlock extends MyBody {
 
                 0,
                 0,
-                1.0f,
+                0.0f,
                 0.01f,
                 0.1f,
                 isStatic,
@@ -218,7 +218,7 @@ public class ButtonBlock extends MyBody {
 
                 0,
                 0,
-                1.0f,
+                0.0f,
                 0.01f,
                 0.1f,
                 isStatic,
@@ -278,7 +278,7 @@ public class ButtonBlock extends MyBody {
         rotateAngleGameElements = -(float)Math.toDegrees( rectBody.body.getAngle());
         rectBody.rotateAngleGameElements = rotateAngleGameElements;
 
-        if(!isStatic)Log.d(id,"rotateAngle"+rectBody.rotateAngleGameElements%360);
+        //if(!isStatic)Log.d(id,"rotateAngle"+rectBody.rotateAngleGameElements%360);
 
         rectBody.jumpHeight = jumpHeight;
         circleBody1.jumpHeight = jumpHeight;
