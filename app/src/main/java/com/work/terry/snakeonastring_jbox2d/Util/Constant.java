@@ -203,6 +203,7 @@ public class Constant {
     public static final int COLOR_BLACKBLUE = 9;
     public static final int COLOR_GREEN = 10;
     public static final int COLOR_DEEP_PINK = 11;
+    public static final int COLOR_SKINISH = 12;
 
     public static final int LAYER_TOP = 0;
     public static final int LAYER_CENTER = 1;

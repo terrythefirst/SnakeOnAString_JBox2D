@@ -69,16 +69,16 @@ public class StartView extends MyView {
     float letterOnAStringSpanX = 10;
     float letterOnAStringGapX = 100;
 
-    float scaleRatio = 1;
-    float SnakeY = 1400;
-    float SnakeYSpan = 100;
+    float scaleRatio = 1.4f;
+    float SnakeY = 1200;
+    float SnakeYSpan = 150;
     float SnakeXSpan = 90;
     float SnakeXTotalSpan = 8*SnakeXSpan;
 
-    float OriginalEndlessY = 1850;
-    float OriginalEndlessSpan = 600;
-    float OriginalEndlessWidth = 200;
-    float OriginalEndlessHeight = 200;
+    float OriginalEndlessY = 1750;
+    float OriginalEndlessSpan = 560;
+    float OriginalEndlessWidth = 260;
+    float OriginalEndlessHeight = OriginalEndlessWidth;
     float OriginalEndlessDefaultHeight = 40;
 
     float OriginalEndlessMaxScaleRate = 0.1f;
@@ -153,6 +153,7 @@ public class StartView extends MyView {
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                     0,
                     SnakeSkinManager.getSkin(nowSkin,8-NodeIndex),
+                    scaleRatio,
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
             );
@@ -164,6 +165,7 @@ public class StartView extends MyView {
                 720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                 1,1,
                 SnakeSkinManager.getSkin(nowSkin,0),
+                scaleRatio,
                 Constant.SnakeDefaultHeight
         );
         drawUtil.addToCenterLayer(snakeHead);

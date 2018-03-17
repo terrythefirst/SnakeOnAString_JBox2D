@@ -114,6 +114,7 @@ public class SkinChangingView extends MyView {
                     720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
                     0,
                     SnakeSkinManager.getSkin(skinNumber,8-NodeIndex),
+                    1,
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
             );
@@ -125,6 +126,7 @@ public class SkinChangingView extends MyView {
                 720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
                 1,1,
                 SnakeSkinManager.getSkin(skinNumber,0),
+               1,
                 Constant.SnakeDefaultHeight
         );
         drawUtil.addToCenterLayer(snakeHead);

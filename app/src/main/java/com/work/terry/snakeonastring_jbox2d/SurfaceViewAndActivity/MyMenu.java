@@ -91,22 +91,6 @@ public class MyMenu extends RoundEdgeRect {
         closeButton.setTopImgRatio(0.4f);
         closeButton.setButtonListener(
                 ()->{
-//                    Thread thread = new PullMoveAnimation(
-//                            this,
-//                            new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT+height/2),
-//                            100f,
-//                            0.01f,
-//                            1
-//                    );
-//
-//                    thread.start();
-//                    try {
-//                        thread.join();
-//                        gamePlayView.setNowMenu(null);
-//                    }catch (Exception e){
-//                        e.printStackTrace();
-//                    }
-
                     Thread thread = new UniformMotionAnimation(
                             this,
                             new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT+height/2),

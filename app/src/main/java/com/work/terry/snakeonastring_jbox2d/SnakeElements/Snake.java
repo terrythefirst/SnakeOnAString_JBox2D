@@ -71,6 +71,8 @@ public class Snake {
     public boolean isDead = false;
     private DrawUtil drawUtil;
 
+    public float scaleRatio;
+
     public Snake(
             GamePlay gamePlay,
             Vec2 headLoc,
@@ -84,6 +86,7 @@ public class Snake {
         //this.color = color;
         this.Skin = skin;
         this.drawUtil = gamePlay.getDrawUtil();
+        this.scaleRatio = scaleRatio;
 
         snakeBodies = new CopyOnWriteArrayList<>();
 
@@ -101,6 +104,7 @@ public class Snake {
                         x,y,
                         vx,vy,
                         SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode),
+                        scaleRatio,
                         jumpHeight
                 );
                 snakeHead.createBody();
@@ -145,6 +149,7 @@ public class Snake {
                     gamePlay,
                     snakeHead,
                     SnakeSkinManager.getSkin(Skin,index),
+                    scaleRatio,
                     index);
         }else{
             tempt = new SnakeNode(
@@ -152,6 +157,7 @@ public class Snake {
                     gamePlay,
                     (SnakeNode) snakeBodies.get(index-1),
                     SnakeSkinManager.getSkin(Skin,index),
+                    scaleRatio,
                     index);
         }
 

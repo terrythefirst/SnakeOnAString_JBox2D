@@ -20,6 +20,7 @@ public class ColorManager {
             {40,91,116},//墨蓝
             {179,255,184},//浅绿
             {230,71,112},//深粉
+            {246,239,213}//皮肤色
     };
     public static float[] getColorByRGB255(float[] color255){
         return new float[]{

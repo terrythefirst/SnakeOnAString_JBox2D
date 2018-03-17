@@ -51,6 +51,7 @@ public class SnakeNode extends CircleBody{
             float x, float y,
             float angle,
             SnakeNodeSkinInfo snakeNodeSkinInfo,
+                     float scaleRatio,
             float jumpHeight,
             int id
     ){
@@ -59,7 +60,7 @@ public class SnakeNode extends CircleBody{
                 "snakeBody "+id,
                 x,y,
                 angle,
-                snakeNodeSkinInfo.getRadii()[1],
+                snakeNodeSkinInfo.getRadii()[1]*scaleRatio,
 
                 0,
                 jumpHeight,
@@ -87,6 +88,7 @@ public class SnakeNode extends CircleBody{
             GamePlay gamePlay,
             CircleBody frontNode,
             SnakeNodeSkinInfo snakeNodeSkinInfo,
+            float scaleRatio,
             int id
     ){
         super(
@@ -94,7 +96,7 @@ public class SnakeNode extends CircleBody{
                 "snakeBody "+id,
                 0,0,
                 0,
-                snakeNodeSkinInfo.getRadii()[1],
+                snakeNodeSkinInfo.getRadii()[1]*scaleRatio,
 
                 0,
                 Constant.SnakeDefaultHeight,

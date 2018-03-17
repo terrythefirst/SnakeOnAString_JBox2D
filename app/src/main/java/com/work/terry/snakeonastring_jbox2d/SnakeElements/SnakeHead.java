@@ -37,6 +37,7 @@ public class SnakeHead extends CircleBody{
             float x, float y,
             float vx, float vy,
             SnakeNodeSkinInfo snakeNodeSkinInfo,
+            float scaleRatio,
             float jumpHeight
     ){
         super(
@@ -44,7 +45,7 @@ public class SnakeHead extends CircleBody{
                 "snakeHead ",
                 x,y,
                 0,
-                snakeNodeSkinInfo.getRadii()[1],
+                snakeNodeSkinInfo.getRadii()[1]*scaleRatio,
 
                 0,
                 jumpHeight,
@@ -71,13 +72,13 @@ public class SnakeHead extends CircleBody{
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
         setIsPureColor(false);
     }
-    public SnakeHead(Snake snake, GamePlay gamePlay, float x, float y, float vx, float vy, SnakeNodeSkinInfo snakeNodeSkinInfo, float defaultHeight){
+    public SnakeHead(Snake snake, GamePlay gamePlay, float x, float y, float vx, float vy, SnakeNodeSkinInfo snakeNodeSkinInfo,float scaleRatio, float defaultHeight){
         super(
                 gamePlay,
                 "snakeHead",
                 x,y,
                 (float) ((135/360)*Math.PI),
-                snakeNodeSkinInfo.getRadii()[1],
+                snakeNodeSkinInfo.getRadii()[1]*scaleRatio,
                 0,
                 defaultHeight,
                 SnakeDownLittleHeight,
