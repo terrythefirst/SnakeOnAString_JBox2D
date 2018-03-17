@@ -116,6 +116,8 @@ public class SnakeHead extends CircleBody{
         }else {
             rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);
         }
+        if(body!=null)
+            Log.e("snakeHeadDrawSelf","V x="+body.getLinearVelocity() .x+" y="+body.getLinearVelocity() .y);
         super.drawSelf(painter);
     }
     public void changeFace(String face){

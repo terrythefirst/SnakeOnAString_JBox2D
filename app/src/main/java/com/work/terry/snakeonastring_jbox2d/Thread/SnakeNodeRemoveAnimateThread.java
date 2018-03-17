@@ -62,7 +62,6 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
             //drawUtil.deleteElement(snakeNodeAnimateDraw);
             //snakeNodeAnimateDraw.setDoDraw(false);
             //drawUtil.addToRemoveSequence(snakeNodeAnimateDraw);
-
             snakeNode.sendDeleteTask();
             snakeNode.snake.snakeBodies.remove(snakeNode);
             drawUtil.addToRemoveSequence(snakeNode);

@@ -50,9 +50,9 @@ public class SnakeNodeMovingThread extends Thread{
 //        snakeNode.body.applyForceToCenter(
 //                Mul2D(dxyV,10f)
 //        );
-//        snakeNode.body.applyForceToCenter(
-//                    Mul2D(targetMoveV,6f)
-//            );
+        snakeNode.body.applyForceToCenter(
+                    Mul2D(targetMoveV,6f*snakeNode.body.getMass())
+            );
 
         snakeNode.body.applyLinearImpulse(
                 Mul2D(targetMoveV, MyMath.smoothStep(0,6,snakeNode.getId())*0.3f),//0.006f*snakeNode.getId()),

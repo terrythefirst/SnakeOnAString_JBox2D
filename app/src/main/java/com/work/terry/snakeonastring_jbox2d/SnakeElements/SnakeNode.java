@@ -42,6 +42,11 @@ public class SnakeNode extends CircleBody{
     private Thread movingThread = null;
     public float centerDistance = 0;
 
+    float angleRect;
+
+    float frontInitX;
+    float frontInitY;
+
     public SnakeNode(//注： 供显示用
             float x, float y,
             float angle,
@@ -110,17 +115,19 @@ public class SnakeNode extends CircleBody{
         this.setColorFloats255(snakeNodeSkinInfo.getColor255());
         this.snake = snake;
         this.front = frontNode;
+        this.frontInitX = front.x;
+        this.frontInitY = front.y;
         setTopImg( snakeNodeSkinInfo.getImg());
         if(!(TopImg==null||TopImg.contains("null")))setIsPureColor(false);
         setTopRatio(snakeNodeSkinInfo.getTopRatio());
 
-        initSelf();
-        sendCreateTask();
-        startMoving();
+        //sendCreateTask();
+        //startMoving();
     }
     @Override
     public void createBody(){
-        super.createBody();
+        initSelf();
+        //super.createBody();
         initJoints();
     }
     @Override
@@ -148,20 +155,20 @@ public class SnakeNode extends CircleBody{
         Vec2 frontXY = front.getBodyXY();
         x = frontXY.x - frontVNormalized.x*centerDistance;
         y = frontXY.y - frontVNormalized.y*centerDistance;
+        this.angleRadian = VectorUtil.calRotateAngleRadius(frontV.x,frontV.y);
+        super.createBody();
         Log.d("bodyInitSelf"+id,"x="+x+" y="+y);
-        this.angleRadian = VectorUtil.calRotateAngleRadius(frontXY.x,frontXY.y);
-        setTopRatio(SnakeBodyTopRadius*1.0f/SnakeBodyRadius);
-    }
-    public void initJoints(){
+
         Vec2 center = getCenterV2(front.getBodyXY(),this.getBodyXY());
-        float angle = calBodyRadians(front.x-x,front.y-y);//front.body.getAngle();//calBodyRadians(-frontV.x,-frontV.y);
-        float rectBodyLenth = getBodyCenterDistance();
+        this.angleRect = calBodyRadians(frontVNormalized.x,frontVNormalized.y);
+        Log.e("initSelf","angleDegrees"+Math.toDegrees(angleRect));
+        float rectBodyLength = getBodyCenterDistance();
         rectBody = new RectBody(
                 gamePlay,
                 body.getUserData().toString()+" Rect",
                 center.x,center.y,
-                angle,
-                1,rectBodyLenth/2,
+                angleRect,
+                1,rectBodyLength/2,
 
                 this.color,
                 0,
@@ -176,60 +183,8 @@ public class SnakeNode extends CircleBody{
                 false
         );
         rectBody.createBody();
-        //        if(frontBody instanceof SnakeHead){
-//            new MyBox2DRevoluteJoint(
-//                    ""+body.getUserData().toString()+"RevoltJoint1",
-//                    gamePlay,
-//                    true,
-//                    rectBody,
-//                    frontBody,
-//                    frontBody.body.getPosition(),
-//                    true,
-//                    (float) ((-30/360)*Math.PI),
-//                    (float) ((30/360)*Math.PI),
-//                    false,0f,0f
-//            );
-//        }else {
-//
-//        }
-
-//        new MyBox2DRevoluteJoint(
-//                ""+body.getUserData().toString()+"RevoltJoint1",
-//                gamePlay,
-//                true,
-//                rectBody,
-//                front,
-//                front.body.getPosition(),
-//                false,
-//                (float) ((-30/360)*Math.PI),
-//                (float) ((30/360)*Math.PI),
-//                false, 0f, 0f
-//        );
-//        new MyBox2DRevoluteJoint(
-//                ""+body.getUserData().toString()+"RevoltJoint2",
-//                gamePlay,
-//                true,
-//                rectBody,
-//                this,
-//                this.body.getPosition(),
-//                false,
-//                (float) ((-30/360)*Math.PI),
-//                (float) ((30/360)*Math.PI),
-//                false, 0f, 0f
-//        );
-//        if(front instanceof SnakeHead){
-//            new MyWeldJoint(
-//                    body.getUserData().toString()+" WeldJoint 1",
-//                    gamePlay,
-//                    false,
-//                    rectBody,
-//                    front,
-//                    //rectBody.body.getPosition(),
-//                    front.body.getPosition(),
-//                    0.01f,
-//                    0.01f
-//            );
-//        }else {
+    }
+    public void initJoints(){
         joints.add(
                 new MyWeldJoint(
                         body.getUserData().toString()+" WeldJoint 1",
@@ -242,7 +197,7 @@ public class SnakeNode extends CircleBody{
                         10.0f,
                         0.70f
                 ));
-        //}
+
         joints.add(
                 new MyWeldJoint(
                         body.getUserData().toString()+" WeldJoint 2",
@@ -254,7 +209,7 @@ public class SnakeNode extends CircleBody{
                         10.0f,
                         0.50f
                 ));
-//
+
         joints.add(
                 new MyDistanceJoint(
                         body.getUserData().toString() +" DistanceJoint 1",
@@ -269,41 +224,34 @@ public class SnakeNode extends CircleBody{
                 )
         );
 
+//        joints.add(
 //            new MyBox2DRevoluteJoint(
 //                    body.getUserData().toString()+" RevoluteJoint 1",
 //                    gamePlay,
 //                    false,
-//                    front,
 //                    rectBody,
+//                    front,
 //                    //rectBody.body.getPosition(),
 //                    front.body.getPosition(),
-//                    true,
+//                    false,
 //                    (float)Math.toRadians(-30),
 //                    (float)Math.toRadians(30),
 //                    false, 0, 0
-//            );
-//        new MyBox2DRevoluteJoint(
-//                body.getUserData().toString() +" RevoluteJoint 1",
-//                gamePlay,
-//                false,
-//                this,
-//                rectBody,
-//                this.body.getPosition(),
-//                true,
-//                (float)Math.toRadians(-30),
-//                (float)Math.toRadians(30),
-//                false, 0, 0
+//            )
 //        );
-//        new MyDistanceJoint(
-//                "snake and body joint",
-//                gamePlay,
-//                true,
-//                this,
-//                frontBody,
-//                this.body.getPosition(),
-//                frontBody.body.getPosition(),
-//                0.0f,
-//                0f
+//        joints.add(
+//                new MyBox2DRevoluteJoint(
+//                        body.getUserData().toString() +" RevoluteJoint 1",
+//                        gamePlay,
+//                        false,
+//                        rectBody,
+//                        this,
+//                        this.body.getPosition(),
+//                        false,
+//                        (float)Math.toRadians(-30),
+//                        (float)Math.toRadians(30),
+//                        false, 0, 0
+//                )
 //        );
         for (MyJoint j:joints){
             j.createJoint();
@@ -314,11 +262,15 @@ public class SnakeNode extends CircleBody{
         if(body!=null)
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
         super.drawSelf(painter);
+
+        if(rectBody==null)return;
+        rectBody.rotateAngleGameElements = -(float)Math.toDegrees( rectBody.body.getAngle());
+        rectBody.drawSelf(painter);
     }
     @Override
     public void sendDeleteTask(){
         super.sendDeleteTask();
-        rectBody.sendDeleteTask();
+        if(rectBody!=null)rectBody.sendDeleteTask();
         for(MyJoint mj:joints)mj.sendDeleteTask();
     }
     public void startMoving(){

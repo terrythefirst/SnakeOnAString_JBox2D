@@ -42,7 +42,7 @@ public class VectorUtil {
             if (dy<0)return (float) Math.toRadians(0);
             else return (float) Math.toRadians(180);
         }else {
-            return (float) Math.atan(-dy/dx);
+            return (float)( Math.atan(dy/dx)+Math.PI/2);
         }
     }
     public static float calRotateAngleDegrees(float dx,float dy){

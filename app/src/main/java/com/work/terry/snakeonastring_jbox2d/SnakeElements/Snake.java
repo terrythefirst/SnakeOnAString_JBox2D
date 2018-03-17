@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
@@ -84,7 +85,7 @@ public class Snake {
         this.Skin = skin;
         this.drawUtil = gamePlay.getDrawUtil();
 
-        snakeBodies = new ArrayList<>();
+        snakeBodies = new CopyOnWriteArrayList<>();
 
         float x = headLoc.x;
         float y = headLoc.y;
@@ -342,7 +343,8 @@ public class Snake {
         synchronized (snakeBodies){
             for (CircleBody sn:snakeBodies){
                 if(sn instanceof SnakeNode){
-                    ((SnakeNode) sn).rectBody.sendDeleteTask();
+                    if(((SnakeNode) sn).rectBody!=null)
+                        ((SnakeNode) sn).rectBody.sendDeleteTask();
                     for (MyJoint mj : ((SnakeNode) sn).joints) {
                         mj.sendDeleteTask();
                     }
