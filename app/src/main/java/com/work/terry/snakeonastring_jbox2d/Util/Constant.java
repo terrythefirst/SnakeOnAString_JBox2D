@@ -71,10 +71,13 @@ public class Constant {
     public static String LuckImg = "luck.png";
     public static String ShapeImg = "shape.png";
     public static String ArrowBackImg = "arrow_back.png";
-
-    public static String SelectChineseImg = "select_chinese.png";
-    public static String UnlockChineseImg = "unlock_chinese.png";
-    public static String ChangeSkinChineseImg = "change_skin_chinese.png";
+    //中文
+    public static final String SelectChineseImg = "select_chinese.png";
+    public static final String UnlockChineseImg = "unlock_chinese.png";
+    public static final String ChangeSkinChineseImg = "change_skin_chinese.png";
+    public static final String RestartChineseImg = "restart_chinese.png";
+    public static final String BestChineseImg = "best_chinese.png";
+    public static final String EndlessChineseImg = "endless_chinese.png";
 
     public static String RoundRectSector = "round_rect_sector1.png";
 
@@ -122,7 +125,8 @@ public class Constant {
     //按钮
     public static final String PauseButtonImg = "pause.png";
     public static final String DeleteImg = "delete.png";
-    public static final String RestaetImg = "restart.png";
+    public static final String RestartImg = "restart.png";
+
 
     //磁铁
     public static final String FoodMagnetImg = "magnet.png";

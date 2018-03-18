@@ -260,11 +260,11 @@ public class GameElement {
             float width,
             float height,
             float rotateAngle,
-            int Color
+            float[] ColorFloats
     ){
         painter.drawColorFactorTex(
                 TexManager.getTex(picName),
-                ColorManager.getColor(Color),
+                ColorFloats,
                 x,
                 y,
                 width,
@@ -278,7 +278,7 @@ public class GameElement {
             int number,
             float x,float y,
             float width,float height,
-            int Color,
+            float[] ColorFloats,
             float colorFactor
     ) {
         List<Integer> digits = new ArrayList<>();
@@ -297,7 +297,7 @@ public class GameElement {
         for (int i=0;i<length;i++){
             painter.drawColorFactorTex(
                     TexManager.getTex(ImgManager.getNumberImgName(digits.get(i))),
-                    ColorManager.getColor(Color),
+                    ColorFloats,
                     startX-i*perWidth,
                     y,
                     perWidth,
@@ -312,7 +312,7 @@ public class GameElement {
             int number,
             float x,float y,
             float width,float height,
-            int Color,
+            float[] ColorFloats,
             float floorShadowColorFactor
     ) {
         List<Integer> digits = new ArrayList<>();
@@ -331,7 +331,7 @@ public class GameElement {
         for (int i=0;i<length;i++){
             painter.drawShadow(
                     TexManager.getTex(ImgManager.getNumberImgName(digits.get(i))),
-                    ColorManager.getColor(Color),
+                    ColorFloats,
                     startX-i*perWidth,
                     y,
                     perWidth,
@@ -350,7 +350,7 @@ public class GameElement {
             int number,
             float x,float y,
             float width,float height,
-            int Color
+            float[] ColorFloats
     ){
         List<Integer> digits = new ArrayList<>();
         if(number==0)digits.add(0);
@@ -374,7 +374,7 @@ public class GameElement {
                     perWidth,
                     height,
                     0,
-                    Color
+                    ColorFloats
             );
         }
     }

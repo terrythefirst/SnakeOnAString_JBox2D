@@ -59,15 +59,24 @@ public class ImgManager {
             LikeImg,
             RateImg,
 
+            RestartImg,
+
+
             LuckImg,
             ShapeImg,
             ArrowBackImg,
 
             SpeedImg,
             MenuImg,
+
             SelectChineseImg,
             UnlockChineseImg,
             ChangeSkinChineseImg,
+            RestartChineseImg,
+            BestChineseImg,
+            EndlessChineseImg,
+
+
             LockImg,
             RoundRectSector,
 

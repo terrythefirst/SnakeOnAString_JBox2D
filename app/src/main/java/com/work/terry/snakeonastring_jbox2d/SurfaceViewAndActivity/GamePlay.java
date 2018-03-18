@@ -144,14 +144,24 @@ public class GamePlay extends MyView{
         jBox2DThread.start();
     }
     public void gameOver(){
-        GameOverMenu gameOverMenu = new GameOverMenu(
-                this,
-                "gameOverMenu",
-                Constant.COLOR_SKINISH,
-                20,
-                0
-        );
-        gamePlayView.setNowMenu(gameOverMenu);
+        new Thread(){
+            @Override
+            public void run(){
+                try {
+                    sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                GameOverMenu gameOverMenu = new GameOverMenu(
+                        GamePlay.this,
+                        "gameOverMenu",
+                        Constant.COLOR_SKINISH,
+                        20,
+                        0
+                );
+                gamePlayView.setNowMenu(gameOverMenu);
+            }
+        }.start();
     }
     public void plusScore(int x){
         score.plusScore(x);

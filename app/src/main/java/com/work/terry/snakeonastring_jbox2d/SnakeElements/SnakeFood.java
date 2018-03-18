@@ -5,6 +5,7 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeFoodJumpScoreThread;
+import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -90,7 +91,7 @@ public class SnakeFood extends CircleBody{
                 y+width/2+30,
                 width*2,
                 60,
-                0
+                ColorManager.getColor(Constant.COLOR_GREY)
         );
     }
 }

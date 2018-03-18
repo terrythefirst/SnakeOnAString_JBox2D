@@ -4,8 +4,12 @@ import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
+import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
+import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRectButton;
+import com.work.terry.snakeonastring_jbox2d.UI.Score;
+import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
@@ -23,13 +27,20 @@ public class GameOverMenu extends MyMenu {
     float menufloorShadowFactorY = 4f;
     float menuWidth = 900;
     DrawUtil drawUtil;
+    int gameModeAndLevel;
 
 
     MyMenu scoreResultBand;
+    RoundEdgeRectButton retryButton;
 
-    int gameModeAndLevel;
 
     MyMenu retryBand;
+    GameElement levelNameBoard;
+    ScoreBoard levelNumberBoard;
+    ScoreBoard finalScoreBoard;
+    GameElement bestBoard;
+    ScoreBoard bestScoreBoard;
+    ImgButton statisticsButton;
 
 
     MyMenu bottomBand;
@@ -131,7 +142,7 @@ public class GameOverMenu extends MyMenu {
 
         scoreResultBand.closeButton.setButtonListener(
                 ()->{
-                    Thread thread = scoreResultBand.backToBottom();
+                    Thread thread = scoreResultBand.backToTop();
                     try {
                         thread.join();
                     }catch (Exception e){
@@ -139,6 +150,101 @@ public class GameOverMenu extends MyMenu {
                     }
                 }
         );
+
+        Score finalScore = gamePlay.score;
+        finalScoreBoard = new ScoreBoard(
+                finalScore,
+                0,scoreResultBand.height/2-scoreResultBand.defaultHeight,
+                400,180,
+                Constant.COLOR_RED,
+                0,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor
+        );
+        finalScoreBoard.setDoDrawFloorShadow(false);
+        finalScoreBoard.setDoDrawHeight(false);
+        scoreResultBand.addToMenu(finalScoreBoard);
+
+
+        float levelLineY = 60;
+        levelNameBoard = new GameElement(
+                "levelNameBoard ",
+                -30,levelLineY,
+                scoreResultBand.width-scoreResultBand.angleRadius*2,160,
+                Constant.COLOR_GREY,
+                0,
+                0,0,0,0,
+                Constant.EndlessChineseImg
+        );
+        levelNameBoard.setDoDrawHeight(false);
+        levelNameBoard.setDoDrawFloorShadow(false);
+        scoreResultBand.addToMenu(levelNameBoard);
+
+        Score gameLevel = new Score(gameModeAndLevel%10);
+        levelNumberBoard = new ScoreBoard(
+                gameLevel,
+                200,levelLineY,
+                100,120,
+                Constant.COLOR_GREY,
+                0,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor
+        );
+        levelNumberBoard.setDoDrawFloorShadow(false);
+        levelNumberBoard.setDoDrawHeight(false);
+        scoreResultBand.addToMenu(levelNumberBoard);
+
+
+
+        float bestLineY = scoreResultBand.height-80-scoreResultBand.defaultHeight;
+        bestBoard = new GameElement(
+                "bestBoard  ",
+                -100,bestLineY,
+                240,140,
+                Constant.COLOR_GREEN,
+                0,
+                0,0,0,0,
+                Constant.BestChineseImg
+        );
+        bestBoard.setDoDrawHeight(false);
+        bestBoard.setDoDrawFloorShadow(false);
+        scoreResultBand.addToMenu(bestBoard);
+
+        Score bestScore = new Score(2000);
+        bestScoreBoard = new ScoreBoard(
+                bestScore,
+                180,bestLineY,
+                360,100,
+                Constant.COLOR_GREEN,
+                0,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor
+        );
+        bestScoreBoard.setDoDrawHeight(false);
+        bestScoreBoard.setDoDrawFloorShadow(false);
+        scoreResultBand.addToMenu(bestScoreBoard);
+
+        statisticsButton = new ImgButton(
+                0,
+                -280,bestLineY-20,
+                160,160,
+                Constant.COLOR_GREEN,
+                20,
+                0,
+                0,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                Constant.StatisticsBars,
+                Constant.SnakeBodyImg
+        );
+        scoreResultBand.addButton(statisticsButton);
+
     }
     public void initRetryBand(){
         retryBand = new MyMenu(
@@ -168,6 +274,54 @@ public class GameOverMenu extends MyMenu {
                     }
                 }
         );
+
+        retryButton = new RoundEdgeRectButton(
+                0,
+                0,200,
+                640,200,
+                100,
+                Constant.COLOR_GOLDEN,
+                20,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                null,
+                null
+        );
+        GameElement tempt = new GameElement(
+                "ge",
+                -retryButton.width/2+retryButton.angleRadius+10,retryButton.height/2-20,
+                retryButton.height*3/5,retryButton.height*3/5,
+                0,
+                0,
+                0,0,0,0,
+                Constant.RestartImg
+        );
+        tempt.setDoDrawHeight(false);
+        tempt.setDoDrawFloorShadow(false);
+        retryButton.addToTopGameElements(tempt);
+
+        tempt = new GameElement(
+                "ge",
+                60,retryButton.height*2/5,
+                400,retryButton.height*4/5,
+                0,
+                0,
+                0,0,0,0,
+                Constant.RestartChineseImg
+        );
+        tempt.setDoDrawHeight(false);
+        tempt.setDoDrawFloorShadow(false);
+        retryButton.addToTopGameElements(tempt);
+
+        retryButton.setButtonListener(
+                ()->{
+                    gamePlayView.setNowView(gamePlay.gameModeAndLevel);
+                    closeButton.doButtonStuff();
+                }
+        );
+        retryBand.addButton(retryButton);
     }
     public void initBottomBand(){
         float bottomBandHeight = 300;
