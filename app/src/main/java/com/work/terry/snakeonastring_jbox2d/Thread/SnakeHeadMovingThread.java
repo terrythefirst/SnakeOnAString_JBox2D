@@ -109,7 +109,7 @@ public class SnakeHeadMovingThread extends Thread {
             if(cb!=null&&cb.body!=null)
                 totalMass+=cb.body.getMass();
         }
-        Log.e("totalMass",""+totalMass);
+        //Log.e("totalMass",""+totalMass);
         float ratio =  MyMath.smoothStep(
                 1,
                 10,

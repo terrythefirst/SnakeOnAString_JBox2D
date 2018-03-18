@@ -55,9 +55,9 @@ public class SnakeFood extends CircleBody{
         setColor(Constant.COLOR_RED);
 
         drawUtil.addToFloorLayer(this);
-        starttJumpScoreThread();
+        startJumpScoreThread();
     }
-    public void starttJumpScoreThread(){
+    public void startJumpScoreThread(){
         jumpScoreThread = new SnakeFoodJumpScoreThread(
                 this,
                 score-score/3,
@@ -91,7 +91,7 @@ public class SnakeFood extends CircleBody{
                 y+width/2+30,
                 width*2,
                 60,
-                ColorManager.getColor(Constant.COLOR_GREY)
+                ColorManager.getColor(Constant.COLOR_WHITE)
         );
     }
 }

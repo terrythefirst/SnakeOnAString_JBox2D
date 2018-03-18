@@ -2,11 +2,8 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.view.MotionEvent;
 
-import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
-import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
-import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRectButton;
 import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
@@ -15,13 +12,11 @@ import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
-import org.jbox2d.common.Vec2;
-
 /**
- * Created by Terry on 2018/3/17.
+ * Created by Terry on 2018/3/18.
  */
 
-public class GameOverMenu extends MyMenu {
+public class PauseMenu extends MyMenu {
     GamePlay gamePlay;
     float menuFloorShadowFactorX = 0;
     float menuFloorShadowFactorY = 4f;
@@ -29,31 +24,24 @@ public class GameOverMenu extends MyMenu {
     int gameModeAndLevel;
     int gameMode;
 
-
-    MyMenu scoreResultBand;
-    RoundEdgeRectButton retryButton;
-
-
-    MyMenu retryBand;
+    MyMenu centerBand;
     GameElement levelNameBoard;
     ScoreBoard levelNumberBoard;
-    ScoreBoard finalScoreBoard;
-    GameElement bestBoard;
-    ScoreBoard bestScoreBoard;
-    ImgButton statisticsButton;
-
+    RoundEdgeRectButton resumeButton;
+    RoundEdgeRectButton retryButton;
+    RoundEdgeRectButton changeSkinButton;
 
     MyMenu bottomBand;
 
-    public GameOverMenu(
+    public PauseMenu(
             GamePlay gamePlay
     ) {
         super(
                 gamePlay.gamePlayView,
-                "gameOverMenu",
-                720,1280,Constant.SCREEN_WIDTH,Constant.SCREEN_HEIGHT,0,
+                "PauseMenu",
+                720,1280, Constant.SCREEN_WIDTH,Constant.SCREEN_HEIGHT,0,
+                0,
                 Constant.COLOR_SKINISH,
-                20,
                 0,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 Constant.ButtonBlockHeightColorFactor,
@@ -73,16 +61,10 @@ public class GameOverMenu extends MyMenu {
                     new Thread(){
                         @Override
                         public void run(){
-                            Thread thread1 = new Thread(){
-                                @Override
-                                public void run(){
-                                    retryBand.closeButton.doButtonStuff();
-                                }
-                            };
                             Thread thread2 = new Thread(){
                                 @Override
                                 public void run(){
-                                    scoreResultBand.closeButton.doButtonStuff();
+                                    centerBand.closeButton.doButtonStuff();
                                 }
                             };
                             Thread thread3 = new Thread(){
@@ -92,12 +74,10 @@ public class GameOverMenu extends MyMenu {
                                 }
                             };
 
-                            thread1.start();
                             thread2.start();
                             thread3.start();
 
                             try {
-                                thread1.join();
                                 thread2.join();
                                 thread3.join();
 
@@ -109,8 +89,6 @@ public class GameOverMenu extends MyMenu {
                     }.start();
                 }
         );
-        initScoreResultBand();
-        initRetryBand();
         bottomBand = new BottomMenu(
                 gamePlay,
                 this,
@@ -119,18 +97,18 @@ public class GameOverMenu extends MyMenu {
                 floorShadowFactorX,
                 floorShadowFactorY
         );
+        initCenterBand();
 
-        scoreResultBand.popFromTop();
-        retryBand.popFromBottom();
         bottomBand.popFromBottom();
+        centerBand.popFromBottom();
     }
-    public void initScoreResultBand(){
-        scoreResultBand = new MyMenu(
+    public void initCenterBand(){
+        centerBand = new MyMenu(
                 gamePlayView,
-                "scoreResultBand",
-                720,500,
-                menuWidth,500,
-                200,
+                "centerBand",
+                720,1280,
+                menuWidth,1200,
+                240,
                 Constant.COLOR_SKINISH,
                 defaultHeight,
                 TopOffset,
@@ -140,12 +118,11 @@ public class GameOverMenu extends MyMenu {
                 null,
                 false
         );
-        scoreResultBand.setFloorShadowFactorX(menuFloorShadowFactorX);
-        scoreResultBand.setFloorShadowFactorY(menuFloorShadowFactorY);
-
-        scoreResultBand.closeButton.setButtonListener(
+        centerBand.setFloorShadowFactorX(menuFloorShadowFactorX);
+        centerBand.setFloorShadowFactorY(menuFloorShadowFactorY);
+        centerBand.closeButton.setButtonListener(
                 ()->{
-                    Thread thread = scoreResultBand.backToTop();
+                    Thread thread = centerBand.backToBottom();
                     try {
                         thread.join();
                     }catch (Exception e){
@@ -154,28 +131,11 @@ public class GameOverMenu extends MyMenu {
                 }
         );
 
-        Score finalScore = gamePlay.score;
-        finalScoreBoard = new ScoreBoard(
-                finalScore,
-                0,scoreResultBand.height/2-scoreResultBand.defaultHeight,
-                400,180,
-                Constant.COLOR_RED,
-                0,
-                0,
-                Constant.ButtonBlockTopOffSetColorFactor,
-                Constant.ButtonBlockHeightColorFactor,
-                Constant.ButtonBlockFloorColorFactor
-        );
-        finalScoreBoard.setDoDrawFloorShadow(false);
-        finalScoreBoard.setDoDrawHeight(false);
-        scoreResultBand.addToMenu(finalScoreBoard);
-
-
-        float levelLineY = 60;
+        float levelLineY = 120;
         levelNameBoard = new GameElement(
                 "levelNameBoard ",
                 -30,levelLineY,
-                scoreResultBand.width-scoreResultBand.angleRadius*2,160,
+                centerBand.width-centerBand.angleRadius*2,160,
                 Constant.COLOR_GREY,
                 0,
                 0,0,0,0,
@@ -183,7 +143,7 @@ public class GameOverMenu extends MyMenu {
         );
         levelNameBoard.setDoDrawHeight(false);
         levelNameBoard.setDoDrawFloorShadow(false);
-        scoreResultBand.addToMenu(levelNameBoard);
+        centerBand.addToMenu(levelNameBoard);
 
         Score gameLevel = new Score(gameModeAndLevel%10);
         levelNumberBoard = new ScoreBoard(
@@ -199,90 +159,70 @@ public class GameOverMenu extends MyMenu {
         );
         levelNumberBoard.setDoDrawFloorShadow(false);
         levelNumberBoard.setDoDrawHeight(false);
-        scoreResultBand.addToMenu(levelNumberBoard);
+        centerBand.addToMenu(levelNumberBoard);
 
-
-
-        float bestLineY = scoreResultBand.height-80-scoreResultBand.defaultHeight;
-        bestBoard = new GameElement(
-                "bestBoard  ",
-                -100,bestLineY,
-                240,140,
-                Constant.COLOR_GREEN,
+        //threeButtons
+        float threeButtonsStartY = 400;
+        float threeButtonsYSpan = 40;
+        float threeButtonsWidth = 600;
+        float threeButtonsHeight = 200;
+        float threeButtonsAngleRadius = 100;
+        //resumeButton
+        resumeButton = new RoundEdgeRectButton(
                 0,
-                0,0,0,0,
-                Constant.BestChineseImg
-        );
-        bestBoard.setDoDrawHeight(false);
-        bestBoard.setDoDrawFloorShadow(false);
-        scoreResultBand.addToMenu(bestBoard);
-
-        Score bestScore = new Score(2000);
-        bestScoreBoard = new ScoreBoard(
-                bestScore,
-                180,bestLineY,
-                360,100,
-                Constant.COLOR_GREEN,
-                0,
-                0,
-                Constant.ButtonBlockTopOffSetColorFactor,
-                Constant.ButtonBlockHeightColorFactor,
-                Constant.ButtonBlockFloorColorFactor
-        );
-        bestScoreBoard.setDoDrawHeight(false);
-        bestScoreBoard.setDoDrawFloorShadow(false);
-        scoreResultBand.addToMenu(bestScoreBoard);
-
-        statisticsButton = new ImgButton(
-                0,
-                -280,bestLineY-20,
-                160,160,
+                0,threeButtonsStartY,
+                threeButtonsWidth,threeButtonsHeight,
+                threeButtonsAngleRadius,
                 Constant.COLOR_GREEN,
                 20,
                 0,
-                0,
-                Constant.ButtonBlockHeightColorFactor,
-                Constant.ButtonBlockFloorColorFactor,
-                Constant.StatisticsBars,
-                Constant.SnakeBodyImg
-        );
-        scoreResultBand.addButton(statisticsButton);
-
-    }
-    public void initRetryBand(){
-        retryBand = new MyMenu(
-                gamePlayView,
-                "retryBand",
-                720,1280,
-                menuWidth,600,
-                240,
-                Constant.COLOR_SKINISH,
-                defaultHeight,
-                TopOffset,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor,
                 null,
-                false
-        );
-        retryBand.setFloorShadowFactorX(menuFloorShadowFactorX);
-        retryBand.setFloorShadowFactorY(menuFloorShadowFactorY);
-        retryBand.closeButton.setButtonListener(
-                ()->{
-                    Thread thread = retryBand.backToBottom();
-                    try {
-                        thread.join();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
+                null
         );
 
+        GameElement tempt = new GameElement(
+                "ge",
+                -resumeButton.width/2+resumeButton.angleRadius+10,resumeButton.height/2-20,
+                resumeButton.height*3/5,resumeButton.height*3/5,
+                0,
+                0,
+                0,0,0,0,
+                Constant.StartImg
+        );
+        tempt.setDoDrawHeight(false);
+        tempt.setDoDrawFloorShadow(false);
+        resumeButton.addToTopGameElements(tempt);
+
+        tempt = new GameElement(
+                "ge",
+                60,resumeButton.height*2/5,
+                400,resumeButton.height*4/5,
+                0,
+                0,
+                0,0,0,0,
+                Constant.ResumeImg
+        );
+        tempt.setDoDrawHeight(false);
+        tempt.setDoDrawFloorShadow(false);
+        resumeButton.addToTopGameElements(tempt);
+
+        resumeButton.setButtonListener(
+                ()->{
+                    closeButton.doButtonStuff();
+                    gamePlay.IS_PLAYING = true;
+                }
+        );
+        centerBand.addButton(resumeButton);
+
+        //retryButton
         retryButton = new RoundEdgeRectButton(
                 0,
-                0,200,
-                640,200,
-                100,
+                0,threeButtonsStartY+(threeButtonsYSpan+threeButtonsHeight),
+                threeButtonsWidth,threeButtonsHeight,
+                threeButtonsAngleRadius,
                 Constant.COLOR_GOLDEN,
                 20,
                 0,
@@ -292,7 +232,7 @@ public class GameOverMenu extends MyMenu {
                 null,
                 null
         );
-        GameElement tempt = new GameElement(
+        tempt = new GameElement(
                 "ge",
                 -retryButton.width/2+retryButton.angleRadius+10,retryButton.height/2-20,
                 retryButton.height*3/5,retryButton.height*3/5,
@@ -324,30 +264,76 @@ public class GameOverMenu extends MyMenu {
                     closeButton.doButtonStuff();
                 }
         );
-        retryBand.addButton(retryButton);
+        centerBand.addButton(retryButton);
+
+        //changeSkinButton
+        changeSkinButton = new RoundEdgeRectButton(
+                0,
+                0,threeButtonsStartY+(threeButtonsYSpan+threeButtonsHeight)*2,
+                threeButtonsWidth,threeButtonsHeight,
+                threeButtonsAngleRadius,
+                Constant.COLOR_WINE_RED,
+                20,
+                0,
+                Constant.ButtonBlockTopOffSetColorFactor,
+                Constant.ButtonBlockHeightColorFactor,
+                Constant.ButtonBlockFloorColorFactor,
+                null,
+                null
+        );
+        tempt = new GameElement(
+                "ge",
+                -changeSkinButton.width/2+changeSkinButton.angleRadius+10,changeSkinButton.height/2-20,
+                changeSkinButton.height*3/5,changeSkinButton.height*3/5,
+                0,
+                0,
+                0,0,0,0,
+                Constant.ShapeImg
+        );
+        tempt.setDoDrawHeight(false);
+        tempt.setDoDrawFloorShadow(false);
+        changeSkinButton.addToTopGameElements(tempt);
+
+        tempt = new GameElement(
+                "ge",
+                60,changeSkinButton.height*2/5,
+                400,changeSkinButton.height*4/5,
+                0,
+                0,
+                0,0,0,0,
+                Constant.ChangeSkinChineseImg
+        );
+        tempt.setDoDrawHeight(false);
+        tempt.setDoDrawFloorShadow(false);
+        changeSkinButton.addToTopGameElements(tempt);
+
+        changeSkinButton.setButtonListener(
+                ()->{
+                    gamePlay.changeSkinButton.doButtonStuff();
+                    closeButton.doButtonStuff();
+                }
+        );
+        centerBand.addButton(changeSkinButton);
     }
     @Override
     public void onTouchEvent(MotionEvent event, float x, float y){
-        if(scoreResultBand.testTouch(x,y))scoreResultBand.onTouchEvent(event,x,y);
-        else if(retryBand.testTouch(x,y))retryBand.onTouchEvent(event,x,y);
+        if(centerBand.testTouch(x,y))centerBand.onTouchEvent(event,x,y);
         else if(bottomBand.testTouch(x,y))bottomBand.onTouchEvent(event, x, y);
     }
+
     @Override
     public void drawSelf(TexDrawer painter){
-        scoreResultBand.drawSelf(painter);
-        retryBand.drawSelf(painter);
+        centerBand.drawSelf(painter);
         bottomBand.drawSelf(painter);
     }
     @Override
     public void drawHeight(TexDrawer painter){
-        scoreResultBand.drawHeight(painter);
-        retryBand.drawHeight(painter);
+        centerBand.drawHeight(painter);
         bottomBand.drawHeight(painter);
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){
-        scoreResultBand.drawFloorShadow(painter);
-        retryBand.drawFloorShadow(painter);
+        centerBand.drawFloorShadow(painter);
         bottomBand.drawFloorShadow(painter);
     }
 }

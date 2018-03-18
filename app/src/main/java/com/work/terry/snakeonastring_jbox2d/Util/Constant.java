@@ -75,6 +75,7 @@ public class Constant {
     public static final String SelectChineseImg = "select_chinese.png";
     public static final String UnlockChineseImg = "unlock_chinese.png";
     public static final String ChangeSkinChineseImg = "change_skin_chinese.png";
+    public static final String ResumeImg = "resume_chinese.png";
     public static final String RestartChineseImg = "restart_chinese.png";
     public static final String BestChineseImg = "best_chinese.png";
     public static final String EndlessChineseImg = "endless_chinese.png";
@@ -211,6 +212,7 @@ public class Constant {
     public static final int COLOR_GREEN = 10;
     public static final int COLOR_DEEP_PINK = 11;
     public static final int COLOR_SKINISH = 12;
+    public static final int COLOR_WINE_RED = 13;
 
     public static final int LAYER_TOP = 0;
     public static final int LAYER_CENTER = 1;

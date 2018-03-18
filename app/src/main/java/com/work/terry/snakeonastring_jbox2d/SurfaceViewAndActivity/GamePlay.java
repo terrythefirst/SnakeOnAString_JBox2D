@@ -153,11 +153,7 @@ public class GamePlay extends MyView{
                     e.printStackTrace();
                 }
                 GameOverMenu gameOverMenu = new GameOverMenu(
-                        GamePlay.this,
-                        "gameOverMenu",
-                        Constant.COLOR_SKINISH,
-                        20,
-                        0
+                        GamePlay.this
                 );
                 gamePlayView.setNowMenu(gameOverMenu);
             }
@@ -195,7 +191,9 @@ public class GamePlay extends MyView{
         );
         pauseButton.setButtonListener(
                 ()->{
-                    Log.d("pauseButton","touch!");
+                    PauseMenu pauseMenu = new PauseMenu(this);
+                    gamePlayView.setNowMenu(pauseMenu);
+                    IS_PLAYING = false;
                 }
         );
         pauseButton.setDoDrawHeight(false);

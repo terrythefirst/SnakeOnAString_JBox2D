@@ -159,11 +159,11 @@ public class SnakeNode extends CircleBody{
         y = frontXY.y - frontVNormalized.y*centerDistance;
         this.angleRadian = VectorUtil.calRotateAngleRadius(frontV.x,frontV.y);
         super.createBody();
-        Log.d("bodyInitSelf"+id,"x="+x+" y="+y);
+        //Log.d("bodyInitSelf"+id,"x="+x+" y="+y);
 
         Vec2 center = getCenterV2(front.getBodyXY(),this.getBodyXY());
         this.angleRect = calBodyRadians(frontVNormalized.x,frontVNormalized.y);
-        Log.e("initSelf","angleDegrees"+Math.toDegrees(angleRect));
+       // Log.e("initSelf","angleDegrees"+Math.toDegrees(angleRect));
         float rectBodyLength = getBodyCenterDistance();
         rectBody = new RectBody(
                 gamePlay,

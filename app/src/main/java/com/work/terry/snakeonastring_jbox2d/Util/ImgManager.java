@@ -72,6 +72,7 @@ public class ImgManager {
             SelectChineseImg,
             UnlockChineseImg,
             ChangeSkinChineseImg,
+            ResumeImg,
             RestartChineseImg,
             BestChineseImg,
             EndlessChineseImg,
