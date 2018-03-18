@@ -80,7 +80,7 @@ public class SingleGrain extends GameElement {
         if(Math.abs(vz)<0.1f)vz=0;
         //else  Log.e("Math.abs(vz)",Math.abs(vz)+"");
         jumpHeight = height;
-        Log.e("singleGrain jumpHeight",jumpHeight+"");
+        //Log.e("singleGrain jumpHeight",jumpHeight+"");
     }
     @Override
     public void drawSelf(TexDrawer painter){

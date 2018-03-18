@@ -105,7 +105,6 @@ public class SnakeHead extends CircleBody{
         HeadVY = vy;
     }
 
-
     public Vec2 getV2D(){
         return new Vec2(HeadVX,HeadVY);
     }

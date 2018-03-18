@@ -64,6 +64,7 @@ public class ImgManager {
             ArrowBackImg,
 
             SpeedImg,
+            MenuImg,
             SelectChineseImg,
             UnlockChineseImg,
             ChangeSkinChineseImg,

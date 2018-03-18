@@ -19,7 +19,7 @@ public class EndlessPlayMenu extends MyMenu {
                 gamePlayView,
                 "menu",
                 Constant.SCREEN_WIDTH/2,
-                Constant.SCREEN_HEIGHT+1050,//+Constant.SCREEN_HEIGHT*3/8,
+                Constant.SCREEN_HEIGHT/2+100,//+Constant.SCREEN_HEIGHT*3/8,
                 1230,
                 2100,
                 200,
@@ -32,7 +32,6 @@ public class EndlessPlayMenu extends MyMenu {
                 null,
                 true
         );
-
         initBand();
         initLevels();
     }

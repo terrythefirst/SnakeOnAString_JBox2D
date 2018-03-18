@@ -111,6 +111,8 @@ public class Constant {
     public static final String BombImg = "my_bomb.png";
     //Speed
     public static final String SpeedImg = "speed.png";
+    //menu
+    public static final String MenuImg = "menu.png";
     //钉子
     public static final String NailVerticalImg = "nail_vertical.png";
     public static final String NailShadowImg = "nail_shadow.png";
@@ -120,6 +122,7 @@ public class Constant {
     //按钮
     public static final String PauseButtonImg = "pause.png";
     public static final String DeleteImg = "delete.png";
+    public static final String RestaetImg = "restart.png";
 
     //磁铁
     public static final String FoodMagnetImg = "magnet.png";

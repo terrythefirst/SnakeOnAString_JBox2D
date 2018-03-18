@@ -89,6 +89,8 @@ public class GameElement {
 
         this.floorShadowFactorX = Constant.FloorShadowFactorX;
         this.floorShadowFactorY = Constant.FloorShadowFactorY;
+
+        this.constantXY = new Vec2(x,y);
     }
     public GameElement(
             String id,
@@ -122,6 +124,8 @@ public class GameElement {
 
         this.floorShadowFactorX = Constant.FloorShadowFactorX;
         this.floorShadowFactorY = Constant.FloorShadowFactorY;
+
+        this.constantXY = new Vec2(x,y);
     }
     public void setTopRatio(float TopRatio){
         this.TopRatio = TopRatio;

@@ -596,12 +596,7 @@ public class StartView extends MyView {
                         gamePlayView.setNowMenu(
                                 endlessPlayMenu
                         );
-                        new UniformMotionAnimation(
-                                endlessPlayMenu,
-                                new Vec2(Constant.SCREEN_WIDTH/2,
-                                        Constant.SCREEN_HEIGHT/2+100),
-                                0.2f
-                        ).start();
+                        endlessPlayMenu.popFromBottom();
                     }
         );
         drawUtil.addToCenterLayer(endlessPlayButton);

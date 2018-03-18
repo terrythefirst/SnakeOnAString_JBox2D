@@ -79,7 +79,7 @@ public class SnakeHeadMovingThread extends Thread {
                     vecDXY .x* forceFactor(dx),
                     vecDXY .y* forceFactor(dy)
                     ));
-            Log.e("snakeMoving","force x="+vecDXY .x* forceFactor(dx)+" y="+vecDXY .y* forceFactor(dy));
+            //Log.e("snakeMoving","force x="+vecDXY .x* forceFactor(dx)+" y="+vecDXY .y* forceFactor(dy));
 //                snakeHead.setBodyVelocity(
 //                        vecDXY .x* speedFactor(dx),
 //                        vecDXY .y* speedFactor(dy)

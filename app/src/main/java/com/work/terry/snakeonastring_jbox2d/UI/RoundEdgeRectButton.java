@@ -19,6 +19,7 @@ public class RoundEdgeRectButton extends ImgButton {
     public Button rectButton2;
     public Button circleButton;
     public float angleRadius;
+    public List<GameElement> topGameElements = new ArrayList<>();
     public List<Button> buttons = new ArrayList<Button>();
 
     public RoundEdgeRectButton(
@@ -92,6 +93,9 @@ public class RoundEdgeRectButton extends ImgButton {
         );
         buttons.add(rectButton2);
     }
+    public void addToTopGameElements(GameElement gameElement){
+         topGameElements.add(gameElement);
+    }
     @Override
     public void setColor(int x){
         super.color = x;
@@ -128,20 +132,6 @@ public class RoundEdgeRectButton extends ImgButton {
 
         if(disabled)setColor(Constant.COLOR_GREY);
 
-//        circleButton.setXY(x-(width/2-angleRadius),y-(height/2-angleRadius));
-//        circleButton.drawSelf(painter);
-//        if(((width/2-angleRadius)!=0)){
-//            circleButton.setXY(x+(width/2-angleRadius),y-(height/2-angleRadius));
-//            circleButton.drawSelf(painter);
-//        }
-//        if((height/2-angleRadius)!=0){
-//            circleButton.setXY(x-(width/2-angleRadius),y+(height/2-angleRadius));
-//            circleButton.drawSelf(painter);
-//        }
-//        if((height/2-angleRadius)!=0||(width/2-angleRadius)!=0){
-//            circleButton.setXY(x+(width/2-angleRadius),y+(height/2-angleRadius));
-//            circleButton.drawSelf(painter);
-//        }
         int startAngle = 0;
 
         circleButton.rotateAngleGameElements = startAngle;
@@ -161,16 +151,28 @@ public class RoundEdgeRectButton extends ImgButton {
         rectButton2.setXY(x,y);
         rectButton2.drawSelf(painter);
 
-        painter.drawColorSelf(
-                TexManager.getTex(TopImg),
-                ColorManager.getColor(Constant.COLOR_WHITE),//(disabled?ColorManager.getColor(Constant.COLOR_GREY):ColorManager.getColor(Constant.COLOR_WHITE)),
-                x,
-                y - jumpHeight - defaultHeight,
-                (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
-                (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
-                rotateAngleGameElements
-        );
-
+        if(TopImg!=null)
+            painter.drawColorSelf(
+                    TexManager.getTex(TopImg),
+                    ColorManager.getColor(Constant.COLOR_WHITE),//(disabled?ColorManager.getColor(Constant.COLOR_GREY):ColorManager.getColor(Constant.COLOR_WHITE)),
+                    x,
+                    y - jumpHeight - defaultHeight,
+                    (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
+                    (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
+                    rotateAngleGameElements
+            );
+        else {
+            for(GameElement gameElement : topGameElements){
+                gameElement.setXY(
+                        x+ gameElement.constantXY.x,
+                        y-height/2+ gameElement.constantXY.y
+                );
+                gameElement.drawFloorShadow(painter);
+                gameElement.drawHeight(painter);
+                gameElement.drawSelf(painter);
+                //Log.d("Menu GameElementsList","x="+gameElement.x+" y="+gameElement.y);
+            }
+        }
     }
     @Override
     public void drawHeight(TexDrawer painter){
@@ -245,10 +247,16 @@ public class RoundEdgeRectButton extends ImgButton {
             for (Button button:buttons){
                 button.jumpHeight = -button.defaultHeight*3/4;
             }
+            for(GameElement gameElement : topGameElements){
+                gameElement.jumpHeight = -defaultHeight*3/4;
+            }
         }else {
             jumpHeight = -defaultHeight*1/4;
             for (Button button:buttons){
                 button.jumpHeight = -button.defaultHeight*1/4;
+            }
+            for(GameElement gameElement : topGameElements){
+                gameElement.jumpHeight = -defaultHeight*1/4;
             }
         }
     }
@@ -257,6 +265,9 @@ public class RoundEdgeRectButton extends ImgButton {
         jumpHeight = 0;
         for (Button button:buttons){
             button.jumpHeight = 0;
+        }
+        for(GameElement gameElement : topGameElements){
+            gameElement.jumpHeight = 0;
         }
         if(!disabled&&within&&buttonListener!=null)buttonListener.doButtonStuff();
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
+import com.work.terry.snakeonastring_jbox2d.UI.ButtonListener;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
 import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
@@ -23,8 +24,12 @@ import java.util.List;
  */
 
 public class MyMenu extends RoundEdgeRect {
+    public float menuX;
+    public float menuY;
+
     public GamePlayView gamePlayView;
     public ImgButton closeButton;
+    public ButtonListener closeButtonListener ;
     public boolean needDefaultCloseButton = true;
     public Button closeButtonUnder;
 
@@ -71,6 +76,10 @@ public class MyMenu extends RoundEdgeRect {
                 Img
         );
         setIsPureColor(true);
+        this.menuX = x;
+        this.menuY = y;
+        x = -width/2;
+        y = -height/2;
         this.needDefaultCloseButton = needDefaultCloseButton;
         this.gamePlayView = gamePlayView;
         //drawUtil = new DrawUtil(null);
@@ -91,13 +100,8 @@ public class MyMenu extends RoundEdgeRect {
         closeButton.setTopImgRatio(0.4f);
         closeButton.setButtonListener(
                 ()->{
-                    Thread thread = new UniformMotionAnimation(
-                            this,
-                            new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT+height/2),
-                            0.5f
-                    );
+                    Thread thread = backToBottom();
 
-                    thread.start();
                     try {
                         thread.join();
                         gamePlayView.setNowMenu(null);
@@ -125,14 +129,47 @@ public class MyMenu extends RoundEdgeRect {
         );
 
     }
-    public static void PopFromButtom(MyMenu myMenu){
-//        new PullMoveAnimation(
-//                myMenu,
-//                new Vec2(Constant.SCREEN_WIDTH/2,Constant.SCREEN_HEIGHT/2),
-//                0.4f,
-//                0.01f,
-//                3
-//        ).start();
+    public Thread backToTop(){
+        Thread thread = new UniformMotionAnimation(
+                this,
+                new Vec2(menuX,-height/2),
+                0.2f
+        );
+        thread.start();
+        return thread;
+    }
+    public Thread backToBottom(){
+        Thread thread =new UniformMotionAnimation(
+                this,
+                new Vec2(menuX,Constant.SCREEN_HEIGHT+height/2),
+                0.2f
+        );
+        thread.start();
+        return thread;
+    }
+    public Thread popFromTop(){
+        x=menuX;
+        y=-height/2;
+
+        Thread thread =new UniformMotionAnimation(
+                this,
+                new Vec2(menuX,menuY),
+                0.2f
+        );
+        thread.start();
+        return thread;
+    }
+    public Thread popFromBottom(){
+        x=menuX;
+        y=Constant.SCREEN_HEIGHT+height/2;
+
+        Thread thread =new UniformMotionAnimation(
+                this,
+                new Vec2(menuX,menuY),
+                0.2f
+        );
+        thread.start();
+        return thread;
     }
     public void addToMenu(GameElement gameElement){
         gameElementList.add(gameElement);
@@ -185,13 +222,13 @@ public class MyMenu extends RoundEdgeRect {
         super.drawFloorShadow(painter);
     }
 
-    private Button whichButtonTouched(float x,float y){
+    protected Button whichButtonTouched(float x,float y){
         for(Button b:buttons){
             if (b.testTouch(x,y))return b;
         }
         return null;
     }
-    private void whenUp(float x,float y){
+    protected void whenUp(float x,float y){
         if(nowPressedButton!=null)
             nowPressedButton.whenReleased(nowPressedButton.testTouch(x,y));
     }

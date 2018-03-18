@@ -206,6 +206,7 @@ public class Snake {
                 ColorManager.getColor(Constant.COLOR_GREY)
         );
         snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDeadImgCode).getImg());//Constant.SnakeHeadDizzyEyesImg);
+        gamePlay.gameOver();
     }
     public boolean isDead(){
         return isDead;

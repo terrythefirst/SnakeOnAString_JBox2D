@@ -12,6 +12,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
 public class ImgButton extends Button{
     String TopImg;
+    float topImgRotateDegrees = 0;
     float TopImgRatio = 0;
     public ImgButton(
             int id,
@@ -43,6 +44,7 @@ public class ImgButton extends Button{
         //jumpHeight = defaultHeight;
         //this.defaultHeight = 0;
     }
+    public void setTopImgRotateDegrees(float x){this.topImgRotateDegrees = x;}
     public void setTopImgRatio(float rate){
         this.TopImgRatio = rate;
     }
@@ -58,7 +60,7 @@ public class ImgButton extends Button{
                     y - jumpHeight - defaultHeight,
                     (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
                     (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
-                    rotateAngleGameElements
+                    topImgRotateDegrees
             );
     }
 }

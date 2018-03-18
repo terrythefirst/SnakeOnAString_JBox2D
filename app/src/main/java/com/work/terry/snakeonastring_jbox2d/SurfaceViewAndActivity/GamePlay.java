@@ -143,6 +143,16 @@ public class GamePlay extends MyView{
         snake.moving();
         jBox2DThread.start();
     }
+    public void gameOver(){
+        GameOverMenu gameOverMenu = new GameOverMenu(
+                this,
+                "gameOverMenu",
+                Constant.COLOR_SKINISH,
+                20,
+                0
+        );
+        gamePlayView.setNowMenu(gameOverMenu);
+    }
     public void plusScore(int x){
         score.plusScore(x);
     }
