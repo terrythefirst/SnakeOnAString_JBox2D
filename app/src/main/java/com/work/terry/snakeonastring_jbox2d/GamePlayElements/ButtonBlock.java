@@ -143,7 +143,7 @@ public class ButtonBlock extends MyBody {
                 rectLength/2,
 
                 color,
-                ButtonBlockDefaultHeight,
+                defaultHeight,
                 TopOffset,
                 ButtonBlockTopOffSetColorFactor,
                 ButtonBlockHeightColorFactor,
@@ -184,7 +184,7 @@ public class ButtonBlock extends MyBody {
                 circleDiameter/2,
 
                 this.color,
-                ButtonBlockDefaultHeight,
+                defaultHeight,
                 TopOffset,
                 ButtonBlockTopOffSetColorFactor,
                 ButtonBlockHeightColorFactor,
@@ -210,7 +210,7 @@ public class ButtonBlock extends MyBody {
                 circleDiameter/2,
 
                 this.color,
-                ButtonBlockDefaultHeight,
+                defaultHeight,
                 TopOffset,
                 ButtonBlockTopOffSetColorFactor,
                 ButtonBlockHeightColorFactor,

@@ -63,7 +63,6 @@ public class JBox2DThread extends Thread implements Stoppable{
                 if(gamePlay.snake.isMagnetic)
                     gamePlay.snake.searchWithin();
             }
-
             //timeStamp = currTimeStamp;
         }
     }

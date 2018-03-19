@@ -96,7 +96,6 @@ public class BottomMenu extends MyMenu {
                 }
         );
 
-
         preLevelButton = new ImgButton(
                 0,
                 -(bottomBandButtonsSpanX+bottomBandButtonsWidth)*(1)/2,bottomBandButtonsRelativeY,

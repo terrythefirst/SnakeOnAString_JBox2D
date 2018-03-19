@@ -187,7 +187,7 @@ public class LoadGameUtil {
                 floorShadowFactorY = Float.parseFloat(tempsp[1].trim());
             }
         }
-
+        defaultHeight = (float)(Math.toRadians(30)*radius);
         CircleButtonBlocks cbb = new CircleButtonBlocks(
                 gamePlay,
                 (id!=-1)?id:0,

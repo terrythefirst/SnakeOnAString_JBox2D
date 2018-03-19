@@ -42,7 +42,7 @@ public class SnakeNodeAnimateDraw extends GameElement {
 
     }
     public boolean isFinished(){
-        return (nowRadius==targetRadius);
+        return (Math.abs(nowRadius-targetRadius)<0.1f);
     }
     public void AnimationStep(float perRadius){
         if(snakeNode==null||snakeNode.body==null)return;

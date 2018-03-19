@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
+import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import org.jbox2d.common.Vec2;
 
@@ -74,16 +76,17 @@ public class SnakeHeadMovingThread extends Thread {
 //                            vecDXY .x* 1000,
 //                            vecDXY .y* 1000 )
 //            );
-            snakeHead.body.applyForceToCenter(
-                    new Vec2(
-                    vecDXY .x* forceFactor(dx),
-                    vecDXY .y* forceFactor(dy)
-                    ));
+//                Log.e("forceFactor(dx)","x="+forceFactor(10)+" y="+forceFactor(10));
+//            snakeHead.body.applyForceToCenter(
+//                    new Vec2(
+//                    vecDXY .x* forceFactor(dx),
+//                    vecDXY .y* forceFactor(dy)
+//                    ));
             //Log.e("snakeMoving","force x="+vecDXY .x* forceFactor(dx)+" y="+vecDXY .y* forceFactor(dy));
-//                snakeHead.setBodyVelocity(
-//                        vecDXY .x* speedFactor(dx),
-//                        vecDXY .y* speedFactor(dy)
-//                );
+                snakeHead.setBodyVelocity(
+                        vecDXY .x* speedFactor(dx),
+                        vecDXY .y* speedFactor(dy)
+                );
             }
 
             try {
@@ -101,7 +104,7 @@ public class SnakeHeadMovingThread extends Thread {
         )
                 *snakeHead.speed
                 * snakeHead.snake.getLength()
-                *10;
+                *40;
     }
     public float forceFactor(float x){
         float totalMass = 0;
@@ -109,7 +112,7 @@ public class SnakeHeadMovingThread extends Thread {
             if(cb!=null&&cb.body!=null)
                 totalMass+=cb.body.getMass();
         }
-        //Log.e("totalMass",""+totalMass);
+        Log.d("totalMass",""+totalMass);
         float ratio =  MyMath.smoothStep(
                 1,
                 10,

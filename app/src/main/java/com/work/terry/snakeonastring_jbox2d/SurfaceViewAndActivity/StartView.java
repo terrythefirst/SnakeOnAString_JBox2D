@@ -466,10 +466,10 @@ public class StartView extends MyView {
     public void initButtons(){
         switchButton = new ImgButton(
                 0,
-                720,SnakeY,
+                720,SnakeY-40,
                 150,150,
                 Constant.COLOR_RED,
-                30,
+                8,
                 0,
                 0,
                 Constant.ButtonBlockHeightColorFactor,
@@ -477,6 +477,8 @@ public class StartView extends MyView {
                 Constant.ArrowsSwitchImg,
                 Constant.SnakeBodyImg
         );
+        switchButton.setFloorShadowFactorX(0);
+        switchButton.setFloorShadowFactorY(4f);
         switchButton.setTopImgRatio(0.7f);
         switchButton.setButtonListener(
                 ()->{

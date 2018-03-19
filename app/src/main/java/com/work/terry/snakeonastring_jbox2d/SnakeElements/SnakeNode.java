@@ -170,7 +170,7 @@ public class SnakeNode extends CircleBody{
                 body.getUserData().toString()+" Rect",
                 center.x,center.y,
                 angleRect,
-                1,rectBodyLength/2,
+                5,rectBodyLength/2,
 
                 this.color,
                 0,
@@ -225,17 +225,17 @@ public class SnakeNode extends CircleBody{
                         0.0f
                 )
         );
-
+//
 //        joints.add(
 //            new MyBox2DRevoluteJoint(
 //                    body.getUserData().toString()+" RevoluteJoint 1",
 //                    gamePlay,
 //                    false,
-//                    rectBody,
 //                    front,
+//                    rectBody,
 //                    //rectBody.body.getPosition(),
 //                    front.body.getPosition(),
-//                    false,
+//                    true,
 //                    (float)Math.toRadians(-30),
 //                    (float)Math.toRadians(30),
 //                    false, 0, 0
@@ -243,13 +243,14 @@ public class SnakeNode extends CircleBody{
 //        );
 //        joints.add(
 //                new MyBox2DRevoluteJoint(
-//                        body.getUserData().toString() +" RevoluteJoint 1",
+//                        body.getUserData().toString() +" RevoluteJoint 2",
 //                        gamePlay,
 //                        false,
-//                        rectBody,
 //                        this,
+//                        rectBody,
+//                        //rectBody.body.getPosition(),
 //                        this.body.getPosition(),
-//                        false,
+//                        true,
 //                        (float)Math.toRadians(-30),
 //                        (float)Math.toRadians(30),
 //                        false, 0, 0

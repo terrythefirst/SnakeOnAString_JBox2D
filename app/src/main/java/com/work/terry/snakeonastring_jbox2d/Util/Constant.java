@@ -184,8 +184,8 @@ public class Constant {
     public static float ButtonBlockFloorColorFactor = SnakeFloorColorFactor;
 
     //绘制相关
-    public static final float FloorShadowFactorX = 0.3f;
-    public static final float FloorShadowFactorY = 0.5f;
+    public static final float FloorShadowFactorX = 0.6f;
+    public static final float FloorShadowFactorY = 0.8f;
 
     public static String BackgroundImg = "Strips_background.png";
     public static String LockImg = "lock.png";
