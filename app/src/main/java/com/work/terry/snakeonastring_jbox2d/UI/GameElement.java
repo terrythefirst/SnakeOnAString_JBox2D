@@ -361,7 +361,7 @@ public class GameElement {
         int length = digits.size();
 
         float perWidth = width/length;
-        if(perWidth>height){
+        if(perWidth>height&&height>0){
             perWidth = height*4/5;
         }
         float startX = x+(length-1)*perWidth/2;

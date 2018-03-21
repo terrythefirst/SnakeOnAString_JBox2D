@@ -10,7 +10,6 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 public class ScoreBoard extends GameElement {
     public Score score;
-    public float scoreWidth;
     public ScoreBoard(
             Score score,
             float x, float y,
@@ -36,18 +35,18 @@ public class ScoreBoard extends GameElement {
         );
         this.score = score;
         setDoDrawHeight(false);
-        this.scoreWidth = width;
     }
 
 
     @Override
     public void drawSelf(TexDrawer painter){
+        if(width-scaleWidth<=0||height-scaleHeight<=0)return;
         if(TopOffset!=0)
             drawNumberColorFactor(
                     painter,
                     score.getScore(),
                     x,y-jumpHeight-defaultHeight+TopOffset,
-                    width+scaleWidth,height+scaleWidth,
+                    width+scaleWidth,height+scaleHeight,
                     colorFloats,
                     TopOffsetColorFactor
             );
@@ -55,18 +54,19 @@ public class ScoreBoard extends GameElement {
                 painter,
                 score.getScore(),
                 x,y-jumpHeight-defaultHeight,
-                width+scaleWidth,height+scaleWidth,
+                width+scaleWidth,height+scaleHeight,
                 colorFloats
         );
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){
+        if(width-scaleWidth<=0||height-scaleHeight<=0)return;
         if(doDrawFloorShadow)
         drawNumberShadow(
                 painter,
                 score.getScore(),
                 x,y,
-                width+scaleWidth,height+scaleWidth,
+                width+scaleWidth,height+scaleHeight,
                 ColorManager.getColor(Constant.COLOR_GREY),
                 FloorShadowColorFactor
         );
