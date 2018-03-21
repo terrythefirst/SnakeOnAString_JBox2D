@@ -25,6 +25,9 @@ public class LoadSkinUtil {
         SnakeSkin snakeSkin = null;
 
         String skinName = "";
+        float speed = 0.2f;
+        float luck = 0.2f;
+        int price = 0;
         Map<Integer,SnakeNodeSkinInfo> skinInfo = new HashMap<>();
 
         try {
@@ -33,7 +36,11 @@ public class LoadSkinUtil {
             BufferedReader br = new BufferedReader(isr);
             String temps;
 
-            skinName = br.readLine();
+            String[] firstLineStrings = br.readLine().split("[ ]+");
+            skinName = firstLineStrings[0];
+            speed = Float.parseFloat(firstLineStrings[1]);
+            luck = Float.parseFloat(firstLineStrings[2]);
+            price = Integer.parseInt(firstLineStrings[3]);
             Log.d("loadSnakeSkinFromFile",skinName+" start");
 
             while ((temps=br.readLine())!=null){
@@ -53,7 +60,7 @@ public class LoadSkinUtil {
                 Log.d("put number",number+" name:"+imgName);
             }
 
-            snakeSkin = new SnakeSkin(skinName,skinInfo);
+            snakeSkin = new SnakeSkin(skinName,speed,luck,price,skinInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }

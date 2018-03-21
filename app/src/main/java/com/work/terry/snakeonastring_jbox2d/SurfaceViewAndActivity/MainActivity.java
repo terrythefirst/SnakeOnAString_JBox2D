@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -11,6 +12,8 @@ import android.view.WindowManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import com.work.terry.snakeonastring_jbox2d.auto.ScreenScaleUtil;
+
+import java.util.Date;
 
 public class MainActivity extends Activity {
     private GamePlayView gamePlayView;

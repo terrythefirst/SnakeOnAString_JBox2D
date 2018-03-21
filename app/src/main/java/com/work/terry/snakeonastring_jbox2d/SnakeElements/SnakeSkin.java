@@ -8,6 +8,9 @@ import java.util.Map;
  */
 
 public class SnakeSkin {
+    public float speed;
+    public float luck;
+    public int price;
     String SkinName;
     Map<Integer,SnakeNodeSkinInfo> skinInfo;
 
@@ -15,10 +18,16 @@ public class SnakeSkin {
 
     public SnakeSkin(
             String SkinName,
+            float speed,
+            float luck,
+            int price,
             Map<Integer,SnakeNodeSkinInfo> skinNodeInfo
     ){
         this.SkinName = SkinName;
         this.skinInfo = skinNodeInfo;
+        this.luck = luck;
+        this.speed = speed;
+        this.price = price;
         cycle = Integer.MIN_VALUE;
         for(Object x:skinInfo.keySet()){
             Integer k = (Integer)x;

@@ -102,9 +102,10 @@ public class SnakeHeadMovingThread extends Thread {
                 snakeHead.SpeedFactor,
                 Math.abs(x)
         )
-                *snakeHead.speed
+                *snakeHead.snake.speed
                 * snakeHead.snake.getLength()
-                *40;
+                *30
+                ;
     }
     public float forceFactor(float x){
         float totalMass = 0;

@@ -24,8 +24,8 @@ public class SnakeEatingHeadAnimation extends Thread {
         int time = 0;
         boolean open = false;
         while (time<times){
-            if (open)snakeHead.changeFace(SnakeSkinManager.getSkin(snakeHead.snake.getSkinNumber(),Constant.SnakeHeadEatingOpenImgCode).getImg());
-            else snakeHead.changeFace(SnakeSkinManager.getSkin(snakeHead.snake.getSkinNumber(),Constant.SnakeHeadEatingCloseImgCode).getImg());
+            if (open)snakeHead.changeFace(SnakeSkinManager.getSkinNodeInfo(snakeHead.snake.getSkinNumber(),Constant.SnakeHeadEatingOpenImgCode).getImg());
+            else snakeHead.changeFace(SnakeSkinManager.getSkinNodeInfo(snakeHead.snake.getSkinNumber(),Constant.SnakeHeadEatingCloseImgCode).getImg());
 
             open=!open;
             if(open)time++;
@@ -35,6 +35,6 @@ public class SnakeEatingHeadAnimation extends Thread {
                 e.printStackTrace();
             }
         }
-        snakeHead.changeFace(SnakeSkinManager.getSkin(snakeHead.snake.getSkinNumber(),Constant.SnakeHeadImgCode).getImg());
+        snakeHead.changeFace(SnakeSkinManager.getSkinNodeInfo(snakeHead.snake.getSkinNumber(),Constant.SnakeHeadImgCode).getImg());
     }
 }

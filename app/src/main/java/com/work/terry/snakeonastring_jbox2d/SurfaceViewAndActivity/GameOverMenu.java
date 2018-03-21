@@ -155,6 +155,7 @@ public class GameOverMenu extends MyMenu {
         );
 
         Score finalScore = gamePlay.score;
+        gamePlay.gamePlayView.yellowStars+=finalScore.getScore()/10;
         finalScoreBoard = new ScoreBoard(
                 finalScore,
                 0,scoreResultBand.height/2-scoreResultBand.defaultHeight,
@@ -217,7 +218,12 @@ public class GameOverMenu extends MyMenu {
         bestBoard.setDoDrawFloorShadow(false);
         scoreResultBand.addToMenu(bestBoard);
 
-        Score bestScore = new Score(2000);
+        int bestScores = gamePlay.gamePlayView.maxScore;
+        if(bestScores<finalScore.getScore()){
+            gamePlay.gamePlayView.maxScore = finalScore.getScore();
+            bestScores = finalScore.getScore();
+        }
+        Score bestScore = new Score(bestScores);
         bestScoreBoard = new ScoreBoard(
                 bestScore,
                 180,bestLineY,

@@ -1,4 +1,4 @@
-bee
+bee 0.3f 0.3f 40
 -5 254,218,0 snake_head_bee_eating_close.png 60,55
 -4 254,218,0 snake_head_bee_eating_open.png 60,55
 -3 254,218,0 snake_head_bee_dizzy.png 60,55

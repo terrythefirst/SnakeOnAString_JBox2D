@@ -8,6 +8,7 @@ import com.work.terry.snakeonastring_jbox2d.Animation.DisappearAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
+import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.Thread.StoppableBreathAnimationThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.WhenUpMoveSnakeThread;
@@ -113,7 +114,7 @@ public class SkinChangingView extends MyView {
             SnakeNode snakeNode = new SnakeNode(
                     720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
                     0,
-                    SnakeSkinManager.getSkin(skinNumber,8-NodeIndex),
+                    SnakeSkinManager.getSkinNodeInfo(skinNumber,8-NodeIndex),
                     1,
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
@@ -125,7 +126,7 @@ public class SkinChangingView extends MyView {
         SnakeHead snakeHead = new SnakeHead(
                 720+(skinNumber-nowSelect)*SnakeXInterval+SnakeXSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),SnakeY+SnakeYSpan*(NodeIndex-4),
                 1,1,
-                SnakeSkinManager.getSkin(skinNumber,0),
+                SnakeSkinManager.getSkinNodeInfo(skinNumber,0),
                1,
                 Constant.SnakeDefaultHeight
         );
@@ -149,9 +150,12 @@ public class SkinChangingView extends MyView {
         }
     }
     public boolean isPossessedSkin(int number){
-        boolean ans = true;
-        if(number==1){
-            ans = false;
+        boolean ans = false;
+        for(String ss:gamePlayView.ObtainedSkins){
+            if(ss.equals(""+number)){
+                ans=true;
+                break;
+            }
         }
         Log.e("isPossessedSkin",((ans)?"has":"has not")+" skin"+number);
         return ans;
@@ -188,12 +192,24 @@ public class SkinChangingView extends MyView {
                         returnButton.doButtonStuff();
                     }
             );
-        else
-            selectButton.setButtonListener(
-                    ()->{
-                        Log.e("selectButton","unlock!!!!");
-                    }
-            );
+        else{
+            SnakeSkin snakeSkin = SnakeSkinManager.getSnakeSkin(nowSelect);
+            Score price = new Score(snakeSkin.price);
+            boolean haveMoney = haveMoney(price.getScore());
+            if(haveMoney){
+                selectButton.setButtonListener(
+                        ()->{
+                            gamePlayView.ObtainedSkins.add(""+nowSelect);
+                            gamePlayView.yellowStars -= price.getScore();
+                            gamePlayView.setSnakeSkinNumber(nowSelect);
+                            returnButton.doButtonStuff();
+                        }
+                );
+            }else {
+                selectButton.setDisabled(true);
+            }
+        }
+
         buttons.add(selectButton);
         drawUtil.addToCenterLayer(selectButton);
 
@@ -246,7 +262,7 @@ public class SkinChangingView extends MyView {
         yellowStar.setDoDrawHeight(false);
         drawUtil.addToCenterLayer(yellowStar);
 
-        Score yellowStarScore = new Score(33);
+        Score yellowStarScore = new Score(gamePlayView.yellowStars);
         yellowStarScoreboard = new ScoreBoard(
                 yellowStarScore,
                 1000,140,
@@ -341,8 +357,9 @@ public class SkinChangingView extends MyView {
             }
         }.start();
 
-        Score score = new Score(80);
-        boolean haveMoney = haveMoney(score.getScore());
+        SnakeSkin snakeSkin = SnakeSkinManager.getSnakeSkin(nowSelect);
+        Score price = new Score(snakeSkin.price);
+        boolean haveMoney = haveMoney(price.getScore());
 
         float lockStarNumberWidth = 150;
         float lockStarNumberHeight = 100;
@@ -351,7 +368,7 @@ public class SkinChangingView extends MyView {
         float lockStarNumberDefaultHeight = 20;
 
         lockStarNumber = new ScoreBoard(
-                score,
+                price,
                 lockStarNumberX,lockStarNumberY,
                 lockStarNumberWidth,lockStarNumberHeight,
                 0,

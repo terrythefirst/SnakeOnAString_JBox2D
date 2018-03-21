@@ -1,28 +1,20 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
-import com.work.terry.snakeonastring_jbox2d.Animation.ListBreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
-import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeSkinInfo;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
-import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.Animation.ListJiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
-import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
-import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
-
-import org.jbox2d.common.Vec2;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -129,7 +121,7 @@ public class StartView extends MyView {
         yellowStar.setDoDrawHeight(false);
         drawUtil.addToCenterLayer(yellowStar);
 
-        Score yellowStarScore = new Score(33);
+        Score yellowStarScore = new Score(gamePlayView.yellowStars);
         yellowStarScoreboard = new ScoreBoard(
                 yellowStarScore,
                 1000,140,
@@ -152,7 +144,7 @@ public class StartView extends MyView {
             SnakeNode snakeNode = new SnakeNode(
                     720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                     0,
-                    SnakeSkinManager.getSkin(nowSkin,8-NodeIndex),
+                    SnakeSkinManager.getSkinNodeInfo(nowSkin,8-NodeIndex),
                     scaleRatio,
                     Constant.SnakeDefaultHeight,
                     NodeIndex++
@@ -164,7 +156,7 @@ public class StartView extends MyView {
         SnakeHead snakeHead = new SnakeHead(
                 720+SnakeXSpan*(NodeIndex-4),SnakeY+SnakeYSpan*((float)Math.sin(0.25*Math.PI*NodeIndex)),
                 1,1,
-                SnakeSkinManager.getSkin(nowSkin,0),
+                SnakeSkinManager.getSkinNodeInfo(nowSkin,0),
                 scaleRatio,
                 Constant.SnakeDefaultHeight
         );

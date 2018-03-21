@@ -1,4 +1,4 @@
-minty
+minty 0.2f 0.3f 0
 -5 255,255,240 snake_head_minty_eating_close.png 45,48
 -4 255,255,240 snake_head_minty_eating_open.png 45,48
 -3 255,255,240 snake_head_minty_dizzy.png 45,48

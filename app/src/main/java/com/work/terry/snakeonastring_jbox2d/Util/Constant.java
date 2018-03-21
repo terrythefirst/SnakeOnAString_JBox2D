@@ -95,7 +95,6 @@ public class Constant {
         public static final float SnakeHeadFriction = 0.04f;
         public static final float SnakeHeadRestitution = 0.6f;
 
-        public static final float SnakeHeadSpeed = 0.2f;
         public static final int SnakeHeadSpeedFactor = 10;
 
         public static final float SnakeHeadSpeedUponDead = 0.2f;
@@ -220,4 +219,8 @@ public class Constant {
 
     public static final int GAME_MODE_ORIGINAL = 0;
     public static final int GAME_MODE_ENDLESS = 1;
+
+    public static final int MUSIC_MODE_ALL_ON = 0;
+    public static final int MUSIC_MODE_BG_OFF = 1;
+    public static final int MUSIC_MODE_ALL_OFF = 2;
 }

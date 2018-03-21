@@ -6,13 +6,10 @@ import android.util.Log;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.Thread.SnakeHeadMovingThread;
-import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
-import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
@@ -24,8 +21,6 @@ public class SnakeHead extends CircleBody{
     public Snake snake;
 
     //public String nowFace;
-
-    public float speed = SnakeHeadSpeed;
     public int SpeedFactor = SnakeHeadSpeedFactor;
 
     public float HeadVX = 0;
@@ -111,7 +106,7 @@ public class SnakeHead extends CircleBody{
     @Override
     public void drawSelf(TexDrawer painter){
         if(snake!=null&&snake.isDead()){
-            changeFace(SnakeSkinManager.getSkin(snake.getSkinNumber(),SnakeHeadDeadImgCode).getImg());
+            changeFace(SnakeSkinManager.getSkinNodeInfo(snake.getSkinNumber(),SnakeHeadDeadImgCode).getImg());
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
         }else {
             rotateAngleGameElements = calRotateAngleDegrees(HeadVX,HeadVY);

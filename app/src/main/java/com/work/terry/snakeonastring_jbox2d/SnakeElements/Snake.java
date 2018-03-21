@@ -21,7 +21,6 @@ import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -51,6 +50,8 @@ public class Snake {
     public int SnakeAjaxLength ;
 
     private int Skin;
+    public float speed = 0;
+    public float luck = 0;
 
     public boolean initFinished = false;
     public boolean entered = false;
@@ -85,6 +86,10 @@ public class Snake {
         this.world = gamePlay.world;
         //this.color = color;
         this.Skin = skin;
+        SnakeSkin snakeSkin = SnakeSkinManager.getSnakeSkin(skin);
+        speed = snakeSkin.speed;
+        luck = snakeSkin.luck;
+
         this.drawUtil = gamePlay.getDrawUtil();
         this.scaleRatio = scaleRatio;
 
@@ -103,7 +108,7 @@ public class Snake {
                         gamePlay,
                         x,y,
                         vx,vy,
-                        SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode),
+                        SnakeSkinManager.getSkinNodeInfo(Skin,SnakeHeadImgCode),
                         scaleRatio,
                         jumpHeight
                 );
@@ -115,7 +120,6 @@ public class Snake {
             }
             gamePlay.jBox2DThread.stepTasks();
         }
-
 //        snakeHead = new SnakeHead(this,world,720,1280,0,1,this.color,null,Constant.SnakeDefaultHeight);
 //        snakeBodies.add(snakeHead);
 //        drawUtil.addToCenterLayer(snakeHead);
@@ -148,7 +152,7 @@ public class Snake {
                     this,
                     gamePlay,
                     snakeHead,
-                    SnakeSkinManager.getSkin(Skin,index),
+                    SnakeSkinManager.getSkinNodeInfo(Skin,index),
                     scaleRatio,
                     index);
         }else{
@@ -156,7 +160,7 @@ public class Snake {
                     this,
                     gamePlay,
                     (SnakeNode) snakeBodies.get(index-1),
-                    SnakeSkinManager.getSkin(Skin,index),
+                    SnakeSkinManager.getSkinNodeInfo(Skin,index),
                     scaleRatio,
                     index);
         }
@@ -179,14 +183,14 @@ public class Snake {
             public void run() {
                 //Log.e("SnakeSkinManager.skinMap.get(Skin)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode).getImg()+"");
                 //Log.e("SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)",SnakeSkinManager.skinMap.get(Skin).skinInfo.get(SnakeHeadDizzyImgCode)==null?"null":"not null");
-                snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDizzyImgCode).getImg());
+                snakeHead.changeFace(SnakeSkinManager.getSkinNodeInfo(Skin,SnakeHeadDizzyImgCode).getImg());
                 try {
                     sleep(800);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
                 if(!isDead())
-                    snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadImgCode).getImg());
+                    snakeHead.changeFace(SnakeSkinManager.getSkinNodeInfo(Skin,SnakeHeadImgCode).getImg());
             }
         }.start();
     }
@@ -205,7 +209,7 @@ public class Snake {
                 0.5F,
                 ColorManager.getColor(Constant.COLOR_GREY)
         );
-        snakeHead.changeFace(SnakeSkinManager.getSkin(Skin,SnakeHeadDeadImgCode).getImg());//Constant.SnakeHeadDizzyEyesImg);
+        snakeHead.changeFace(SnakeSkinManager.getSkinNodeInfo(Skin,SnakeHeadDeadImgCode).getImg());//Constant.SnakeHeadDizzyEyesImg);
         gamePlay.gameOver();
     }
     public boolean isDead(){

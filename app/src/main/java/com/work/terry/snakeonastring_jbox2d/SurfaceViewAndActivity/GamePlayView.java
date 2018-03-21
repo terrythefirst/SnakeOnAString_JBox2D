@@ -18,6 +18,9 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import com.work.terry.snakeonastring_jbox2d.auto.*;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -28,21 +31,52 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GamePlayView extends GLSurfaceView {
+    Context context;
+    public int yellowStars;
+    public int maxScore;
+    public int musicMode;
     public int SnakeSkinNumber = 0;
     public int nowViewIndex = 0;
+    public Set<String> ObtainedSkins;
     public MyView nowView = null;
     public MyMenu nowMenu = null;
     private SceneRenderer sceneRenderer;
+    SharedPreferences sp;
 
     public GamePlayView(Context context){
         super(context);
+        this.context = context;
         this.setEGLContextClientVersion(3);
+
+        loadPlayerInfo();
 
         sceneRenderer = new SceneRenderer();
         setRenderer(sceneRenderer);
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
-
+    public void savePlayerInfo(){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("nowSelectSkinNumber",SnakeSkinNumber);
+        editor.putStringSet("ObtainedSkins",ObtainedSkins);
+        editor.putInt("yellowStars",yellowStars);
+        editor.putInt("maxScore",maxScore);
+        editor.putInt("musicMode",musicMode);
+        editor.commit();
+    }
+    public void loadPlayerInfo(){
+        if(sp==null) {
+            sp = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        }
+        SnakeSkinNumber = sp.getInt("nowSelectSkinNumber",SnakeSkinManager.SKIN_DEFAULT);
+        ObtainedSkins = sp.getStringSet("ObtainedSkins",null);
+        if(ObtainedSkins==null){
+            ObtainedSkins = new HashSet<>();
+            ObtainedSkins.add(SnakeSkinManager.SKIN_DEFAULT+"");
+        }
+        yellowStars = sp.getInt("yellowStars",0);
+        maxScore = sp.getInt("maxScore",0);
+        musicMode = sp.getInt("musicMode",Constant.MUSIC_MODE_ALL_ON);
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event){
         int x = (int)event.getX();
@@ -103,8 +137,6 @@ public class GamePlayView extends GLSurfaceView {
         }else {
             this.nowMenu = menu;
         }
-
-        //nowView.getDrawUtil().setMenu(nowMenu);
     }
 
     private  class  SceneRenderer implements Renderer {
@@ -157,8 +189,6 @@ public class GamePlayView extends GLSurfaceView {
 
             GLES30.glDisable(GLES30.GL_CULL_FACE);
 
-            setSnakeSkinNumber(SnakeSkinManager.SKIN_BEE);
-
             setNowViewIndex(START_VIEW);
             setNowView(START_VIEW);
         }
@@ -167,6 +197,7 @@ public class GamePlayView extends GLSurfaceView {
         super.onResume();
     }
     public void onPause(SharedPreferences.Editor editor){
+        savePlayerInfo();
         if(nowView!=null)nowView.onResume();
     }
 
