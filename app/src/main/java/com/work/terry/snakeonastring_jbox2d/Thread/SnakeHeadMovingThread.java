@@ -31,6 +31,15 @@ public class SnakeHeadMovingThread extends Thread {
     }
     public void run () {
         while (!snakeHead.snake.isPaused()&&!snakeHead.snake.isDead()) {
+            if (!snakeHead.gamePlay.IS_PLAYING) {
+                try {
+                    sleep(100);
+                    continue;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             bodyV = snakeHead.body.getLinearVelocity();//getBodyVelocityNormalized();
             if(snakeHead.snake.checkEntered()&&snakeHead.target.getReached()){
                 snakeHead.setBodyVelocity(

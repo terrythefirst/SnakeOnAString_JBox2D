@@ -26,6 +26,14 @@ public class FoodMagnetMoveThread extends Thread {
     public void run(){
         Log.d("FoodMagnetMoveThread","start");
         while (!snakeFood.eatean){
+            if (!snakeFood.gamePlay.IS_PLAYING) {
+                try {
+                    sleep(100);
+                    continue;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             Vec2 foodLocation = snakeFood.getBodyXY();
             Vec2 headLocation = snakeHead.getBodyXY();
             Vec2 moveV = VectorUtil.minusV2D(headLocation,foodLocation);

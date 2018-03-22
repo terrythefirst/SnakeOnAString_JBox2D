@@ -178,7 +178,7 @@ public class SnakeNode extends CircleBody{
                 Constant.SnakeHeightColorFactor,
                 Constant.SnakeFloorColorFactor,
 
-                0.01f,
+                0.0001f,
                 0.0f,0.0f,
                 ButtonImgRect,
                 false

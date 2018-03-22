@@ -30,6 +30,15 @@ public class SnakeFoodJumpScoreThread extends Thread {
     @Override
     public void run(){
         while (!snakeFood.eatean&&snakeFood.score > targetScore){
+            if (!snakeFood.gamePlay.IS_PLAYING) {
+                try {
+                    sleep(100);
+                    continue;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             new JiggleAnimation(
                     snakeFood,
                     50,
@@ -40,6 +49,14 @@ public class SnakeFoodJumpScoreThread extends Thread {
                     true
             ).run();
 
+            if (!snakeFood.gamePlay.IS_PLAYING) {
+                try {
+                    sleep(100);
+                    continue;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             try {
                 sleep(1000);
             }catch (Exception e){

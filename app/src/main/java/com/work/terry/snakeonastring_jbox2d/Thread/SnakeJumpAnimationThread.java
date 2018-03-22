@@ -24,6 +24,14 @@ public class SnakeJumpAnimationThread extends Thread {
         int timeLimit = (int) (2* Constant.JumpMathFactor);
         boolean finished = false;
         while (!snake.paused&&!finished){
+            if (!snake.gamePlay.IS_PLAYING) {
+                try {
+                    sleep(100);
+                    continue;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             if(index<snake.getLength()&&index<=jumpLength){
                 CircleBody cc  = snake.snakeBodies.get(index);
                 Thread animateThread = new JiggleAnimation(

@@ -37,7 +37,6 @@ public class ScoreBoard extends GameElement {
         setDoDrawHeight(false);
     }
 
-
     @Override
     public void drawSelf(TexDrawer painter){
         if(width-scaleWidth<=0||height-scaleHeight<=0)return;

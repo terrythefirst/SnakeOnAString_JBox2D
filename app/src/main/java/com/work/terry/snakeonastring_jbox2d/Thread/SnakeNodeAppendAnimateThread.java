@@ -59,6 +59,14 @@ public class SnakeNodeAppendAnimateThread extends Thread {
                     snakeNode.colorFloats
             );
             while(!snakeNode.snake.isDead()&&!snakeNodeAnimateDraw.isFinished()){
+                if (!snakeNode.gamePlay.IS_PLAYING) {
+                    try {
+                        sleep(100);
+                        continue;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 snakeNodeAnimateDraw.AnimationStep(0.5f);
 
                 try {

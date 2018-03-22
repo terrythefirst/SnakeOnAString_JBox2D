@@ -33,6 +33,14 @@ public class FoodMagnetSearchThread extends Thread {
                 0.5f
         ).start();
        while (nowTime<duration){
+           if (!snake.gamePlay.IS_PLAYING) {
+               try {
+                   sleep(100);
+                   continue;
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
            this.duration += snake.getMagneticDurationSetZero();
            this.duration = (duration>snake.snakeMaxMagneticDuration)?snake.snakeMaxMagneticDuration:duration;
 

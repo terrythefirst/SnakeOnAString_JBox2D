@@ -440,7 +440,11 @@ public class GamePlay extends MyView{
     }
     @Override
     public void onResume(){
-//        IS_PLAYING = true;
+        if(OnPauseSave.gamePlay!=null){
+            pauseButton.doButtonStuff();
+        }else {
+            IS_PLAYING = true;
+        }
 //        jBox2DThread = new JBox2DThread(GamePlay.this);
 //        snake.moving();
 //        jBox2DThread.start();
@@ -449,7 +453,8 @@ public class GamePlay extends MyView{
     @Override
     public void onPause(SharedPreferences.Editor editor){
         IS_PLAYING = false;
-        jBox2DThread.setShouldDie();
+        OnPauseSave.saveGame(this);
+        //jBox2DThread.setShouldDie();
         //if(snake!=null)snake.onPause(editor);
     }
 }
