@@ -5,6 +5,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.Snake;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.Animation.JiggleAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 
 /**
  * Created by Terry on 2018/1/31.
@@ -37,7 +38,7 @@ public class SnakeJumpAnimationThread extends Thread {
                 Thread animateThread = new JiggleAnimation(
                         cc,
                         50,
-                        0.1f,
+                        0.2f,
 
                         !(cc instanceof SnakeHead),
                         0.5f,
@@ -46,7 +47,7 @@ public class SnakeJumpAnimationThread extends Thread {
                 animateThread.start();
                 index++;
                 try {
-                    sleep(50);
+                    sleep(80);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

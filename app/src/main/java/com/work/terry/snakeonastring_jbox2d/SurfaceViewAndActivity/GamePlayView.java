@@ -13,6 +13,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MatrixState;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 import com.work.terry.snakeonastring_jbox2d.auto.*;
@@ -24,6 +25,8 @@ import java.util.Set;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import work.terry.com.snakeonastring_jbox2d.R;
+
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 /**
@@ -31,7 +34,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GamePlayView extends GLSurfaceView {
-    Context context;
+    private MainActivity context;
     public int yellowStars;
     public int maxScore;
     public int musicMode;
@@ -43,13 +46,12 @@ public class GamePlayView extends GLSurfaceView {
     private SceneRenderer sceneRenderer;
     SharedPreferences sp;
 
-    public GamePlayView(Context context){
+    public GamePlayView(MainActivity context){
         super(context);
         this.context = context;
         this.setEGLContextClientVersion(3);
-
+        context.setBackgroundMusic(R.raw.back_ground_music_magic_trunck);
         loadPlayerInfo();
-
         sceneRenderer = new SceneRenderer();
         setRenderer(sceneRenderer);
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);

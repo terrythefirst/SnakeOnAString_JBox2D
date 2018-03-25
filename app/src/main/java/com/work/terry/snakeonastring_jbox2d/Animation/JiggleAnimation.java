@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 
 /**
  * Created by Terry on 2018/1/31.
@@ -15,6 +16,8 @@ public class JiggleAnimation extends Thread{
 
     float G;
 
+    boolean doJiggleSound = false;
+
     boolean doScale;
     float defaultWidth;
     float defaultHeight;
@@ -22,10 +25,9 @@ public class JiggleAnimation extends Thread{
 
     boolean doHeight;
     public boolean firstRoundFinished = false;
-    boolean allRoundFinnished = false;
 
-    public boolean getFirstRoundFinished(){
-        return firstRoundFinished;
+    public void setDoJiggleSound(boolean x){
+        doJiggleSound = x;
     }
     public JiggleAnimation(
             GameElement gameElement,
@@ -64,7 +66,6 @@ public class JiggleAnimation extends Thread{
             nowTime +=interval*0.001f;
             //根据此轮起始Y坐标、此轮运动时间、此轮起始速度计算当前位置
             float tempCurrY=-0.5f*G*nowTime*nowTime+vy*nowTime;
-
             if(tempCurrY<=0)
             {//若当前位置低于地面则碰到地面反弹
                 //反弹后起始高度为0
@@ -78,7 +79,6 @@ public class JiggleAnimation extends Thread{
                 if(vy<1f)
                 {
                     jumpHeight=0;
-                    allRoundFinnished = true;
                     break;
                 }
             }

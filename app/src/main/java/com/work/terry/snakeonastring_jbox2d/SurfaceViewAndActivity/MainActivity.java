@@ -3,6 +3,7 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,12 +12,17 @@ import android.view.WindowManager;
 
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
+
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.auto.ScreenScaleUtil;
 
 import java.util.Date;
 
+import work.terry.com.snakeonastring_jbox2d.R;
+
 public class MainActivity extends Activity {
     private GamePlayView gamePlayView;
+    private MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,19 +43,38 @@ public class MainActivity extends Activity {
 
         Log.d("ssr",Constant.ssr.toString());
 
+        SoundPoolManager.initSoundPool(this);
+
         gamePlayView = new GamePlayView(this);
         setContentView(gamePlayView);
         gamePlayView.requestFocus();
         gamePlayView.setFocusableInTouchMode(true);
     }
+    public void setBackgroundMusic(int raw){
+        if(mp!=null&&mp.isPlaying()){
+            mp.pause();
+        }
+        mp = MediaPlayer.create(this,raw);
+        try {
+            mp.setLooping(true);
+            mp.prepare();
+            mp.start();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onResume(){
         super.onResume();
         gamePlayView.onResume();
+        if(mp!=null)
+            mp.start();
     }
     @Override
     protected void onPause(){
         super.onPause();
+        if(mp!=null)
+            mp.pause();
         SharedPreferences.Editor sharedata = getSharedPreferences(SharedPreferencesName, 0).edit();
         gamePlayView.onPause(sharedata);
         sharedata.commit();

@@ -2,6 +2,8 @@ package com.work.terry.snakeonastring_jbox2d.UI;
 
 import android.util.Log;
 
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
+
 /**
  * Created by Terry on 2017/12/30.
  */
@@ -53,6 +55,7 @@ public class Button extends GameElement {
         }
     }
     public void whenReleased(boolean within){
+        SoundPoolManager.play(SoundPoolManager.snakeBodyPopUpSound,1);
         jumpHeight = 0;
         if(!disabled&&within&&buttonListener!=null)buttonListener.doButtonStuff();
     }

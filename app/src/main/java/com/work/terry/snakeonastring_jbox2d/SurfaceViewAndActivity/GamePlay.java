@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import work.terry.com.snakeonastring_jbox2d.R;
+
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
 
@@ -86,7 +88,6 @@ public class GamePlay extends MyView{
         if(gameModeAndLevel>=Constant.GAMEPLAY_VIEW_ENDLESS&&gameModeAndLevel<Constant.GAMEPLAY_VIEW_ENDLESS+10)
             addScoreBoard();
         initChangeSkinButton();
-
 //        ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
 //                world,
 //                720,2000,
