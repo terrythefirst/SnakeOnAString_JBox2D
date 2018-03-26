@@ -50,7 +50,7 @@ public class GamePlayView extends GLSurfaceView {
         super(context);
         this.context = context;
         this.setEGLContextClientVersion(3);
-        context.setBackgroundMusic(R.raw.back_ground_music_magic_trunck);
+
         loadPlayerInfo();
         sceneRenderer = new SceneRenderer();
         setRenderer(sceneRenderer);
@@ -77,7 +77,8 @@ public class GamePlayView extends GLSurfaceView {
         }
         yellowStars = sp.getInt("yellowStars",0);
         maxScore = sp.getInt("maxScore",0);
-        musicMode = sp.getInt("musicMode",Constant.MUSIC_MODE_ALL_ON);
+        int musicMode = sp.getInt("musicMode",Constant.MUSIC_MODE_ALL_ON);
+        setMusicMode(musicMode);
     }
     @Override
     public boolean onTouchEvent(MotionEvent event){
@@ -93,7 +94,32 @@ public class GamePlayView extends GLSurfaceView {
             nowView.onTouchEvent(event,x,y);
         return true;
     }
-
+    public int getMusicMode(){
+        return musicMode;
+    }
+    private void setMusicMode(int x){
+        this.musicMode = x%3;
+    }
+    public void changeMusicMode(){
+        setMusicMode(++musicMode);
+        changeMusicVolumeAccordingToMusicMode();
+    }
+    public void changeMusicVolumeAccordingToMusicMode(){
+        switch (musicMode){
+            case Constant.MUSIC_MODE_ALL_ON:
+                SoundPoolManager.setVolume(1);
+                context.setBackgroundMusicVolume(1);
+                break;
+            case Constant.MUSIC_MODE_BG_OFF:
+                SoundPoolManager.setVolume(1);
+                context.setBackgroundMusicVolume(0);
+                break;
+            case Constant.MUSIC_MODE_ALL_OFF:
+                SoundPoolManager.setVolume(0);
+                context.setBackgroundMusicVolume(0);
+                break;
+        }
+    }
     public void setNowViewIndex(int v){
         this.nowViewIndex = v;
     }
@@ -109,10 +135,13 @@ public class GamePlayView extends GLSurfaceView {
 
         if(nowView!=null)nowView.onPause(null);
         if(index == START_VIEW){
+            context.setBackgroundMusic(R.raw.back_ground_music);
             nowView = new StartView(this,null);
         }else if(index > GAMEPLAY_VIEW_ORIGINAL&&index <GAMEPLAY_VIEW_ORIGINAL+10){
+            context.setBackgroundMusic(R.raw.back_ground_music_magic_trunck);
             nowView = new LoadGameUtil().loadGameFromFile(OriginalPlayDirectoryPrefix+index%10+".gl",this,getSnakeSkinNumber());
         }else if(index > GAMEPLAY_VIEW_ENDLESS&&index <GAMEPLAY_VIEW_ENDLESS+10){
+            context.setBackgroundMusic(R.raw.back_ground_music_magic_trunck);
             nowView = new LoadGameUtil().loadGameFromFile(EndlessPlayDirectoryPrefix+index%10+".gl",this,getSnakeSkinNumber());
         }else if(index==SKIN_CHANGING_VIEW){
             if(nowView instanceof StartView){
@@ -122,6 +151,7 @@ public class GamePlayView extends GLSurfaceView {
                 nowView = new SkinChangingView(this,null,gameModeAndLevel);
             }
         }
+        changeMusicVolumeAccordingToMusicMode();
     }
     public int getSnakeSkinNumber(){
         return SnakeSkinNumber;

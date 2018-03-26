@@ -8,6 +8,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeFood;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.VectorUtil.*;
@@ -63,6 +64,7 @@ public class MyContactListener implements ContactListener {
 					Log.d("ContactListener",idA+" equals snakeHead "+idB+" contains snakeFood");
 					SnakeFood sf = gamePlay.getFood(Integer.parseInt(idB.split(" ")[1]));
 					sf.setEaten();
+					SoundPoolManager.play(SoundPoolManager.snakeFountainAnimationSound,0);
 					new FountainAnimation(
 							gamePlay.getDrawUtil(),
 							0,
@@ -92,6 +94,7 @@ public class MyContactListener implements ContactListener {
 //						gamePlay.snake.setDead();
 //						changeSnakeVelocityUponDead();
 //					}
+					SoundPoolManager.play(SoundPoolManager.snakeCrushBreakingSound,0);
 					gamePlay.snake.setDead();
 					changeSnakeVelocityUponDead();
 				}

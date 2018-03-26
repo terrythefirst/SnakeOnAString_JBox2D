@@ -48,6 +48,7 @@ public class Button extends GameElement {
         disabled = x;
     }
     public void whenPressed(){
+        //SoundPoolManager.play(SoundPoolManager.buttonPress,0);
         if(!disabled){
             jumpHeight = -defaultHeight*3/4;
         }else {
@@ -55,7 +56,7 @@ public class Button extends GameElement {
         }
     }
     public void whenReleased(boolean within){
-        SoundPoolManager.play(SoundPoolManager.snakeBodyPopUpSound,1);
+        SoundPoolManager.play(SoundPoolManager.snakeBodyPopUpSound,0);
         jumpHeight = 0;
         if(!disabled&&within&&buttonListener!=null)buttonListener.doButtonStuff();
     }

@@ -7,6 +7,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeAnimateDraw;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 
 /**
  * Created by Terry on 2018/1/31.
@@ -37,6 +38,7 @@ public class SnakeNodeRemoveAnimateThread extends Thread {
 
         if(snakeNode.snake.getSnakeAjaxLength()<snakeNode.snake.getLength()) {
             snakeNode.setDoDraw(false);
+            SoundPoolManager.play(SoundPoolManager.snakeRemoveExplodeSound,0);
             new FountainAnimation(
                     snakeNode.snake.gamePlay.getDrawUtil(),
                     1,

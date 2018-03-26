@@ -10,6 +10,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNodeAnimateDraw;
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 
 
 /**
@@ -46,6 +47,7 @@ public class SnakeNodeAppendAnimateThread extends Thread {
 //                    e.printStackTrace();
 //                }
 //            }
+            SoundPoolManager.play(SoundPoolManager.snakeFountainAnimationSound,0);
             new FountainAnimation(
                     snakeNode.snake.gamePlay.getDrawUtil(),
                     1,

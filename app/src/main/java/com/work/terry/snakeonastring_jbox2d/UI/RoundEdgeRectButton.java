@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
 
@@ -151,9 +152,9 @@ public class RoundEdgeRectButton extends ImgButton {
         rectButton2.setXY(x,y);
         rectButton2.drawSelf(painter);
 
-        if(TopImg!=null)
+        if(TopImgImgButton!=null)
             painter.drawColorSelf(
-                    TexManager.getTex(TopImg),
+                    TexManager.getTex(TopImgImgButton),
                     ColorManager.getColor(Constant.COLOR_WHITE),//(disabled?ColorManager.getColor(Constant.COLOR_GREY):ColorManager.getColor(Constant.COLOR_WHITE)),
                     x,
                     y - jumpHeight - defaultHeight,
@@ -242,6 +243,7 @@ public class RoundEdgeRectButton extends ImgButton {
     }
     @Override
     public void whenPressed(){
+        //SoundPoolManager.play(SoundPoolManager.buttonPress,0);
         if(!disabled){
             jumpHeight = -defaultHeight*3/4;
             for (Button button:buttons){
@@ -262,6 +264,7 @@ public class RoundEdgeRectButton extends ImgButton {
     }
     @Override
     public void whenReleased(boolean within){
+        SoundPoolManager.play(SoundPoolManager.snakeBodyPopUpSound,0);
         jumpHeight = 0;
         for (Button button:buttons){
             button.jumpHeight = 0;

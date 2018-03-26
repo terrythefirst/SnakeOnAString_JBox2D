@@ -1,6 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
@@ -15,6 +16,7 @@ import com.work.terry.snakeonastring_jbox2d.UI.Score;
 import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -492,6 +494,36 @@ public class StartView extends MyView {
                 Constant.ButtonBlockFloorColorFactor,
                 Constant.SoundOutloud,
                 Constant.SnakeBodyImg
+        );
+        int musicMode1 = gamePlayView.getMusicMode();
+        switch(musicMode1){
+            case Constant.MUSIC_MODE_ALL_ON:
+                musicButton.setTopImgImgButton(Constant.SoundOutloud);
+                break;
+            case Constant.MUSIC_MODE_BG_OFF:
+                musicButton.setTopImgImgButton(Constant.SoundAltImg);
+                break;
+            case Constant.MUSIC_MODE_ALL_OFF:
+                musicButton.setTopImgImgButton(Constant.SoundOffImg);
+                break;
+        }
+        musicButton.setButtonListener(
+                ()->{
+                    gamePlayView.changeMusicMode();
+
+                    int musicMode = gamePlayView.getMusicMode();
+                    switch(musicMode){
+                        case Constant.MUSIC_MODE_ALL_ON:
+                            musicButton.setTopImgImgButton(Constant.SoundOutloud);
+                            break;
+                        case Constant.MUSIC_MODE_BG_OFF:
+                            musicButton.setTopImgImgButton(Constant.SoundAltImg);
+                            break;
+                        case Constant.MUSIC_MODE_ALL_OFF:
+                            musicButton.setTopImgImgButton(Constant.SoundOffImg);
+                            break;
+                    }
+                }
         );
         drawUtil.addToCenterLayer(musicButton);
         buttons.add(musicButton);

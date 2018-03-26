@@ -27,6 +27,7 @@ import java.util.Queue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.Util.VectorUtil;
 
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
@@ -250,6 +251,7 @@ public class Snake {
         return thread;
     }
     public void whenEatBomb(){
+        SoundPoolManager.play(SoundPoolManager.fireFuseSound,0);
         startARemoveJumpAnimationThread();
         minusOneSnakeAjaxLength();
     }

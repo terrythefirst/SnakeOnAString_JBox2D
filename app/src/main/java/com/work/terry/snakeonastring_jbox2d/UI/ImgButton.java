@@ -11,7 +11,7 @@ import com.work.terry.snakeonastring_jbox2d.Util.TexManager;
  */
 
 public class ImgButton extends Button{
-    String TopImg;
+    String TopImgImgButton;
     float topImgRotateDegrees = 0;
     float TopImgRatio = 0;
     public ImgButton(
@@ -39,10 +39,13 @@ public class ImgButton extends Button{
                 heightColorFactor,
                 floorShadowColorFactor,
                 Img);
-        this.TopImg = TopImg;
+        this.TopImgImgButton = TopImg;
         //buttonDefaultHeight = defaultHeight;
         //jumpHeight = defaultHeight;
         //this.defaultHeight = 0;
+    }
+    public void setTopImgImgButton(String x){
+        TopImgImgButton = x;
     }
     public void setTopImgRotateDegrees(float x){this.topImgRotateDegrees = x;}
     public void setTopImgRatio(float rate){
@@ -52,9 +55,9 @@ public class ImgButton extends Button{
         if(disabled)setColor(Constant.COLOR_GREY);
         super.drawSelf(painter);
 
-        if(TopImg!=null)
+        if(TopImgImgButton!=null)
             painter.drawColorSelf(
-                    TexManager.getTex(TopImg),
+                    TexManager.getTex(TopImgImgButton),
                     ColorManager.getColor(Constant.COLOR_WHITE),//(disabled?ColorManager.getColor(Constant.COLOR_GREY):ColorManager.getColor(Constant.COLOR_WHITE)),
                     x,
                     y - jumpHeight - defaultHeight,

@@ -167,6 +167,36 @@ public class BottomMenu extends MyMenu {
                 Constant.SoundOutloud,
                 Constant.SnakeBodyImg
         );
+        int musicMode1 = gamePlayView.getMusicMode();
+        switch(musicMode1){
+            case Constant.MUSIC_MODE_ALL_ON:
+                musicButton.setTopImgImgButton(Constant.SoundOutloud);
+                break;
+            case Constant.MUSIC_MODE_BG_OFF:
+                musicButton.setTopImgImgButton(Constant.SoundAltImg);
+                break;
+            case Constant.MUSIC_MODE_ALL_OFF:
+                musicButton.setTopImgImgButton(Constant.SoundOffImg);
+                break;
+        }
+        musicButton.setButtonListener(
+                ()->{
+                    gamePlayView.changeMusicMode();
+
+                    int musicMode = gamePlayView.getMusicMode();
+                    switch(musicMode){
+                        case Constant.MUSIC_MODE_ALL_ON:
+                            musicButton.setTopImgImgButton(Constant.SoundOutloud);
+                            break;
+                        case Constant.MUSIC_MODE_BG_OFF:
+                            musicButton.setTopImgImgButton(Constant.SoundAltImg);
+                            break;
+                        case Constant.MUSIC_MODE_ALL_OFF:
+                            musicButton.setTopImgImgButton(Constant.SoundOffImg);
+                            break;
+                    }
+                }
+        );
         addButton(musicButton);
         addToMenu(musicButton);
     }

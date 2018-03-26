@@ -3,7 +3,9 @@ package com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.WindowManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
 
+import com.work.terry.snakeonastring_jbox2d.Util.ShaderUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.auto.ScreenScaleUtil;
 
@@ -23,6 +26,7 @@ import work.terry.com.snakeonastring_jbox2d.R;
 public class MainActivity extends Activity {
     private GamePlayView gamePlayView;
     private MediaPlayer mp;
+    private int currentPlayMusicRawInt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,8 @@ public class MainActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         WindowManager manager = this.getWindowManager();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -50,14 +56,22 @@ public class MainActivity extends Activity {
         gamePlayView.requestFocus();
         gamePlayView.setFocusableInTouchMode(true);
     }
+    public void setBackgroundMusicVolume(int x){
+        mp.setVolume(x,x);
+    }
     public void setBackgroundMusic(int raw){
+        if(raw==currentPlayMusicRawInt){
+            if(!mp.isPlaying())mp.start();
+            return;
+        }
         if(mp!=null&&mp.isPlaying()){
             mp.pause();
         }
         mp = MediaPlayer.create(this,raw);
+        currentPlayMusicRawInt = raw;
         try {
             mp.setLooping(true);
-            mp.prepare();
+            //mp.prepare();
             mp.start();
         }catch (Exception e){
             e.printStackTrace();
@@ -78,5 +92,10 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor sharedata = getSharedPreferences(SharedPreferencesName, 0).edit();
         gamePlayView.onPause(sharedata);
         sharedata.commit();
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SoundPoolManager.release();
     }
 }

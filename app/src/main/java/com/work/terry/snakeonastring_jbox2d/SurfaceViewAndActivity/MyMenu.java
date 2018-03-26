@@ -12,6 +12,7 @@ import com.work.terry.snakeonastring_jbox2d.UI.RoundEdgeRect;
 import com.work.terry.snakeonastring_jbox2d.Animation.UniformMotionAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 import org.jbox2d.common.Vec2;
@@ -100,6 +101,7 @@ public class MyMenu extends RoundEdgeRect {
         closeButton.setTopImgRatio(0.4f);
         closeButton.setButtonListener(
                 ()->{
+                    SoundPoolManager.play(SoundPoolManager.menuSlideSound,0);
                     Thread thread = backToBottom();
 
                     try {

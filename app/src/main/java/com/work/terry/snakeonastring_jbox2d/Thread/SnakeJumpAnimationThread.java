@@ -45,6 +45,7 @@ public class SnakeJumpAnimationThread extends Thread {
                         true
                         );
                 animateThread.start();
+                SoundPoolManager.play(SoundPoolManager.snakeBodyPopUpSound,0);
                 index++;
                 try {
                     sleep(80);

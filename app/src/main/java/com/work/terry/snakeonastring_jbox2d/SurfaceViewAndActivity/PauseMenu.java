@@ -10,6 +10,7 @@ import com.work.terry.snakeonastring_jbox2d.UI.ScoreBoard;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
+import com.work.terry.snakeonastring_jbox2d.Util.SoundPoolManager;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
 
 /**
@@ -58,6 +59,7 @@ public class PauseMenu extends MyMenu {
         }
         this.closeButton.setButtonListener(
                 ()->{
+                    SoundPoolManager.play(SoundPoolManager.menuSlideSound,0);
                     new Thread(){
                         @Override
                         public void run(){
