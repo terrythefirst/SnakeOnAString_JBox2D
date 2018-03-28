@@ -2,6 +2,7 @@
 precision mediump float;
 uniform sampler2D sTexture;
 uniform float uDownFactor;
+uniform float uOpacityFactor;
 uniform vec3 uColor;
 in vec2 vTextureCoord;
 out vec4 fragColor;
@@ -18,7 +19,7 @@ void main()
                 tempColor.a*uColor.r*(uDownFactor),
                 tempColor.a*uColor.g*(uDownFactor),
                 tempColor.a*uColor.b*(uDownFactor),
-                tempColor.a
+                tempColor.a*uOpacityFactor
             );
 
     //fragColor = vec4((tempColor.r*(uDownFactor)+uColor.r)*tempColor.a,(tempColor.g*(uDownFactor)+uColor.g)*tempColor.a,(tempColor.b*(uDownFactor)+uColor.b)*tempColor.a,tempColor.a);

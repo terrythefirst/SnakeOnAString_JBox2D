@@ -139,24 +139,4 @@ public abstract class MyBody extends GameElement
                 +"bodyX = "+body.getPosition().x* RATE+" bodyY = "+body.getPosition().y*RATE
                 +"\nvX = "+body.getLinearVelocity().x+" vY = "+body.getLinearVelocity().y;
     }
-    @Override
-    public void onPause(SharedPreferences.Editor editor){
-        super.onPause(editor);
-        if(body!=null){
-            Vec2 v = getBodyXY();
-            Vec2 vv = getBodyVelocityNormalized();
-            editor.putFloat(body.getUserData().toString()+"x",v.x);
-            editor.putFloat(body.getUserData().toString()+"y",v.y);
-            editor.putFloat(body.getUserData().toString()+"vx",vv.x);
-            editor.putFloat(body.getUserData().toString()+"vy",vv.y);
-            editor.putFloat(body.getUserData().toString()+"width",width);
-            editor.putFloat(body.getUserData().toString()+"height",height);
-            editor.putFloat(id+"angle",body.getAngle());
-            editor.putFloat(body.getUserData().toString()+"color",color);
-        }
-    }
-    @Override
-    public void onResume(){
-
-    }
 }

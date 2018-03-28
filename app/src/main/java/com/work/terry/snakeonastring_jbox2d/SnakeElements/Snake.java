@@ -392,24 +392,4 @@ public class Snake {
             SnakeAjaxLength-=1;
         }
     }
-    public void onResume(){
-        for (CircleBody c:snakeBodies){
-            if(c instanceof SnakeHead){
-                ((SnakeHead)c).onResume();
-            }else {
-                ((SnakeNode)c).onResume();
-            }
-        }
-    }
-    public void onPause(SharedPreferences.Editor editor){
-        paused = true;
-        for (CircleBody c:snakeBodies){
-            if(c instanceof SnakeHead){
-                ((SnakeHead)c).onPause(editor);
-            }else {
-                ((SnakeNode)c).onPause(editor);
-            }
-        }
-    }
-
 }

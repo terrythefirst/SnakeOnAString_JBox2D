@@ -446,16 +446,10 @@ public class GamePlay extends MyView{
         }else {
             IS_PLAYING = true;
         }
-//        jBox2DThread = new JBox2DThread(GamePlay.this);
-//        snake.moving();
-//        jBox2DThread.start();
-//        if(snake!=null)snake.onResume();
     }
     @Override
     public void onPause(SharedPreferences.Editor editor){
         IS_PLAYING = false;
         OnPauseSave.saveGame(this);
-        //jBox2DThread.setShouldDie();
-        //if(snake!=null)snake.onPause(editor);
     }
 }

@@ -153,14 +153,16 @@ public class RoundEdgeRectButton extends ImgButton {
         rectButton2.drawSelf(painter);
 
         if(TopImgImgButton!=null)
-            painter.drawColorSelf(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(TopImgImgButton),
                     ColorManager.getColor(Constant.COLOR_WHITE),//(disabled?ColorManager.getColor(Constant.COLOR_GREY):ColorManager.getColor(Constant.COLOR_WHITE)),
                     x,
                     y - jumpHeight - defaultHeight,
                     (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
                     (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
-                    rotateAngleGameElements
+                    rotateAngleGameElements,
+                    1,
+                    opacityFactor
             );
         else {
             for(GameElement gameElement : topGameElements){

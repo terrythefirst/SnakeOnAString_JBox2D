@@ -56,14 +56,16 @@ public class ImgButton extends Button{
         super.drawSelf(painter);
 
         if(TopImgImgButton!=null)
-            painter.drawColorSelf(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(TopImgImgButton),
                     ColorManager.getColor(Constant.COLOR_WHITE),//(disabled?ColorManager.getColor(Constant.COLOR_GREY):ColorManager.getColor(Constant.COLOR_WHITE)),
                     x,
                     y - jumpHeight - defaultHeight,
                     (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
                     (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio)*((TopImgRatio==0)?1:TopImgRatio),
-                    topImgRotateDegrees
+                    topImgRotateDegrees,
+                    1,
+                    opacityFactor
             );
     }
 }

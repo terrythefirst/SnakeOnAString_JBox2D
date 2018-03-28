@@ -91,7 +91,8 @@ public class SnakeFood extends CircleBody{
                 y+width/2+30,
                 width*2,
                 60,
-                ColorManager.getColor(Constant.COLOR_WHITE)
+                ColorManager.getColor(Constant.COLOR_WHITE),
+                opacityFactor
         );
     }
 }

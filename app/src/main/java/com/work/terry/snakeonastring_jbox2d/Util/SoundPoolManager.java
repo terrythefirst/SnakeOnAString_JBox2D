@@ -21,7 +21,7 @@ public class SoundPoolManager {
     public static int snakeBodyExplodeSound = 2;
     public static int snakeEatingSound = 3;
     public static int menuSlideSound = 4;
-    //public static int buttonPress = 5;
+    public static int menuSlideSoundReverse = 5;
     public static int buttonRelease = 6;
     public static int snakeFountainAnimationSound = 7;
     public static int backgroundMusicGamePlay = 8;
@@ -70,7 +70,7 @@ public class SoundPoolManager {
         SoundPoolManager.loadSfx(R.raw.eat_potate_chips,snakeEatingSound);
         SoundPoolManager.loadSfx(R.raw.wet_spoosh_slap,snakeFountainAnimationSound);
         SoundPoolManager.loadSfx(R.raw.thin_whoos,menuSlideSound);
-       // SoundPoolManager.loadSfx(R.raw.button_down,buttonPress);
+        SoundPoolManager.loadSfx(R.raw.thin_whoos_reverse,menuSlideSoundReverse);
         SoundPoolManager.loadSfx(R.raw.button_release,buttonRelease);
         SoundPoolManager.loadSfx(R.raw.glass_breaking,snakeCrushBreakingSound);
         SoundPoolManager.loadSfx(R.raw.booom,snakeRemoveExplodeSound);

@@ -23,22 +23,15 @@ public class TexDrawer {
     String mVertexShader;
     String mFragmentShader;
 
-    int mProgramColor;
-    int muMVPMatrixHandleColor;
-    int maPositionHandleColor;
-    int maTexCoorHandleColor;
-    int muColorHandleColor;
-    String mVertexShaderColor;
-    String mFragmentShaderColor;
-
-    int mProgramShadow;
-    int muMVPMatrixHandleShadow;
-    int maPositionHandleShadow;
-    int maTexCoorHandleShadow;
-    int muDownColorFactorShadow;//向下颜色改变因子
-    int muColorHandleShadow;
-    String mVertexShaderShadow;
-    String mFragmentShaderShadow;
+    int mProgramColorOpacity;
+    int muMVPMatrixHandleColorOpacity;
+    int maPositionHandleColorOpacity;
+    int maTexCoorHandleColorOpacity;
+    int muDownColorFactorColorOpacity;//向下颜色改变因子
+    int muOpacityFactor;//透明度改变因子
+    int muColorHandleColorOpacity;
+    String mVertexShaderColorOpacity;
+    String mFragmentShaderColorOpacity;
 
 
     FloatBuffer mVertexBuffer;
@@ -82,22 +75,16 @@ public class TexDrawer {
         maTexCoorHandle = GLES30.glGetAttribLocation(mProgram,"aTexCoor");
         muMVPMatrixHandle = GLES30.glGetUniformLocation(mProgram,"uMVPMatrix");
 
-        mVertexShaderColor = ShaderUtil.loadFromAssetsFile("sh/vertexColor.sh",view.getResources());
-        mFragmentShaderColor = ShaderUtil.loadFromAssetsFile("sh/fragColor.sh",view.getResources());
-        mProgramColor = ShaderUtil.createProgram(mVertexShaderColor,mFragmentShaderColor);
-        maPositionHandleColor = GLES30.glGetAttribLocation(mProgramColor,"aPosition");
-        maTexCoorHandleColor = GLES30.glGetAttribLocation(mProgramColor,"aTexCoor");
-        muColorHandleColor = GLES30.glGetUniformLocation(mProgramColor,"uColor");
-        muMVPMatrixHandleColor = GLES30.glGetUniformLocation(mProgramColor,"uMVPMatrix");
 
-        mVertexShaderShadow = ShaderUtil.loadFromAssetsFile("sh/vertexShadow.sh",view.getResources());
-        mFragmentShaderShadow = ShaderUtil.loadFromAssetsFile("sh/fragShadow.sh",view.getResources());
-        mProgramShadow = ShaderUtil.createProgram(mVertexShaderShadow,mFragmentShaderShadow);
-        maPositionHandleShadow = GLES30.glGetAttribLocation(mProgramShadow,"aPosition");
-        maTexCoorHandleShadow = GLES30.glGetAttribLocation(mProgramShadow,"aTexCoor");
-        muDownColorFactorShadow = GLES30.glGetUniformLocation(mProgramShadow,"uDownFactor");
-        muColorHandleShadow = GLES30.glGetUniformLocation(mProgramShadow,"uColor");
-        muMVPMatrixHandleShadow = GLES30.glGetUniformLocation(mProgramShadow,"uMVPMatrix");
+        mVertexShaderColorOpacity = ShaderUtil.loadFromAssetsFile("sh/vertex.sh",view.getResources());
+        mFragmentShaderColorOpacity = ShaderUtil.loadFromAssetsFile("sh/fragOpacityColor.sh",view.getResources());
+        mProgramColorOpacity = ShaderUtil.createProgram(mVertexShaderColorOpacity,mFragmentShaderColorOpacity);
+        maPositionHandleColorOpacity = GLES30.glGetAttribLocation(mProgramColorOpacity,"aPosition");
+        maTexCoorHandleColorOpacity = GLES30.glGetAttribLocation(mProgramColorOpacity,"aTexCoor");
+        muDownColorFactorColorOpacity = GLES30.glGetUniformLocation(mProgramColorOpacity,"uDownFactor");
+        muOpacityFactor = GLES30.glGetUniformLocation(mProgramColorOpacity,"uOpacityFactor");
+        muColorHandleColorOpacity = GLES30.glGetUniformLocation(mProgramColorOpacity,"uColor");
+        muMVPMatrixHandleColorOpacity = GLES30.glGetUniformLocation(mProgramColorOpacity,"uMVPMatrix");
     }
 
 /*
@@ -151,59 +138,10 @@ public class TexDrawer {
 
         GLES30.glDisable(GLES30.GL_BLEND);
     }
-    public void drawColorSelf(int texId,float[] color,float x,float y,float width, float height,float rotateAngle){
-        GLES30.glEnable(GLES30.GL_BLEND);
-        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA,GLES30.GL_ONE_MINUS_SRC_ALPHA);
-
-        GLES30.glUseProgram(mProgramColor);
-
-        float wSacle = ScreenScaleUtil.fromPixSizeToScreenSize(width,Constant.ssr);
-        float hScale = ScreenScaleUtil.fromPixSizeToScreenSize(height,Constant.ssr);
-        float xDraw = ScreenScaleUtil.from2DZBTo3DZBX(x,Constant.ssr);
-        float yDraw = ScreenScaleUtil.from2DZBTo3DZBY(y,Constant.ssr);
-
-        MatrixState.pushMatrix();
-
-        MatrixState.translate(xDraw,yDraw,0);
-        MatrixState.rotate(rotateAngle,0,0,1);
-        MatrixState.scale(wSacle,hScale,1.0f);
-
-
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandleColor,1,false,MatrixState.getFinalMatrix(),0);
-        GLES30.glUniform3fv(muColorHandleColor,1,color,0);
-        GLES30.glVertexAttribPointer(
-                maPositionHandleColor,
-                3,
-                GLES30.GL_FLOAT,
-                false,
-                3*4,
-                mVertexBuffer
-        );
-        GLES30.glVertexAttribPointer(
-                maTexCoorHandleColor,
-                2,
-                GLES30.GL_FLOAT,
-                false,
-                2*4,
-                mTexCoorBuffer
-        );
-        GLES30.glEnableVertexAttribArray(maPositionHandleColor);
-        GLES30.glEnableVertexAttribArray(maTexCoorHandleColor);
-
-        GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,texId);
-
-        GLES30.glDrawArrays(GLES30.GL_TRIANGLES,0,vCount);
-
-        MatrixState.popMatrix();
-
-        GLES30.glDisable(GLES30.GL_BLEND);
-    }
     public void drawShadow(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_COLOR,GLES30.GL_ONE_MINUS_SRC_COLOR);
-        //GLES30.glBlendFunc(GLES30.GL_ONE_MINUS_SRC_COLOR,GLES30.GL_SRC_COLOR);
-        GLES30.glUseProgram(mProgramShadow);
+        GLES30.glUseProgram(mProgramColorOpacity);
 
         float wSacle = ScreenScaleUtil.fromPixSizeToScreenSize(width,Constant.ssr);
         float hScale = ScreenScaleUtil.fromPixSizeToScreenSize(height,Constant.ssr);
@@ -217,11 +155,13 @@ public class TexDrawer {
         MatrixState.scale(wSacle,hScale,1.0f);
 
 
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandleShadow,1,false,MatrixState.getFinalMatrix(),0);
-        GLES30.glUniform1f(muDownColorFactorShadow,colorFactor);
-        GLES30.glUniform3fv(muColorHandleShadow,1,color,0);
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandleColorOpacity,1,false,MatrixState.getFinalMatrix(),0);
+        GLES30.glUniform1f(muDownColorFactorColorOpacity,colorFactor);
+        GLES30.glUniform1f(muOpacityFactor,1);
+
+        GLES30.glUniform3fv(muColorHandleColorOpacity,1,color,0);
         GLES30.glVertexAttribPointer(
-                maPositionHandleShadow,
+                maPositionHandleColorOpacity,
                 3,
                 GLES30.GL_FLOAT,
                 false,
@@ -229,15 +169,15 @@ public class TexDrawer {
                 mVertexBuffer
         );
         GLES30.glVertexAttribPointer(
-                maTexCoorHandleShadow,
+                maTexCoorHandleColorOpacity,
                 2,
                 GLES30.GL_FLOAT,
                 false,
                 2*4,
                 mTexCoorBuffer
         );
-        GLES30.glEnableVertexAttribArray(maPositionHandleShadow);
-        GLES30.glEnableVertexAttribArray(maTexCoorHandleShadow);
+        GLES30.glEnableVertexAttribArray(maPositionHandleColorOpacity);
+        GLES30.glEnableVertexAttribArray(maTexCoorHandleColorOpacity);
 
         GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,texId);
@@ -248,11 +188,11 @@ public class TexDrawer {
 
         GLES30.glDisable(GLES30.GL_BLEND);
     }
-    public void drawColorFactorTex(int texId,float[] color,float x,float y,float width, float height,float rotateAngle,float colorFactor){
+    public void drawColorOpacityFactorTex(int texId, float[] color, float x, float y, float width, float height, float rotateAngle, float colorFactor, float opacityFactor){
         GLES30.glEnable(GLES30.GL_BLEND);
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA,GLES30.GL_ONE_MINUS_SRC_ALPHA);
 
-        GLES30.glUseProgram(mProgramShadow);
+        GLES30.glUseProgram(mProgramColorOpacity);
 
         float wSacle = ScreenScaleUtil.fromPixSizeToScreenSize(width,Constant.ssr);
         float hScale = ScreenScaleUtil.fromPixSizeToScreenSize(height,Constant.ssr);
@@ -266,11 +206,13 @@ public class TexDrawer {
         MatrixState.scale(wSacle,hScale,1.0f);
 
 
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandleShadow,1,false,MatrixState.getFinalMatrix(),0);
-        GLES30.glUniform1f(muDownColorFactorShadow,colorFactor);
-        GLES30.glUniform3fv(muColorHandleShadow,1,color,0);
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandleColorOpacity,1,false,MatrixState.getFinalMatrix(),0);
+        GLES30.glUniform1f(muDownColorFactorColorOpacity,colorFactor);
+        GLES30.glUniform1f(muOpacityFactor,opacityFactor);
+
+        GLES30.glUniform3fv(muColorHandleColorOpacity,1,color,0);
         GLES30.glVertexAttribPointer(
-                maPositionHandleShadow,
+                maPositionHandleColorOpacity,
                 3,
                 GLES30.GL_FLOAT,
                 false,
@@ -278,15 +220,15 @@ public class TexDrawer {
                 mVertexBuffer
         );
         GLES30.glVertexAttribPointer(
-                maTexCoorHandleShadow,
+                maTexCoorHandleColorOpacity,
                 2,
                 GLES30.GL_FLOAT,
                 false,
                 2*4,
                 mTexCoorBuffer
         );
-        GLES30.glEnableVertexAttribArray(maPositionHandleShadow);
-        GLES30.glEnableVertexAttribArray(maTexCoorHandleShadow);
+        GLES30.glEnableVertexAttribArray(maPositionHandleColorOpacity);
+        GLES30.glEnableVertexAttribArray(maTexCoorHandleColorOpacity);
 
         GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,texId);

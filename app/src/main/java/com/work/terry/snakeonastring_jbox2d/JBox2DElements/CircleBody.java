@@ -152,9 +152,4 @@ public class CircleBody extends MyBody{
         }
         else throw new RuntimeException(id+" create Failed");
     }
-    @Override
-    public void onPause(SharedPreferences.Editor editor){
-        super.onPause(editor);
-        editor.putFloat(id+"radius",radius);
-    }
 }

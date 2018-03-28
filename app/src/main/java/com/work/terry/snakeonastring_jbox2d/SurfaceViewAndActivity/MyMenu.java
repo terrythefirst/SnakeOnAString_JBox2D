@@ -162,6 +162,7 @@ public class MyMenu extends RoundEdgeRect {
         return thread;
     }
     public Thread popFromBottom(){
+        SoundPoolManager.play(SoundPoolManager.menuSlideSoundReverse,0);
         x=menuX;
         y=Constant.SCREEN_HEIGHT+height/2;
 

@@ -47,14 +47,16 @@ public class ScoreBoard extends GameElement {
                     x,y-jumpHeight-defaultHeight+TopOffset,
                     width+scaleWidth,height+scaleHeight,
                     colorFloats,
-                    TopOffsetColorFactor
+                    TopOffsetColorFactor,
+                    opacityFactor
             );
         drawNumber(
                 painter,
                 score.getScore(),
                 x,y-jumpHeight-defaultHeight,
                 width+scaleWidth,height+scaleHeight,
-                colorFloats
+                colorFloats,
+                opacityFactor
         );
     }
     @Override

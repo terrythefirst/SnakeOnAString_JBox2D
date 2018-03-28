@@ -120,10 +120,4 @@ public class RectBody extends MyBody{
         }
         else throw new RuntimeException(id+" create Failed");
     }
-    @Override
-    public void onPause(SharedPreferences.Editor editor){
-        super.onPause(editor);
-        editor.putFloat(id+"halfWidth",halfWidth);
-        editor.putFloat(id+"halfHeight",halfHeight);
-    }
 }

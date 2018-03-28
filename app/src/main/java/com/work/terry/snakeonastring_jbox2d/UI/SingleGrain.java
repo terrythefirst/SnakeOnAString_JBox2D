@@ -64,6 +64,7 @@ public class SingleGrain extends GameElement {
         float centerDistance = VectorUtil.calDistance(x-centerXY.x,y-centerXY.y);
         if(vz==0||centerDistance>centerRadius)setDoDraw(false);
         float ratio =MyMath.smoothStep(0,centerRadius,centerDistance);
+        opacityFactor = 1-ratio;
         scaleWidth = -width*ratio;
         scaleHeight = -height*ratio;
 

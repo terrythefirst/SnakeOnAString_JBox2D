@@ -1,8 +1,5 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
-import android.content.SharedPreferences;
-import android.util.Log;
-
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
@@ -33,6 +30,8 @@ public class GameElement {
 
     public int color;
     public float[] colorFloats;
+    public float opacityFactor = 1;
+
     public float defaultHeight;
     public float jumpHeight;
     public float TopOffset=0;
@@ -166,7 +165,7 @@ public class GameElement {
         if(!doDraw)return;
         //offSet
         if (TopOffset != 0) {
-            painter.drawColorFactorTex(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(Img),
                     colorFloats,
                     x,
@@ -174,19 +173,22 @@ public class GameElement {
                     width+scaleWidth,
                     height+scaleHeight,
                     rotateAngleGameElements,
-                    TopOffsetColorFactor
+                    TopOffsetColorFactor,
+                    opacityFactor
             );
         }
         if(isPureColor){
             //drawSelf
-            painter.drawColorSelf(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(TopImg==null?Img:TopImg),
                     colorFloats,
                     x,
                     y - jumpHeight - defaultHeight,
                     (TopWidth+scaleWidth)*((TopRatio==0)?1:TopRatio),
                     (TopHeight+scaleHeight)*((TopRatio==0)?1:TopRatio),
-                    rotateAngleGameElements
+                    rotateAngleGameElements,
+                    1,
+                    opacityFactor
             );
         }else {
             painter.drawTex(
@@ -217,7 +219,7 @@ public class GameElement {
     public void drawHeight(TexDrawer painter){
         if (!doDraw||!doDrawHeight)return;
         //drawHeight
-            painter.drawColorFactorTex(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(Img),
                     colorFloats,
                     x,
@@ -225,9 +227,10 @@ public class GameElement {
                     width+scaleWidth,
                     height+scaleHeight,
                     rotateAngleGameElements,
-                    HeightColorFactor
+                    HeightColorFactor,
+                    opacityFactor
             );
-            painter.drawColorFactorTex(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(SnakeBodyHeightImg),
                     colorFloats,
                     x,
@@ -235,7 +238,8 @@ public class GameElement {
                     width+scaleWidth,
                     jumpHeight + defaultHeight,
                     0,
-                    HeightColorFactor
+                    HeightColorFactor,
+                    opacityFactor
             );
     }
 
@@ -260,9 +264,10 @@ public class GameElement {
             float width,
             float height,
             float rotateAngle,
-            float[] ColorFloats
+            float[] ColorFloats,
+            float opacityFactor
     ){
-        painter.drawColorFactorTex(
+        painter.drawColorOpacityFactorTex(
                 TexManager.getTex(picName),
                 ColorFloats,
                 x,
@@ -270,7 +275,8 @@ public class GameElement {
                 width,
                 height,
                 rotateAngle,
-                1
+                1,
+                opacityFactor
         );
     }
     public static void drawNumberColorFactor(
@@ -279,7 +285,8 @@ public class GameElement {
             float x,float y,
             float width,float height,
             float[] ColorFloats,
-            float colorFactor
+            float colorFactor,
+            float opacityFactor
     ) {
         List<Integer> digits = new ArrayList<>();
         if(number==0)digits.add(0);
@@ -295,7 +302,7 @@ public class GameElement {
         }
         float startX = x+(length-1)*perWidth/2;
         for (int i=0;i<length;i++){
-            painter.drawColorFactorTex(
+            painter.drawColorOpacityFactorTex(
                     TexManager.getTex(ImgManager.getNumberImgName(digits.get(i))),
                     ColorFloats,
                     startX-i*perWidth,
@@ -303,7 +310,8 @@ public class GameElement {
                     perWidth,
                     height,
                     0,
-                    colorFactor
+                    colorFactor,
+                    opacityFactor
             );
         }
     }
@@ -350,7 +358,8 @@ public class GameElement {
             int number,
             float x,float y,
             float width,float height,
-            float[] ColorFloats
+            float[] ColorFloats,
+            float opacityFactor
     ){
         List<Integer> digits = new ArrayList<>();
         if(number==0)digits.add(0);
@@ -374,7 +383,8 @@ public class GameElement {
                     perWidth,
                     height,
                     0,
-                    ColorFloats
+                    ColorFloats,
+                    opacityFactor
             );
         }
     }
@@ -387,17 +397,7 @@ public class GameElement {
     public void setColorFloats(float[] floats){
         this.colorFloats = floats;
     }
-    public void onPause(SharedPreferences.Editor editor){
-        editor.putFloat(id+"x",x);
-        editor.putFloat(id+"x",y);
-        editor.putFloat(id+"defaultHeight",defaultHeight);
-        editor.putFloat(id+"topOffset",TopOffset);
-        editor.putFloat(id+"topOffsetColorFactor",TopOffsetColorFactor);
-        editor.putFloat(id+"heightColorFactor",HeightColorFactor);
-        editor.putFloat(id+"floorShadowColorFactor",FloorShadowColorFactor);
-        editor.putString(id+"img",Img);
-    }
-    public void onResume(){
-
+    public void setOpacityFactor(float x){
+        opacityFactor = x;
     }
 }

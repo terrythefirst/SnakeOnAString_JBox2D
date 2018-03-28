@@ -137,14 +137,4 @@ public class SnakeHead extends CircleBody{
     public void whenMotionUp(){
         if(target!=null)target.setDoDraw(true);
     }
-
-    @Override
-    public void onResume(){
-        movingThread =  new SnakeHeadMovingThread(this);
-        movingThread.start();
-    }
-    @Override
-    public void onPause(SharedPreferences.Editor editor){
-        editor.putFloat(id+"defaultHeight",defaultHeight);
-    }
 }

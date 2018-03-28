@@ -1,7 +1,5 @@
 package com.work.terry.snakeonastring_jbox2d.GamePlayElements;
 
-import android.util.Log;
-
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.CircleBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyBody;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyJoint;
@@ -9,7 +7,6 @@ import com.work.terry.snakeonastring_jbox2d.JBox2DElements.MyWeldJoint;
 import com.work.terry.snakeonastring_jbox2d.JBox2DElements.RectBody;
 import com.work.terry.snakeonastring_jbox2d.SurfaceViewAndActivity.GamePlay;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
-import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.TexDrawer;
@@ -289,7 +286,7 @@ public class ButtonBlock extends MyBody {
 //        circleBody1.drawSelf(painter);
 //        circleBody2.drawSelf(painter);
         //float height = calDistance(minusV2D(circleBody1.getBodyXY(),circleBody2.getBodyXY()));
-        painter.drawColorFactorTex(
+        painter.drawColorOpacityFactorTex(
                 TexManager.getTex(rectBody.Img),
                 colorFloats,
                 rectBody.x,
@@ -297,11 +294,12 @@ public class ButtonBlock extends MyBody {
                 (rectBody.TopWidth+rectBody.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (rectBody.height+rectBody.scaleHeight)+circleBody1.radius*(1-TopRatio)+circleBody2.radius*(1-TopRatio),
                 rectBody.rotateAngleGameElements,
-                rectBody.TopOffsetColorFactor
+                rectBody.TopOffsetColorFactor,
+                opacityFactor
         );
         //drawSelf
 
-        painter.drawColorFactorTex(
+        painter.drawColorOpacityFactorTex(
                 TexManager.getTex(SnakeBodyImg),
                 colorFloats,
                 circleBody1.x,
@@ -309,10 +307,11 @@ public class ButtonBlock extends MyBody {
                 (circleBody1.TopWidth+circleBody1.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (circleBody1.TopHeight+circleBody1.scaleHeight)*((TopRatio==0)?1:TopRatio),
                 circleBody1.rotateAngleGameElements,
-                circleBody1.TopOffsetColorFactor
+                circleBody1.TopOffsetColorFactor,
+                opacityFactor
         );
 
-        painter.drawColorFactorTex(
+        painter.drawColorOpacityFactorTex(
                 TexManager.getTex(SnakeBodyImg),
                 colorFloats,
                 circleBody2.x,
@@ -320,7 +319,8 @@ public class ButtonBlock extends MyBody {
                 (circleBody2.TopWidth+circleBody2.scaleWidth)*((TopRatio==0)?1:TopRatio),
                 (circleBody2.TopHeight+circleBody2.scaleHeight)*((TopRatio==0)?1:TopRatio),
                 circleBody2.rotateAngleGameElements,
-                circleBody2.TopOffsetColorFactor
+                circleBody2.TopOffsetColorFactor,
+                opacityFactor
         );
     }
     public void drawTop(TexDrawer painter){
@@ -330,14 +330,16 @@ public class ButtonBlock extends MyBody {
                         ge -> {
                             //x.rotateAngleGameElements = (float)Math.toDegrees( rectBody.body.getAngle());
                             //x.drawSelf(painter);
-                            painter.drawColorSelf(
+                            painter.drawColorOpacityFactorTex(
                                     TexManager.getTex(ge.TopImg==null?ge.Img:ge.TopImg),
                                     ge.colorFloats,
                                     ge.x,
                                     ge.y - ge.jumpHeight - ge.defaultHeight,
                                     (ge.TopWidth+ge.scaleWidth)*((ge.TopRatio==0)?1:ge.TopRatio),
                                     (ge.TopHeight+ge.scaleHeight)*((ge.TopRatio==0)?1:ge.TopRatio),
-                                    ge.rotateAngleGameElements
+                                    ge.rotateAngleGameElements,
+                                    1,
+                                    opacityFactor
                             );
                         }
                 );
