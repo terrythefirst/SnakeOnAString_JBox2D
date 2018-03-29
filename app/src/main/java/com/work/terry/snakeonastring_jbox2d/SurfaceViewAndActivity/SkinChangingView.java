@@ -47,7 +47,7 @@ public class SkinChangingView extends MyView {
 
     public float SnakePickAreaStartY = 300;
     public float SnakePickAreaEndY = 1400;
-    public float SnakePickTouchRatio = 0.8f;
+    public float SnakePickTouchRatio = 0.4f;
     public float SnakePickMaxScaleRate = 0.5f;
     public float SnakePickSelectSpeed = 2;
     public float previousX;
@@ -157,7 +157,6 @@ public class SkinChangingView extends MyView {
                 break;
             }
         }
-        Log.e("isPossessedSkin",((ans)?"has":"has not")+" skin"+number);
         return ans;
     }
     public boolean haveMoney(int price){
