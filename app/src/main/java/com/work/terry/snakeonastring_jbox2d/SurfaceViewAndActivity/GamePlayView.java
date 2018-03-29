@@ -9,7 +9,9 @@ import android.view.MotionEvent;
 
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
+import com.work.terry.snakeonastring_jbox2d.UI.TransitionAnimation;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
+import com.work.terry.snakeonastring_jbox2d.Util.DrawUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;
 import com.work.terry.snakeonastring_jbox2d.Util.LoadGameUtil;
 import com.work.terry.snakeonastring_jbox2d.Util.MatrixState;
@@ -34,6 +36,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class GamePlayView extends GLSurfaceView {
+    private DrawUtil gamePlayViewDrawUtil;
     private MainActivity context;
     public int yellowStars;
     public int maxScore;
@@ -50,7 +53,7 @@ public class GamePlayView extends GLSurfaceView {
         super(context);
         this.context = context;
         this.setEGLContextClientVersion(3);
-
+        this.gamePlayViewDrawUtil = new DrawUtil(null);
         loadPlayerInfo();
         sceneRenderer = new SceneRenderer();
         setRenderer(sceneRenderer);
@@ -151,6 +154,7 @@ public class GamePlayView extends GLSurfaceView {
                 nowView = new SkinChangingView(this,null,gameModeAndLevel);
             }
         }
+        new TransitionAnimation(gamePlayViewDrawUtil);
         changeMusicVolumeAccordingToMusicMode();
     }
     public int getSnakeSkinNumber(){
@@ -163,11 +167,13 @@ public class GamePlayView extends GLSurfaceView {
         return nowViewIndex;
     }
     public void setNowMenu(MyMenu menu){
-        if(menu==null){
+        if(nowMenu!=null){
             this.nowMenu.setDoDraw(false);
-            this.nowMenu = null;
-        }else {
-            this.nowMenu = menu;
+            gamePlayViewDrawUtil.addToRemoveSequence(nowMenu);
+        }
+        this.nowMenu = menu;
+        if(menu!=null){
+            gamePlayViewDrawUtil.addToCenterLayer(nowMenu);
         }
     }
 
@@ -180,7 +186,8 @@ public class GamePlayView extends GLSurfaceView {
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT|GLES30.GL_COLOR_BUFFER_BIT);
 
             nowView.getDrawUtil().stepDraw(texDrawer);
-            nowMenuStepDraw(texDrawer);
+            gamePlayViewDrawUtil.stepDraw(texDrawer);
+            //nowMenuStepDraw(texDrawer);
         }
         public void nowMenuStepDraw(TexDrawer painter){
             if(nowMenu!=null){

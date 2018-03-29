@@ -42,7 +42,7 @@ public class SingleGrain extends GameElement {
             float floorShadowColorFactor) {
         super(
                 "SingleGrain "+SingleGrainCount++,
-                centerXY.x, centerXY.y,
+                x, y,
                 radius*2, radius*2,
                 colorFloats, defaultHeight,
                 0,0,0,

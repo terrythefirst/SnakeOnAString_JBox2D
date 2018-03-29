@@ -619,10 +619,10 @@ public class StartView extends MyView {
         endlessPlayButton.setButtonListener(
                 ()->{
                         MyMenu endlessPlayMenu = new EndlessPlayMenu(gamePlayView);
+                        endlessPlayMenu.popFromBottom();
                         gamePlayView.setNowMenu(
                                 endlessPlayMenu
                         );
-                        endlessPlayMenu.popFromBottom();
                     }
         );
         drawUtil.addToCenterLayer(endlessPlayButton);

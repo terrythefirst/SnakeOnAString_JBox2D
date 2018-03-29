@@ -92,6 +92,7 @@ public class BottomMenu extends MyMenu {
                 ()->{
                     gamePlayView.setNowView(Constant.START_VIEW);
                     MyMenu endlessPlayMenu = new EndlessPlayMenu(gamePlayView);
+                    endlessPlayMenu.popFromBottom();
                     gamePlayView.setNowMenu(endlessPlayMenu);
                 }
         );

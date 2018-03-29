@@ -158,8 +158,8 @@ public class GameOverMenu extends MyMenu {
         gamePlay.gamePlayView.yellowStars+=finalScore.getScore()/10;
         finalScoreBoard = new ScoreBoard(
                 finalScore,
-                0,scoreResultBand.height/2-scoreResultBand.defaultHeight,
-                400,180,
+                0,scoreResultBand.height/2-scoreResultBand.defaultHeight-10,
+                400,160,
                 Constant.COLOR_RED,
                 0,
                 0,
@@ -176,7 +176,7 @@ public class GameOverMenu extends MyMenu {
         levelNameBoard = new GameElement(
                 "levelNameBoard ",
                 -30,levelLineY,
-                scoreResultBand.width-scoreResultBand.angleRadius*2,160,
+                scoreResultBand.width-scoreResultBand.angleRadius*2-30,160,
                 Constant.COLOR_GREY,
                 0,
                 0,0,0,0,
@@ -189,11 +189,11 @@ public class GameOverMenu extends MyMenu {
         Score gameLevel = new Score(gameModeAndLevel%10);
         levelNumberBoard = new ScoreBoard(
                 gameLevel,
-                200,levelLineY,
-                100,120,
+                200,levelLineY-8,
+                100,80,
                 Constant.COLOR_GREY,
                 0,
-                0,
+                10,
                 Constant.ButtonBlockTopOffSetColorFactor,
                 Constant.ButtonBlockHeightColorFactor,
                 Constant.ButtonBlockFloorColorFactor
@@ -204,7 +204,7 @@ public class GameOverMenu extends MyMenu {
 
 
 
-        float bestLineY = scoreResultBand.height-80-scoreResultBand.defaultHeight;
+        float bestLineY = scoreResultBand.height-120-scoreResultBand.defaultHeight;
         bestBoard = new GameElement(
                 "bestBoard  ",
                 -100,bestLineY,
@@ -226,7 +226,7 @@ public class GameOverMenu extends MyMenu {
         Score bestScore = new Score(bestScores);
         bestScoreBoard = new ScoreBoard(
                 bestScore,
-                180,bestLineY,
+                120,bestLineY,
                 360,100,
                 Constant.COLOR_GREEN,
                 0,
