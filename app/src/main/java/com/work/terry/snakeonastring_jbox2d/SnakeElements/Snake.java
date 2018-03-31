@@ -50,7 +50,7 @@ public class Snake {
     public byte[] snakeAjaxLengthLock = new byte[0];
     public int SnakeAjaxLength ;
 
-    private int Skin;
+    public int Skin;
     public float speed = 0;
     public float luck = 0;
 

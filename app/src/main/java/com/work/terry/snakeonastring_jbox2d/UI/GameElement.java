@@ -1,5 +1,7 @@
 package com.work.terry.snakeonastring_jbox2d.UI;
 
+import android.util.Log;
+
 import com.work.terry.snakeonastring_jbox2d.Util.ColorManager;
 import com.work.terry.snakeonastring_jbox2d.Util.Constant;
 import com.work.terry.snakeonastring_jbox2d.Util.ImgManager;

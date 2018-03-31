@@ -264,10 +264,10 @@ public class SnakeNode extends CircleBody{
         if(body!=null)
             rotateAngleGameElements =(float) Math.toDegrees(body.getAngle());
         super.drawSelf(painter);
-
-        if(rectBody==null)return;
-        rectBody.rotateAngleGameElements = -(float)Math.toDegrees( rectBody.body.getAngle());
-        rectBody.drawSelf(painter);
+//
+//        if(rectBody==null)return;
+//        rectBody.rotateAngleGameElements = -(float)Math.toDegrees( rectBody.body.getAngle());
+//        rectBody.drawSelf(painter);
     }
     @Override
     public void sendDeleteTask(){

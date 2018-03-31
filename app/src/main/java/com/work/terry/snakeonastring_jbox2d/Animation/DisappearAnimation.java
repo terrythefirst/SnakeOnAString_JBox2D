@@ -1,5 +1,6 @@
 package com.work.terry.snakeonastring_jbox2d.Animation;
 
+import com.work.terry.snakeonastring_jbox2d.Thread.Stoppable;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
 
@@ -7,8 +8,9 @@ import com.work.terry.snakeonastring_jbox2d.Util.MyMath;
  * Created by Terry on 2018/3/8.
  */
 
-public class DisappearAnimation extends Thread {
+public class DisappearAnimation extends Thread implements Stoppable{
     GameElement gameElement;
+    boolean shouldDie = false;
     boolean disappear;
     float timeSpan;
     float targetWidth;
@@ -32,7 +34,7 @@ public class DisappearAnimation extends Thread {
         long sleepInterval = 10;
         int times = (int) (timeSpan*1000/sleepInterval);
         int timeCount = 0;
-        while (timeCount<times){
+        while (!shouldDie&&timeCount<times){
             float ratio = MyMath.smoothStep(0,1,timeCount*1.0f/times);
             if(!disappear)ratio = 1-ratio;
 
@@ -46,5 +48,10 @@ public class DisappearAnimation extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void setShouldDie() {
+        shouldDie = true;
     }
 }

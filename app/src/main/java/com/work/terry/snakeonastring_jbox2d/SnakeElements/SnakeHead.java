@@ -122,7 +122,8 @@ public class SnakeHead extends CircleBody{
         target = new Nail(
                 x+HeadVX, y+HeadVY,
                 x, y,
-                3
+                SnakeSkinManager.getSkinNodeInfo(snake.Skin,SnakeHeadImgCode).color255,
+                snake.snakeHead
         );
         movingThread =  new SnakeHeadMovingThread(this);
         movingThread.start();
