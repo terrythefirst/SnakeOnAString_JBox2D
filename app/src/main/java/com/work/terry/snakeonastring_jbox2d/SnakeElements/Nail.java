@@ -27,6 +27,8 @@ public class Nail extends GameElement {
     public GameElement nailString;
     public boolean reached = false;
 
+    private boolean doDrawNail = true;
+
     private static float nailDefaultHeight = 30;
 
     public Nail(float x, float y, float vx, float vy, float[] colorFloats,SnakeHead snakeHead) {
@@ -42,6 +44,7 @@ public class Nail extends GameElement {
                 SnakeFloorColorFactor,
                 Constant.SnakeBodyImg);
         //setDoDrawHeight(false);
+        setDoDraw(true);
         setTarget(x,y,vx,vy);
         setFloorShadowFactorX(0.1f);
         setFloorShadowFactorY(0.2f);
@@ -73,6 +76,9 @@ public class Nail extends GameElement {
                 Constant.SnakeBodyImg
         );
     }
+    public void setDoDrawNail(boolean x){
+        doDrawNail = x;
+    }
     public void setReached(boolean x){
         reached = x;
     }
@@ -90,13 +96,17 @@ public class Nail extends GameElement {
         nailString.TopHeight = VectorUtil.calDistance(nailStringV);
         nailString.height = nailString.TopHeight;
 
-        super.drawSelf(painter);
+        if(doDrawNail)super.drawSelf(painter);
         nailString.drawSelf(painter);
-        nailTop.drawSelf(painter);
+        if(doDrawNail)nailTop.drawSelf(painter);
+    }
+    @Override
+    public void drawHeight(TexDrawer painter){
+        if(doDrawNail)super.drawHeight(painter);
     }
     @Override
     public void drawFloorShadow(TexDrawer painter){
-        super.drawFloorShadow(painter);
+        if(doDrawNail)super.drawFloorShadow(painter);
         nailString.drawFloorShadow(painter);
         //nailTop.drawFloorShadow(painter);
     }

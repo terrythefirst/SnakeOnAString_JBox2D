@@ -52,7 +52,7 @@ public class SnakeHeadMovingThread extends Thread {
                 //Log.e("calDistance(dx,dy)<10f",calDistance(dx,dy)+"");
                 if(calDistance(dx,dy)<10f){
                     snakeHead.target.setReached(true);
-                    snakeHead.target.setDoDraw(false);
+                    snakeHead.target.setDoDrawNail(false);
                 }else {
                     snakeHead.target.setReached(false);
                 }

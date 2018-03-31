@@ -123,19 +123,19 @@ public class SnakeHead extends CircleBody{
                 x+HeadVX, y+HeadVY,
                 x, y,
                 SnakeSkinManager.getSkinNodeInfo(snake.Skin,SnakeHeadImgCode).color255,
-                snake.snakeHead
+                this
         );
         movingThread =  new SnakeHeadMovingThread(this);
         movingThread.start();
     }
     public void whenMotionDown(float touchX,float touchY){
-        if(target!=null)target.setDoDraw(false);
+        if(target!=null)target.setDoDrawNail(false);
         if(touchX!=x||touchY!=y){
             target.setReached(false);
             target.setTarget(touchX,touchY,x,y);
         }
     }
     public void whenMotionUp(){
-        if(target!=null)target.setDoDraw(true);
+        if(target!=null)target.setDoDrawNail(true);
     }
 }
