@@ -52,11 +52,6 @@ public class JBox2DThread extends Thread implements Stoppable{
                     e.printStackTrace();
                 }
             }
-//            long currTimeStamp = System.nanoTime()/1000000;
-//            long dt = currTimeStamp-timeStamp;
-//            Log.d("JBox2DThread","dt="+dt);
-
-            // Log.d("JBOX2DTHREAD","worldBodySize="+gamePlay.world.getBodyCount()+" myBodiesSize="+JBox2DUtil.Bodies.size());
             gamePlay.world.step(JBOX2D_TIME_STEP, JBOX2D_ITERA, JBOX2D_ITERA);//开始模拟
 
             MyJBox2DStep();
@@ -72,7 +67,11 @@ public class JBox2DThread extends Thread implements Stoppable{
                     gamePlay.snake.searchWithin();
             }
             //timeStamp = currTimeStamp;
-
+            try {
+                sleep((long)JBOX2D_TIME_STEP*1000);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     }

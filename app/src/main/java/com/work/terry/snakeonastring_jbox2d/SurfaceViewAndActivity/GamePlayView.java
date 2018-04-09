@@ -242,8 +242,4 @@ public class GamePlayView extends GLSurfaceView {
         savePlayerInfo();
         if(nowView!=null)nowView.onResume();
     }
-    public void onStop(){
-        if(nowView!=null)nowView.onSwitchViewAndStop();
-    }
-
 }
