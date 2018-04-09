@@ -136,7 +136,10 @@ public class GamePlayView extends GLSurfaceView {
             nowViewIndex = index;
         }
 
-        if(nowView!=null)nowView.onPause(null);
+        if(nowView!=null){
+            nowView.onPause(null);
+            nowView.onSwitchViewAndStop();
+        }
         if(index == START_VIEW){
             context.setBackgroundMusic(R.raw.back_ground_music);
             nowView = new StartView(this,null);
@@ -238,6 +241,9 @@ public class GamePlayView extends GLSurfaceView {
     public void onPause(SharedPreferences.Editor editor){
         savePlayerInfo();
         if(nowView!=null)nowView.onResume();
+    }
+    public void onStop(){
+        if(nowView!=null)nowView.onSwitchViewAndStop();
     }
 
 }

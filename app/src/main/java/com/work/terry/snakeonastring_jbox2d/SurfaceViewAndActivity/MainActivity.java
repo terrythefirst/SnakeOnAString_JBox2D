@@ -96,6 +96,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStop(){
         super.onStop();
+        gamePlayView.onStop();
         SoundPoolManager.release();
     }
 }

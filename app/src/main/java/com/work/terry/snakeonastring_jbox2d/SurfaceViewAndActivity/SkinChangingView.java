@@ -10,6 +10,7 @@ import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkin;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
+import com.work.terry.snakeonastring_jbox2d.Thread.Stoppable;
 import com.work.terry.snakeonastring_jbox2d.Thread.StoppableBreathAnimationThread;
 import com.work.terry.snakeonastring_jbox2d.Thread.WhenUpMoveSnakeThread;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
@@ -44,6 +45,8 @@ public class SkinChangingView extends MyView {
     private GameElement lock;
     private ScoreBoard lockStarNumber;
     private GameElement lockStar;
+
+    private List<ListJiggleAnimation> snakesListAnimationThreadList = new ArrayList<>();
 
     public float SnakePickAreaStartY = 300;
     public float SnakePickAreaEndY = 1400;
@@ -134,7 +137,7 @@ public class SkinChangingView extends MyView {
         snake.add(snakeHead);
 
         Collections.reverse(snake);
-        new ListJiggleAnimation(
+        ListJiggleAnimation temp = new ListJiggleAnimation(
                 snake,
                 40,
                 0.3f,
@@ -142,7 +145,9 @@ public class SkinChangingView extends MyView {
                 false,
                 0,
                 true
-        ).start();
+        );
+        temp.start();
+        snakesListAnimationThreadList.add(temp);
 
         snakes.put(skinNumber,snake);
         for(Integer integer:snakes.keySet()){
@@ -643,5 +648,13 @@ public class SkinChangingView extends MyView {
     @Override
     public void onPause(SharedPreferences.Editor editor) {
 
+    }
+    @Override
+    public void onSwitchViewAndStop() {
+        for(Stoppable s:snakesListAnimationThreadList){
+            s.setShouldDie();
+        }
+        if(selectButtonBreathAnimationThread!=null)selectButtonBreathAnimationThread.setShouldDie();
+        if(lockBreathAnimationThread!=null)lockBreathAnimationThread.setShouldDie();
     }
 }

@@ -8,6 +8,7 @@ import com.work.terry.snakeonastring_jbox2d.Animation.BreathAnimation;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeHead;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeNode;
 import com.work.terry.snakeonastring_jbox2d.SnakeElements.SnakeSkinManager;
+import com.work.terry.snakeonastring_jbox2d.Thread.Stoppable;
 import com.work.terry.snakeonastring_jbox2d.UI.Button;
 import com.work.terry.snakeonastring_jbox2d.UI.GameElement;
 import com.work.terry.snakeonastring_jbox2d.UI.ImgButton;
@@ -29,6 +30,7 @@ import static com.work.terry.snakeonastring_jbox2d.Util.Constant.*;
  */
 
 public class StartView extends MyView {
+    private boolean closed = false;
     private String backgroundImg = BackgroundImg;
     private ImgButton musicButton;
     private ImgButton statisticsButton;
@@ -62,6 +64,9 @@ public class StartView extends MyView {
     float letterOnAStringHeight = 100;
     float letterOnAStringSpanX = 10;
     float letterOnAStringGapX = 100;
+
+    private ListJiggleAnimation snakeJiggleAnimationThread;
+    private ListJiggleAnimation  SnakeLettersAnimationThread;
 
     float scaleRatio = 1.4f;
     float SnakeY = 1200;
@@ -136,7 +141,6 @@ public class StartView extends MyView {
                 Constant.ButtonBlockFloorColorFactor
         );
         drawUtil.addToCenterLayer(yellowStarScoreboard);
-
     }
     public void initSnake(){
         int nowSkin = gamePlayView.getSnakeSkinNumber();//SnakeSkinManager.SKIN_DEFAULT;
@@ -166,7 +170,7 @@ public class StartView extends MyView {
         snake.add(snakeHead);
 
         Collections.reverse(snake);
-        new ListJiggleAnimation(
+        snakeJiggleAnimationThread = new ListJiggleAnimation(
                 snake,
                 40,
                 0.3f,
@@ -174,7 +178,8 @@ public class StartView extends MyView {
                 false,
                 0,
                 true
-        ).start();
+        );
+        snakeJiggleAnimationThread.start();
     }
     public void initLetterSnake(){
         Button tempt = new Button(
@@ -257,7 +262,7 @@ public class StartView extends MyView {
         letterSnakeList.add(tempt);
         drawUtil.addToCenterLayer(tempt);
 
-        new ListJiggleAnimation(
+        SnakeLettersAnimationThread = new ListJiggleAnimation(
                 letterSnakeList,
                 40,
                 0.3f,
@@ -265,7 +270,8 @@ public class StartView extends MyView {
                 true,
                 0.3f,
                 true
-        ).start();
+        );
+        SnakeLettersAnimationThread.start();
     }
     public void initOnAString(){
         Button tempt = new Button(
@@ -422,7 +428,7 @@ public class StartView extends MyView {
                 for(GameElement ge:letterOnAStringList){
                     new Thread(){
                         public void run(){
-                            while (true){
+                            while (!closed){
                                 new BreathAnimation(
                                         ge,
                                         false,
@@ -447,15 +453,6 @@ public class StartView extends MyView {
                 }
             }
         }.start();
-//        new ListBreathAnimation(
-//                letterOnAStringList,
-//                40,
-//                0.8f,
-//                1500,
-//                true,
-//                0.2f,
-//                false
-//        ).start();
     }
     public void initButtons(){
         switchButton = new ImgButton(
@@ -568,7 +565,7 @@ public class StartView extends MyView {
         new Thread(){
             @Override
             public void run(){
-                while(true){
+                while(!closed){
                     Thread thread = new BreathAnimation(
                             originalPlayButton,
                             false,
@@ -635,7 +632,7 @@ public class StartView extends MyView {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                while(true){
+                while(!closed){
                     Thread thread = new BreathAnimation(
                             endlessPlayButton,
                             false,
@@ -743,11 +740,18 @@ public class StartView extends MyView {
 
     @Override
     public void onResume() {
-
+        closed = false;
     }
 
     @Override
     public void onPause(SharedPreferences.Editor editor) {
 
+    }
+
+    @Override
+    public void onSwitchViewAndStop() {
+        if(snakeJiggleAnimationThread!=null)snakeJiggleAnimationThread.setShouldDie();
+        if(SnakeLettersAnimationThread!=null)SnakeLettersAnimationThread.setShouldDie();
+        closed = true;
     }
 }

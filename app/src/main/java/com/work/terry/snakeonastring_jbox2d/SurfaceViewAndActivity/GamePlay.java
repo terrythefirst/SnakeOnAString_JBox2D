@@ -46,8 +46,6 @@ public class GamePlay extends MyView{
 
     public Snake snake ;
 
-//    public int Score ;
-//    private byte[] scoreLock = new byte[0];
     public ScoreBoard scoreBoard;
     public Score score = new Score(0);
 
@@ -88,24 +86,6 @@ public class GamePlay extends MyView{
         if(gameModeAndLevel>=Constant.GAMEPLAY_VIEW_ENDLESS&&gameModeAndLevel<Constant.GAMEPLAY_VIEW_ENDLESS+10)
             addScoreBoard();
         initChangeSkinButton();
-//        ButtonBlockCircle buttonBlockCircle = new ButtonBlockCircle(
-//                world,
-//                720,2000,
-//                60,
-//                Constant.C0LOR_CYAN,
-//
-//                true,
-//                ButtonBlockDefaultHeight,
-//                1
-//        );
-//        drawUtil.addToCenterLayer(buttonBlockCircle);
-//        new BreathAnimation(
-//                buttonBlockCircle,
-//                40,
-//                true,
-//                2f
-//        ).start();
-
     }
     public void initChangeSkinButton(){
         float changeSkinButtonWidth = 500;
@@ -287,8 +267,7 @@ public class GamePlay extends MyView{
             }
         }
         if(!ok)return;
-        //Vec2 loc = snakeFoodLocationMap.get(foodLocationCount++);
-        //Log.d("foodCount",foodCount+"");
+
         SnakeFood tempt = new SnakeFood(
                     getDrawUtil(),
                     this,
@@ -302,9 +281,6 @@ public class GamePlay extends MyView{
         tempt.sendCreateTask();
         snakeFoodMap.put(foodIndex,tempt);
         foodIndex++;
-//        if(foodLocationCount>3){
-//            foodLocationCount=0;
-//        }
     }
     public SnakeFood getFood(int index){
         return snakeFoodMap.get(index);
@@ -451,5 +427,9 @@ public class GamePlay extends MyView{
     public void onPause(SharedPreferences.Editor editor){
         IS_PLAYING = false;
         OnPauseSave.saveGame(this);
+    }
+    @Override
+    public void onSwitchViewAndStop() {
+        jBox2DThread.setShouldDie();
     }
 }

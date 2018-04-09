@@ -46,4 +46,6 @@ public abstract class MyView {
     public abstract void onTouchEvent(MotionEvent event, float x, float y);
     public abstract void onResume();
     public abstract void onPause(SharedPreferences.Editor editor);
+    public abstract void onSwitchViewAndStop();
+
 }
