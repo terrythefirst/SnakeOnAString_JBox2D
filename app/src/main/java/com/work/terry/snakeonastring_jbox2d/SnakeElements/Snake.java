@@ -198,6 +198,7 @@ public class Snake {
     public void setDead(){
         Log.d("snake","DEAD!");
         isDead = true;
+        snakeHead.target.setDoDraw(false);
         new FountainAnimation(
                 gamePlay.getDrawUtil(),
                 1,

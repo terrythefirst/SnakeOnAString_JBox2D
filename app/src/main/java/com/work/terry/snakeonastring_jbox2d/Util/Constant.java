@@ -21,66 +21,66 @@ public class Constant {
     public static final int SKIN_CHANGING_VIEW = 30;
 
     //文件前缀
-    public static String PicDirectoryPrefix = "pic/";
+    public static String PicDirectoryPrefix = "compressed_imgs/";
     public static String NumbersPicDirectoryPrefix = "numbers/";
     public static String LettersPicDirectoryPrefix = "letters/";
     public static String SnakeSkinDirectoryPrefix = "snake_skin/";
-    public static String SnakeSkinPicDirectoryPrefix = SnakeSkinDirectoryPrefix+"skin_img/";
+    public static String SnakeSkinPicDirectoryPrefix = SnakeSkinDirectoryPrefix+"compressed_skin_imgs/";
     public static final String OriginalPlayDirectoryPrefix = "game_level/original_play/";
     public static final String EndlessPlayDirectoryPrefix = "game_level/endless_play/";
 
-    public static String Number0Img = NumbersPicDirectoryPrefix+"number_zero.png";
-    public static String Number1Img = NumbersPicDirectoryPrefix+"number_one.png";
-    public static String Number2Img = NumbersPicDirectoryPrefix+"number_two.png";
-    public static String Number3Img = NumbersPicDirectoryPrefix+"number_three.png";
-    public static String Number4Img = NumbersPicDirectoryPrefix+"number_four.png";
-    public static String Number5Img = NumbersPicDirectoryPrefix+"number_five.png";
-    public static String Number6Img = NumbersPicDirectoryPrefix+"number_six.png";
-    public static String Number7Img = NumbersPicDirectoryPrefix+"number_seven.png";
-    public static String Number8Img = NumbersPicDirectoryPrefix+"number_eight.png";
-    public static String Number9Img = NumbersPicDirectoryPrefix+"number_nine.png";
+    public static String Number0Img = NumbersPicDirectoryPrefix+"number_zero.pkm";
+    public static String Number1Img = NumbersPicDirectoryPrefix+"number_one.pkm";
+    public static String Number2Img = NumbersPicDirectoryPrefix+"number_two.pkm";
+    public static String Number3Img = NumbersPicDirectoryPrefix+"number_three.pkm";
+    public static String Number4Img = NumbersPicDirectoryPrefix+"number_four.pkm";
+    public static String Number5Img = NumbersPicDirectoryPrefix+"number_five.pkm";
+    public static String Number6Img = NumbersPicDirectoryPrefix+"number_six.pkm";
+    public static String Number7Img = NumbersPicDirectoryPrefix+"number_seven.pkm";
+    public static String Number8Img = NumbersPicDirectoryPrefix+"number_eight.pkm";
+    public static String Number9Img = NumbersPicDirectoryPrefix+"number_nine.pkm";
 
-    public static String LetterOriginal = LettersPicDirectoryPrefix+"original.png";
-    public static String LetterEndless = LettersPicDirectoryPrefix+"endless.png";
-    public static String LetterS = LettersPicDirectoryPrefix+"letter_s.png";
-    public static String LetterN = LettersPicDirectoryPrefix+"letter_n.png";
-    public static String LetterA = LettersPicDirectoryPrefix+"letter_a.png";
-    public static String LetterK = LettersPicDirectoryPrefix+"letter_k.png";
-    public static String LetterE = LettersPicDirectoryPrefix+"letter_e.png";
-    public static String LetterO = LettersPicDirectoryPrefix+"letter_o.png";
-    public static String LetterT = LettersPicDirectoryPrefix+"letter_t.png";
-    public static String LetterR = LettersPicDirectoryPrefix+"letter_r.png";
-    public static String LetterI = LettersPicDirectoryPrefix+"letter_i.png";
-    public static String LetterG = LettersPicDirectoryPrefix+"letter_g.png";
+    public static String LetterOriginal = LettersPicDirectoryPrefix+"original.pkm";
+    public static String LetterEndless = LettersPicDirectoryPrefix+"endless.pkm";
+    public static String LetterS = LettersPicDirectoryPrefix+"letter_s.pkm";
+    public static String LetterN = LettersPicDirectoryPrefix+"letter_n.pkm";
+    public static String LetterA = LettersPicDirectoryPrefix+"letter_a.pkm";
+    public static String LetterK = LettersPicDirectoryPrefix+"letter_k.pkm";
+    public static String LetterE = LettersPicDirectoryPrefix+"letter_e.pkm";
+    public static String LetterO = LettersPicDirectoryPrefix+"letter_o.pkm";
+    public static String LetterT = LettersPicDirectoryPrefix+"letter_t.pkm";
+    public static String LetterR = LettersPicDirectoryPrefix+"letter_r.pkm";
+    public static String LetterI = LettersPicDirectoryPrefix+"letter_i.pkm";
+    public static String LetterG = LettersPicDirectoryPrefix+"letter_g.pkm";
 
 
-    public static String RoundEdgeCube = "round_edge_cube.png";
-    public static String ArrowsSwitchImg = "arrows_switch_horizontal.png";
-    public static String SoundAltImg = "sound_alt.png";
-    public static String SoundOffImg = "sound_off.png";
-    public static String SoundOutloud = "sound_outloud.png";
+    public static String RoundEdgeCube = "round_edge_cube.pkm";
+    public static String ArrowsSwitchImg = "arrows_switch_horizontal.pkm";
+    public static String SoundAltImg = "sound_alt.pkm";
+    public static String SoundOffImg = "sound_off.pkm";
+    public static String SoundOutloud = "sound_outloud.pkm";
 
-    public static String StatisticsBars = "bars.png";
-    public static String StartImg = "start.png";
-    public static String InfiniteImg = "infinite.png";
+    public static String StatisticsBars = "bars.pkm";
+    public static String StartImg = "start.pkm";
+    public static String InfiniteImg = "infinite.pkm";
 
-    public static String StarFavoriteImg = "star_favorite.png";
-    public static String RateImg = "thumbs_up.png";
-    public static String LikeImg = "love.png";
+    public static String StarFavoriteImg = "star_favorite.pkm";
+    public static String RateImg = "thumbs_up.pkm";
+    public static String LikeImg = "love.pkm";
 
-    public static String LuckImg = "luck.png";
-    public static String ShapeImg = "shape.png";
-    public static String ArrowBackImg = "arrow_back.png";
+    public static String LuckImg = "luck.pkm";
+    public static String ShapeImg = "shape.pkm";
+    public static String ArrowBackImg = "arrow_back.pkm";
     //中文
-    public static final String SelectChineseImg = "select_chinese.png";
-    public static final String UnlockChineseImg = "unlock_chinese.png";
-    public static final String ChangeSkinChineseImg = "change_skin_chinese.png";
-    public static final String ResumeImg = "resume_chinese.png";
-    public static final String RestartChineseImg = "restart_chinese.png";
-    public static final String BestChineseImg = "best_chinese.png";
-    public static final String EndlessChineseImg = "endless_chinese.png";
+    public static final String SelectChineseImg = "select_chinese.pkm";
+    public static final String UnlockChineseImg = "unlock_chinese.pkm";
+    public static final String ChangeSkinChineseImg = "change_skin_chinese.pkm";
+    public static final String ResumeImg = "resume_chinese.pkm";
+    public static final String RestartChineseImg = "restart_chinese.pkm";
+    public static final String BestChineseImg = "best_chinese.pkm";
+    public static final String EndlessChineseImg = "endless_chinese.pkm";
 
-    public static String RoundRectSector = "round_rect_sector1.png";
+    public static String RoundRectSector = "round_rect_sector1.pkm";
 
 
     //JBOX2D相关1
@@ -109,27 +109,27 @@ public class Constant {
     //public static final float snakeBodyAngularDampingRate = 0f;
 
     //蛇的食物
-    public static final String SnakeFoodImg = "snake_food.png";
+    public static final String SnakeFoodImg = "snake_food.pkm";
     //炸弹
-    public static final String BombImg = "my_bomb.png";
+    public static final String BombImg = "my_bomb.pkm";
     //Speed
-    public static final String SpeedImg = "speed.png";
+    public static final String SpeedImg = "speed.pkm";
     //menu
-    public static final String MenuImg = "menu.png";
+    public static final String MenuImg = "menu.pkm";
     //钉子
-    public static final String NailVerticalImg = "nail_vertical.png";
-    public static final String NailShadowImg = "nail_shadow.png";
+    public static final String NailVerticalImg = "nail_vertical.pkm";
+    public static final String NailShadowImg = "nail_shadow.pkm";
     //锁定
-    public static final String LockDownImg = "circle_drashed.png";
+    public static final String LockDownImg = "circle_drashed.pkm";
 
     //按钮
-    public static final String PauseButtonImg = "pause.png";
-    public static final String DeleteImg = "delete.png";
-    public static final String RestartImg = "restart.png";
+    public static final String PauseButtonImg = "pause.pkm";
+    public static final String DeleteImg = "delete.pkm";
+    public static final String RestartImg = "restart.pkm";
 
 
     //磁铁
-    public static final String FoodMagnetImg = "magnet.png";
+    public static final String FoodMagnetImg = "magnet.pkm";
     //蛇整体
     public static final int SnakeBodyDefaultLength = 4;
 
@@ -159,18 +159,18 @@ public class Constant {
     public static final int SnakeHeadEatingCloseImgCode = -5;
 
     public static String SnakeHeadID = "snakeHead";
-    public static String SnakeHeadEyesImg = "snake_head_eyes_version_2.png";
-    public static String SnakeHeadDeadEyesImg = "snake_head_eyes_dead_version_2.png";
-    public static String SnakeHeadDizzyEyesImg = "snake_head_eyes_dizzy_version_2.png";
-    public static String SnakeHeadEyesBallImg = "snake_head_eyesBalls_version_2.png";
+    public static String SnakeHeadEyesImg = "snake_head_eyes_version_2.pkm";
+    public static String SnakeHeadDeadEyesImg = "snake_head_eyes_dead_version_2.pkm";
+    public static String SnakeHeadDizzyEyesImg = "snake_head_eyes_dizzy_version_2.pkm";
+    public static String SnakeHeadEyesBallImg = "snake_head_eyesBalls_version_2.pkm";
     public static final float SnakeHeadRatio = (float) (800*1.0/1024);
     public static final int SnakeHeadRadius = 38;
 
     public static float SnakeHeadRotateStepAngle =3.0f/5f;//Degree
     //蛇身体
     public static String SnakeBodyID = "snakeBody";
-    public static String SnakeBodyImg = "snake_body.png";
-    public static String SnakeBodyHeightImg ="snake_body_height.png";
+    public static String SnakeBodyImg = "snake_body.pkm";
+    public static String SnakeBodyHeightImg ="snake_body_height.pkm";
     public static final int SnakeBodyTopRadius = 33;
     public static final int SnakeBodyRadius = 35;
 
@@ -186,16 +186,16 @@ public class Constant {
     public static final float FloorShadowFactorX = 0.6f;
     public static final float FloorShadowFactorY = 0.8f;
 
-    public static String BackgroundImg = "Strips_background.png";
-    public static String LockImg = "lock.png";
+    public static String BackgroundImg = "Strips_background.pkm";
+    public static String LockImg = "lock.pkm";
 
-    public static String ButtonImgCircleUp = "button_circle_up.png";
-    public static String ButtonImgCircleDown = "button_circle_down.png";
+    public static String ButtonImgCircleUp = "button_circle_up.pkm";
+    public static String ButtonImgCircleDown = "button_circle_down.pkm";
     public static String ButtonImgRect = SnakeBodyHeightImg;
 
-    public static String EntranceImg = "entrance.png";
+    public static String EntranceImg = "entrance.pkm";
 
-    public static String AxisImg = "axis_with_direction.png";
+    public static String AxisImg = "axis_with_direction.pkm";
     public static int AxisWidth = SnakeHeadRadius;
 
     public static final int COLOR_WHITE= 0;

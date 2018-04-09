@@ -30,45 +30,7 @@ public class TexManager {
     private static List<String> texName = new ArrayList<String>();
 
     private static int initTexture(Resources r,String texFileName){
-        int[] textures = new int[1];
-        GLES30.glGenTextures(
-                1,
-                textures,
-                0
-        );
-
-        int textureID = textures[0];
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,textureID);
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,GLES30.GL_TEXTURE_MIN_FILTER,GLES30.GL_NEAREST);
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,GLES20.GL_TEXTURE_MAG_FILTER,GLES30.GL_LINEAR);
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,GLES30.GL_TEXTURE_WRAP_R,GLES30.GL_CLAMP_TO_EDGE);
-        GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,GLES30.GL_TEXTURE_WRAP_T,GLES30.GL_CLAMP_TO_EDGE);
-
-        InputStream is = null;
-        Bitmap bitmap = null;
-        try{
-            is = r.getAssets().open(texFileName);
-            bitmap = BitmapFactory.decodeStream(is);
-        }catch (Exception e){
-            Log.e("loadTex","PicName: "+texFileName);
-            e.printStackTrace();
-        }finally {
-            try{
-                is.close();
-            }catch (IOException ee){
-                ee.printStackTrace();
-            }
-        }
-
-        GLUtils.texImage2D(
-                GLES30.GL_TEXTURE_2D,
-                0,
-                bitmap,
-                0
-        );
-        bitmap.recycle();
-
-        return textureID;
+        return BnETC2Util.initTextureETC2(texFileName,r);
     }
 
     public static void addTex(String tn){texName.add(tn);}
